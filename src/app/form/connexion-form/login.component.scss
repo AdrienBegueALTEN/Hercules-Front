@@ -1,0 +1,54 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+
+$usual-primary-blue: #043962;
+$usual-secondary-blue: #008BD2;
+
+mat-form-field {
+    display: block;
+    color: black;
+}
+
+mat-card {
+    width: 300px;
+    top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Raleway, Arial, sans-serif;
+    color: $usual-primary-blue;
+}
+
+mat-card-header {
+    margin-bottom: 12px;
+}
+
+img {
+    height: 64px;
+    margin-right: 16px;
+
+    float: left;
+}
+
+mat-card-title {
+    vertical-align: middle;
+    line-height: 52px;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+mat-card-actions {
+    position: relative;
+    line-height: 36px;
+    vertical-align: middle;
+    margin-bottom: 0;
+    margin-left: 8px;
+}
+
+mat-card-actions a:hover {
+    cursor: pointer;
+}
+
+mat-card-actions button {
+    background-color: $usual-primary-blue;
+    color: white;
+    float: right;
+}

@@ -1,0 +1,123 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+
+$usual-primary-blue: #043962;
+$usual-secondary-blue: #008BD2;
+$usual-tertiary-blue: #7ECBEE;
+
+.vr {
+	height: 100%;
+	width : 5px;
+	background: black;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+header {
+    display: block;
+    position: sticky;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    height: 160px;
+    font-family: Raleway, Arial, sans-serif;
+    text-transform: uppercase;
+    cursor: default;
+}
+
+header .head {
+    background-color: white;
+    height: 100px;
+    line-height: 32px;
+    color: #043962;
+}
+
+header .head nav, header .foot .content {
+    margin-left: 122px;
+    position: relative;
+}
+
+header .head nav {
+    height: 36px;
+    padding: 32px 0;
+}
+
+header nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 32px;
+    max-height: 32px;
+    overflow: hidden;
+}
+  
+header nav ul li {
+    float: left;
+}
+
+.border {
+    border-left: solid $usual-secondary-blue 2px;
+    border-right: solid $usual-secondary-blue 2px;
+}
+  
+header nav ul li a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-style: normal;
+    padding: 0 16px;
+}
+
+header nav ul li a:hover {
+    color: $usual-secondary-blue;
+}
+
+header .foot {
+    background: linear-gradient(to right, $usual-primary-blue, $usual-secondary-blue, $usual-tertiary-blue);
+    height: 60px;
+    color: white;
+    line-height: 32px;
+    font-size: 16px;
+}
+
+header .user {
+    float: left;
+    margin: 14px 0;
+    padding: 0 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    max-height: 32px;
+    overflow: hidden;
+}
+
+header .user mat-icon {
+    float: left;
+    margin: 4px 10px 4px 0;
+}
+
+header .foot .content > mat-icon {
+    float: right;
+    margin: 18px 0 18px 20px;
+}
+
+header .ALTEN-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 74px;
+    height: 122px;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #043962;
+    color: white;
+    text-align: center;
+    font-family: Raleway, Arial, sans-serif;
+ }

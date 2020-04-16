@@ -1,0 +1,39 @@
+<div id="app">
+  <header *ngIf="isAuthenticated">
+    <div class="head">
+        <div class="container">
+            <nav>
+                <ul>
+                    <li><a>Clients</a></li>
+                    <li><a>Consultants</a></li>
+                    <li *ngIf="userIsManager"><a title="Créer une nouvelle mission">Nouvelle mission</a></li>
+                    <div *ngIf="userIsAdmin">
+                        <li><a>CDR</a></li>
+                        <li><a>Managers</a></li>
+                    </div>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="foot">
+        <div class="container">
+            <a>
+                <img class="ALTEN-logo" src="assets/img/ALTEN-white-logo.png" alt="Logo ALTEN">
+            </a>
+            <div class="content">
+                <div class="user">
+                    <mat-icon>account_circle</mat-icon>
+                    {{user.firstname}} {{user.lastname}}
+                </div>
+                    <mat-icon title="Déconnexion" (click)="onLogout()">power_settings_new</mat-icon>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+<footer>
+  <p>ALTEN Group - Copyright © 2020</p>
+</footer>
+</div>
