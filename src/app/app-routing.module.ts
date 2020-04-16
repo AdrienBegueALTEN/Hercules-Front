@@ -1,5 +1,5 @@
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './form/connexion-form/login.component';
+import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 

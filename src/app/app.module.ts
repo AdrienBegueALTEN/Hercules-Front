@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { LoginComponent } from './form/connexion-form/login.component';
+import { LoginComponent } from './login//login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { authInterceptorProviders } from './_helper/auth.interceptor';
 import { HomeComponent } from './home/home.component';

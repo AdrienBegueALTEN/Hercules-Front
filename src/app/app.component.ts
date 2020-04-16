@@ -22,8 +22,8 @@ export class AppComponent implements OnInit {
     if (this.isAuthenticated) {
       this.user = this.tokenStorageService.getUser();
 
-      this.userIsAdmin = this.user.roles.includes('ROLE_ADMIN');
-      this.userIsManager = this.userIsAdmin || this.user.roles.includes('ROLE_MANAGER');
+      this.userIsAdmin = this.user.roles.includes('ADMIN');
+      this.userIsManager = this.userIsAdmin || this.user.roles.includes('MANAGER');
 
     }
   }

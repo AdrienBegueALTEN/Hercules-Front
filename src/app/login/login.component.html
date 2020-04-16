@@ -22,10 +22,11 @@
                   {{getPasswordErr()}}
                 </mat-error>
             </mat-form-field>
-                <mat-card-actions>
-                    <a>Mot de passe oublié ?</a>
-                    <button mat-raised-button type="submit" (click)="onSubmit()" [disabled]="!loginForm.valid">Se connecter</button>
-                </mat-card-actions>
+            <p *ngIf="isLoginFailed">Identifiants incorrects</p>
+            <mat-card-actions>
+                <a>Mot de passe oublié ?</a>
+                <button mat-raised-button type="submit" (click)="onSubmit()" [disabled]="!loginForm.valid">Se connecter</button>
+            </mat-card-actions>
         </form>
     </mat-card-content>
 </mat-card>
