@@ -4,10 +4,8 @@ $usual-primary-blue: #043962;
 $usual-secondary-blue: #008BD2;
 $usual-tertiary-blue: #7ECBEE;
 
-.vr {
-	height: 100%;
-	width : 5px;
-	background: black;
+#app {
+    font-family: Raleway, Arial, sans-serif;
 }
 
 a:hover {
@@ -23,9 +21,6 @@ header {
     width: 100%;
     z-index: 20;
     height: 160px;
-    font-family: Raleway, Arial, sans-serif;
-    text-transform: uppercase;
-    cursor: default;
 }
 
 header .head {
@@ -43,6 +38,7 @@ header .head nav, header .foot .content {
 header .head nav {
     height: 36px;
     padding: 32px 0;
+    text-transform: uppercase;
 }
 
 header nav ul {
@@ -72,10 +68,6 @@ header nav ul li a {
     padding: 0 16px;
 }
 
-header nav ul li a:hover {
-    color: $usual-secondary-blue;
-}
-
 header .foot {
     background: linear-gradient(to right, $usual-primary-blue, $usual-secondary-blue, $usual-tertiary-blue);
     height: 60px;
@@ -86,11 +78,11 @@ header .foot {
 
 header .user {
     float: left;
-    margin: 14px 0;
-    padding: 0 20px;
+    position: relative;
+    padding: 14px 20px;
     background-color: rgba(255, 255, 255, 0.2);
-    max-height: 32px;
     overflow: hidden;
+    height: 60px;
 }
 
 header .user mat-icon {
@@ -101,6 +93,7 @@ header .user mat-icon {
 header .foot .content > mat-icon {
     float: right;
     margin: 18px 0 18px 20px;
+    cursor: pointer;
 }
 
 header .ALTEN-logo {
@@ -111,13 +104,27 @@ header .ALTEN-logo {
     height: 122px;
 }
 
+.firstOfSection {
+    border-left: solid 2px $usual-secondary-blue;
+    padding-left: 16px;
+    margin-left: 16px;
+}
+
 footer {
+    display: block;
     position: fixed;
-    left: 0;
     bottom: 0;
+    right: 0;
+    left: 0;
     width: 100%;
+    z-index: 20;
     background-color: #043962;
     color: white;
-    text-align: center;
-    font-family: Raleway, Arial, sans-serif;
+    line-height: 14px;
+    padding: 16px 0;
+ }
+
+ footer p {
+     margin : 0;
+     text-align: center;
  }
