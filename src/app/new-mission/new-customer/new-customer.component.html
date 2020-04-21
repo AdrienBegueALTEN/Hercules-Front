@@ -1,0 +1,17 @@
+<form [formGroup]="formGrp">
+  <mat-form-field>
+    <mat-label>Nom</mat-label>
+    <input matInput formControlName="name" required (keydown)="onKeyDown()">
+    <mat-error *ngIf="!formGrp.controls['name'].valid && formGrp.controls['name'].touched">
+      {{getNameErr()}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Secteur d'activité</mat-label>
+    <input matInput formControlName="activity_sector" required (keydown)="onKeyDown()">
+    <mat-error *ngIf="!formGrp.controls['activity_sector'].valid && formGrp.controls['activity_sector'].touched">
+      {{getActivitySectorErr()}}
+    </mat-error>
+  </mat-form-field>
+</form>

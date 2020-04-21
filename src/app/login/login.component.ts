@@ -1,3 +1,4 @@
+import { AppSettings } from './../app-settings';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
@@ -25,9 +26,8 @@ export class LoginComponent implements OnInit {
   }
 
   createForm() {
-    let emailregex = '[a-zA-Z]+\\.[a-zA-Z]+@alten\\.com'
     return new FormBuilder().group({
-      email: ['', [Validators.required, Validators.pattern(emailregex)]],
+      email: ['', [Validators.required, Validators.pattern(AppSettings.EMAIL_PATTERN)]],
       password: ['', [Validators.required]]
     });
   }
