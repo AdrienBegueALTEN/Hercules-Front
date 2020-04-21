@@ -16,12 +16,16 @@ import { LoginComponent } from './login//login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { authInterceptorProviders } from './_helper/auth.interceptor';
 import { HomeComponent } from './home/home.component';
+import { NewMissionComponent } from './new-mission/new-mission.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       LoginComponent,
-      HomeComponent
+      HomeComponent,
+      NewMissionComponent,
+      PageNotFoundComponent
    ],
    imports: [
       AppRoutingModule,

@@ -6,7 +6,7 @@
                 <ul>
                     <li><a>Clients</a></li>
                     <li><a>Consultants</a></li>
-                    <li *ngIf="userIsManager" class="firstOfSection"><a title="Créer une nouvelle mission">Nouvelle mission</a></li>
+                    <li *ngIf="userIsManager" class="firstOfSection"><a routerLink="/newMission" routerLinkActive="router-link-active"  title="Créer une nouvelle mission">Nouvelle mission</a></li>
                     <div *ngIf="userIsAdmin">
                         <li class="firstOfSection"><a>CDR</a></li>
                         <li><a>Managers</a></li>
