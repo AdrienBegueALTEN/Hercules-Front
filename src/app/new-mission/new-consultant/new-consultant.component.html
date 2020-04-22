@@ -25,7 +25,7 @@
 
   <mat-form-field>
     <mat-label>Année(s) d'expérience</mat-label>
-    <input matInput type="number" formControlName="xp" required (keydown)="onKeyDown()">
+    <input matInput type="number" formControlName="xp" (keydown)="onKeyDown()">
     <mat-error *ngIf="!formGrp.controls['xp'].valid && formGrp.controls['xp'].touched">
       {{getXpErr()}}
     </mat-error>

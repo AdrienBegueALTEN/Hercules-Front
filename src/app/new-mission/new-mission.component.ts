@@ -4,12 +4,7 @@ import { ConsultantService } from 'src/app/_services/consultant.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../_services/customer.service';
-
-export const _filter = (opt : string[], value : string) : string[] => {
-  const filterValue = value.toLowerCase();
-
-  return opt.filter(item => item.toLowerCase().indexOf(filterValue) === 0);
-};
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-mission',
@@ -22,7 +17,7 @@ export class NewMissionComponent implements OnInit {
   disabled : boolean = true;
   consultant : FormControl | FormGroup;
   customer : FormControl | FormGroup;
-
+  x : number;
   constructor(
     private _consultantService : ConsultantService,
     private _customerService : CustomerService,
@@ -33,7 +28,7 @@ export class NewMissionComponent implements OnInit {
   ngOnInit() {}
 
   updateConsultant(consultant : FormControl | FormGroup) {
-    this.consultant = consultant; console.log(consultant);
+    this.consultant = consultant;
   }
 
   updateCustomer(customer : FormControl | FormGroup) {
@@ -45,20 +40,26 @@ export class NewMissionComponent implements OnInit {
   onNewCustomer() { this.newCustomer = true; }
 
   onCreateMission() {
-    let consultant  = this.consultant.value;
-    let customer  = this.customer.value;
-    var consultantId : number;
-    var customerId : number;
+    let consultant = this.consultant.value;
 
     if (this.newConsultant) {
       let manager = this._tokenStorageService.getUser().id;
-      this._consultantService.addConsultant(consultant.email, consultant.firstname, consultant.lastname, consultant.xp, manager).subscribe(data => { consultantId = data; }, err => {console.log(err)});
-    } else consultantId = consultant.id;
+      this._consultantService.addConsultant(consultant.email, consultant.firstname, consultant.lastname, consultant.xp, manager).subscribe(
+        consultantId => { this.createMission(consultantId); },
+        err => { console.log(err); });
+    } else this.createMission(consultant.id);
 
-    if (this.newCustomer)
-      this._customerService.addCustomer(customer.name, customer.activity_sector).subscribe(data => { customerId = data; }, err => {console.log(err)});
-      else customerId = customer.id;
+  }
 
-    this._missionService.addMission(consultantId, customerId).subscribe(() => {}, err => {console.log(err)});
+  private createMission(consultantId : number) : void {
+    let customer = this.customer.value;
+
+    if (this.newCustomer) {
+      this._customerService.addCustomer(customer.name, customer.activity_sector).subscribe(
+        customerId => {
+          this._missionService.addMission(consultantId, customerId).subscribe(() => {}, err => {console.log(err)});
+        },
+        err => {console.log(err)});
+    } else this._missionService.addMission(consultantId, customer.id).subscribe(() => {}, err => {console.log(err)});
   }
 }
