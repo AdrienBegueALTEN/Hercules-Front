@@ -3,7 +3,7 @@
     <mat-label>Rechercher un client</mat-label>
     <input matInput [formControl]="ctrl" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer.id" (onSelectionChange)="selectionChange()">
+      <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer" (onSelectionChange)="selectionChange()">
         {{customer.name}}
       </mat-option>
     </mat-autocomplete>

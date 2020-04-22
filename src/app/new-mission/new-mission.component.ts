@@ -1,7 +1,7 @@
 import { MissionService } from './../_services/mission.service';
 import { TokenStorageService } from './../_services/token-storage.service';
 import { ConsultantService } from 'src/app/_services/consultant.service';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../_services/customer.service';
 
@@ -20,8 +20,8 @@ export class NewMissionComponent implements OnInit {
   newConsultant : boolean = false;
   newCustomer : boolean = false;
   disabled : boolean = true;
-  consultantFormGrp : FormGroup;
-  customerFormGrp : FormGroup;
+  consultant : FormControl | FormGroup;
+  customer : FormControl | FormGroup;
 
   constructor(
     private _consultantService : ConsultantService,
@@ -32,12 +32,12 @@ export class NewMissionComponent implements OnInit {
 
   ngOnInit() {}
 
-  updateConsultant(consultantFormGrp : FormGroup) {
-    this.consultantFormGrp = consultantFormGrp;
+  updateConsultant(consultant : FormControl | FormGroup) {
+    this.consultant = consultant; console.log(consultant);
   }
 
-  updateCustomer(customerFormGrp : FormGroup) {
-    this.customerFormGrp = customerFormGrp;
+  updateCustomer(customer : FormControl | FormGroup) {
+    this.customer = customer;
   }
 
   onNewConsultant() { this.newConsultant = true; }
@@ -45,13 +45,20 @@ export class NewMissionComponent implements OnInit {
   onNewCustomer() { this.newCustomer = true; }
 
   onCreateMission() {
-    let consultant  = this.consultantFormGrp.value;
-    let customer  = this.customerFormGrp.value;
-    let manager = this._tokenStorageService.getUser().id;
+    let consultant  = this.consultant.value;
+    let customer  = this.customer.value;
     var consultantId : number;
     var customerId : number;
-    this._consultantService.addConsultant(consultant.email, consultant.firstname, consultant.lastname, consultant.xp, manager).subscribe(data => { consultantId = data; }, err => {console.log(err)});
-    this._customerService.addCustomer(customer.name, customer.activity_sector).subscribe(data => { customerId = data; }, err => {console.log(err)});
-    this._missionService.addMission(2, 1).subscribe(() => {}, err => {console.log(err)});
+
+    if (this.newConsultant) {
+      let manager = this._tokenStorageService.getUser().id;
+      this._consultantService.addConsultant(consultant.email, consultant.firstname, consultant.lastname, consultant.xp, manager).subscribe(data => { consultantId = data; }, err => {console.log(err)});
+    } else consultantId = consultant.id;
+
+    if (this.newCustomer)
+      this._customerService.addCustomer(customer.name, customer.activity_sector).subscribe(data => { customerId = data; }, err => {console.log(err)});
+      else customerId = customer.id;
+
+    this._missionService.addMission(consultantId, customerId).subscribe(() => {}, err => {console.log(err)});
   }
 }

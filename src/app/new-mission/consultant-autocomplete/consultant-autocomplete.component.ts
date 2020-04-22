@@ -24,7 +24,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
   ctrl = new FormControl();
   groups : ConsultantGrp[];
   filteredGroups: Observable<ConsultantGrp[]>;
-  @Output() change = new EventEmitter<FormControl>();
+  @Output() dirtyValue = new EventEmitter<FormControl>();
 
   constructor(
     private _consultantService : ConsultantService,
@@ -40,7 +40,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
       );
   }
 
-  selectionChange() { this.change.emit(this.ctrl); }
+  selectionChange() { this.dirtyValue.emit(this.ctrl); }
 
   private initOptions() {
     const manager = this._tokenStorageService.getUser().id;

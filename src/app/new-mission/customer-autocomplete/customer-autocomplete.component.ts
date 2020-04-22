@@ -14,7 +14,7 @@ export class CustomerAutocompleteComponent implements OnInit {
   ctrl = new FormControl();
   customers : BasicCustomer[];
   filteredCustomers: Observable<BasicCustomer[]>;
-  @Output() change = new EventEmitter<FormControl>();
+  @Output() dirtyValue = new EventEmitter<FormControl>();
 
   constructor(
     private _customerService : CustomerService
@@ -27,11 +27,11 @@ export class CustomerAutocompleteComponent implements OnInit {
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value.name),
-        map(name => name ? this._filter(name) : this.customers.slice())
+        map(name => name ? this._filter(name) : this.customers)
       );
   }
 
-  selectionChange() { this.change.emit(this.ctrl); }
+  selectionChange() { this.dirtyValue.emit(this.ctrl); }
 
   private initOptions() {
     this._customerService.getBasicCustomers().subscribe(

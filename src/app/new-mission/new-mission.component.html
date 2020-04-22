@@ -5,7 +5,7 @@
         <form>
           <ng-template matStepLabel>Consultant</ng-template>
           <div *ngIf="!newConsultant">
-            <app-consultant-autocomplete></app-consultant-autocomplete>
+            <app-consultant-autocomplete (dirtyValue)="updateConsultant($event)"></app-consultant-autocomplete>
             <mat-icon title="Créer un nouveau consultant" (click)="onNewConsultant()">add_box</mat-icon>
           </div>
           <app-new-consultant *ngIf="newConsultant" (dirtyValues)="updateConsultant($event)"></app-new-consultant>
@@ -15,7 +15,7 @@
         <form>
           <ng-template matStepLabel>Client</ng-template>
           <div *ngIf="!newCustomer">
-          <app-customer-autocomplete ></app-customer-autocomplete>
+          <app-customer-autocomplete (dirtyValue)="updateCustomer($event)"></app-customer-autocomplete>
           <mat-icon title="Créer un nouveau client" (click)="onNewCustomer()">add_box</mat-icon>
           </div>
           <app-new-customer *ngIf="newCustomer" (dirtyValues)="updateCustomer($event)"></app-new-customer>
