@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from './_services/token-storage.service';
 
@@ -14,7 +13,7 @@ export class AppComponent implements OnInit {
   userIsAdmin = false;
   userIsManager = false;
 
-  constructor(private tokenStorageService: TokenStorageService, private router: Router) { }
+  constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
     this.isAuthenticated = !!this.tokenStorageService.getToken();
