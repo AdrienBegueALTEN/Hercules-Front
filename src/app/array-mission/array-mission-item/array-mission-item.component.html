@@ -9,7 +9,7 @@
       <i *ngSwitchCase="2" style="color: orange" class="fas fa-clock"></i>
       <i *ngSwitchCase="3" style="color: green" class="fas fa-check-circle"></i>
       &nbsp;
-      <button mat-icon-button [disabled]="mission.status!=1"><i class="fas fa-trash"></i></button>
+      <button mat-icon-button [disabled]="mission.status!=1"><i class="material-icons">delete</i></button>
       <button mat-icon-button (click)="toggleProjects()" [disabled]="projects.length==0">
         <i [ngClass]="{
               'fas':true,
