@@ -1,0 +1,11 @@
+.consultant-card {
+    width: 75%;
+    margin: auto;
+ }
+
+ @media (max-width: 600px) {
+    .consultant-card {
+        margin: auto;
+        width: 90%;
+     }
+  }

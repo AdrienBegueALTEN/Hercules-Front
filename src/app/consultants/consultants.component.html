@@ -1,0 +1,89 @@
+<br>
+<mat-form-field style="width: 100%;">
+  <mat-label>Chercher un consultant</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Chercher un consultant">
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+    <ng-container matColumnDef="firstname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
+      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
+        {{element.firstname}}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="lastname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
+        {{element.lastname}}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </th>
+      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
+        {{element.email}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <!--<button mat-icon-button (click)="expandedElement = expandedElement === element ? null : element" [disabled]="element.releaseDate!=null">
+          <span class="material-icons">edit</span>
+        </button>-->
+        <button mat-icon-button [routerLink]="[element.id]">
+          <span class="material-icons">edit</span>
+        </button>&nbsp;
+        <button mat-icon-button color="warn" [disabled]="element.releaseDate!=null">
+          <span class="material-icons">delete</span>
+        </button>&nbsp;
+        <button mat-icon-button (click)="openBottomSheet(element)" [disabled]="element.releaseDate!=null">
+          <span *ngIf="element.releaseDate!=null" class="material-icons">lock</span>
+          <span *ngIf="element.releaseDate==null" class="material-icons">lock_open</span>
+        </button>&nbsp;
+        <span class="material-icons icon">warning</span>
+      </td>
+    </ng-container>
+  
+    <!--<ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+        <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <form>
+            <mat-form-field>
+              <mat-label>Prénom</mat-label>
+              <input matInput type="text" value="{{element.firstname}}">
+            </mat-form-field>
+            &nbsp;
+            <mat-form-field>
+              <mat-label>Nom</mat-label>
+              <input matInput type="text" value="{{element.lastname}}">
+            </mat-form-field>
+            &nbsp;
+            <mat-form-field>
+              <mat-label>E-mail</mat-label>
+              <input matInput type="email" value="{{element.email}}">
+            </mat-form-field>
+            &nbsp;
+            <button mat-icon-button color="warn" style="color: green">
+              <i class="fas fa-check"></i>
+            </button>
+          </form>
+        </div>
+      </td>
+    </ng-container>-->
+  
+    <!--<tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>-->
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+        class="example-element-row">
+    </tr>
+  </table>
+  
+  <br>
+  <mat-paginator style="background-color: transparent;" [pageSizeOptions]="[ 5, 10, 25]"></mat-paginator>
+  

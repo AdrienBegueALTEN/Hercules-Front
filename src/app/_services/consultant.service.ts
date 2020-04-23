@@ -15,6 +15,14 @@ export class ConsultantService {
     return this._httpClient.get<BasicConsultant[]>(AppSettings.CONSULTANT_API + '?basic=true', AppSettings.HTTP_OPTIONS);
   }
 
+  getAll() : Observable<any[]> {
+    return this._httpClient.get<any[]>(AppSettings.CONSULTANT_API + 'all', AppSettings.HTTP_OPTIONS);
+  }
+
+  getById(id:number){
+    return this._httpClient.get<any>(AppSettings.CONSULTANT_API + id, AppSettings.HTTP_OPTIONS);
+  }
+
   addConsultant(email : string, firstname : string, lastname : string, xp : number, manager : number) : Observable<any> {
     return this._httpClient.post(AppSettings.CONSULTANT_API,
       {

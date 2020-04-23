@@ -1,0 +1,29 @@
+<br>
+<mat-card class="consultant-card">
+    <mat-card-header>
+      <h1>Modifier un consultant</h1>
+      
+    </mat-card-header>
+    <mat-card-content>
+        <form >
+            <mat-form-field>
+              <mat-label>Prénom</mat-label>
+              <input matInput type="text" value="{{consultant.firstname}}">
+            </mat-form-field>
+            &nbsp;
+            <mat-form-field>
+              <mat-label>Nom</mat-label>
+              <input matInput type="text" value="{{consultant.lastname}}">
+            </mat-form-field>
+            &nbsp;
+            <mat-form-field>
+              <mat-label>E-mail</mat-label>
+              <input matInput type="email" value="{{consultant.email}}">
+            </mat-form-field>
+            &nbsp;
+            <button mat-icon-button style="color: green">
+              <span class="material-icons">done</span>
+            </button>
+          </form>
+    </mat-card-content>
+</mat-card>
