@@ -4,12 +4,12 @@
         <div class="container">
             <nav>
                 <ul>
-                    <li><a>Clients</a></li>
-                    <li><a>Consultants</a></li>
-                    <li *ngIf="userIsManager" class="firstOfSection"><a routerLink="/newMission" routerLinkActive="router-link-active"  title="Créer une nouvelle mission">Nouvelle mission</a></li>
+                    <li><a routerLink="/customers">Clients</a></li>
+                    <li><a routerLink="/consultants">Consultants</a></li>
+                    <li *ngIf="userIsManager" class="firstOfSection"><a routerLink="/new-mission" title="Créer une nouvelle mission">Nouvelle mission</a></li>
                     <div *ngIf="userIsAdmin">
-                        <li class="firstOfSection"><a>CDR</a></li>
-                        <li><a>Managers</a></li>
+                        <li class="firstOfSection"><a routerLink="/cdr">CDR</a></li>
+                        <li><a routerLink="/managers">Managers</a></li>
                     </div>
                 </ul>
             </nav>
@@ -17,7 +17,7 @@
     </div>
     <div class="foot">
         <div class="container">
-            <a title="Page d'accueil"><img class="ALTEN-logo" src="assets/img/ALTEN-white-logo.png" alt="Logo ALTEN"></a>
+            <a title="Page d'accueil" routerLink="/home"><img class="ALTEN-logo" src="assets/img/logo/alten.png" alt="Logo ALTEN"></a>
             <div class="content">
                 <div class="user">
                     <mat-icon>account_circle</mat-icon>

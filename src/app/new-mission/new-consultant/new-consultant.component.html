@@ -1,0 +1,30 @@
+<form [formGroup]="grp">
+  <mat-form-field>
+    <mat-label>Prénom</mat-label>
+    <input matInput formControlName="firstname" required (keydown)="onFirstnameChange()" (keyup)="onFirstnameChange()">
+    <mat-error *ngIf="!grp.controls['firstname'].valid && grp.controls['firstname'].touched">
+      {{getFirstnameErr()}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Nom</mat-label>
+    <input matInput formControlName="lastname" required (keydown)="onLastnameChange()" (keyup)="onLastnameChange()">
+    <mat-error *ngIf="!grp.controls['lastname'].valid && grp.controls['lastname'].touched">
+      {{getLastnameErr()}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="prenom.nom@alten.com" formControlName="email" required>
+    <mat-error *ngIf="!grp.controls['email'].valid && grp.controls['email'].touched">
+      {{getEmailErr()}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Année(s) d'expérience</mat-label>
+    <input matInput type="number" formControlName="xp">
+    <mat-error *ngIf="!grp.controls['xp'].valid && grp.controls['xp'].touched">
+      {{getXpErr()}}
+    </mat-error>
+  </mat-form-field>
+</form>

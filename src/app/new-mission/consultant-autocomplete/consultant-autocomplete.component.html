@@ -1,0 +1,22 @@
+<form>
+  <mat-form-field>
+    <mat-label>Rechercher un consultant</mat-label>
+    <input type="text" matInput [formControl]="ctrl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-optgroup *ngFor="let grp of filteredGrps | async" [label]="grp.name">
+          <mat-option *ngFor="let consultant of grp.consultants" [value]="consultant">
+            {{consultant.firstname}} {{consultant.lastname}} - {{consultant.email}}
+          </mat-option>
+        </mat-optgroup>
+        <mat-option disabled *ngIf="showNewOpt">
+          <button mat-flat-button (click)="onNew()" title="Créer un nouveau consultant">
+            <mat-icon>add</mat-icon>
+            Nouveau consultant
+          </button>
+        </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+<button class="blue-shape" mat-mini-fab (click)="onNew()" title="Créer un nouveau consultant">
+  <mat-icon>add</mat-icon>
+</button>

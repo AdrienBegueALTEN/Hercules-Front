@@ -1,0 +1,20 @@
+<form>
+  <mat-form-field>
+    <mat-label>Rechercher un client</mat-label>
+    <input matInput [formControl]="ctrl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+        {{customer.name}}
+      </mat-option>
+      <mat-option disabled *ngIf="showNewOpt">
+        <button mat-flat-button (click)="onNew()" title="Créer un nouveau client">
+          <mat-icon>add</mat-icon>
+          Nouveau client
+        </button>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+<button class="blue-shape" mat-mini-fab (click)="onNew()" title="Créer un nouveau client">
+  <mat-icon>add</mat-icon>
+</button>
