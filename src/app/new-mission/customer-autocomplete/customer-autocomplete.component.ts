@@ -1,6 +1,6 @@
 import { BasicCustomer } from './../../_interface/basic-customer';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { CustomerService } from 'src/app/_services/customer.service';
 import { Observable } from 'rxjs';
@@ -11,10 +11,12 @@ import { Observable } from 'rxjs';
   styleUrls: ['../new-mission.component.scss']
 })
 export class CustomerAutocompleteComponent implements OnInit {
-  ctrl = new FormControl();
+  ctrl = new FormControl('', [Validators.required, this._checkSelection]);
   customers : BasicCustomer[];
-  filteredCustomers: Observable<BasicCustomer[]>;
-  @Output() dirtyValue = new EventEmitter<FormControl>();
+  filteredCustomers : Observable<BasicCustomer[]>;
+  showNewOpt : boolean = false;
+  @Output() sendFormCtrl = new EventEmitter<FormControl>();
+  @Output() newCustomer = new EventEmitter();
 
   constructor(
     private _customerService : CustomerService
@@ -22,16 +24,14 @@ export class CustomerAutocompleteComponent implements OnInit {
 
   ngOnInit() {
     this.initOptions();
-
     this.filteredCustomers = this.ctrl.valueChanges
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value.name),
-        map(name => name ? this._filter(name) : this.customers)
+        map(name => name ? this._filter(name) : this._filter(null))
       );
+    this.sendFormCtrl.emit(this.ctrl);
   }
-
-  selectionChange() { this.dirtyValue.emit(this.ctrl); }
 
   private initOptions() {
     this._customerService.getBasicCustomers().subscribe(
@@ -43,10 +43,19 @@ export class CustomerAutocompleteComponent implements OnInit {
   displayFn(customer : BasicCustomer) : string {
     return customer ? customer.name : '';
   }
+  
+  onNew() { this.newCustomer.emit(); }
 
   private _filter(name : string): BasicCustomer[] {
-    const filterValue = name.toLowerCase();
+    if (name == null) return null;
 
-    return this.customers.filter(option => option.name.toLowerCase().indexOf(filterValue) >= 0);
+    const filterValue = name.toLowerCase();
+    const filteredCustomers = this.customers.filter(customer => customer.name.toLowerCase().indexOf(filterValue) >= 0);
+    this.showNewOpt = filteredCustomers.length === 0;
+    return filteredCustomers;
+  }
+
+  private _checkSelection(control) {
+    return (typeof control.value == 'string') ? { 'requirements': true } : null;
   }
 }
