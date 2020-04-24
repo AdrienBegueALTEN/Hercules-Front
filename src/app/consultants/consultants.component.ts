@@ -21,8 +21,7 @@ import { DeactivateComponent } from './deactivate/deactivate.component';
   ],
 })
 export class ConsultantsComponent implements OnInit {
-  dataSource: MatTableDataSource<BasicConsultant>;
-  consultants: BasicConsultant[];
+  dataSource: MatTableDataSource<any>;
   columnsToDisplay = ['firstname', 'lastname', 'email', 'actions'];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -37,6 +36,15 @@ export class ConsultantsComponent implements OnInit {
         this.printData(this.dataSource);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.dataSource.filterPredicate = (data, filter: string)  => {
+          const accumulator = (currentTerm, key) => {
+            return this.nestedFilterCheck(currentTerm, data, key);
+          };
+          const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+          // Transform the filter by converting it to lowercase and removing whitespace.
+          const transformedFilter = filter.trim().toLowerCase();
+          return dataStr.indexOf(transformedFilter) !== -1;
+        };
       },
       (err) => {
         console.log(err);
@@ -55,6 +63,25 @@ export class ConsultantsComponent implements OnInit {
 
   printData(data): void{
     console.log(data);
+  }
+
+  /**
+   * Surch in sub-object
+   * @param search 
+   * @param data 
+   * @param key 
+   */
+  nestedFilterCheck(search, data, key) {
+    if (typeof data[key] === 'object') {
+      for (const k in data[key]) {
+        if (data[key][k] !== null) {
+          search = this.nestedFilterCheck(search, data[key], k);
+        }
+      }
+    } else {
+      search += data[key];
+    }
+    return search;
   }
 
   applyFilter(event: Event) {
