@@ -1,96 +1,65 @@
-import { AppSettings } from './../app-settings';
 import { MissionService } from './../_services/mission.service';
 import { TokenStorageService } from './../_services/token-storage.service';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../_services/customer.service';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpStatus } from 'src/http-status';
-import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-mission',
   templateUrl: './new-mission.component.html',
   styleUrls: ['./new-mission.component.scss']
 })
-export class NewMissionComponent implements OnInit, AfterContentChecked {
+export class NewMissionComponent implements OnInit {
   newConsultant : boolean = false;
   newCustomer : boolean = false;
-  consultantForm : FormControl | FormGroup;
-  customerForm : FormControl | FormGroup;
-
+  disabled : boolean = true;
+  consultant : FormControl | FormGroup;
+  customer : FormControl | FormGroup;
+  x : number;
   constructor(
-    private _cdr: ChangeDetectorRef,
     private _consultantService : ConsultantService,
     private _customerService : CustomerService,
     private _missionService : MissionService,
-    private _router : Router,
-    private _snackBar: MatSnackBar,
     private _tokenStorageService : TokenStorageService
   ){}
 
   ngOnInit() {}
 
-  ngAfterContentChecked(): void {
-    this._cdr.detectChanges();
+  updateConsultant(consultant : FormControl | FormGroup) {
+    this.consultant = consultant;
   }
 
-  getConsultantForm(consultant : FormControl | FormGroup) {
-    this.consultantForm = consultant;
+  updateCustomer(customer : FormControl | FormGroup) {
+    this.customer = customer;
   }
 
-  getCustomerForm(customer : FormControl | FormGroup) {
-    this.customerForm = customer;
-  }
+  onNewConsultant() { this.newConsultant = true; }
 
-  selectionChange(event : StepperSelectionEvent) : void {
-    if (event.selectedIndex === 2) this._createMission();
-  }
+  onNewCustomer() { this.newCustomer = true; }
 
-  private _createMission() {
-    let consultant = this.consultantForm.value;
-   
+  onCreateMission() {
+    let consultant = this.consultant.value;
+
     if (this.newConsultant) {
       let manager = this._tokenStorageService.getUser().id;
-      this._consultantService.newConsultant(consultant.email, consultant.firstname, consultant.lastname, consultant.xp, manager).subscribe(
-        consultantId => { this._subCreateMission(consultantId); },
-        err => { 
-          this._handleNewConsultantError(err);
-          return;
-        });
-    } else this._subCreateMission(consultant.id);
+      this._consultantService.addConsultant(consultant.email, consultant.firstname, consultant.lastname, consultant.xp, manager).subscribe(
+        consultantId => { this.createMission(consultantId); },
+        err => { console.log(err); });
+    } else this.createMission(consultant.id);
+
   }
 
-  private _subCreateMission(consultantId : number) : void {
-    let customer = this.customerForm.value;
+  private createMission(consultantId : number) : void {
+    let customer = this.customer.value;
 
     if (this.newCustomer) {
-      this._customerService.newCustomer(customer.name, customer.activitySector, customer.description).subscribe(
+      this._customerService.addCustomer(customer.name, customer.activity_sector).subscribe(
         customerId => {
-          this._missionService.newMission(consultantId, customerId).subscribe(
-            idMission => { window.location.replace('missions/' + idMission); },
-            err => { console.log(err) });
+          this._missionService.addMission(consultantId, customerId).subscribe(() => {}, err => {console.log(err)});
         },
-        err => { this._handleNewCustomerError(); return; });
-    } else this._missionService.newMission(consultantId, customer.id).subscribe(
-      idMission => { window.location.replace('missions/' + idMission); },
-      err => { this._handleNewMissionError(); return; });
-  }
-
-  private _handleNewConsultantError(error : Response) : void {
-    if (error.status === HttpStatus.CONFLICT)
-      this._snackBar.open('L\'email renseigné pour le consultant est déjà utilisé. Merci d\'en choisir un autre', 'X');
-    else
-      this._snackBar.open('Echec de création du nouveau consultant...', 'X');
-  }
-
-  private _handleNewCustomerError() : void {
-    this._snackBar.open('Echec de création du nouveau client...', 'X');
-  }
-
-  private _handleNewMissionError() : void {
-    this._snackBar.open('Echec de création de la nouvelle mission...', 'X');
+        err => {console.log(err)});
+    } else this._missionService.addMission(consultantId, customer.id).subscribe(() => {}, err => {console.log(err)});
   }
 }

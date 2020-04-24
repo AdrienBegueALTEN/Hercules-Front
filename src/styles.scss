@@ -1,19 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway);
-
-$usual-primary-blue: #043962;
-$usual-secondary-blue: #008BD2;
-$usual-tertiary-blue: #7ECBEE;
-
-.blue-shape {
-    background-image: url(src/assets/img/shape-background/blue.png);
-    background-repeat: no-repeat;
-    color: white;
-}
-
-.white-shape {
-    background-image: url(src/assets/img/shape-background/white.png);
-    background-repeat: no-repeat;
-    color: $usual-primary-blue;
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, main, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 
 .container {
@@ -22,9 +13,5 @@ $usual-tertiary-blue: #7ECBEE;
     left: 0;
     right: 0;
 }
-
-body {
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

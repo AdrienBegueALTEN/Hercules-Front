@@ -15,12 +15,11 @@ constructor(private _httpClient : HttpClient) {}
     return this._httpClient.get<BasicCustomer[]>(AppSettings.CUSTOMER_API + '?basic=true', AppSettings.HTTP_OPTIONS);
   }
 
-  newCustomer(name : string, activitySector : string, description : string) : Observable<any> {
+  addCustomer(name : string, activitySector : string) : Observable<any> {
     return this._httpClient.post(AppSettings.CUSTOMER_API,
       {
         name : name,
         activitySector : activitySector,
-        description : description
       },
     AppSettings.HTTP_OPTIONS);
   }
