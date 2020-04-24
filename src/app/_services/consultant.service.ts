@@ -23,7 +23,7 @@ export class ConsultantService {
     return this._httpClient.get<any>(AppSettings.CONSULTANT_API + id, AppSettings.HTTP_OPTIONS);
   }
 
-  addConsultant(email : string, firstname : string, lastname : string, xp : number, manager : number) : Observable<any> {
+  newConsultant(email : string, firstname : string, lastname : string, xp : number, manager : number) : Observable<any> {
     return this._httpClient.post(AppSettings.CONSULTANT_API,
       {
         email : email,
@@ -34,5 +34,4 @@ export class ConsultantService {
       },
       AppSettings.HTTP_OPTIONS);
   }
-
 }

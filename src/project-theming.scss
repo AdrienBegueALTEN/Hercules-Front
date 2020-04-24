@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+@import './palette';
+@include mat-core();
+$myProject-primary: mat-palette($md-primary);
+$myProject-accent: mat-palette($md-accent, 500, A100, A400);
+$myProject-warn: mat-palette($md-warn);
+$myProject-foreground: mat-palette($md-primary);
+$myProject-theme: mat-light-theme($myProject-primary, $myProject-accent, $myProject-warn);
+@include angular-material-theme($myProject-theme);

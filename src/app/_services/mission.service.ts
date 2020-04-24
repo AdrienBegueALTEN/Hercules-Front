@@ -10,7 +10,7 @@ export class MissionService {
 
   constructor(private _httpClient : HttpClient) {}
 
-  addMission(consultant : number, customer : number) : Observable<any> {
+  newMission(consultant : number, customer : number) : Observable<any> {
     return this._httpClient.post(AppSettings.MISSION_API,
       {
         consultantId : consultant,

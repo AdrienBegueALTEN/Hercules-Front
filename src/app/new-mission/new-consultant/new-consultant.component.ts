@@ -1,3 +1,4 @@
+import { StrUtilsService } from './../../_services/str-utils.service';
 import { AppSettings } from './../../app-settings';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -8,44 +9,59 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   styleUrls: ['../new-mission.component.scss']
 })
 export class NewConsultantComponent implements OnInit {
-  formGrp : FormGroup;
-  @Output() dirtyValues = new EventEmitter<FormGroup>();
+  grp : FormGroup;
 
-  constructor() {}
+  @Output() sendFormGrp = new EventEmitter<FormGroup>();
+
+  constructor(
+    private _strUtilsService : StrUtilsService
+  ) {}
 
   ngOnInit() {
     this.createForm();
-    this.onKeyDown();
+    this.sendFormGrp.emit(this.grp);
   }
 
   createForm() {
-    this.formGrp = new FormBuilder().group({
-      'firstname' : ['', [Validators.required]],
-      'lastname' : ['', [Validators.required]],
-      'email' : ['', [Validators.required, Validators.pattern(AppSettings.EMAIL_PATTERN)]],
-      'xp' : [0, [Validators.required, Validators.min(0)]]
+    this.grp = new FormBuilder().group({
+      'firstname' : ['', [Validators.required, Validators.pattern(AppSettings.FIRSTNAME_PATTERN)]],
+      'lastname' : ['', [Validators.required, Validators.pattern(AppSettings.LASTNAME_PATTERN)]],
+      'email' : ['.@alten.com', [Validators.required, Validators.pattern(AppSettings.EMAIL_PATTERN)]],
+      'xp' : [0, [Validators.min(0)]]
     });
   }
 
   getFirstnameErr(): string {
-    return  this.formGrp.get('firstname').hasError('required') ? 'Prénom obligatoire' :
-            this.formGrp.get('firstname').hasError('pattern') ? 'Format du prénom invalide' : '';
+    return  this.grp.get('firstname').hasError('required') ? 'Le prénom doit être renseigné' :
+            this.grp.get('firstname').hasError('pattern') ? 'Le prénom ne peux contenir que des lettres, éventuellement séparées pas un espace ou un tiret' : '';
   }
 
   getLastnameErr(): string {
-    return  this.formGrp.get('lastname').hasError('required') ? 'Nom obligatoire' :
-            this.formGrp.get('lastname').hasError('pattern') ? 'Format du nom invalide' : '';
+    return  this.grp.get('lastname').hasError('required') ? 'Le nom doit être renseigné' :
+            this.grp.get('lastname').hasError('pattern') ? 'Le nom ne peux contenir que des lettres, éventuellement séparées pas un espace ou un tiret' : '';
   }
 
   getEmailErr(): string {
-    return  this.formGrp.get('email').hasError('required') ? 'Email obligatoire' :
-            this.formGrp.get('email').hasError('pattern') ? 'Format du email invalide' : '';
+    return  this.grp.get('email').hasError('required') ? 'Le email doit être renseignée' :
+            this.grp.get('email').hasError('pattern') ? 'Le format du email est incorrect' : '';
   }
 
   getXpErr(): string {
-    return  this.formGrp.get('xp').hasError('required') ? 'Nombre d\'année d\'expérience obligatoire' :
-            this.formGrp.get('xp').hasError('min') ? 'Le nombre d\'années d\'expéricence doit être positif' : '';
+    return  this.grp.get('xp').hasError('min') ? 'Le nombre d\'années d\'expéricence ne peux pas être négatif' : '';
   }
 
-  onKeyDown() { this.dirtyValues.emit(this.formGrp); }
+  onFirstnameChange() {
+    let firstname : string = this.grp.get('firstname').value;
+    firstname = firstname.charAt(0).toUpperCase() + firstname.substr(1);
+    this.grp.get('firstname').setValue(firstname);
+    this._updateEmail();
+  }
+
+  onLastnameChange() { this._updateEmail(); }
+
+  private _updateEmail() {
+    let firstname = this.grp.get('firstname').value;
+    let lastname = this.grp.get('lastname').value;
+    this.grp.get('email').setValue(this._strUtilsService.getNormalizedEmail(firstname, lastname));
+  }
 }

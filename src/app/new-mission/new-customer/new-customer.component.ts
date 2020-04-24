@@ -8,30 +8,29 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   styleUrls: ['../new-mission.component.scss']
 })
 export class NewCustomerComponent implements OnInit {
-  formGrp : FormGroup;
-  @Output() dirtyValues = new EventEmitter<FormGroup>();
+  grp : FormGroup;
+  @Output() sendFormGrp = new EventEmitter<FormGroup>();
 
   constructor() {}
 
   ngOnInit() {
-    this.createForm();
-    this.onKeyDown();
-  }
-
-  createForm() {
-    this.formGrp = new FormBuilder().group({
-      'name' : ['', [Validators.required]],
-      'activity_sector' : ['', [Validators.required]]
-    });
+    this._createForm();
+    this.sendFormGrp.emit(this.grp);
   }
 
   getNameErr() : string {
-    return  this.formGrp.get('name').hasError('required') ? 'Nom obligatoire' : '';
+    return  this.grp.get('name').hasError('required') ? 'Le nom doit être renseigné' : '';
   }
 
   getActivitySectorErr() : string {
-    return  this.formGrp.get('activity_sector').hasError('required') ? 'Secteur d\'activité obligatoire' : '';
+    return  this.grp.get('activitySector').hasError('required') ? 'Le secteur d\'activité doit être renseigné' : '';
   }
 
-  onKeyDown() { this.dirtyValues.emit(this.formGrp); }
+  _createForm() {
+    this.grp = new FormBuilder().group({
+      'name' : ['', [Validators.required]],
+      'activitySector' : ['', [Validators.required]],
+      'description' : []
+    });
+  }
 }
