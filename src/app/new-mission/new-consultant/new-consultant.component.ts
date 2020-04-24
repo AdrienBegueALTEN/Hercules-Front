@@ -26,7 +26,7 @@ export class NewConsultantComponent implements OnInit {
     this.grp = new FormBuilder().group({
       'firstname' : ['', [Validators.required, Validators.pattern(AppSettings.FIRSTNAME_PATTERN)]],
       'lastname' : ['', [Validators.required, Validators.pattern(AppSettings.LASTNAME_PATTERN)]],
-      'email' : ['.@alten.com', [Validators.required, Validators.pattern(AppSettings.EMAIL_PATTERN)]],
+      'email' : ['', [Validators.required, Validators.pattern(AppSettings.EMAIL_LOCAL_PART_PATTERN)]],
       'xp' : [0, [Validators.min(0)]]
     });
   }
@@ -60,8 +60,11 @@ export class NewConsultantComponent implements OnInit {
   onLastnameChange() { this._updateEmail(); }
 
   private _updateEmail() {
-    let firstname = this.grp.get('firstname').value;
-    let lastname = this.grp.get('lastname').value;
-    this.grp.get('email').setValue(this._strUtilsService.getNormalizedEmail(firstname, lastname));
+    let firstname = this._strUtilsService.normalizeName(this.grp.get('firstname').value);
+    let lastname = this._strUtilsService.normalizeName(this.grp.get('lastname').value);
+    let emailLocalPart = (firstname != '') ? 
+                  firstname + ((lastname != '') ?
+                    '.' + lastname : '') : lastname;
+    this.grp.get('email').setValue(emailLocalPart);
   }
 }

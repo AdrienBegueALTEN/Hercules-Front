@@ -13,10 +13,11 @@
       </ng-template>
       <mat-step [stepControl]="customerForm" label="Client" state="customer">
           <app-customer-autocomplete *ngIf="!newCustomer"
+          [customers]="customers"
           (sendFormCtrl)="getCustomerForm($event)"
           (newCustomer)="newCustomer = true">
           </app-customer-autocomplete>
-          <app-new-customer *ngIf="newCustomer" (sendFormGrp)="getCustomerForm($event)"></app-new-customer>
+          <app-new-customer *ngIf="newCustomer" [customers]="customers" (sendFormGrp)="getCustomerForm($event)"></app-new-customer>
       </mat-step>
       <ng-template matStepperIcon="customer">
         <mat-icon>business_center</mat-icon>

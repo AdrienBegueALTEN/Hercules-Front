@@ -9,6 +9,7 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpStatus } from 'src/http-status';
 import { Router } from '@angular/router';
+import { BasicCustomer } from '../_interface/basic-customer';
 
 @Component({
   selector: 'app-new-mission',
@@ -18,6 +19,7 @@ import { Router } from '@angular/router';
 export class NewMissionComponent implements OnInit, AfterContentChecked {
   newConsultant : boolean = false;
   newCustomer : boolean = false;
+  customers : BasicCustomer[];
   consultantForm : FormControl | FormGroup;
   customerForm : FormControl | FormGroup;
 
@@ -26,12 +28,16 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
     private _consultantService : ConsultantService,
     private _customerService : CustomerService,
     private _missionService : MissionService,
-    private _router : Router,
     private _snackBar: MatSnackBar,
     private _tokenStorageService : TokenStorageService
   ){}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._customerService.getBasicCustomers().subscribe(
+      customers => { this.customers = customers; },
+      err => { console.log(err); }
+    );
+  }
 
   ngAfterContentChecked(): void {
     this._cdr.detectChanges();
@@ -54,7 +60,8 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
    
     if (this.newConsultant) {
       let manager = this._tokenStorageService.getUser().id;
-      this._consultantService.newConsultant(consultant.email, consultant.firstname, consultant.lastname, consultant.xp, manager).subscribe(
+      let email = consultant.email.concat('@alten.com');
+      this._consultantService.newConsultant(email, consultant.firstname, consultant.lastname, consultant.xp, manager).subscribe(
         consultantId => { this._subCreateMission(consultantId); },
         err => { 
           this._handleNewConsultantError(err);

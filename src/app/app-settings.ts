@@ -4,7 +4,8 @@ export class AppSettings {
 
     private static MIN = 'a-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ';
     
-    public static EMAIL_PATTERN = '^[a-zA-Z]+\\.[a-zA-Z]+[1-9]?@alten\\.com$';
+    public static EMAIL_LOCAL_PART_PATTERN = '^[a-z]+\\.[a-z]+([1-9](\\d)?)?$';
+    public static EMAIL_PATTERN = '^[a-z]+\\.[a-z]+([1-9]|[1-9]\\d?)?@alten\\.com$';
     public static FIRSTNAME_PATTERN = '^[A-ZÉ]([' + AppSettings.MIN + ']|([' + AppSettings.MIN + '][ -][A-ZÉ' + AppSettings.MIN + ']))*$';
     public static LASTNAME_PATTERN = '^[A-Z' + AppSettings.MIN + ']([' + AppSettings.MIN + ']|([' + AppSettings.MIN + '][ -][A-Z' + AppSettings.MIN + ']))*$';
     public static API_ENDPOINT = 'http://localhost:8080/hercules/';

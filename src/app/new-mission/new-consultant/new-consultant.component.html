@@ -15,7 +15,8 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input matInput placeholder="prenom.nom@alten.com" formControlName="email" required>
+    <input matInput placeholder="prenom.nom" formControlName="email" required>
+    <span matSuffix>@alten.com</span>
     <mat-error *ngIf="!grp.controls['email'].valid && grp.controls['email'].touched">
       {{getEmailErr()}}
     </mat-error>

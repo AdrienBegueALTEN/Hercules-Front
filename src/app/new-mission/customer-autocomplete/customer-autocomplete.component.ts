@@ -1,5 +1,5 @@
 import { BasicCustomer } from './../../_interface/basic-customer';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { CustomerService } from 'src/app/_services/customer.service';
@@ -12,18 +12,15 @@ import { Observable } from 'rxjs';
 })
 export class CustomerAutocompleteComponent implements OnInit {
   ctrl = new FormControl('', [Validators.required, this._checkSelection]);
-  customers : BasicCustomer[];
+  @Input() customers : BasicCustomer[];
   filteredCustomers : Observable<BasicCustomer[]>;
   showNewOpt : boolean = false;
   @Output() sendFormCtrl = new EventEmitter<FormControl>();
   @Output() newCustomer = new EventEmitter();
 
-  constructor(
-    private _customerService : CustomerService
-  ) {}
+  constructor() {}
 
   ngOnInit() {
-    this.initOptions();
     this.filteredCustomers = this.ctrl.valueChanges
       .pipe(
         startWith(''),
@@ -31,13 +28,6 @@ export class CustomerAutocompleteComponent implements OnInit {
         map(name => name ? this._filter(name) : this._filter(null))
       );
     this.sendFormCtrl.emit(this.ctrl);
-  }
-
-  private initOptions() {
-    this._customerService.getBasicCustomers().subscribe(
-      customers => { this.customers = customers; },
-      err => { console.log(err); }
-    );
   }
 
   displayFn(customer : BasicCustomer) : string {

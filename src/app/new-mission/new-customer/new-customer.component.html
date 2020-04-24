@@ -8,13 +8,19 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Secteur d'activité</mat-label>
-    <input matInput formControlName="activitySector" required>
+    <input matInput formControlName="activitySector" [matAutocomplete]="auto" required>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let activitySector of activitySectors" [value]="activitySector">
+        {{activitySector}}
+      </mat-option>
+    </mat-autocomplete>
     <mat-error *ngIf="!grp.controls['activitySector'].valid && grp.controls['activitySector'].touched">
       {{getActivitySectorErr()}}
     </mat-error>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field appearance="fill">
     <mat-label>Description</mat-label>
     <textarea matInput formControlName="description"></textarea>
+    <mat-hint>{{grp.get('description').value?.length || 0}}/1000</mat-hint>
   </mat-form-field>
 </form>
