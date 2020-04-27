@@ -15,6 +15,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -33,6 +35,8 @@ import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.com
 import { ConsultantsComponent } from './consultants/consultants.component';
 import { ConsultantDetailsComponent } from './consultants/consultant-details/consultant-details.component';
 import { DeactivateComponent } from './consultants/deactivate/deactivate.component';
+import { ConsultantCardComponent } from './consultants/consultant-card/consultant-card.component';
+import { ConsultantFormComponent } from './consultants/consultant-form/consultant-form.component';
 
 
 @NgModule({
@@ -49,6 +53,8 @@ import { DeactivateComponent } from './consultants/deactivate/deactivate.compone
       ConsultantsComponent,
       ConsultantDetailsComponent,
       DeactivateComponent,
+      ConsultantCardComponent,
+      ConsultantFormComponent,
    ],
    imports: [
       AppRoutingModule,
@@ -68,7 +74,9 @@ import { DeactivateComponent } from './consultants/deactivate/deactivate.compone
       MatTableModule,
       MatPaginatorModule,
       MatTooltipModule,
-      MatBottomSheetModule
+      MatBottomSheetModule,
+      MatTabsModule,
+      MatSlideToggleModule
    ],
    providers: [
       authInterceptorProviders
