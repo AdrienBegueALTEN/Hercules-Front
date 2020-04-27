@@ -5,13 +5,14 @@ import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ConsultantsComponent } from './consultants/consultants.component';
-import { ConsultantDetailsComponent } from './consultants/consultant-details/consultant-details.component';
 import { ConsultantCardComponent } from './consultants/consultant-card/consultant-card.component';
+import { MissionComponent } from './mission/mission.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'new-mission', component: NewMissionComponent },
+  { path: 'missions/:id', component: MissionComponent },
   { path: 'consultants', component: ConsultantsComponent},
   { path: 'consultants/:id', component: ConsultantCardComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full' },
