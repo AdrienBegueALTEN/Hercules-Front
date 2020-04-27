@@ -12,13 +12,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'new-mission', component: NewMissionComponent },
-<<<<<<< HEAD
-  { path: 'consultants', component: ConsultantsComponent },
-  { path: 'consultants/:id', component: ConsultantDetailsComponent},
-=======
   { path: 'consultants', component: ConsultantsComponent},
   { path: 'consultants/:id', component: ConsultantCardComponent},
->>>>>>> parent of 030e4e8... Revert "tri "mes consultants" + ajout formulaire màj consultant ; manque formulaire diplômes"
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];

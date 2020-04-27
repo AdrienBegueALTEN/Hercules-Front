@@ -14,19 +14,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
-<<<<<<< HEAD
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-=======
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
->>>>>>> parent of 030e4e8... Revert "tri "mes consultants" + ajout formulaire màj consultant ; manque formulaire diplômes"
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -64,12 +57,9 @@ import { ConsultantFormComponent } from './consultants/consultant-form/consultan
       ConsultantsComponent,
       ConsultantDetailsComponent,
       DeactivateComponent,
-<<<<<<< HEAD
-      YesNoDialogComponent
-=======
+      YesNoDialogComponent,
       ConsultantCardComponent,
-      ConsultantFormComponent,
->>>>>>> parent of 030e4e8... Revert "tri "mes consultants" + ajout formulaire màj consultant ; manque formulaire diplômes"
+      ConsultantFormComponent
    ],
    imports: [
       AppRoutingModule,
