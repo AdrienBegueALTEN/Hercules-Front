@@ -1,29 +1,33 @@
 <mat-card>
   <mat-card-content>
-    <mat-vertical-stepper #stepper>
-      <mat-step>
-        <form>
-          <ng-template matStepLabel>Consultant</ng-template>
-          <div *ngIf="!newConsultant">
-            <app-consultant-autocomplete (dirtyValue)="updateConsultant($event)"></app-consultant-autocomplete>
-            <mat-icon title="Créer un nouveau consultant" (click)="onNewConsultant()">add_box</mat-icon>
-          </div>
-          <app-new-consultant *ngIf="newConsultant" (dirtyValues)="updateConsultant($event)"></app-new-consultant>
-        </form>
+    <mat-vertical-stepper linear="true" (selectionChange)="onStepChange($event)" #stepper>
+      <mat-step [stepControl]="consultantForm" label="Consultant" state="consultant">
+          <app-consultant-autocomplete *ngIf="!newConsultant"
+          (sendFormCtrl)="getConsultantForm($event)"
+          (newConsultant)="newConsultant = true"
+          #consultantAutocomplete>
+          </app-consultant-autocomplete>
+          <app-new-consultant *ngIf="newConsultant" (sendFormGrp)="getConsultantForm($event)"></app-new-consultant>
       </mat-step>
-      <mat-step >
-        <form>
-          <ng-template matStepLabel>Client</ng-template>
-          <div *ngIf="!newCustomer">
-          <app-customer-autocomplete (dirtyValue)="updateCustomer($event)"></app-customer-autocomplete>
-          <mat-icon title="Créer un nouveau client" (click)="onNewCustomer()">add_box</mat-icon>
-          </div>
-          <app-new-customer *ngIf="newCustomer" (dirtyValues)="updateCustomer($event)"></app-new-customer>
-        </form>
+      <ng-template matStepperIcon="consultant">
+        <mat-icon>person</mat-icon>
+      </ng-template>
+      <mat-step [stepControl]="customerForm" label="Client" state="customer">
+          <app-customer-autocomplete *ngIf="!newCustomer"
+          [customers]="customers"
+          (sendFormCtrl)="getCustomerForm($event)"
+          (newCustomer)="newCustomer = true">
+          </app-customer-autocomplete>
+          <app-new-customer *ngIf="newCustomer" [customers]="customers" (sendFormGrp)="getCustomerForm($event)"></app-new-customer>
       </mat-step>
+      <ng-template matStepperIcon="customer">
+        <mat-icon>business_center</mat-icon>
+      </ng-template>
+        <mat-step label="Créer la mission" state="mission">
+        </mat-step>
+      <ng-template matStepperIcon="mission">
+        <mat-icon>post_add</mat-icon>
+      </ng-template>
     </mat-vertical-stepper>
-    <mat-card-actions>
-      <button mat-button (click)=onCreateMission()>Créer la mission</button>
-    </mat-card-actions>
   </mat-card-content>
 </mat-card>

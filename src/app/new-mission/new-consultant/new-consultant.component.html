@@ -1,32 +1,29 @@
-<form [formGroup]="formGrp">
+<form [formGroup]="grp">
   <mat-form-field>
     <mat-label>Prénom</mat-label>
-    <input matInput formControlName="firstname" required (keydown)="onKeyDown()">
-    <mat-error *ngIf="!formGrp.controls['firstname'].valid && formGrp.controls['firstname'].touched">
+    <input matInput formControlName="firstname" required (change)="onFirstnameChange()" >
+    <mat-error *ngIf="!grp.controls['firstname'].valid && grp.controls['firstname'].touched">
       {{getFirstnameErr()}}
     </mat-error>
   </mat-form-field>
-
   <mat-form-field>
     <mat-label>Nom</mat-label>
-    <input matInput formControlName="lastname" required (keydown)="onKeyDown()">
-    <mat-error *ngIf="!formGrp.controls['lastname'].valid && formGrp.controls['lastname'].touched">
+    <input matInput formControlName="lastname" required (change)="onLastnameChange()">
+    <mat-error *ngIf="!grp.controls['lastname'].valid && grp.controls['lastname'].touched">
       {{getLastnameErr()}}
     </mat-error>
   </mat-form-field>
-
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input matInput placeholder="prenom.nom@alten.com" formControlName="email" required (keydown)="onKeyDown()">
-    <mat-error *ngIf="!formGrp.controls['email'].valid && formGrp.controls['email'].touched">
+    <input matInput placeholder="prenom.nom@alten.com" formControlName="email" required>
+    <mat-error *ngIf="!grp.controls['email'].valid && grp.controls['email'].touched">
       {{getEmailErr()}}
     </mat-error>
   </mat-form-field>
-
   <mat-form-field>
     <mat-label>Année(s) d'expérience</mat-label>
-    <input matInput type="number" formControlName="xp" (keydown)="onKeyDown()">
-    <mat-error *ngIf="!formGrp.controls['xp'].valid && formGrp.controls['xp'].touched">
+    <input matInput type="number" formControlName="xp">
+    <mat-error *ngIf="!grp.controls['xp'].valid && grp.controls['xp'].touched">
       {{getXpErr()}}
     </mat-error>
   </mat-form-field>

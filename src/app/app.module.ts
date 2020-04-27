@@ -1,3 +1,5 @@
+import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
+import { YesNoDialogComponent } from './dialog/yes-no/yes-no-dialog.component';
 import { NewCustomerComponent } from './new-mission/new-customer/new-customer.component';
 import { NewConsultantComponent } from './new-mission/new-consultant/new-consultant.component';
 import { ConsultantAutocompleteComponent } from './new-mission/consultant-autocomplete/consultant-autocomplete.component';
@@ -7,16 +9,11 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
-import {MatTableModule} from '@angular/material/table';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -32,12 +29,6 @@ import { authInterceptorProviders } from 'src/app/_helper/auth.interceptor';
 import { HomeComponent } from 'src/app/home/home.component';
 import { NewMissionComponent } from 'src/app/new-mission/new-mission.component';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
-import { ConsultantsComponent } from './consultants/consultants.component';
-import { ConsultantDetailsComponent } from './consultants/consultant-details/consultant-details.component';
-import { DeactivateComponent } from './consultants/deactivate/deactivate.component';
-import { ConsultantCardComponent } from './consultants/consultant-card/consultant-card.component';
-import { ConsultantFormComponent } from './consultants/consultant-form/consultant-form.component';
-
 
 @NgModule({
    declarations: [
@@ -49,12 +40,9 @@ import { ConsultantFormComponent } from './consultants/consultant-form/consultan
       NewConsultantComponent,
       NewCustomerComponent,
       NewMissionComponent,
+      OkDialogComponent,
       PageNotFoundComponent,
-      ConsultantsComponent,
-      ConsultantDetailsComponent,
-      DeactivateComponent,
-      ConsultantCardComponent,
-      ConsultantFormComponent,
+      YesNoDialogComponent,
    ],
    imports: [
       AppRoutingModule,
@@ -65,24 +53,22 @@ import { ConsultantFormComponent } from './consultants/consultant-form/consultan
       MatAutocompleteModule,
       MatButtonModule,
       MatCardModule,
+      MatDialogModule,
       MatFormFieldModule,
       MatIconModule,
       MatInputModule,
       MatStepperModule,
       FormsModule,
-      ReactiveFormsModule,
-      MatTableModule,
-      MatPaginatorModule,
-      MatTooltipModule,
-      MatBottomSheetModule,
-      MatTabsModule,
-      MatSlideToggleModule
+      ReactiveFormsModule
    ],
    providers: [
       authInterceptorProviders
    ],
    bootstrap: [
       AppComponent
+   ],
+   entryComponents: [
+      YesNoDialogComponent
    ]
 })
 export class AppModule { }
