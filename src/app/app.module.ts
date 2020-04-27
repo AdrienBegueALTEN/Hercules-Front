@@ -53,6 +53,7 @@ import { DeactivateComponent } from './consultants/deactivate/deactivate.compone
       ConsultantsComponent,
       ConsultantDetailsComponent,
       DeactivateComponent,
+      YesNoDialogComponent
    ],
    imports: [
       AppRoutingModule,

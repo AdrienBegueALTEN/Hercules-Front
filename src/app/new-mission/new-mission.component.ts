@@ -72,22 +72,22 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
       this._consultantService.newConsultant(consultant.email, consultant.firstname, consultant.lastname, consultant.xp, manager).subscribe(
         response => { this._handleNewConsultantResponse(response); },
         error => { this._handleNewConsultantError(error); }); //An error occurred during the creation of the new consultant
-    } else this._createMissionCustomerStep(consultant.id); //The consultant step is OK, passage to the customer step
+    } else this._createMissionCustomerStep(consultant.id, false); //The consultant step is OK, passage to the customer step
   }
 
-  private _createMissionCustomerStep(consultantId : number) : void {
+  private _createMissionCustomerStep(consultantId : number, newConsultant : boolean) : void {
     let customer = this.customerForm.value;
     if (this.newCustomer) { //A new customer need to be created
       this._customerService.newCustomer(customer.name, customer.activitySector, customer.description).subscribe(
-        response => { this._handleNewCustomerResponse(consultantId, response); },
-        () => { this._handleNewCustomerError(consultantId); }); //An error occurred during the creation of the new customer
-    } else this._createMissionFinalStep(consultantId, customer.id); //The customer step is OK, passage to the final step
+        response => { this._handleNewCustomerResponse(consultantId, newConsultant, response); },
+        () => { this._handleNewCustomerError(consultantId, newConsultant); }); //An error occurred during the creation of the new customer
+    } else this._createMissionFinalStep(consultantId, newConsultant, customer.id, false); //The customer step is OK, passage to the final step
   }
 
-  private _createMissionFinalStep(consultantId : number, customerId : number) : void {
+  private _createMissionFinalStep(consultantId : number, newConsultant : boolean, customerId : number, newCustomer : boolean) : void {
     this._missionService.newMission(consultantId, customerId).subscribe(
-      idMission => { window.location.replace('missions/' + idMission); }, //The mission has been successfully created
-      () => { this._handleNewMissionError(consultantId, customerId); }); //An error occurred during the creation of the new mission
+      missionId => { window.location.replace('missions/' + missionId); }, //The mission has been successfully created
+      () => { this._handleNewMissionError(consultantId, newConsultant, customerId, newCustomer); }); //An error occurred during the creation of the new mission
   }
 
   private _handleNewConsultantResponse(response : Response) : void {
@@ -107,16 +107,14 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
         dialogRef.afterClosed().subscribe(
           data => {
             if (data) {
-              this.newConsultant = false;
               const id : number = parseInt(String(response.body));
-              this.consultantAutocomplete.selectConsultant(id);
-              this._createMissionCustomerStep(id);
+              this._createMissionCustomerStep(id, false);
             } else this.stepper.selectedIndex = NewMissionComponent.CONSULTANT_STEP;
           });  
         break;
       case HttpStatus.CREATED : //The consultant step is OK, passage to the customer step
         const id : number = parseInt(String(response.body));
-        this._createMissionCustomerStep(id);
+        this._createMissionCustomerStep(id, true);
         break;
     }
   }
@@ -146,7 +144,7 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  private _handleNewCustomerResponse(consultantId : number, response : Response) : void {
+  private _handleNewCustomerResponse(consultantId : number, newConsultant : boolean, response : Response) : void {
     switch(response.status) {
       case HttpStatus.ACCEPTED : //The customer already exists
         const customer = this.customerForm.value.name;
@@ -165,9 +163,9 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
             if (data) {
               this.newCustomer = false;
               const customerId : number = parseInt(String(response.body));
-              this._createMissionFinalStep(consultantId, customerId)
+              this._createMissionFinalStep(consultantId, newConsultant, customerId, false);
             } else {
-              if (this.newConsultant)
+              if (newConsultant)
                 this._consultantService.deleteConsultant(consultantId).subscribe();
               this.stepper.selectedIndex = NewMissionComponent.CUSTOMER_STEP;
             }
@@ -175,13 +173,13 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
         break;
       case HttpStatus.CREATED : //The customer step is OK, passage to the final step
         const customerId : number = parseInt(String(response.body));
-        this._createMissionFinalStep(consultantId, customerId)
+        this._createMissionFinalStep(consultantId, newConsultant, customerId, true);
         break;
     }
   }
 
-  private _handleNewCustomerError(consultantId : number) : void {
-    if (this.newConsultant)
+  private _handleNewCustomerError(consultantId : number, newConsultant : boolean) : void {
+    if (newConsultant)
       this._consultantService.deleteConsultant(consultantId).subscribe();
 
     const dialogConfig = new MatDialogConfig();
@@ -195,11 +193,11 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
     this._dialog.open(OkDialogComponent, dialogConfig);
   }
 
-  private _handleNewMissionError(consultantId : number, customerId : number) : void {
-    if (this.newConsultant)
+  private _handleNewMissionError(consultantId : number, newConsultant : boolean, customerId : number, newCustomer : boolean) : void {
+    if (newConsultant)
       this._consultantService.deleteConsultant(consultantId).subscribe();
 
-    if (this.newCustomer)
+    if (newCustomer)
       this._customerService.deleteCustomer(customerId).subscribe();
 
     const dialogConfig = new MatDialogConfig();
