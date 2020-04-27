@@ -7,7 +7,6 @@ import { ConsultantService } from '../_services/consultant.service';
 import { BasicConsultant } from '../_interface/basic-consultant';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DeactivateComponent } from './deactivate/deactivate.component';
-import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-consultants',
@@ -15,80 +14,55 @@ import { TokenStorageService } from '../_services/token-storage.service';
   styleUrls: ['./consultants.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
 export class ConsultantsComponent implements OnInit {
-  user;
-  isAuthenticated = false;
-  userIsAdmin = false;
-  userIsManager = false;
-
-  onlyMyConsultantChecked = true;
-
-  consultants: any[];
   dataSource: MatTableDataSource<any>;
-  columnsToDisplay = ['firstname', 'lastname', 'email', 'manager', 'actions'];
+  columnsToDisplay = ['firstname', 'lastname', 'email', 'actions'];
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort; 
 
-  constructor(private consultantService: ConsultantService, private _bottomSheet: MatBottomSheet,
-    private tokenStorageService: TokenStorageService) {
+  constructor(private consultantService: ConsultantService, private _bottomSheet: MatBottomSheet) {
   }
   ngOnInit() {
-
-    this.isAuthenticated = !!this.tokenStorageService.getToken();
-
-    if (this.isAuthenticated) {
-      this.user = this.tokenStorageService.getUser();
-      this.userIsAdmin = this.user.role == 'ADMIN';
-      this.userIsManager = this.userIsAdmin || this.user.role == 'MANAGER';
-    }
-
-
     this.consultantService.getAll().subscribe(
       (data) => {
-        this.consultants = data;
-        this.createDatasource(data.filter((cons) => cons.manager.id == this.user.id));
+        this.dataSource = new MatTableDataSource(data);
+        this.printData(this.dataSource);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.dataSource.filterPredicate = (data, filter: string)  => {
+          const accumulator = (currentTerm, key) => {
+            return this.nestedFilterCheck(currentTerm, data, key);
+          };
+          const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+          // Transform the filter by converting it to lowercase and removing whitespace.
+          const transformedFilter = filter.trim().toLowerCase();
+          return dataStr.indexOf(transformedFilter) !== -1;
+        };
       },
       (err) => {
         console.log(err);
       }
     )
+    
+    
+    
   }
 
-  openBottomSheet(element: any): void {
-    const bootomSheet = this._bottomSheet.open(DeactivateComponent, {
+  openBottomSheet(element:any): void {
+    const bootomSheet = this._bottomSheet.open(DeactivateComponent,{
       data: { consultant: element },
     });
   }
 
-  printData(data): void {
+  printData(data): void{
     console.log(data);
-  }
-
-  createDatasource(data) {
-    if (this.onlyMyConsultantChecked) {
-      this.dataSource = new MatTableDataSource(data.filter((cons) => cons.manager.id == this.user.id));
-    }
-    else {
-      this.dataSource = new MatTableDataSource(data);
-    }
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.dataSource.filterPredicate = (data, filter: string) => {
-      const accumulator = (currentTerm, key) => {
-        return this.nestedFilterCheck(currentTerm, data, key);
-      };
-      const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
-      // Transform the filter by converting it to lowercase and removing whitespace.
-      const transformedFilter = filter.trim().toLowerCase();
-      return dataStr.indexOf(transformedFilter) !== -1;
-    };
   }
 
   /**
@@ -115,9 +89,5 @@ export class ConsultantsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  showOnlyMyConsultant() {
-    this.onlyMyConsultantChecked = !this.onlyMyConsultantChecked;
-    this.createDatasource(this.consultants);
-  }
 }
 

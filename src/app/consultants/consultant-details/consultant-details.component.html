@@ -1,8 +1,29 @@
 <br>
-<p><span class="material-icons">alternate_email</span> {{consultant.email}}</p>
-<p><span class="material-icons">grade</span> {{consultant.experience}} années d'expériences</p>
-<p><span class="material-icons">supervisor_account</span> {{consultant?.manager?.firstname}} {{consultant?.manager?.lastname}}</p>
-<div class="diplomas" *ngFor="let d of consultant.diplomas">
-    <p><span class="material-icons">school</span> <span class="bold"> {{d.diplomaName.name}}</span> à {{d.diplomaLocation.school}} ({{d.diplomaLocation.city}}, {{d.graduationYear}})</p>
-</div>
-
+<mat-card class="consultant-card">
+    <mat-card-header>
+      <h1>Modifier un consultant</h1>
+      
+    </mat-card-header>
+    <mat-card-content>
+        <form >
+            <mat-form-field>
+              <mat-label>Prénom</mat-label>
+              <input matInput type="text" value="{{consultant.firstname}}">
+            </mat-form-field>
+            &nbsp;
+            <mat-form-field>
+              <mat-label>Nom</mat-label>
+              <input matInput type="text" value="{{consultant.lastname}}">
+            </mat-form-field>
+            &nbsp;
+            <mat-form-field>
+              <mat-label>E-mail</mat-label>
+              <input matInput type="email" value="{{consultant.email}}">
+            </mat-form-field>
+            &nbsp;
+            <button mat-icon-button style="color: green">
+              <span class="material-icons">done</span>
+            </button>
+          </form>
+    </mat-card-content>
+</mat-card>
