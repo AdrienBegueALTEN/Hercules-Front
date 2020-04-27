@@ -5,7 +5,7 @@
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         <mat-optgroup *ngFor="let grp of filteredGrps | async" [label]="grp.name">
           <mat-option *ngFor="let consultant of grp.consultants" [value]="consultant">
-            {{consultant.firstname}} {{consultant.lastname}} - {{consultant.email}}
+            <p><b>{{consultant.firstname}} {{consultant.lastname}}</b> - <i>{{consultant.email}}</i></p>
           </mat-option>
         </mat-optgroup>
         <mat-option disabled *ngIf="showNewOpt">

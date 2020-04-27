@@ -63,9 +63,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
           consultants : otherConsultants
         }]
       },
-      err => {
-        console.log(err);
-      }
+      err => { console.log(err); }
     );
   }
 
@@ -75,8 +73,15 @@ export class ConsultantAutocompleteComponent implements OnInit {
 
   onNew() { this.newConsultant.emit(); }
 
+  selectConsultant(id : number) {
+    this.ctrl.setValue(this._getConsultantById(id));
+  }
+
   private _filterGroup(value : string) : ConsultantGrp[] {
-    if (value == null) return null;
+    if (value == null) {
+      this.showNewOpt = false;
+      return null;
+    }
 
     const filterValue = value.toLowerCase();
     const filteredConsultants = this.groups
@@ -88,6 +93,21 @@ export class ConsultantAutocompleteComponent implements OnInit {
 
   private _checkSelection(control) {
     return (typeof control.value == 'string') ? { 'requirements': true } : null;
+  }
+
+  private _getConsultantById(id : number) {
+    let i : number = 0;
+    let j : number = 0;
+    let res : BasicConsultant = null;
+
+    while (i < this.groups.length && res == null) {
+      while (j < this.groups[i].consultants.length && res == null) {
+        if (this.groups[i].consultants[j].id !== id) ++j;
+        else res = this.groups[i].consultants[j];
+      }
+      ++i;
+    }
+    return res;
   }
 
 }

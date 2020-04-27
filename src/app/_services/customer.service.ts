@@ -22,7 +22,11 @@ constructor(private _httpClient : HttpClient) {}
         activitySector : activitySector,
         description : description
       },
-    AppSettings.HTTP_OPTIONS);
+      {observe: 'response'});
+  }
+
+  deleteCustomer(id : number) : Observable<any> {
+    return this._httpClient.delete(AppSettings.CUSTOMER_API + id, AppSettings.HTTP_OPTIONS);
   }
 
 }

@@ -24,6 +24,10 @@ export class ConsultantService {
         experience : xp,
         manager : manager
       },
-      AppSettings.HTTP_OPTIONS);
+      {observe: 'response'});
+  }
+
+  deleteConsultant(id : number) : Observable<any> {
+    return this._httpClient.delete(AppSettings.CONSULTANT_API + id, AppSettings.HTTP_OPTIONS);
   }
 }

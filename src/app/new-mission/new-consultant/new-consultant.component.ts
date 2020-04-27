@@ -24,21 +24,21 @@ export class NewConsultantComponent implements OnInit {
 
   createForm() {
     this.grp = new FormBuilder().group({
-      'firstname' : ['', [Validators.required, Validators.pattern(AppSettings.FIRSTNAME_PATTERN)]],
-      'lastname' : ['', [Validators.required, Validators.pattern(AppSettings.LASTNAME_PATTERN)]],
-      'email' : ['', [Validators.required, Validators.pattern(AppSettings.EMAIL_LOCAL_PART_PATTERN)]],
+      'firstname' : ['', [Validators.required, Validators.pattern(AppSettings.NAME_PATTERN)]],
+      'lastname' : ['', [Validators.required, Validators.pattern(AppSettings.NAME_PATTERN)]],
+      'email' : ['', [Validators.required, Validators.pattern(AppSettings.EMAIL_PATTERN)]],
       'xp' : [0, [Validators.min(0)]]
     });
   }
 
   getFirstnameErr(): string {
     return  this.grp.get('firstname').hasError('required') ? 'Le prénom doit être renseigné' :
-            this.grp.get('firstname').hasError('pattern') ? 'Le prénom ne peux contenir que des lettres, éventuellement séparées pas un espace ou un tiret' : '';
+            this.grp.get('firstname').hasError('pattern') ? 'Le prénom ne peut contenir que des lettres, éventuellement séparées pas un espace ou un tiret' : '';
   }
 
   getLastnameErr(): string {
     return  this.grp.get('lastname').hasError('required') ? 'Le nom doit être renseigné' :
-            this.grp.get('lastname').hasError('pattern') ? 'Le nom ne peux contenir que des lettres, éventuellement séparées pas un espace ou un tiret' : '';
+            this.grp.get('lastname').hasError('pattern') ? 'Le nom ne peut contenir que des lettres, éventuellement séparées pas un espace ou un tiret' : '';
   }
 
   getEmailErr(): string {
@@ -47,7 +47,7 @@ export class NewConsultantComponent implements OnInit {
   }
 
   getXpErr(): string {
-    return  this.grp.get('xp').hasError('min') ? 'Le nombre d\'années d\'expéricence ne peux pas être négatif' : '';
+    return  this.grp.get('xp').hasError('min') ? 'Le nombre d\'années d\'expéricence ne peut pas être négatif' : '';
   }
 
   onFirstnameChange() {
@@ -65,6 +65,6 @@ export class NewConsultantComponent implements OnInit {
     let emailLocalPart = (firstname != '') ? 
                   firstname + ((lastname != '') ?
                     '.' + lastname : '') : lastname;
-    this.grp.get('email').setValue(emailLocalPart);
+    this.grp.get('email').setValue(emailLocalPart + '@alten.com');
   }
 }

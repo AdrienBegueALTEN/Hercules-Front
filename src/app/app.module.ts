@@ -1,16 +1,18 @@
+import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
+import { YesNoDialogComponent } from './dialog/yes-no/yes-no-dialog.component';
 import { NewCustomerComponent } from './new-mission/new-customer/new-customer.component';
 import { NewConsultantComponent } from './new-mission/new-consultant/new-consultant.component';
 import { ConsultantAutocompleteComponent } from './new-mission/consultant-autocomplete/consultant-autocomplete.component';
 import { CustomerAutocompleteComponent } from './new-mission/customer-autocomplete/customer-autocomplete.component';
-import { CdkStepperModule, STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { CdkStepperModule } from '@angular/cdk/stepper';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -27,6 +29,7 @@ import { authInterceptorProviders } from 'src/app/_helper/auth.interceptor';
 import { HomeComponent } from 'src/app/home/home.component';
 import { NewMissionComponent } from 'src/app/new-mission/new-mission.component';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
+import { MissionComponent } from './mission/mission.component';
 
 @NgModule({
    declarations: [
@@ -35,10 +38,13 @@ import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.com
       CustomerAutocompleteComponent,
       HomeComponent,
       LoginComponent,
+      MissionComponent,
       NewConsultantComponent,
       NewCustomerComponent,
       NewMissionComponent,
-      PageNotFoundComponent
+      OkDialogComponent,
+      PageNotFoundComponent,
+      YesNoDialogComponent,
    ],
    imports: [
       AppRoutingModule,
@@ -49,27 +55,22 @@ import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.com
       MatAutocompleteModule,
       MatButtonModule,
       MatCardModule,
+      MatDialogModule,
       MatFormFieldModule,
       MatIconModule,
       MatInputModule,
-      MatSnackBarModule,
       MatStepperModule,
       FormsModule,
       ReactiveFormsModule
    ],
    providers: [
-      authInterceptorProviders,
-      {
-         provide: STEPPER_GLOBAL_OPTIONS,
-         useValue: { displayDefaultIndicatorType: false }
-      },
-      {
-         provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-         useValue: { duration: 7000 }
-      }
+      authInterceptorProviders
    ],
    bootstrap: [
       AppComponent
+   ],
+   entryComponents: [
+      YesNoDialogComponent
    ]
 })
 export class AppModule { }

@@ -2,7 +2,6 @@ import { BasicCustomer } from './../../_interface/basic-customer';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
-import { CustomerService } from 'src/app/_services/customer.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -37,7 +36,10 @@ export class CustomerAutocompleteComponent implements OnInit {
   onNew() { this.newCustomer.emit(); }
 
   private _filter(name : string): BasicCustomer[] {
-    if (name == null) return null;
+    if (name == null) {
+      this.showNewOpt = false;
+      return null;
+    }
 
     const filterValue = name.toLowerCase();
     const filteredCustomers = this.customers.filter(customer => customer.name.toLowerCase().indexOf(filterValue) >= 0);

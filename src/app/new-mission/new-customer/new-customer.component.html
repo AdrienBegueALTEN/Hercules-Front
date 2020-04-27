@@ -10,7 +10,7 @@
     <mat-label>Secteur d'activité</mat-label>
     <input matInput formControlName="activitySector" [matAutocomplete]="auto" required>
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let activitySector of activitySectors" [value]="activitySector">
+      <mat-option *ngFor="let activitySector of filteredActivitySectors | async" [value]="activitySector">
         {{activitySector}}
       </mat-option>
     </mat-autocomplete>
@@ -20,7 +20,7 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Description</mat-label>
-    <textarea matInput formControlName="description"></textarea>
+    <textarea matInput formControlName="description" maxlength="1000"></textarea>
     <mat-hint>{{grp.get('description').value?.length || 0}}/1000</mat-hint>
   </mat-form-field>
 </form>

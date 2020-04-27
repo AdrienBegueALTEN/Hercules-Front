@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Component, OnInit, EventEmitter, Output, Input, ViewChild } from '@angular/core';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { BasicCustomer } from 'src/app/_interface/basic-customer';
 import { startWith, map } from 'rxjs/operators';
@@ -20,13 +20,13 @@ export class NewCustomerComponent implements OnInit {
 
   ngOnInit() {
     this._createForm();
-    this.sendFormGrp.emit(this.grp);
     this.activitySectors = this._getActivitySectorsSet(this.customers);
-    this.filteredActivitySectors = this.grp.get('activitySector').valueChanges
-    .pipe(
-      startWith(''),
-      map(activitySector => this._filter(activitySector))
-    );
+    this.filteredActivitySectors = this.grp.controls['activitySector'].valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+    this.sendFormGrp.emit(this.grp);
   }
 
   getNameErr() : string {
@@ -37,16 +37,16 @@ export class NewCustomerComponent implements OnInit {
     return  this.grp.get('activitySector').hasError('required') ? 'Le secteur d\'activité doit être renseigné' : '';
   }
 
-  private _createForm() {
+  private _createForm() : void {
     this.grp = new FormBuilder().group({
       'name' : ['', [Validators.required]],
       'activitySector' : ['', [Validators.required]],
-      'description' : []
+      'description' : ['', [Validators.maxLength(1000)]]
     });
   }
 
-  private _filter(name : string): string[] {
-    const filterValue = name.toLowerCase();
+  private _filter(value : string) : string[] {
+    const filterValue = value.toLowerCase();
     const filteredActivitySectors = this.activitySectors.filter(activitySector => activitySector.toLowerCase().indexOf(filterValue) >= 0);
     return filteredActivitySectors;
   }

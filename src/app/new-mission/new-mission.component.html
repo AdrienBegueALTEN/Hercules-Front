@@ -1,10 +1,11 @@
 <mat-card>
   <mat-card-content>
-    <mat-vertical-stepper linear="true" #stepper (selectionChange)="selectionChange($event)">
+    <mat-vertical-stepper linear="true" (selectionChange)="onStepChange($event)" #stepper>
       <mat-step [stepControl]="consultantForm" label="Consultant" state="consultant">
           <app-consultant-autocomplete *ngIf="!newConsultant"
           (sendFormCtrl)="getConsultantForm($event)"
-          (newConsultant)="newConsultant = true">
+          (newConsultant)="newConsultant = true"
+          #consultantAutocomplete>
           </app-consultant-autocomplete>
           <app-new-consultant *ngIf="newConsultant" (sendFormGrp)="getConsultantForm($event)"></app-new-consultant>
       </mat-step>
