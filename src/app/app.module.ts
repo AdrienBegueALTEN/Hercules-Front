@@ -14,6 +14,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -29,6 +33,10 @@ import { authInterceptorProviders } from 'src/app/_helper/auth.interceptor';
 import { HomeComponent } from 'src/app/home/home.component';
 import { NewMissionComponent } from 'src/app/new-mission/new-mission.component';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
+import { ConsultantsComponent } from './consultants/consultants.component';
+import { ConsultantDetailsComponent } from './consultants/consultant-details/consultant-details.component';
+import { DeactivateComponent } from './consultants/deactivate/deactivate.component';
+
 
 @NgModule({
    declarations: [
@@ -42,7 +50,9 @@ import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.com
       NewMissionComponent,
       OkDialogComponent,
       PageNotFoundComponent,
-      YesNoDialogComponent,
+      ConsultantsComponent,
+      ConsultantDetailsComponent,
+      DeactivateComponent,
    ],
    imports: [
       AppRoutingModule,
@@ -59,7 +69,11 @@ import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.com
       MatInputModule,
       MatStepperModule,
       FormsModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      MatTableModule,
+      MatPaginatorModule,
+      MatTooltipModule,
+      MatBottomSheetModule
    ],
    providers: [
       authInterceptorProviders

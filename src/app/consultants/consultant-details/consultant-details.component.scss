@@ -1,11 +1,11 @@
- p .material-icons{
-    vertical-align: middle;
-}
+.consultant-card {
+    width: 75%;
+    margin: auto;
+ }
 
-.school{
-    width: 100px;
-}
-
-.bold{
-    font-weight: bold;
-}
+ @media (max-width: 600px) {
+    .consultant-card {
+        margin: auto;
+        width: 90%;
+     }
+  }
