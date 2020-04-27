@@ -14,10 +14,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
+<<<<<<< HEAD
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+=======
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+>>>>>>> parent of 030e4e8... Revert "tri "mes consultants" + ajout formulaire màj consultant ; manque formulaire diplômes"
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -36,6 +45,8 @@ import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.com
 import { ConsultantsComponent } from './consultants/consultants.component';
 import { ConsultantDetailsComponent } from './consultants/consultant-details/consultant-details.component';
 import { DeactivateComponent } from './consultants/deactivate/deactivate.component';
+import { ConsultantCardComponent } from './consultants/consultant-card/consultant-card.component';
+import { ConsultantFormComponent } from './consultants/consultant-form/consultant-form.component';
 
 
 @NgModule({
@@ -53,7 +64,12 @@ import { DeactivateComponent } from './consultants/deactivate/deactivate.compone
       ConsultantsComponent,
       ConsultantDetailsComponent,
       DeactivateComponent,
+<<<<<<< HEAD
       YesNoDialogComponent
+=======
+      ConsultantCardComponent,
+      ConsultantFormComponent,
+>>>>>>> parent of 030e4e8... Revert "tri "mes consultants" + ajout formulaire màj consultant ; manque formulaire diplômes"
    ],
    imports: [
       AppRoutingModule,
@@ -74,7 +90,9 @@ import { DeactivateComponent } from './consultants/deactivate/deactivate.compone
       MatTableModule,
       MatPaginatorModule,
       MatTooltipModule,
-      MatBottomSheetModule
+      MatBottomSheetModule,
+      MatTabsModule,
+      MatSlideToggleModule
    ],
    providers: [
       authInterceptorProviders
