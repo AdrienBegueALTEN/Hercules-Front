@@ -1,17 +1,21 @@
+import { AuthService } from 'src/app/_services/auth.service';
 import { YesNoDialogComponent } from '../dialog/yes-no/yes-no-dialog.component';
 import { MissionService } from './../_services/mission.service';
-import { TokenStorageService } from './../_services/token-storage.service';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit, ChangeDetectorRef, AfterContentChecked, ViewChild } from '@angular/core';
 import { CustomerService } from '../_services/customer.service';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { BasicCustomer } from '../_interface/basic-customer';
-import { HttpStatus } from '../http-status.enum';
+import { HttpStatus } from '../_enums/http-status.enum';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { OkDialogComponent } from '../dialog/ok/ok-dialog.component';
 import { ConsultantAutocompleteComponent } from './consultant-autocomplete/consultant-autocomplete.component';
+
+const CONSULTANT_STEP : number = 0;
+const CUSTOMER_STEP : number = 1;
+const NEW_MISSION_STEP : number = 2;
 
 @Component({
   selector: 'app-new-mission',
@@ -19,10 +23,6 @@ import { ConsultantAutocompleteComponent } from './consultant-autocomplete/consu
   styleUrls: ['./new-mission.component.scss']
 })
 export class NewMissionComponent implements OnInit, AfterContentChecked {
-  private static CONSULTANT_STEP = 0;
-  private static CUSTOMER_STEP = 1;
-  private static NEW_MISSION_STEP = 2;
-
   newConsultant : boolean = false;
   consultantForm : FormControl | FormGroup;
   newCustomer : boolean = false;
@@ -38,7 +38,7 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
     private _customerService : CustomerService,
     private _dialog : MatDialog,
     private _missionService : MissionService,
-    private _tokenStorageService : TokenStorageService
+    private _authService : AuthService
   ){}
 
   ngOnInit() : void {
@@ -61,14 +61,14 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
   }
 
   onStepChange(event : StepperSelectionEvent) : void {
-    if (event.selectedIndex === NewMissionComponent.NEW_MISSION_STEP)
+    if (event.selectedIndex === NEW_MISSION_STEP)
       this._createMissionConsultantStep();
   }
 
   private _createMissionConsultantStep() : void {
     let consultant = this.consultantForm.value;
     if (this.newConsultant) { //A new consultant need to be created
-      let manager = this._tokenStorageService.getUser().id; //The authenticated user is defined as the manager of the new consultant
+      let manager = this._authService.getUser().id; //The authenticated user is defined as the manager of the new consultant
       this._consultantService.newConsultant(consultant.email, consultant.firstname, consultant.lastname, consultant.xp, manager).subscribe(
         response => { this._handleNewConsultantResponse(response); },
         error => { this._handleNewConsultantError(error); }); //An error occurred during the creation of the new consultant
@@ -109,7 +109,7 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
             if (data) {
               const id : number = parseInt(String(response.body));
               this._createMissionCustomerStep(id, false);
-            } else this.stepper.selectedIndex = NewMissionComponent.CONSULTANT_STEP;
+            } else this.stepper.selectedIndex = CONSULTANT_STEP;
           });  
         break;
       case HttpStatus.CREATED : //The consultant step is OK, passage to the customer step
@@ -132,7 +132,7 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
           ok: 'Modifier l\'email'
         };
         const dialogRef = this._dialog.open(OkDialogComponent, dialogConfig);
-        dialogRef.afterClosed().subscribe(() => { this.stepper.selectedIndex = NewMissionComponent.CONSULTANT_STEP; });  
+        dialogRef.afterClosed().subscribe(() => { this.stepper.selectedIndex = CONSULTANT_STEP; });  
         break;
       default :
         dialogConfig.data = {
@@ -167,7 +167,7 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
             } else {
               if (newConsultant)
                 this._consultantService.deleteConsultant(consultantId).subscribe();
-              this.stepper.selectedIndex = NewMissionComponent.CUSTOMER_STEP;
+              this.stepper.selectedIndex = CUSTOMER_STEP;
             }
           });
         break;

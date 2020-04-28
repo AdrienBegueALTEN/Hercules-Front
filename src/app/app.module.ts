@@ -1,3 +1,6 @@
+import { MissionViewConsultantComponent } from './mission-view/consultant/mission-view-consultant.component';
+import { MissionViewCustomerComponent } from './mission-view/customer/mission-view-customer.component';
+import { MissionViewProjectsComponent } from './mission-view/projects/mission-view-projects.component';
 import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
 import { YesNoDialogComponent } from './dialog/yes-no/yes-no-dialog.component';
 import { NewCustomerComponent } from './new-mission/new-customer/new-customer.component';
@@ -14,12 +17,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
-import {MatTableModule} from '@angular/material/table';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatTableModule} from '@angular/material/table';
+import { MatPaginatorModule} from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -41,6 +46,8 @@ import { DeactivateComponent } from './consultants/deactivate/deactivate.compone
 import { ConsultantCardComponent } from './consultants/consultant-card/consultant-card.component';
 import { ConsultantFormComponent } from './consultants/consultant-form/consultant-form.component';
 import { ConsultantManagerComponent } from './consultants/consultant-manager/consultant-manager.component';
+import { MissionViewComponent } from './mission-view/mission-view.component';
+import { MissionViewInfosComponent } from './mission-view/infos/mission-view-infos.component';
 
 
 @NgModule({
@@ -61,7 +68,12 @@ import { ConsultantManagerComponent } from './consultants/consultant-manager/con
       YesNoDialogComponent,
       ConsultantCardComponent,
       ConsultantFormComponent,
-      ConsultantManagerComponent
+      ConsultantManagerComponent,
+      MissionViewComponent,
+      MissionViewInfosComponent,
+      MissionViewProjectsComponent,
+      MissionViewConsultantComponent,
+      MissionViewCustomerComponent
    ],
    imports: [
       AppRoutingModule,
@@ -84,7 +96,9 @@ import { ConsultantManagerComponent } from './consultants/consultant-manager/con
       MatTooltipModule,
       MatBottomSheetModule,
       MatTabsModule,
-      MatSlideToggleModule
+      MatSlideToggleModule,
+      MatListModule,
+      MatGridListModule
    ],
    providers: [
       authInterceptorProviders

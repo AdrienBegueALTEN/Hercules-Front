@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenStorageService } from './_services/token-storage.service';
+import { AuthService } from './_services/auth.service';
+import { Role } from './_enums/role.enum';
 
 @Component({
   selector: 'app-root',
@@ -7,26 +8,19 @@ import { TokenStorageService } from './_services/token-storage.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  user : any;
+  userIsAdmin : boolean = false;
+  userIsManager : boolean = false;
 
-  user;
-  isAuthenticated = false; 
-  userIsAdmin = false;
-  userIsManager = false;
-
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private _authService : AuthService) { }
 
   ngOnInit() {
-    this.isAuthenticated = !!this.tokenStorageService.getToken();
-
-    if (this.isAuthenticated) {
-      this.user = this.tokenStorageService.getUser();
-      this.userIsAdmin = this.user.role == 'ADMIN';
-      this.userIsManager = this.userIsAdmin || this.user.role == 'MANAGER';
+    if (this._authService.isAuthenticated()) {
+      this.user = this._authService.getUser();
+      this.userIsAdmin = this.user.roles.includes(Role.ADMIN);
+      this.userIsManager = this.userIsAdmin || this.user.roles.includes(Role.MANAGER);
     }
   }
 
-  onLogout() {
-    this.tokenStorageService.signOut();
-    window.location.replace('login');
-  }
+  onLogout() { this._authService.logout(); }
 }

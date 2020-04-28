@@ -13,9 +13,13 @@ export class MissionService {
   newMission(consultant : number, customer : number) : Observable<any> {
     return this._httpClient.post(AppSettings.MISSION_API,
       {
-        consultantId : consultant,
-        customerId : customer,
+        consultant : consultant,
+        customer : customer,
       },
     AppSettings.HTTP_OPTIONS);
+  }
+
+  getMissionDetails(mission : number) : Observable<any> {
+    return this._httpClient.get(AppSettings.MISSION_API + mission, AppSettings.HTTP_OPTIONS);
   }
 }
