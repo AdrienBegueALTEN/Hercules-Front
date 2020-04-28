@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormArray, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -14,7 +14,6 @@ export class ConsultantFormComponent implements OnInit {
   consultantForm: FormGroup;
 
   constructor(private consultantService: ConsultantService, 
-    private route: ActivatedRoute,
     private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -23,42 +22,29 @@ export class ConsultantFormComponent implements OnInit {
 
   initForm(){
     this.consultantForm = this.formBuilder.group({
-      firstname:'',
-      lastname:'',
-      email:'',
-      diplomas: this.formBuilder.array([])
+      firstname: new FormControl(this.consultant.firstname),
+      lastname: new FormControl(this.consultant.lastname),
+      email: new FormControl(this.consultant.email),
+      experience: new FormControl(this.consultant.experience),
+      manager: new FormControl(this.consultant.manager.firstname+' '+this.consultant.manager.lastname)
     });
-
-    for(let d of this.consultant.diplomas){
-      const newDiplomasControl = this.formBuilder.group({
-        year:'',
-        name:'',
-        school:'',
-        city:''
-      });
-      this.getDiplomas().push(newDiplomasControl);
-    }
   }
 
-  getDiplomas(): FormArray {
-    return this.consultantForm.get('diplomas') as FormArray;
-  }
-
-  onAddHobby() {
-    const diplomaGroup = this.formBuilder.group({
-      year:'',
-        name:'',
-        school:'',
-        city:''
-    })
-    this.getDiplomas().push(diplomaGroup);
-  }
-
-  /*onSubmit(){
-    const formValue = this.consultantForm.value;
+  onSubmit(){
+    const values = this.consultantForm.value;
     const consultant={
+      'id':this.consultant.id,
+      'email':values.email,
+      'lastname':values.lastname,
+      'firstname':values.firstname,
+      'experience':values.experience
+    };
+    
+    this.consultantService.updateConsultant(consultant).subscribe(
+      ()=>{},
+      (err) => {console.log}
+    )
 
-    }
-  }*/
+  }
 
 }

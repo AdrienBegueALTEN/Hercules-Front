@@ -17,7 +17,6 @@ export class ConsultantCardComponent implements OnInit {
     this.consultantService.getById(+id).subscribe(
       (data)=>{
         this.consultant=data;
-        console.log(data);
       },
       (err)=>{
         console.log(err);
