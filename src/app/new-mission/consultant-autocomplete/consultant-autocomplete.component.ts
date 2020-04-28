@@ -1,4 +1,5 @@
-import { TokenStorageService } from 'src/app/_services/token-storage.service';
+import { AuthService } from 'src/app/_services/auth.service';
+
 import { ConsultantGrp } from 'src/app/_interface/consultant-grp';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
@@ -29,7 +30,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
 
   constructor(
     private _consultantService : ConsultantService,
-    private _tokenStorageService : TokenStorageService
+    private _authService : AuthService
   ) {}
 
   ngOnInit() {
@@ -44,7 +45,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
   }
 
   private initOptions() {
-    const manager = this._tokenStorageService.getUser().id;
+    const manager = this._authService.getUser().id;
     var managerConsultants : BasicConsultant[] = new Array();
     var otherConsultants : BasicConsultant[] = new Array();
 
