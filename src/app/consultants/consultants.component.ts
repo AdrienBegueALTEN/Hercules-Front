@@ -119,5 +119,16 @@ export class ConsultantsComponent implements OnInit {
     this.onlyMyConsultantChecked = !this.onlyMyConsultantChecked;
     this.createDatasource(this.consultants);
   }
+
+  delete(element){
+    if(confirm("Voulez-vous continuer?")){
+      this.consultantService.deleteConsultant(element.id).subscribe(
+        ()=>{},
+        (err) => {
+          console.log(err);
+        }
+      )
+    }
+  }
 }
 

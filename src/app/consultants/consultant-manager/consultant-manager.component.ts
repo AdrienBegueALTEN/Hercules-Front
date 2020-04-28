@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { startWith, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { ConsultantService } from 'src/app/_services/consultant.service';
 
 @Component({
   selector: 'app-consultant-manager',
@@ -28,13 +29,15 @@ export class ConsultantManagerComponent implements OnInit {
     }
   ];
 
-  constructor() {
+  constructor(private formBuilder: FormBuilder,
+    private consultantService: ConsultantService) {
     this.filteredManagers = this.managerCtrl.valueChanges
       .pipe(
         startWith(''),
         map(state => state ? this._filterStates(state) : this.managers.slice())
       );
   }
+
   ngOnInit(): void {
     console.log(this.consultant);
   }
@@ -43,5 +46,25 @@ export class ConsultantManagerComponent implements OnInit {
     const filterValue = value.toLowerCase();
 
     return this.managers.filter(m => m.email.toLowerCase().includes(filterValue));
+  }
+
+  onSubmit(){
+    if(this.managerCtrl.value!=null){
+      const cons = {
+        manager:this.managerCtrl.value.id,
+        id:this.consultant.id
+      }
+      this.consultantService.updateConsultant(cons).subscribe(
+        () => {},
+        (err) => {
+          console.log(err);
+        }
+      )
+      console.log(cons);
+    }
+  }
+
+  getManagerSelected(option){
+    return option.firstname+' '+option.lastname;
   }
 }
