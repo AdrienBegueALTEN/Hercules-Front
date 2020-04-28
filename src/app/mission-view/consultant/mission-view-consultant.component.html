@@ -1,3 +1,29 @@
-<p>
-  mission-view-consultant works!
-</p>
+<mat-card>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <h1 mat-line>Prénom</h1>
+        <p mat-line>{{consultant.firstname}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h1 mat-line>Nom</h1>
+        <p mat-line>{{consultant.lastname}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h1 mat-line>Adresse email</h1>
+        <p mat-line>{{consultant.email}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h1 mat-line>Niveau d'expérience au début de la mission</h1>
+        <p mat-line>{{ consultant.startXp ? xpToString(consultant.startXp) : 'Non renseigné' }}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h1 mat-line>Niveau d'expérience actuel</h1>
+        <p mat-line>{{ consultant.actualXp ? xpToString(consultant.actualXp) : 'Non renseigné' }}</p>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <a [href]="'/consultant/' + consultant.id">Accèder à la page du consultant</a>
+  </mat-card-actions>
+</mat-card>

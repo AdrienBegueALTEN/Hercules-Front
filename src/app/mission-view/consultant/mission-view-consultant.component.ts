@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-mission-view-consultant',
@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MissionViewConsultantComponent implements OnInit {
 
+  @Input() consultant : any;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  xpToString (xp : number) : string {
+    switch(xp) {
+      case 0 : return 'Débutant'
+      case 1 : return '1 an'
+      default : return  xp + ' ans'
+    }
   }
 
 }

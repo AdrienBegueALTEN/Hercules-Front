@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-mission-view-infos',
@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MissionViewInfosComponent implements OnInit {
 
+  @Input() mission : any;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public getLocation() : string {
+    const city = this.mission.city;
+    const country = this.mission.country;
+    return city ?
+      city + (country ? '(' + country + ')' : '') :
+      country ? country : 'Non renseignée';
   }
 
 }

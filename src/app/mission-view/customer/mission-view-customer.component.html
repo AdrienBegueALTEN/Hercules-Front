@@ -1,3 +1,21 @@
-<p>
-  mission-view-client works!
-</p>
+<mat-card>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <h1 mat-line>Nom</h1>
+        <p mat-line>{{customer.name}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h1 mat-line>Secteur d'activité</h1>
+        <p mat-line>{{customer.activitySector}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h1 mat-line>Description</h1>
+        <div mat-line><p>{{ customer.description ? customer.description : 'Non renseignée' }}</p></div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <a [href]="'/customers/' + customer.id">Accèder à la page du client</a>
+  </mat-card-actions>
+</mat-card>
