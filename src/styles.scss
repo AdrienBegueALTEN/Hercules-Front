@@ -1,8 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway);
-
-$usual-primary-blue: #043962;
-$usual-secondary-blue: #008BD2;
-$usual-tertiary-blue: #7ECBEE;
+@import "src/vars";
 
 .blue-shape {
     background-image: url(src/assets/img/shape-background/blue.png);
