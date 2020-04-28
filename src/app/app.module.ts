@@ -40,6 +40,7 @@ import { ConsultantDetailsComponent } from './consultants/consultant-details/con
 import { DeactivateComponent } from './consultants/deactivate/deactivate.component';
 import { ConsultantCardComponent } from './consultants/consultant-card/consultant-card.component';
 import { ConsultantFormComponent } from './consultants/consultant-form/consultant-form.component';
+import { ConsultantManagerComponent } from './consultants/consultant-manager/consultant-manager.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { ConsultantFormComponent } from './consultants/consultant-form/consultan
       DeactivateComponent,
       YesNoDialogComponent,
       ConsultantCardComponent,
-      ConsultantFormComponent
+      ConsultantFormComponent,
+      ConsultantManagerComponent
    ],
    imports: [
       AppRoutingModule,

@@ -2,7 +2,8 @@
     
     
     <mat-card-content>
-      <h1>Modifier un consultant</h1>
+      <br>
+      <h1>Modifier ses informations</h1>
         <form [formGroup]="consultantForm" (ngSubmit)="onSubmit()">
             <mat-form-field>
               <mat-label>Prénom</mat-label>
@@ -28,14 +29,9 @@
               <span class="material-icons">done</span>
             </button>
           </form>
-
-          <h1>Manager du consultant</h1>
-          <form>
-            <mat-form-field>
-              <mat-label>Manager</mat-label>
-              <input matInput type="text">
-            </mat-form-field>
-          </form>
-
-          <h1>Diplôme</h1>
+          <br>
+          <h1>Modification son manager</h1>
+          <app-consultant-manager [consultant]="consultant"></app-consultant-manager>
+          <br>
+          <h1>Modifier ses diplômes</h1>
     </mat-card-content>
