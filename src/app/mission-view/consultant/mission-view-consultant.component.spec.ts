@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { MissionComponent } from './mission.component';
+import { MissionViewConsultantComponent } from './mission-view-consultant.component';
 
-describe('MissionComponent', () => {
-  let component: MissionComponent;
-  let fixture: ComponentFixture<MissionComponent>;
+describe('MissionViewConsultantComponent', () => {
+  let component: MissionViewConsultantComponent;
+  let fixture: ComponentFixture<MissionViewConsultantComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MissionComponent ]
+      declarations: [ MissionViewConsultantComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MissionComponent);
+    fixture = TestBed.createComponent(MissionViewConsultantComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,13 +6,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ConsultantsComponent } from './consultants/consultants.component';
 import { ConsultantCardComponent } from './consultants/consultant-card/consultant-card.component';
-import { MissionComponent } from './mission/mission.component';
+import { MissionViewComponent } from './mission-view/mission-view.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'new-mission', component: NewMissionComponent },
-  { path: 'missions/:id', component: MissionComponent },
+  { path: 'missions/:id', component: MissionViewComponent },
   { path: 'consultants', component: ConsultantsComponent},
   { path: 'consultants/:id', component: ConsultantCardComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full' },
