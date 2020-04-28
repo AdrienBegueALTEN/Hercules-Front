@@ -1,13 +1,12 @@
+import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ConsultantService } from '../_services/consultant.service';
-import { BasicConsultant } from '../_interface/basic-consultant';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DeactivateComponent } from './deactivate/deactivate.component';
-import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-consultants',
@@ -37,18 +36,17 @@ export class ConsultantsComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private consultantService: ConsultantService, private _bottomSheet: MatBottomSheet,
-    private tokenStorageService: TokenStorageService) {
+    private _authService: AuthService) {
   }
   ngOnInit() {
 
-    this.isAuthenticated = !!this.tokenStorageService.getToken();
+    this.isAuthenticated = !!this._authService.getToken();
 
     if (this.isAuthenticated) {
-      this.user = this.tokenStorageService.getUser();
+      this.user = this._authService.getUser();
       this.userIsAdmin = this.user.role == 'ADMIN';
       this.userIsManager = this.userIsAdmin || this.user.role == 'MANAGER';
     }
-
 
     this.consultantService.getAll().subscribe(
       (data) => {

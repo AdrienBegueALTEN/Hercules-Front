@@ -1,9 +1,10 @@
 import { AppSettings } from './../app-settings';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { TokenStorageService } from 'src/app/_services/token-storage.service';
 import { AuthService } from 'src/app/_services/auth.service';
-import { Router } from '@angular/router';
+
+const EMAIL_KEY : string = 'email';
+const PASSWORD_KEY : string = 'password';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,10 @@ export class LoginComponent implements OnInit {
   hidden = true;
   loginForm = this.createForm();
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) {}
+  constructor(private _authService: AuthService) {}
 
   ngOnInit() {
-    if (this.tokenStorage.getToken()) {
+    if (this._authService.getToken()) {
       this.isLoggedIn = true;
     }
   }
@@ -36,14 +37,14 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     let credentials = {
-      email: this.loginForm.get('email').value,
-      password: this.loginForm.get('password').value
+      email: this.loginForm.get(EMAIL_KEY).value,
+      password: this.loginForm.get(PASSWORD_KEY).value
     }
 
-    this.authService.login(credentials).subscribe(
+    this._authService.login(credentials).subscribe(
       data => {
-        this.tokenStorage.saveToken(data.accessToken);
-        this.tokenStorage.saveUser(data);
+        this._authService.saveToken(data.accessToken);
+        this._authService.saveUser(data);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
@@ -56,11 +57,11 @@ export class LoginComponent implements OnInit {
   }
 
   getEmailErr(): String {
-    return  this.loginForm.get('email').hasError('required') ? 'Email obligatoire' :
-            this.loginForm.get('email').hasError('pattern') ? 'Format du email invalide' : '';
+    return  this.loginForm.get(EMAIL_KEY).hasError('required') ? 'Email obligatoire' :
+            this.loginForm.get(EMAIL_KEY).hasError('pattern') ? 'Format du email invalide' : '';
   }
 
   getPasswordErr(): String {
-    return this.loginForm.get('password').hasError('required') ? 'Mot de passe obligatoire' : '';
+    return this.loginForm.get(PASSWORD_KEY).hasError('required') ? 'Mot de passe obligatoire' : '';
   }
 }
