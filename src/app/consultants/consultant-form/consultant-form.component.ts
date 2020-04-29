@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ConsultantService } from 'src/app/_services/consultant.service';
-import { ActivatedRoute } from '@angular/router';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-consultant-form',
@@ -14,7 +14,8 @@ export class ConsultantFormComponent implements OnInit {
   consultantForm: FormGroup;
 
   constructor(private consultantService: ConsultantService, 
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private route: Router) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -44,6 +45,8 @@ export class ConsultantFormComponent implements OnInit {
       ()=>{},
       (err) => {console.log}
     )
+
+    this.route.navigateByUrl('/consultants/'+this.consultant.id);
 
   }
 

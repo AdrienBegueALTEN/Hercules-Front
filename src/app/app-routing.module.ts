@@ -16,14 +16,16 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'new-mission', canActivate: [AuthGuard, ManagerGuard], component: NewMissionComponent },
   { path: 'missions/:id', canActivate: [AuthGuard], component: MissionViewComponent },
-  { path: 'consultants', canActivate: [AuthGuard], component: ConsultantsComponent},
-  { path: 'consultants/:id', canActivate: [AuthGuard], component: ConsultantCardComponent},
+  { path: 'consultants', canActivate: [AuthGuard], component: ConsultantsComponent, runGuardsAndResolvers: 'always'},
+  { path: 'consultants/:id', canActivate: [AuthGuard], component: ConsultantCardComponent, runGuardsAndResolvers: 'always'},
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    onSameUrlNavigation: 'reload'
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

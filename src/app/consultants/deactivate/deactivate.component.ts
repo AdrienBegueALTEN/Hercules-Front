@@ -16,7 +16,7 @@ export class DeactivateComponent implements OnInit {
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
     private formBuilder: FormBuilder,
     private consultantService: ConsultantService,
-    private route: Router) {}
+    private router: Router) {}
 
     ngOnInit(): void {
       this.initForm();
@@ -45,7 +45,7 @@ export class DeactivateComponent implements OnInit {
       ()=>{},
       (err) => {console.log(err)}
     )
-    this.route.navigate(['/consultants/'+this.data.consultant.id]);
+    this.router.navigate(['/consultants']);
   }
 
 }

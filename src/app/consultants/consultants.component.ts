@@ -1,5 +1,5 @@
 import { AuthService } from 'src/app/_services/auth.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { ConsultantService } from '../_services/consultant.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DeactivateComponent } from './deactivate/deactivate.component';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-consultants',
@@ -20,14 +21,13 @@ import { DeactivateComponent } from './deactivate/deactivate.component';
     ]),
   ],
 })
-export class ConsultantsComponent implements OnInit {
+export class ConsultantsComponent implements OnInit, OnDestroy {
   user;
   isAuthenticated = false;
   userIsAdmin = false;
   userIsManager = false;
-
+  navigationSubscription;
   onlyMyConsultantChecked = true;
-
   consultants: any[];
   dataSource: MatTableDataSource<any>;
   columnsToDisplay = ['firstname', 'lastname', 'email', 'manager', 'actions'];
@@ -35,11 +35,29 @@ export class ConsultantsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private consultantService: ConsultantService, private _bottomSheet: MatBottomSheet,
-    private _authService: AuthService) {
+  constructor(private consultantService: ConsultantService, 
+    private _bottomSheet: MatBottomSheet,
+    private _authService: AuthService,
+    private router:Router) {
+      this.navigationSubscription = this.router.events.subscribe((e: any) => {
+        // If it is a NavigationEnd event re-initalise the component
+        if (e instanceof NavigationEnd) {
+          this.initialize();
+        }
+      });
   }
-  ngOnInit() {
 
+  ngOnInit() {
+    this.initialize();
+  }
+
+  ngOnDestroy(){
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
+
+  initialize(){
     this.isAuthenticated = !!this._authService.getToken();
 
     if (this.isAuthenticated) {
@@ -51,7 +69,7 @@ export class ConsultantsComponent implements OnInit {
     this.consultantService.getAll().subscribe(
       (data) => {
         this.consultants = data;
-        this.createDatasource(data.filter((cons) => cons.manager.id == this.user.id));
+        this.createDatasource(data);
       },
       (err) => {
         console.log(err);

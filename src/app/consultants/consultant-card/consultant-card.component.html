@@ -1,9 +1,9 @@
 <br>
-<div *ngIf="consultant.releaseDate!=null" class="issue">
+<div *ngIf="consultant?.releaseDate!=null" class="issue">
     Le consultant ne fait plus parti du groupe ALTEN.
 </div>
 <br>
-<mat-card class="consultant-card">
+<mat-card *ngIf="consultant" class="consultant-card">
     <button style="float: right;" mat-icon-button >
         <span class="material-icons" routerLink="/consultants">close</span>
     </button>
@@ -12,11 +12,8 @@
             <app-consultant-details [consultant]="consultant"></app-consultant-details>
         </mat-tab>
         <mat-tab label="Modifier">
-            <app-consultant-form [consultant]="consultant"></app-consultant-form>
+            <app-consultant-form [(consultant)]="consultant"></app-consultant-form>
         </mat-tab>
         <mat-tab label="Ses missions"></mat-tab>
-      </mat-tab-group>
-    
-
-    
+    </mat-tab-group>
 </mat-card>
