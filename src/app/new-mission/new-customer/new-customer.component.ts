@@ -40,8 +40,7 @@ export class NewCustomerComponent implements OnInit {
   private _createForm() : void {
     this.grp = new FormBuilder().group({
       'name' : ['', [Validators.required]],
-      'activitySector' : ['', [Validators.required]],
-      'description' : ['', [Validators.maxLength(1000)]]
+      'activitySector' : ['', [Validators.required]]
     });
   }
 

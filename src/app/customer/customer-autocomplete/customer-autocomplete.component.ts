@@ -1,19 +1,26 @@
-import { BasicCustomer } from './../../_interface/basic-customer';
+import { BasicCustomer } from '../../_interface/basic-customer';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
+const _filter = (name : string, value : string) : boolean => {
+  return name.toLowerCase().indexOf(value) >= 0;
+};
+
 @Component({
   selector: 'app-customer-autocomplete',
   templateUrl: './customer-autocomplete.component.html',
-  styleUrls: ['../new-mission.component.scss']
+  styleUrls: ['./customer-autocomplete.component.scss']
 })
 export class CustomerAutocompleteComponent implements OnInit {
   ctrl = new FormControl('', [Validators.required, this._checkSelection]);
-  @Input() customers : BasicCustomer[];
-  filteredCustomers : Observable<BasicCustomer[]>;
+  filteredCustomers : Observable<any[]>;
   showNewOpt : boolean = false;
+
+  @Input() customers : any[];
+  @Input() canCreateNew : boolean = false;
+
   @Output() sendFormCtrl = new EventEmitter<FormControl>();
   @Output() newCustomer = new EventEmitter();
 
@@ -35,15 +42,15 @@ export class CustomerAutocompleteComponent implements OnInit {
   
   onNew() { this.newCustomer.emit(); }
 
-  private _filter(name : string): BasicCustomer[] {
+  private _filter(name : string) : any[] {
     if (name == null) {
       this.showNewOpt = false;
       return null;
     }
 
-    const filterValue = name.toLowerCase();
-    const filteredCustomers = this.customers.filter(customer => customer.name.toLowerCase().indexOf(filterValue) >= 0);
-    this.showNewOpt = filteredCustomers.length === 0;
+    const filteredValue = name.toLowerCase();
+    const filteredCustomers = this.customers.filter(customer => _filter(customer.name, filteredValue));
+    this.showNewOpt = this.canCreateNew && filteredCustomers.length === 0;
     return filteredCustomers;
   }
 

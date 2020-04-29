@@ -26,8 +26,7 @@ export class NewConsultantComponent implements OnInit {
     this.grp = new FormBuilder().group({
       'firstname' : ['', [Validators.required, Validators.pattern(AppSettings.NAME_PATTERN)]],
       'lastname' : ['', [Validators.required, Validators.pattern(AppSettings.NAME_PATTERN)]],
-      'email' : ['', [Validators.required, Validators.pattern(AppSettings.EMAIL_PATTERN)]],
-      'xp' : [0, [Validators.min(0)]]
+      'email' : ['', [Validators.required, Validators.pattern(AppSettings.EMAIL_PATTERN)]]
     });
   }
 
@@ -44,10 +43,6 @@ export class NewConsultantComponent implements OnInit {
   getEmailErr(): string {
     return  this.grp.get('email').hasError('required') ? 'Le email doit être renseignée' :
             this.grp.get('email').hasError('pattern') ? 'Le format du email est incorrect' : '';
-  }
-
-  getXpErr(): string {
-    return  this.grp.get('xp').hasError('min') ? 'Le nombre d\'années d\'expéricence ne peut pas être négatif' : '';
   }
 
   onFirstnameChange() {

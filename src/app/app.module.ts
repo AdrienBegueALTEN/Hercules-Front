@@ -5,8 +5,8 @@ import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
 import { YesNoDialogComponent } from './dialog/yes-no/yes-no-dialog.component';
 import { NewCustomerComponent } from './new-mission/new-customer/new-customer.component';
 import { NewConsultantComponent } from './new-mission/new-consultant/new-consultant.component';
-import { ConsultantAutocompleteComponent } from './new-mission/consultant-autocomplete/consultant-autocomplete.component';
-import { CustomerAutocompleteComponent } from './new-mission/customer-autocomplete/customer-autocomplete.component';
+import { ConsultantAutocompleteComponent } from './consultants/consultant-autocomplete/consultant-autocomplete.component';
+import { CustomerAutocompleteComponent } from './customer/customer-autocomplete/customer-autocomplete.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -47,7 +47,6 @@ import { ConsultantCardComponent } from './consultants/consultant-card/consultan
 import { ConsultantFormComponent } from './consultants/consultant-form/consultant-form.component';
 import { MissionViewComponent } from './mission-view/mission-view.component';
 import { MissionViewInfosComponent } from './mission-view/infos/mission-view-infos.component';
-
 
 @NgModule({
    declarations: [

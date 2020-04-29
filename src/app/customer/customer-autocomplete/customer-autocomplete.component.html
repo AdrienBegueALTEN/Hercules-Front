@@ -15,6 +15,6 @@
     </mat-autocomplete>
   </mat-form-field>
 </form>
-<button class="blue-shape" mat-mini-fab (click)="onNew()" title="Créer un nouveau client">
+<button *ngIf="canCreateNew" class="blue-shape" mat-mini-fab (click)="onNew()" title="Créer un nouveau client">
   <mat-icon>add</mat-icon>
 </button>

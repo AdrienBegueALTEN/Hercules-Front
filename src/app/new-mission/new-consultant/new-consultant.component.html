@@ -20,11 +20,4 @@
       {{getEmailErr()}}
     </mat-error>
   </mat-form-field>
-  <mat-form-field>
-    <mat-label>Année(s) d'expérience</mat-label>
-    <input matInput type="number" formControlName="xp">
-    <mat-error *ngIf="!grp.controls['xp'].valid && grp.controls['xp'].touched">
-      {{getXpErr()}}
-    </mat-error>
-  </mat-form-field>
 </form>
