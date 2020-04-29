@@ -48,6 +48,7 @@ import { ConsultantFormComponent } from './consultants/consultant-form/consultan
 import { ConsultantManagerComponent } from './consultants/consultant-manager/consultant-manager.component';
 import { MissionViewComponent } from './mission-view/mission-view.component';
 import { MissionViewInfosComponent } from './mission-view/infos/mission-view-infos.component';
+import { ConsultantDiplomaComponent } from './consultants/consultant-diploma/consultant-diploma.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { MissionViewInfosComponent } from './mission-view/infos/mission-view-inf
       MissionViewInfosComponent,
       MissionViewProjectsComponent,
       MissionViewConsultantComponent,
-      MissionViewCustomerComponent
+      MissionViewCustomerComponent,
+      ConsultantDiplomaComponent
    ],
    imports: [
       AppRoutingModule,

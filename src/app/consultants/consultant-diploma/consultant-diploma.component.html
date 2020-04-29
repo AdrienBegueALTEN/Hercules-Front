@@ -1,0 +1,22 @@
+<form>
+    <mat-form-field>
+        <mat-label>Ville</mat-label>
+        <input matInput type="text" value="{{diploma.diplomaLocation.city}}">
+    </mat-form-field>&nbsp;
+    <mat-form-field>
+        <mat-label>Ecole</mat-label>
+        <input matInput type="text" value="{{diploma.diplomaLocation.school}}">
+    </mat-form-field> &nbsp;
+    <mat-form-field>
+        <mat-label>Année</mat-label >
+        <input matInput type="integer" value="{{diploma.graduationYear}}">
+    </mat-form-field>&nbsp;
+    <mat-form-field>
+        <mat-label>Niveau</mat-label>
+        <input matInput type="text" value="{{diploma.diplomaName.level.name}}">
+    </mat-form-field>&nbsp;
+    <mat-form-field>
+        <mat-label>Diplôme</mat-label>
+        <input matInput type="text" value="{{diploma.diplomaName.name}}">
+    </mat-form-field>
+</form>

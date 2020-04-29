@@ -34,4 +34,5 @@
           <app-consultant-manager [consultant]="consultant"></app-consultant-manager>
           <br>
           <h1>Modifier ses diplômes</h1>
+          <app-consultant-diploma *ngFor="let diploma of consultant.diplomas" [diploma]="diploma"></app-consultant-diploma>
     </mat-card-content>
