@@ -1,9 +1,8 @@
+import { XpInputComponent } from './_input/xp-input/xp-input.component';
+import { ConsultantViewComponent } from './_view/consultant-view/consultant-view.component';
 import { EmailInputComponent } from './_input/email-input/email-input.component';
 import { LastnameInputComponent } from './_input/lastname-input/lastname-input.component';
 import { FirstnameInputComponent } from './_input/firstname-input/firstname-input.component';
-import { MissionViewConsultantComponent } from './mission-view/consultant/mission-view-consultant.component';
-import { MissionViewCustomerComponent } from './mission-view/customer/mission-view-customer.component';
-import { MissionViewProjectsComponent } from './mission-view/projects/mission-view-projects.component';
 import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
 import { YesNoDialogComponent } from './dialog/yes-no/yes-no-dialog.component';
 import { NewCustomerComponent } from './new-mission/new-customer/new-customer.component';
@@ -48,8 +47,10 @@ import { ConsultantDetailsComponent } from './consultants/consultant-details/con
 import { DeactivateComponent } from './consultants/deactivate/deactivate.component';
 import { ConsultantCardComponent } from './consultants/consultant-card/consultant-card.component';
 import { ConsultantFormComponent } from './consultants/consultant-form/consultant-form.component';
-import { MissionViewComponent } from './mission-view/mission-view.component';
-import { MissionViewInfosComponent } from './mission-view/infos/mission-view-infos.component';
+import { MissionViewComponent } from './_view/mission-view/mission-view.component';
+import { ConsultantEditComponent } from './_edit/consultant-edit/consultant-edit.component';
+import { CustomerEditComponent } from './_edit/customer-edit/customer-edit.component';
+import { CustomerViewComponent } from './_view/customer-view/customer-view.component';
 
 @NgModule({
    declarations: [
@@ -70,13 +71,14 @@ import { MissionViewInfosComponent } from './mission-view/infos/mission-view-inf
       ConsultantCardComponent,
       ConsultantFormComponent,
       MissionViewComponent,
-      MissionViewInfosComponent,
-      MissionViewProjectsComponent,
-      MissionViewConsultantComponent,
-      MissionViewCustomerComponent,
       FirstnameInputComponent,
       LastnameInputComponent,
-      EmailInputComponent
+      EmailInputComponent,
+      XpInputComponent,
+      ConsultantViewComponent,
+      ConsultantEditComponent,
+      CustomerViewComponent,
+      CustomerEditComponent
    ],
    imports: [
       AppRoutingModule,

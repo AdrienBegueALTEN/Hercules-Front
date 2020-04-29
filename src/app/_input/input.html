@@ -1,6 +1,6 @@
 <mat-form-field>
     <mat-label>{{label}}</mat-label>
-    <input matInput [formControl]="ctrl" required (change)="onChange()" >
+    <input matInput [type]="type" [formControl]="ctrl" [required]="showRequired" (change)="onChange()" >
     <mat-error *ngIf="!ctrl.valid && ctrl.touched">
       {{getError()}}
     </mat-error>

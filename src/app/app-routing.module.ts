@@ -9,7 +9,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ConsultantsComponent } from './consultants/consultants.component';
 import { ConsultantCardComponent } from './consultants/consultant-card/consultant-card.component';
 import { NoAuthGuard } from './_services/guard/no-auth-guard.service';
-import { MissionViewComponent } from './mission-view/mission-view.component';
+import { MissionViewComponent } from './_view/mission-view/mission-view.component';
 
 const routes: Routes = [
   { path: 'login', canActivate: [NoAuthGuard], component: LoginComponent },

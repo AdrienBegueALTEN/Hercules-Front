@@ -24,16 +24,8 @@ export class NewConsultantComponent implements OnInit {
     this.sendFormGrp.emit(this.grp);
   }
 
-  addFirstnameCtrl(ctrl : FormControl) : void {
-    this.grp.addControl(FIRSTNAME_KEY, ctrl);
-  }
-
-  addLastnameCtrl(ctrl : FormControl) : void {
-    this.grp.addControl(LASTNAME_KEY, ctrl);
-  }
-
-  addEmailCtrl(ctrl : FormControl) : void {
-    this.grp.addControl(EMAIL_KEY, ctrl);
+  addCtrl(key : string, ctrl : FormControl) : void {
+    this.grp.addControl(key, ctrl);
   }
 
   autoCompleteEmail() : void {

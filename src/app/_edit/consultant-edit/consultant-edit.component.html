@@ -1,0 +1,29 @@
+<form *ngIf="!!consultant">
+  <app-firstname-input 
+    (sendCtrl)="addCtrl('firstname', $event)"
+    (valueChange)="valueChange('firstname')"
+    [initialValue]="consultant.firstname">
+  </app-firstname-input>
+  <app-lastname-input 
+    (sendCtrl)="addCtrl('lastname', $event)"
+    (valueChange)="valueChange('lastname')"
+    [initialValue]="consultant.lastname">
+  </app-lastname-input>
+  <app-email-input 
+    (sendCtrl)="addCtrl('email', $event)"
+    (valueChange)="valueChange('email')"
+    [initialValue]="consultant.email">
+  </app-email-input>
+  <app-xp-input 
+    (sendCtrl)="addCtrl('startXp', $event)"
+    (valueChange)="valueChange('startXp')"
+    [initialValue]="consultant.startXp"
+    label="Expérience au début de la mission">
+  </app-xp-input>
+  <app-xp-input 
+    (sendCtrl)="addCtrl('actualXp', $event)"
+    (valueChange)="valueChange('actualXp')"
+    [initialValue]="consultant.actualXp"
+    label="Expérience actuelle">
+  </app-xp-input>
+</form>
