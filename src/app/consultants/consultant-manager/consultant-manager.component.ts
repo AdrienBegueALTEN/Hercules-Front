@@ -39,7 +39,6 @@ export class ConsultantManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.consultant);
   }
 
   private _filterStates(value: string): any[] {
@@ -65,6 +64,9 @@ export class ConsultantManagerComponent implements OnInit {
   }
 
   getManagerSelected(option){
-    return option.firstname+' '+option.lastname;
+    if(option)
+      return option?.firstname+' '+option?.lastname;
+    else
+      return '';
   }
 }

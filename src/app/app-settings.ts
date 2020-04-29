@@ -11,5 +11,6 @@ export class AppSettings {
     public static CONSULTANT_API : string = AppSettings.API_ENDPOINT + 'consultants/';
     public static CUSTOMER_API : string = AppSettings.API_ENDPOINT + 'customers/';
     public static MISSION_API : string = AppSettings.API_ENDPOINT + 'missions/';
+    public static DIPLOMA_API : string = AppSettings.API_ENDPOINT + 'diplomas/';
     public static HTTP_OPTIONS = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 }

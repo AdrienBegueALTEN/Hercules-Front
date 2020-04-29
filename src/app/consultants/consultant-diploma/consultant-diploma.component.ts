@@ -1,5 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { DiplomaService } from 'src/app/_services/diploma.service';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-consultant-diploma',
@@ -10,11 +14,49 @@ export class ConsultantDiplomaComponent implements OnInit {
 
   @Input() diploma:any
   diplomaForm: FormGroup;
+  diplomas : any[];
+
+  filteredDiplomasCity: Observable<any[]>;
+  filteredDiplomasSchool: Observable<any[]>;
   
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+    private diplomaService: DiplomaService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.diplomaService.getAll().subscribe(
+      (data) => {
+        console.log(data);
+        this.diplomas = data;
+
+        this.filteredDiplomasCity = this.diplomaForm.controls['city'].valueChanges.pipe(
+          startWith(''),
+          map(diploma => diploma? this._filterCity(diploma) : this.diplomas.slice())
+        );
+
+        this.filteredDiplomasSchool = this.diplomaForm.controls['school'].valueChanges.pipe(
+          startWith(''),
+          map(diploma => diploma? this._filterSchool(diploma) : this.diplomas.slice())
+        );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+
+    
+  }
+
+  private _filterCity(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.diplomas.filter(d => d.diplomaLocation.city.toLowerCase().includes(filterValue));
+  }
+  private _filterSchool(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.diplomas.filter(d => d.diplomaLocation.school.toLowerCase().includes(filterValue));
   }
 
   initForm(){
@@ -29,7 +71,25 @@ export class ConsultantDiplomaComponent implements OnInit {
 
   onSubmit(){
     const values = this.diplomaForm.value;
-    console.log(values);
+    
+    const dipl = {
+      id:this.diploma.id,
+      graduationYear:values.year,
+      graduationCity:values.city,
+      diplomaName:values.diploma,
+      levelName:values.level,
+      school:values.school
+    }
+
+    this.diplomaService.updateDiploma(dipl).subscribe(
+      ()=>{},
+      (err) => {
+        console.log(err);
+      }
+    )
+
+    this.router.navigate(['/consultants'])
+    
   }
 
 }

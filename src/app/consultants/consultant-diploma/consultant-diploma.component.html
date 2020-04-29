@@ -1,11 +1,21 @@
 <form [formGroup]="diplomaForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
         <mat-label>Ville</mat-label>
-        <input matInput type="text" formControlName="city">
+        <input matInput type="text" formControlName="city" [matAutocomplete]="city">
+        <mat-autocomplete #city="matAutocomplete">
+            <mat-option *ngFor="let diploma of filteredDiplomasCity | async" [value]="diploma.diplomaLocation.city">
+               {{diploma.diplomaLocation.city}}
+            </mat-option>
+        </mat-autocomplete>
     </mat-form-field>&nbsp;
     <mat-form-field>
         <mat-label>Ecole</mat-label>
-        <input matInput type="text"  formControlName="school">
+        <input matInput type="text"  formControlName="school"  [matAutocomplete]="school">
+        <mat-autocomplete #school="matAutocomplete">
+            <mat-option *ngFor="let diploma of filteredDiplomasSchool | async" [value]="diploma.diplomaLocation.school">
+               {{diploma.diplomaLocation.school}}
+            </mat-option>
+        </mat-autocomplete>
     </mat-form-field> &nbsp;
     <mat-form-field>
         <mat-label>Année</mat-label >

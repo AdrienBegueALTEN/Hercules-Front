@@ -75,7 +75,7 @@ import { ConsultantDiplomaComponent } from './consultants/consultant-diploma/con
       MissionViewProjectsComponent,
       MissionViewConsultantComponent,
       MissionViewCustomerComponent,
-      ConsultantDiplomaComponent
+      ConsultantDiplomaComponent,
    ],
    imports: [
       AppRoutingModule,
