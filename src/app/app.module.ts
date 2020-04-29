@@ -1,3 +1,6 @@
+import { EmailInputComponent } from './_input/email-input/email-input.component';
+import { LastnameInputComponent } from './_input/lastname-input/lastname-input.component';
+import { FirstnameInputComponent } from './_input/firstname-input/firstname-input.component';
 import { MissionViewConsultantComponent } from './mission-view/consultant/mission-view-consultant.component';
 import { MissionViewCustomerComponent } from './mission-view/customer/mission-view-customer.component';
 import { MissionViewProjectsComponent } from './mission-view/projects/mission-view-projects.component';
@@ -5,8 +8,8 @@ import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
 import { YesNoDialogComponent } from './dialog/yes-no/yes-no-dialog.component';
 import { NewCustomerComponent } from './new-mission/new-customer/new-customer.component';
 import { NewConsultantComponent } from './new-mission/new-consultant/new-consultant.component';
-import { ConsultantAutocompleteComponent } from './consultants/consultant-autocomplete/consultant-autocomplete.component';
-import { CustomerAutocompleteComponent } from './customer/customer-autocomplete/customer-autocomplete.component';
+import { ConsultantAutocompleteComponent } from './_input/consultant-autocomplete/consultant-autocomplete.component';
+import { CustomerAutocompleteComponent } from './_input/customer-autocomplete/customer-autocomplete.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -70,7 +73,10 @@ import { MissionViewInfosComponent } from './mission-view/infos/mission-view-inf
       MissionViewInfosComponent,
       MissionViewProjectsComponent,
       MissionViewConsultantComponent,
-      MissionViewCustomerComponent
+      MissionViewCustomerComponent,
+      FirstnameInputComponent,
+      LastnameInputComponent,
+      EmailInputComponent
    ],
    imports: [
       AppRoutingModule,

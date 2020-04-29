@@ -1,4 +1,3 @@
-import { BasicCustomer } from '../../_interface/basic-customer';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
@@ -36,7 +35,7 @@ export class CustomerAutocompleteComponent implements OnInit {
     this.sendFormCtrl.emit(this.ctrl);
   }
 
-  displayFn(customer : BasicCustomer) : string {
+  displayFn(customer : any) : string {
     return customer ? customer.name : '';
   }
   

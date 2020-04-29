@@ -3,7 +3,6 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { BasicConsultant } from 'src/app/_interface/basic-consultant';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Role } from 'src/app/_enums/role.enum';
 import { startWith, map } from 'rxjs/operators';
@@ -47,7 +46,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
   private _initOptions() {
     const user = this._authService.getUser();
 
-    this._consultantService.getEnabledConsultants().subscribe(
+    this._consultantService.getAll(true).subscribe(
       consultants => {
         if (user.roles.includes(Role.MANAGER)) {
           this.displayInGrps = true;
@@ -85,7 +84,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
     );
   }
 
-  displayFn(consultant : BasicConsultant) : string {
+  displayFn(consultant : any) : string {
     return consultant ? consultant.firstname + ' ' + consultant.lastname : '';
   }
 

@@ -48,7 +48,7 @@ export class ConsultantsComponent implements OnInit {
       this.userIsManager = this.userIsAdmin || this.user.role == 'MANAGER';
     }
 
-    this.consultantService.getAll().subscribe(
+    this.consultantService.getAll(false).subscribe(
       (data) => {
         this.consultants = data;
         this.createDatasource(data.filter((cons) => cons.manager.id == this.user.id));

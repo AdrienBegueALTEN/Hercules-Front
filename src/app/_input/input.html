@@ -1,0 +1,7 @@
+<mat-form-field>
+    <mat-label>{{label}}</mat-label>
+    <input matInput [formControl]="ctrl" required (change)="onChange()" >
+    <mat-error *ngIf="!ctrl.valid && ctrl.touched">
+      {{getError()}}
+    </mat-error>
+</mat-form-field>
