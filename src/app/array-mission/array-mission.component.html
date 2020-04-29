@@ -1,0 +1,32 @@
+<div class="row-titre">
+    <div class="title" [ngSwitch]="orderByTitle">
+      <mat-checkbox>Titre de la mission</mat-checkbox> &nbsp;
+      <a mat-icon-button (click)="toggleOrderTitle()">
+        <i *ngSwitchCase="0" class="fas fa-sort"></i>
+        <i *ngSwitchCase="1" class="fas fa-sort-up"></i>
+        <i *ngSwitchCase="-1" class="fas fa-sort-down"></i>
+      </a>
+    </div>
+    <div [ngSwitch]="orderByConsultant">Consultant &nbsp;
+      <a mat-icon-button (click)="toggleOrderConsultant()">
+        <i *ngSwitchCase="0" class="fas fa-sort"></i>
+        <i *ngSwitchCase="1" class="fas fa-sort-up"></i>
+        <i *ngSwitchCase="-1" class="fas fa-sort-down"></i>
+      </a>
+    </div>
+    <div [ngSwitch]="orderByCustomer">Client &nbsp;
+      <a mat-icon-button (click)="toggleOrderCustomer()">
+        <i *ngSwitchCase="0" class="fas fa-sort"></i>
+        <i *ngSwitchCase="1" class="fas fa-sort-up"></i>
+        <i *ngSwitchCase="-1" class="fas fa-sort-down"></i>
+      </a>
+    </div>
+    <div></div>
+  </div>
+  
+  <app-array-mission-item *ngFor="let mission of getPageData()" [mission]="mission"
+                          [projects]="getProjects(mission.id)"></app-array-mission-item>
+  
+  <mat-paginator [pageSizeOptions]="[ 2, 3, 4]" (page)="pageEvent = $event"></mat-paginator>
+  
+  
