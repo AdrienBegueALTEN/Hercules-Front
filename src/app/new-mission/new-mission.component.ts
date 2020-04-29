@@ -6,12 +6,11 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit, ChangeDetectorRef, AfterContentChecked, ViewChild } from '@angular/core';
 import { CustomerService } from '../_services/customer.service';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { BasicCustomer } from '../_interface/basic-customer';
 import { HttpStatus } from '../_enums/http-status.enum';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { OkDialogComponent } from '../dialog/ok/ok-dialog.component';
-import { ConsultantAutocompleteComponent } from './consultant-autocomplete/consultant-autocomplete.component';
+import { ConsultantAutocompleteComponent } from '../_input/consultant-autocomplete/consultant-autocomplete.component';
 
 const CONSULTANT_STEP : number = 0;
 const CUSTOMER_STEP : number = 1;
@@ -27,7 +26,7 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
   consultantForm : FormControl | FormGroup;
   newCustomer : boolean = false;
   customerForm : FormControl | FormGroup;
-  customers : BasicCustomer[];
+  customers : any[];
 
   @ViewChild('stepper') stepper : MatStepper;
   @ViewChild('consultantAutocomplete') consultantAutocomplete : ConsultantAutocompleteComponent;
@@ -42,7 +41,7 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
   ){}
 
   ngOnInit() : void {
-    this._customerService.getBasicCustomers().subscribe(
+    this._customerService.getAll().subscribe(
       customers => { this.customers = customers; },
       err => { console.log(err); }
     );
@@ -69,7 +68,7 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
     let consultant = this.consultantForm.value;
     if (this.newConsultant) { //A new consultant need to be created
       let manager = this._authService.getUser().id; //The authenticated user is defined as the manager of the new consultant
-      this._consultantService.newConsultant(consultant.email, consultant.firstname, consultant.lastname, consultant.xp, manager).subscribe(
+      this._consultantService.newConsultant(consultant.email, consultant.firstname, consultant.lastname, manager).subscribe(
         response => { this._handleNewConsultantResponse(response); },
         error => { this._handleNewConsultantError(error); }); //An error occurred during the creation of the new consultant
     } else this._createMissionCustomerStep(consultant.id, false); //The consultant step is OK, passage to the customer step
@@ -78,7 +77,7 @@ export class NewMissionComponent implements OnInit, AfterContentChecked {
   private _createMissionCustomerStep(consultantId : number, newConsultant : boolean) : void {
     let customer = this.customerForm.value;
     if (this.newCustomer) { //A new customer need to be created
-      this._customerService.newCustomer(customer.name, customer.activitySector, customer.description).subscribe(
+      this._customerService.newCustomer(customer.name, customer.activitySector).subscribe(
         response => { this._handleNewCustomerResponse(consultantId, newConsultant, response); },
         () => { this._handleNewCustomerError(consultantId, newConsultant); }); //An error occurred during the creation of the new customer
     } else this._createMissionFinalStep(consultantId, newConsultant, customer.id, false); //The customer step is OK, passage to the final step

@@ -18,9 +18,4 @@
       {{getActivitySectorErr()}}
     </mat-error>
   </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Description</mat-label>
-    <textarea matInput formControlName="description" maxlength="1000"></textarea>
-    <mat-hint>{{grp.get('description').value?.length || 0}}/1000</mat-hint>
-  </mat-form-field>
 </form>

@@ -1,7 +1,10 @@
 import { StrUtilsService } from './../../_services/str-utils.service';
-import { AppSettings } from './../../app-settings';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+
+const FIRSTNAME_KEY = 'firstname';
+const LASTNAME_KEY = 'lastname';
+const EMAIL_KEY = 'email';
 
 @Component({
   selector: 'app-new-consultant',
@@ -9,7 +12,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   styleUrls: ['../new-mission.component.scss']
 })
 export class NewConsultantComponent implements OnInit {
-  grp : FormGroup;
+  grp : FormGroup = new FormBuilder().group({});
 
   @Output() sendFormGrp = new EventEmitter<FormGroup>();
 
@@ -18,53 +21,27 @@ export class NewConsultantComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.createForm();
     this.sendFormGrp.emit(this.grp);
   }
 
-  createForm() {
-    this.grp = new FormBuilder().group({
-      'firstname' : ['', [Validators.required, Validators.pattern(AppSettings.NAME_PATTERN)]],
-      'lastname' : ['', [Validators.required, Validators.pattern(AppSettings.NAME_PATTERN)]],
-      'email' : ['', [Validators.required, Validators.pattern(AppSettings.EMAIL_PATTERN)]],
-      'xp' : [0, [Validators.min(0)]]
-    });
+  addFirstnameCtrl(ctrl : FormControl) : void {
+    this.grp.addControl(FIRSTNAME_KEY, ctrl);
   }
 
-  getFirstnameErr(): string {
-    return  this.grp.get('firstname').hasError('required') ? 'Le prénom doit être renseigné' :
-            this.grp.get('firstname').hasError('pattern') ? 'Le prénom ne peut contenir que des lettres, éventuellement séparées pas un espace ou un tiret' : '';
+  addLastnameCtrl(ctrl : FormControl) : void {
+    this.grp.addControl(LASTNAME_KEY, ctrl);
   }
 
-  getLastnameErr(): string {
-    return  this.grp.get('lastname').hasError('required') ? 'Le nom doit être renseigné' :
-            this.grp.get('lastname').hasError('pattern') ? 'Le nom ne peut contenir que des lettres, éventuellement séparées pas un espace ou un tiret' : '';
+  addEmailCtrl(ctrl : FormControl) : void {
+    this.grp.addControl(EMAIL_KEY, ctrl);
   }
 
-  getEmailErr(): string {
-    return  this.grp.get('email').hasError('required') ? 'Le email doit être renseignée' :
-            this.grp.get('email').hasError('pattern') ? 'Le format du email est incorrect' : '';
-  }
-
-  getXpErr(): string {
-    return  this.grp.get('xp').hasError('min') ? 'Le nombre d\'années d\'expéricence ne peut pas être négatif' : '';
-  }
-
-  onFirstnameChange() {
-    let firstname : string = this.grp.get('firstname').value;
-    firstname = firstname.charAt(0).toUpperCase() + firstname.substr(1);
-    this.grp.get('firstname').setValue(firstname);
-    this._updateEmail();
-  }
-
-  onLastnameChange() { this._updateEmail(); }
-
-  private _updateEmail() {
-    let firstname = this._strUtilsService.normalizeName(this.grp.get('firstname').value);
-    let lastname = this._strUtilsService.normalizeName(this.grp.get('lastname').value);
+  autoCompleteEmail() : void {
+    let firstname = this._strUtilsService.normalizeName(this.grp.get(FIRSTNAME_KEY).value);
+    let lastname = this._strUtilsService.normalizeName(this.grp.get(LASTNAME_KEY).value);
     let emailLocalPart = (firstname != '') ? 
                   firstname + ((lastname != '') ?
                     '.' + lastname : '') : lastname;
-    this.grp.get('email').setValue(emailLocalPart + '@alten.com');
+    this.grp.get(EMAIL_KEY).setValue(emailLocalPart + '@alten.com');
   }
 }
