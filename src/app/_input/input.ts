@@ -4,10 +4,10 @@ import { InputType as InpuType } from '../_enums/input-type.enum';
 
 export abstract class MyInput implements OnInit {
   @Input() initialValue : any;
+  @Input() label : string;
   @Input() showRequired : boolean = false;
   
   ctrl : FormControl;
-  @Input() label : string;
   type : InpuType;
 
   @Output() sendCtrl = new EventEmitter<FormControl>();
