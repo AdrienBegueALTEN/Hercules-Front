@@ -12,6 +12,7 @@ const EMAIL_KEY = 'email';
 })
 export class ConsultantEditComponent implements OnInit {
   @Input() consultant : any;
+  @Input() inMissionView : boolean = false;
 
   grp : FormGroup = new FormBuilder().group({});
 

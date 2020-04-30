@@ -15,7 +15,7 @@ export class EmailInputComponent extends MyInput {
 
   ngOnInit() : void {
     const value = (this.initialValue && typeof this.initialValue === 'string') ? this.initialValue : '';
-    this.ctrl = new FormControl(value, [Validators.required, Validators.pattern(AppSettings.EMAIL_PATTERN), Validators.maxLength(255)]);
+    this.ctrl = new FormControl(value, [Validators.pattern(AppSettings.EMAIL_PATTERN), Validators.maxLength(255)]);
     super.ngOnInit();
   }
 

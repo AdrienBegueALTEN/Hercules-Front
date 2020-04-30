@@ -1,11 +1,11 @@
-import { FormControl } from '@angular/forms';
+import { FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { Input, EventEmitter, Output, OnInit } from '@angular/core';
 import { InputType as InpuType } from '../_enums/input-type.enum';
 
 export abstract class MyInput implements OnInit {
   @Input() initialValue : any;
   @Input() label : string;
-  @Input() showRequired : boolean = false;
+  @Input() required : boolean = false;
   
   ctrl : FormControl;
   type : InpuType;
@@ -19,6 +19,8 @@ export abstract class MyInput implements OnInit {
   }
 
   ngOnInit() : void {
+    if (this.required)
+      this.ctrl.setValidators(Validators.required);
     this.sendCtrl.emit(this.ctrl);
   }
 

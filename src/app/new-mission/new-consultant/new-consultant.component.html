@@ -2,15 +2,15 @@
   <app-firstname-input 
     (sendCtrl)="addCtrl('firstname', $event)" 
     (valueChange)="autoCompleteEmail()"
-    [showRequired]="true">
+    [required]="true">
   </app-firstname-input>
   <app-lastname-input
     (sendCtrl)="addCtrl('lastname', $event)"
     (valueChange)="autoCompleteEmail()"
-    [showRequired]="true">
+    [required]="true">
   </app-lastname-input>
   <app-email-input
     (sendCtrl)="addCtrl('email', $event)"
-    [showRequired]="true">
+    [required]="true">
   </app-email-input>
 </form>

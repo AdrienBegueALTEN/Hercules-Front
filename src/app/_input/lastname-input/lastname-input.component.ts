@@ -15,7 +15,7 @@ export class LastnameInputComponent extends MyInput {
 
   ngOnInit() : void {
     const value = (this.initialValue && typeof this.initialValue === 'string') ? this.initialValue : '';
-    this.ctrl = new FormControl(value, [Validators.required, Validators.pattern(AppSettings.NAME_PATTERN), Validators.maxLength(100)]);
+    this.ctrl = new FormControl(value, [Validators.pattern(AppSettings.NAME_PATTERN), Validators.maxLength(100)]);
     super.ngOnInit();
   }
 

@@ -1,3 +1,4 @@
+import { ArrayMissionComponent } from './array-mission/array-mission.component';
 import { XpInputComponent } from './_input/xp-input/xp-input.component';
 import { ConsultantViewComponent } from './_view/consultant-view/consultant-view.component';
 import { EmailInputComponent } from './_input/email-input/email-input.component';
@@ -7,8 +8,8 @@ import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
 import { YesNoDialogComponent } from './dialog/yes-no/yes-no-dialog.component';
 import { NewCustomerComponent } from './new-mission/new-customer/new-customer.component';
 import { NewConsultantComponent } from './new-mission/new-consultant/new-consultant.component';
-import { ConsultantAutocompleteComponent } from './_input/consultant-autocomplete/consultant-autocomplete.component';
-import { CustomerAutocompleteComponent } from './_input/customer-autocomplete/customer-autocomplete.component';
+import { ConsultantAutocompleteComponent } from './_input/autocomplete/consultant/consultant-autocomplete.component';
+import { CustomerAutocompleteComponent } from './_input/autocomplete/customer/customer-autocomplete.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 
 import { MatDialogModule } from '@angular/material/dialog';
@@ -25,10 +26,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
-import {MatTableModule} from '@angular/material/table';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -53,7 +54,6 @@ import { MissionViewComponent } from './_view/mission-view/mission-view.componen
 import { ConsultantEditComponent } from './_edit/consultant-edit/consultant-edit.component';
 import { CustomerEditComponent } from './_edit/customer-edit/customer-edit.component';
 import { CustomerViewComponent } from './_view/customer-view/customer-view.component';
-import { ArrayMissionComponent } from './array-mission/array-mission.component';
 import { ArrayMissionItemComponent } from './array-mission/array-mission-item/array-mission-item.component';
 import { ArrayProjectItemComponent } from './array-mission/array-project-item/array-project-item.component';
 
@@ -87,10 +87,10 @@ import { getFrenchPaginatorIntl } from './_services/french-paginator-intl';
       ConsultantViewComponent,
       ConsultantEditComponent,
       CustomerViewComponent,
-      CustomerEditComponent
+      CustomerEditComponent,
+      ArrayMissionComponent,
       ArrayMissionItemComponent,
-      ArrayProjectItemComponent,
-      
+      ArrayProjectItemComponent
    ],
    imports: [
       AppRoutingModule,
@@ -116,7 +116,8 @@ import { getFrenchPaginatorIntl } from './_services/french-paginator-intl';
       MatSlideToggleModule,
       MatListModule,
       MatGridListModule,
-      MatCheckboxModule
+      MatCheckboxModule,
+      MatDividerModule
    ],
    providers: [
       authInterceptorProviders,

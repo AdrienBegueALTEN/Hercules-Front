@@ -10,7 +10,7 @@ import { HttpStatus } from '../_enums/http-status.enum';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { OkDialogComponent } from '../dialog/ok/ok-dialog.component';
-import { ConsultantAutocompleteComponent } from '../_input/consultant-autocomplete/consultant-autocomplete.component';
+import { ConsultantAutocompleteComponent } from '../_input/autocomplete/consultant/consultant-autocomplete.component';
 
 const CONSULTANT_STEP : number = 0;
 const CUSTOMER_STEP : number = 1;
