@@ -27,4 +27,8 @@ export class DiplomaService {
     }
     return this._httpClient.delete(AppSettings.DIPLOMA_API, options);
   }
+
+  addDiploma(request) : Observable<any>{ 
+    return this._httpClient.post<any>(AppSettings.DIPLOMA_API,request);
+}
 }

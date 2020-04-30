@@ -38,7 +38,7 @@
             [diploma]="diploma" 
             [consultantId]="consultant.id"></app-consultant-diploma>
           <div #messagecontainer></div>
-          <button mat-button (click)="createComponent()">
+          <button mat-button (click)="createComponent(consultant.id)">
             <span class="material-icons">add</span>
           </button>
 

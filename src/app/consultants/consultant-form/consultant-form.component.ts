@@ -52,8 +52,10 @@ export class ConsultantFormComponent implements OnInit {
 
   }
 
-  createComponent() {
+  createComponent(consultantId:number) {
+    this.entry.clear();
     const factory = this.resolver.resolveComponentFactory(ConsultantNewDiplomaComponent);
     const componentRef = this.entry.createComponent(factory);
+    componentRef.instance.consultantId=consultantId;
 }
 }

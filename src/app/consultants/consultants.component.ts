@@ -144,6 +144,7 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
           console.log(err);
         }
       )
+      this.router.navigate(['/consultants']);
     }
   }
 }
