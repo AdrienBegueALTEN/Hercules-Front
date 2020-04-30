@@ -62,6 +62,7 @@ import { ArrayProjectItemComponent } from './array-mission/array-project-item/ar
 import {MissionService} from './_services/mission.service';
 import {ProjectService} from './_services/project.service';
 import { getFrenchPaginatorIntl } from './_services/french-paginator-intl';
+import { ConsultantNewDiplomaComponent } from './consultants/consultant-new-diploma/consultant-new-diploma.component';
 
 @NgModule({
    declarations: [
@@ -94,6 +95,7 @@ import { getFrenchPaginatorIntl } from './_services/french-paginator-intl';
       ArrayMissionComponent,
       ArrayMissionItemComponent,
       ArrayProjectItemComponent,
+      ConsultantNewDiplomaComponent,
       
    ],
    imports: [

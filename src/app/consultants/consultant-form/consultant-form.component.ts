@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { FormArray, Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import {  Router } from '@angular/router';
+import { ConsultantNewDiplomaComponent } from '../consultant-new-diploma/consultant-new-diploma.component';
 
 @Component({
   selector: 'app-consultant-form',
@@ -9,13 +10,14 @@ import {  Router } from '@angular/router';
   styleUrls: ['./consultant-form.component.scss']
 })
 export class ConsultantFormComponent implements OnInit {
-
+  @ViewChild('messagecontainer', { read: ViewContainerRef }) entry: ViewContainerRef;
   @Input() consultant:any;
   consultantForm: FormGroup;
 
   constructor(private consultantService: ConsultantService, 
     private formBuilder: FormBuilder,
-    private route: Router) { }
+    private route: Router,
+    private resolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -50,4 +52,8 @@ export class ConsultantFormComponent implements OnInit {
 
   }
 
+  createComponent() {
+    const factory = this.resolver.resolveComponentFactory(ConsultantNewDiplomaComponent);
+    const componentRef = this.entry.createComponent(factory);
+}
 }
