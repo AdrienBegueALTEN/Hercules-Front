@@ -30,11 +30,13 @@
             </button>
           </form>
           <br>
-          <h1>Modification son manager</h1>
+          <h1>Modifier son manager</h1>
           <app-consultant-manager [consultant]="consultant"></app-consultant-manager>
           <br>
           <h1>Modifier ses diplômes</h1>
-          <app-consultant-diploma *ngFor="let diploma of consultant.diplomas" [diploma]="diploma"></app-consultant-diploma>
+          <app-consultant-diploma *ngFor="let diploma of consultant.diplomas" 
+            [diploma]="diploma" 
+            [consultantId]="consultant.id"></app-consultant-diploma>
           <button mat-button>
             <span class="material-icons">add</span>
           </button>

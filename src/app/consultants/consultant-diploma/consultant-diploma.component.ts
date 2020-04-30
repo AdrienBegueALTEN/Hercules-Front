@@ -12,7 +12,8 @@ import { startWith, map } from 'rxjs/operators';
 })
 export class ConsultantDiplomaComponent implements OnInit {
 
-  @Input() diploma:any
+  @Input() diploma:any;
+  @Input() consultantId:number;
   diplomaForm: FormGroup;
   diplomas : any[];
 
@@ -88,8 +89,22 @@ export class ConsultantDiplomaComponent implements OnInit {
       }
     )
 
-    this.router.navigate(['/consultants'])
+    this.router.navigate(['/consultants/'+this.consultantId])
     
+  }
+
+  onDelete(){
+    const req={
+      consultantId: this.consultantId,
+      diplomaId: this.diploma.id
+    }
+    this.diplomaService.deleteDiploma(req).subscribe(
+      ()=>{},
+      (err) => {
+        console.log(err);
+      }
+    )
+    this.router.navigate(['/consultants/'+this.consultantId])
   }
 
 }
