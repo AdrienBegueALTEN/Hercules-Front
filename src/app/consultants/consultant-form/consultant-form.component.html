@@ -1,56 +1,45 @@
 
     
-    <h1>Modifier un consultant</h1>
+    
     <mat-card-content>
-        <form [formGroup]="consultantForm">
+      <br>
+      <h1>Modifier ses informations</h1>
+        <form [formGroup]="consultantForm" (ngSubmit)="onSubmit()">
             <mat-form-field>
               <mat-label>Prénom</mat-label>
-              <input matInput type="text" formControlName="firstname" value="{{consultant.firstname}}">
+              <input matInput type="text" formControlName="firstname">
             </mat-form-field>
+            &nbsp;
             <mat-form-field>
               <mat-label>Nom</mat-label>
-              <input matInput type="text" formControlName="lastname" value="{{consultant.lastname}}">
+              <input matInput type="text" formControlName="lastname">
             </mat-form-field>
             <br>
             <mat-form-field style="width:100%;">
               <mat-label>E-mail</mat-label>
-              <input matInput type="email"  formControlName="email" value="{{consultant.email}}">
+              <input matInput type="email"  formControlName="email">
             </mat-form-field>
             <br>
             <mat-form-field>
               <mat-label>Expérience</mat-label>
-              <input matInput type="number" value="{{consultant.experience}}">
+              <input matInput type="number" formControlName="experience">
             </mat-form-field>
-            <mat-form-field>
-              <mat-label>Manager</mat-label>
-              <input matInput type="text" value="{{consultant.manager.firstname}} {{consultant.manager.lastname}}">
-            </mat-form-field>
-            <!--<div formArrayName="diplomas">
-              <h3>Diplômes</h3>
-              <div *ngFor="let d of getDiplomas().controls; let i = index">
-                <mat-form-field>
-                  <mat-label>Année</mat-label>
-                  <input matInput type="text" [formControlName]="i">
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>Nom du diplôme</mat-label>
-                  <input matInput type="text" [formControlName]="i">
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>Ecole</mat-label>
-                  <input matInput type="text" [formControlName]="i">
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>Ville</mat-label>
-                  <input matInput type="text" [formControlName]="i">
-                </mat-form-field>
-              </div>
-              <button type="button" (click)="onAddHobby()">Ajouter un diplôme</button>
-            </div>-->
-            
             &nbsp;
-            <button mat-icon-button style="color: green">
+            <button type="submit" mat-icon-button style="color: green">
               <span class="material-icons">done</span>
             </button>
           </form>
+          <br>
+          <h1>Modifier son manager</h1>
+          <app-consultant-manager [consultant]="consultant"></app-consultant-manager>
+          <br>
+          <h1>Modifier ses diplômes</h1>
+          <app-consultant-diploma *ngFor="let diploma of consultant.diplomas" 
+            [diploma]="diploma" 
+            [consultantId]="consultant.id"></app-consultant-diploma>
+          <div #messagecontainer></div>
+          <button mat-button (click)="createComponent()">
+            <span class="material-icons">add</span>
+          </button>
+
     </mat-card-content>

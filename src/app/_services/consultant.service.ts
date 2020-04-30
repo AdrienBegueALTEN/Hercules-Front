@@ -32,4 +32,8 @@ export class ConsultantService {
   deleteConsultant(id : number) : Observable<any> {
     return this._httpClient.delete(AppSettings.CONSULTANT_API + id, AppSettings.HTTP_OPTIONS);
   }
+
+  updateConsultant(cons: any) : Observable<any> {
+    return this._httpClient.put(AppSettings.CONSULTANT_API, cons, {observe: 'response'});
+  }
 }

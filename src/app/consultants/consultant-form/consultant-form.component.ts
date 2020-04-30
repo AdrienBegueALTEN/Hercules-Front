@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormArray, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { FormArray, Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ConsultantService } from 'src/app/_services/consultant.service';
-import { ActivatedRoute } from '@angular/router';
+import {  Router } from '@angular/router';
+import { ConsultantNewDiplomaComponent } from '../consultant-new-diploma/consultant-new-diploma.component';
 
 @Component({
   selector: 'app-consultant-form',
@@ -9,13 +10,14 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./consultant-form.component.scss']
 })
 export class ConsultantFormComponent implements OnInit {
-
+  @ViewChild('messagecontainer', { read: ViewContainerRef }) entry: ViewContainerRef;
   @Input() consultant:any;
   consultantForm: FormGroup;
 
   constructor(private consultantService: ConsultantService, 
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private route: Router,
+    private resolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -23,42 +25,35 @@ export class ConsultantFormComponent implements OnInit {
 
   initForm(){
     this.consultantForm = this.formBuilder.group({
-      firstname:'',
-      lastname:'',
-      email:'',
-      diplomas: this.formBuilder.array([])
+      firstname: new FormControl(this.consultant.firstname),
+      lastname: new FormControl(this.consultant.lastname),
+      email: new FormControl(this.consultant.email),
+      experience: new FormControl(this.consultant.experience),
+      manager: new FormControl(this.consultant.manager.firstname+' '+this.consultant.manager.lastname)
     });
-
-    for(let d of this.consultant.diplomas){
-      const newDiplomasControl = this.formBuilder.group({
-        year:'',
-        name:'',
-        school:'',
-        city:''
-      });
-      this.getDiplomas().push(newDiplomasControl);
-    }
   }
 
-  getDiplomas(): FormArray {
-    return this.consultantForm.get('diplomas') as FormArray;
-  }
-
-  onAddHobby() {
-    const diplomaGroup = this.formBuilder.group({
-      year:'',
-        name:'',
-        school:'',
-        city:''
-    })
-    this.getDiplomas().push(diplomaGroup);
-  }
-
-  /*onSubmit(){
-    const formValue = this.consultantForm.value;
+  onSubmit(){
+    const values = this.consultantForm.value;
     const consultant={
+      'id':this.consultant.id,
+      'email':values.email,
+      'lastname':values.lastname,
+      'firstname':values.firstname,
+      'experience':values.experience
+    };
+    
+    this.consultantService.updateConsultant(consultant).subscribe(
+      ()=>{},
+      (err) => {console.log}
+    )
 
-    }
-  }*/
+    this.route.navigateByUrl('/consultants/'+this.consultant.id);
 
+  }
+
+  createComponent() {
+    const factory = this.resolver.resolveComponentFactory(ConsultantNewDiplomaComponent);
+    const componentRef = this.entry.createComponent(factory);
+}
 }
