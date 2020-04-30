@@ -41,10 +41,10 @@ export class DeactivateComponent implements OnInit {
       'releaseDate':new Date(values.releaseDate)
     }
 
-    this.consultantService.updateConsultant(cons).subscribe(
+    /*this.consultantService.updateConsultant(cons).subscribe(
       ()=>{},
       (err) => {console.log(err)}
-    )
+    )*/
     this.router.navigate(['/consultants']);
   }
 

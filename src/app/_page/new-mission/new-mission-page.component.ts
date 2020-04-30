@@ -1,27 +1,27 @@
 import { AuthService } from 'src/app/_services/auth.service';
-import { YesNoDialogComponent } from '../dialog/yes-no/yes-no-dialog.component';
-import { MissionService } from './../_services/mission.service';
+import { YesNoDialogComponent } from '../../dialog/yes-no/yes-no-dialog.component';
+import { MissionService } from '../../_services/mission.service';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit, ChangeDetectorRef, AfterContentChecked, ViewChild } from '@angular/core';
-import { CustomerService } from '../_services/customer.service';
+import { CustomerService } from '../../_services/customer.service';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { HttpStatus } from '../_enums/http-status.enum';
+import { HttpStatus } from '../../_enums/http-status.enum';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
-import { OkDialogComponent } from '../dialog/ok/ok-dialog.component';
-import { ConsultantAutocompleteComponent } from '../_input/autocomplete/consultant/consultant-autocomplete.component';
+import { OkDialogComponent } from '../../dialog/ok/ok-dialog.component';
+import { ConsultantAutocompleteComponent } from '../../_input/autocomplete/consultant/consultant-autocomplete.component';
 
 const CONSULTANT_STEP : number = 0;
 const CUSTOMER_STEP : number = 1;
 const NEW_MISSION_STEP : number = 2;
 
 @Component({
-  selector: 'app-new-mission',
-  templateUrl: './new-mission.component.html',
-  styleUrls: ['./new-mission.component.scss']
+  selector: 'app-new-mission-page',
+  templateUrl: './new-mission-page.component.html',
+  styleUrls: ['./new-mission-page.component.scss']
 })
-export class NewMissionComponent implements OnInit, AfterContentChecked {
+export class NewMissionPageComponent implements OnInit, AfterContentChecked {
   newConsultant : boolean = false;
   consultantForm : FormControl | FormGroup;
   newCustomer : boolean = false;

@@ -6,7 +6,7 @@ import { startWith, map } from 'rxjs/operators';
 @Component({
   selector: 'app-new-customer',
   templateUrl: './new-customer.component.html',
-  styleUrls: ['../new-mission.component.scss']
+  styleUrls: ['../new-mission-page.component.scss']
 })
 export class NewCustomerComponent implements OnInit {
   @Input() customers : any[];

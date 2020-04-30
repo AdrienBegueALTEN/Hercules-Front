@@ -6,8 +6,8 @@ import { LastnameInputComponent } from './_input/lastname-input/lastname-input.c
 import { FirstnameInputComponent } from './_input/firstname-input/firstname-input.component';
 import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
 import { YesNoDialogComponent } from './dialog/yes-no/yes-no-dialog.component';
-import { NewCustomerComponent } from './new-mission/new-customer/new-customer.component';
-import { NewConsultantComponent } from './new-mission/new-consultant/new-consultant.component';
+import { NewCustomerComponent } from './_page/new-mission/new-customer/new-customer.component';
+import { NewConsultantComponent } from './_page/new-mission/new-consultant/new-consultant.component';
 import { ConsultantAutocompleteComponent } from './_input/autocomplete/consultant/consultant-autocomplete.component';
 import { CustomerAutocompleteComponent } from './_input/autocomplete/customer/customer-autocomplete.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
@@ -42,15 +42,14 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoginComponent } from 'src/app/login//login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { authInterceptorProviders } from 'src/app/_helper/auth.interceptor';
-import { HomeComponent } from 'src/app/home/home.component';
-import { NewMissionComponent } from 'src/app/new-mission/new-mission.component';
+import { NewMissionPageComponent } from 'src/app/_page/new-mission/new-mission-page.component';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
 import { ConsultantsComponent } from './consultants/consultants.component';
 import { ConsultantDetailsComponent } from './consultants/consultant-details/consultant-details.component';
 import { DeactivateComponent } from './consultants/deactivate/deactivate.component';
 import { ConsultantCardComponent } from './consultants/consultant-card/consultant-card.component';
 import { ConsultantFormComponent } from './consultants/consultant-form/consultant-form.component';
-import { MissionViewComponent } from './_view/mission-view/mission-view.component';
+import { MissionPageComponent } from './_page/mission/mission-page.component';
 import { ConsultantEditComponent } from './_edit/consultant-edit/consultant-edit.component';
 import { CustomerEditComponent } from './_edit/customer-edit/customer-edit.component';
 import { CustomerViewComponent } from './_view/customer-view/customer-view.component';
@@ -69,11 +68,10 @@ import { ConsultantNewDiplomaComponent } from './consultants/consultant-new-dipl
       AppComponent,
       ConsultantAutocompleteComponent,
       CustomerAutocompleteComponent,
-      HomeComponent,
       LoginComponent,
       NewConsultantComponent,
       NewCustomerComponent,
-      NewMissionComponent,
+      NewMissionPageComponent,
       OkDialogComponent,
       PageNotFoundComponent,
       ConsultantsComponent,
@@ -83,7 +81,7 @@ import { ConsultantNewDiplomaComponent } from './consultants/consultant-new-dipl
       ConsultantCardComponent,
       ConsultantFormComponent,
       ConsultantManagerComponent,
-      MissionViewComponent,
+      MissionPageComponent,
       ConsultantDiplomaComponent,
       FirstnameInputComponent,
       LastnameInputComponent,
@@ -96,8 +94,7 @@ import { ConsultantNewDiplomaComponent } from './consultants/consultant-new-dipl
       ArrayMissionComponent,
       ArrayMissionItemComponent,
       ArrayProjectItemComponent,
-      ConsultantNewDiplomaComponent,
-      
+      ConsultantNewDiplomaComponent
    ],
    imports: [
       AppRoutingModule,

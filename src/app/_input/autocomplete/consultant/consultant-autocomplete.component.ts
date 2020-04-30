@@ -1,11 +1,10 @@
-import { AuthService } from 'src/app/_services/auth.service';
-
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Role } from 'src/app/_enums/role.enum';
 import { startWith, map } from 'rxjs/operators';
+import { ConsultantService } from 'src/app/_services/consultant.service';
+import { AuthService } from 'src/app/_services/auth.service';
 
 const _filterConsultant = (consultant : any, value : string) : boolean => {
   return consultant.firstname.toLowerCase().concat(' ', consultant.lastname.toLowerCase()).indexOf(value) === 0 ||
@@ -46,7 +45,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
   private _initOptions() {
     const user = this._authService.getUser();
 
-    this._consultantService.getAll(true).subscribe(
+    this._consultantService.getConsultants(true).subscribe(
       consultants => {
         if (user.roles.includes(Role.MANAGER)) {
           this.displayInGrps = true;

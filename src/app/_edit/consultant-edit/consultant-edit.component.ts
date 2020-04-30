@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 const FIRSTNAME_KEY = 'firstname';
 const LASTNAME_KEY = 'lastname';
 const EMAIL_KEY = 'email';
+const XP_KEY = 'xp';
+const RELEASE_DATE_KEY = 'releaseDate';
 
 @Component({
   selector: 'app-consultant-edit',

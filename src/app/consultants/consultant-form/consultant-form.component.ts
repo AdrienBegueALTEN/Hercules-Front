@@ -43,10 +43,10 @@ export class ConsultantFormComponent implements OnInit {
       'experience':values.experience
     };
     
-    this.consultantService.updateConsultant(consultant).subscribe(
+    /*this.consultantService.updateConsultant(consultant).subscribe(
       ()=>{},
       (err) => {console.log}
-    )
+    )*/
 
     this.route.navigateByUrl('/consultants/'+this.consultant.id);
 

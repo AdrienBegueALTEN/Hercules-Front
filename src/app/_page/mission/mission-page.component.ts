@@ -5,12 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Role } from '../../_enums/role.enum';
 
 @Component({
-  selector: 'app-mission-view',
-  templateUrl: './mission-view.component.html',
-  styleUrls: ['./mission-view.component.scss']
+  selector: 'app-mission-page',
+  templateUrl: './mission-page.component.html',
+  styleUrls: ['./mission-page.component.scss']
 })
-export class MissionViewComponent implements OnInit {
-
+export class MissionPageComponent implements OnInit {
   mission : any;
   writingRights : boolean = false;
 

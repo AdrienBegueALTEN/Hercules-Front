@@ -1,4 +1,4 @@
-import { StrUtilsService } from './../../_services/str-utils.service';
+import { StrUtilsService } from '../../../_services/str-utils.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
@@ -9,7 +9,7 @@ const EMAIL_KEY = 'email';
 @Component({
   selector: 'app-new-consultant',
   templateUrl: './new-consultant.component.html',
-  styleUrls: ['../new-mission.component.scss']
+  styleUrls: ['../new-mission-page.component.scss']
 })
 export class NewConsultantComponent implements OnInit {
   grp : FormGroup = new FormBuilder().group({});

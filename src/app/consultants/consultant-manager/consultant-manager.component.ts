@@ -53,12 +53,12 @@ export class ConsultantManagerComponent implements OnInit {
         manager:this.managerCtrl.value.id,
         id:this.consultant.id
       }
-      this.consultantService.updateConsultant(cons).subscribe(
+      /*this.consultantService.updateConsultant(cons).subscribe(
         () => {},
         (err) => {
           console.log(err);
         }
-      )
+      )*/
       console.log(cons);
     }
   }
