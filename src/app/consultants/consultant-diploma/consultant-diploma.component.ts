@@ -89,7 +89,7 @@ export class ConsultantDiplomaComponent implements OnInit {
       }
     )
 
-    this.router.navigate(['/consultants/'+this.consultantId])
+    this.router.navigateByUrl('/consultants/'+this.consultantId);
     
   }
 
@@ -104,7 +104,7 @@ export class ConsultantDiplomaComponent implements OnInit {
         console.log(err);
       }
     )
-    this.router.navigate(['/consultants/'+this.consultantId])
+    this.router.navigateByUrl('/consultants/'+this.consultantId);
   }
 
 }

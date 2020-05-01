@@ -50,7 +50,7 @@ export class ConsultantNewDiplomaComponent implements OnInit {
       (err) => {console.log(err);}
     );
 
-    this.router.navigate(['/consultants/'+this.consultantId])
+    this.router.navigateByUrl('/consultants/'+this.consultantId);
     
   }
 
