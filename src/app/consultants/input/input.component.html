@@ -1,0 +1,5 @@
+<mat-form-field>
+    <mat-label>{{title}}</mat-label>
+    <input matInput [type]="typeInput" [formControl]="ctrl" (keyup.enter)="update()" (blur)="update()">
+</mat-form-field>
+&nbsp;
