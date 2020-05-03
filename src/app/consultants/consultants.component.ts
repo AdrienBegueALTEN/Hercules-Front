@@ -67,7 +67,7 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
       this.userIsManager = this.userIsAdmin || this.user.role == 'MANAGER';
     }
 
-    this.consultantService.getAll(false).subscribe(
+    this.consultantService.getConsultants(false).subscribe(
       (data) => {
         this.consultants = data;
         this.createDatasource(data);

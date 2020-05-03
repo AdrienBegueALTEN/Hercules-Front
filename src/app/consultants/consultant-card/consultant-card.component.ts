@@ -20,7 +20,7 @@ export class ConsultantCardComponent implements OnInit, OnDestroy {
     private router:Router,
     private _authService: AuthService) { 
       this.navigationSubscription = this.router.events.subscribe((e: any) => {
-        // If it is a NavigationEnd event re-initalise the component
+        // If it is a NaviggetConsultantd event re-initalise the component
         if (e instanceof NavigationEnd) {
           this.initialize();
         }
@@ -47,7 +47,7 @@ export class ConsultantCardComponent implements OnInit, OnDestroy {
 
 
     const id = this.route.snapshot.params['id'];
-    this.consultantService.getById(+id).subscribe(
+    this.consultantService.getConsultant(+id).subscribe(
       (data)=>{
         this.consultant=data;
       },

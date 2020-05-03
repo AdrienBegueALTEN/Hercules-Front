@@ -1,0 +1,27 @@
+<mat-tab-group *ngIf="!!consultant" animationDuration="0ms" mat-align-tabs="center">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>person</mat-icon>
+      {{consultant.firstname}} {{consultant.lastname}}
+    </ng-template>
+    <app-consultant-view 
+      *ngIf="!writingRights" 
+      [consultant]="consultant">
+    </app-consultant-view>
+    <app-consultant-edit 
+      *ngIf="writingRights"
+      [consultant]="consultant">
+    </app-consultant-edit>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>view_carousel</mat-icon>
+      Ses missions
+    </ng-template>
+  </mat-tab>
+  <mat-tab *ngIf="writingRights" disabled="true">
+    <ng-template mat-tab-label>
+      <button mat-button color="warn">Indiquer la sortie des effectifs</button>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

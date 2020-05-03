@@ -1,0 +1,54 @@
+<div *ngIf="!!consultant">
+  <div id="firstRow">
+  <mat-card id="infos">
+    <mat-card-title>Informations personnelles</mat-card-title>
+      <mat-card-content>
+        <app-firstname-input
+          (sendCtrl)="addCtrl('firstname', $event)"
+          (valueChange)="valueChange('firstname')"
+          [initialValue]="consultant.firstname"
+          [required]="true">
+        </app-firstname-input>
+        <app-lastname-input
+          (sendCtrl)="addCtrl('lastname', $event)"
+          (valueChange)="valueChange('lastname')"
+          [initialValue]="consultant.lastname"
+          [required]="true">
+        </app-lastname-input>
+        <app-email-input 
+          (sendCtrl)="addCtrl('email', $event)"
+          (valueChange)="valueChange('email')"
+          [initialValue]="consultant.email"
+          [required]="true">
+        </app-email-input>
+        <app-xp-input *ngIf="!inMissionView"
+          (sendCtrl)="addCtrl('experience', $event)"
+          (valueChange)="valueChange('experience')"
+          [initialValue]="consultant.experience">
+      </app-xp-input>
+      </mat-card-content>
+    </mat-card>
+  <mat-card *ngIf="inMissionView" id="xp">
+    <mat-card-title>Années d'expérience</mat-card-title>
+      <mat-card-content>
+          <app-xp-input 
+            (sendCtrl)="addCtrl('startXp', $event)"
+            (valueChange)="valueChange('startExperience')"
+            [initialValue]="consultant.startExperience"
+            label="Au début de la mission">
+          </app-xp-input>
+          <app-xp-input 
+            (sendCtrl)="addCtrl('experience', $event)"
+            (valueChange)="valueChange('experience')"
+            [initialValue]="consultant.experience"
+            label="Actuellement">
+          </app-xp-input>
+        </mat-card-content>
+      </mat-card> 
+    </div> 
+    <mat-card>
+      <mat-card-title>Formation</mat-card-title>
+      <mat-card-content>
+      </mat-card-content>
+    </mat-card>
+</div>
