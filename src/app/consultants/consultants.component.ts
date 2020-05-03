@@ -32,6 +32,7 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<any>;
   columnsToDisplay = ['firstname', 'lastname', 'email', 'manager', 'actions'];
 
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -144,7 +145,7 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
           console.log(err);
         }
       )
-      this.router.navigate(['/consultants']);
+      this.router.navigateByUrl('/consultants');
     }
   }
 }

@@ -1,4 +1,4 @@
-<form [formGroup]="diplomaForm" (ngSubmit)="onSubmit()">
+<form style="vertical-align: top;" [formGroup]="diplomaForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
         <mat-label>Ville</mat-label>
         <input matInput type="text" formControlName="city">
@@ -22,10 +22,6 @@
 
     <button type="submit" mat-button>
         <span class="material-icons">done</span>
-    </button>
-
-    <button mat-button color="warn">
-        <span class="material-icons">delete</span>
     </button>
 </form>
 
