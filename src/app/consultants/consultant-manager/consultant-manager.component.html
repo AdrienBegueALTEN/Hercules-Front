@@ -4,7 +4,8 @@
              placeholder="Manager"
              aria-label="Manager"
              [matAutocomplete]="auto"
-             [formControl]="managerCtrl">
+             [formControl]="managerCtrl"
+             value="aaa">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="getManagerSelected">
         <mat-option *ngFor="let manager of filteredManagers | async" [value]="manager">
           <span>{{manager.firstname}} {{manager.lastname}}</span> |

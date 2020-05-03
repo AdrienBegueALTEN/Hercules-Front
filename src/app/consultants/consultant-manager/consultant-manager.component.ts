@@ -3,6 +3,8 @@ import { startWith, map } from 'rxjs/operators';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ConsultantService } from 'src/app/_services/consultant.service';
+import { Router } from '@angular/router';
+import { ManagerService } from 'src/app/_services/manager.service';
 
 @Component({
   selector: 'app-consultant-manager',
@@ -14,31 +16,34 @@ export class ConsultantManagerComponent implements OnInit {
   managerCtrl = new FormControl();
   filteredManagers: Observable<any[]>;
 
-  managers: any[] = [
-    {
-      id:1,
-      lastname: 'Admin',
-      firstname: 'Admin',
-      email:'admin.admin@alten.com'
-    },
-    {
-      id:2,
-      lastname: 'Manager',
-      firstname: 'Manager',
-      email:'manager.manager@alten.com'
-    }
-  ];
+  managers: any[];
 
   constructor(private formBuilder: FormBuilder,
-    private consultantService: ConsultantService) {
-    this.filteredManagers = this.managerCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(state => state ? this._filterStates(state) : this.managers.slice())
-      );
+    private consultantService: ConsultantService,
+    private router: Router,
+    private managerService: ManagerService) {
+    
   }
 
   ngOnInit(): void {
+    this.initialize();
+  }
+
+  initialize(){
+    this.managerCtrl.setValue(this.consultant.manager);
+    this.managerService.getAll(true).subscribe(
+      (data)=> {
+        this.managers = data;
+        this.filteredManagers = this.managerCtrl.valueChanges
+          .pipe(
+            startWith(''),
+            map(state => state ? this._filterStates(state) : this.managers.slice())
+          );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   private _filterStates(value: string): any[] {
@@ -49,17 +54,18 @@ export class ConsultantManagerComponent implements OnInit {
 
   onSubmit(){
     if(this.managerCtrl.value!=null){
-      const cons = {
-        manager:this.managerCtrl.value.id,
+      const json = {
+        fieldName: 'manager',
+        value:this.managerCtrl.value.id,
         id:this.consultant.id
       }
-      this.consultantService.updateConsultant(cons).subscribe(
+      this.consultantService.updateConsultant(json).subscribe(
         () => {},
         (err) => {
           console.log(err);
         }
       )
-      console.log(cons);
+      this.router.navigateByUrl('/consultants');
     }
   }
 

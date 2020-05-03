@@ -28,7 +28,6 @@ export class ConsultantDiplomaComponent implements OnInit {
     this.initForm();
     this.diplomaService.getAll().subscribe(
       (data) => {
-        console.log(data);
         this.diplomas = data;
 
         this.filteredDiplomasCity = this.diplomaForm.controls['city'].valueChanges.pipe(
