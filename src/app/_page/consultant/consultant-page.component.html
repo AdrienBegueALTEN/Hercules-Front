@@ -19,9 +19,9 @@
       Ses missions
     </ng-template>
   </mat-tab>
-  <mat-tab disabled="true">
+  <mat-tab *ngIf="writingRights" disabled="true">
     <ng-template mat-tab-label>
-      Consultant
+      <button mat-button color="warn">Indiquer la sortie des effectifs</button>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

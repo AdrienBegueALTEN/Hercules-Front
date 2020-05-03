@@ -9,18 +9,21 @@ export abstract class MyInput implements OnInit {
   
   ctrl : FormControl;
   type : InpuType;
+  validators : ValidatorFn[]
 
   @Output() sendCtrl = new EventEmitter<FormControl>();
   @Output() valueChange : EventEmitter<void> = new EventEmitter();
 
-  constructor(label : string, type : InpuType) {
+  constructor(label : string, type : InpuType, validators : ValidatorFn[]) {
     this.label = label;
     this.type = type;
+    this.validators = validators;
   }
 
   ngOnInit() : void {
     if (this.required)
-      this.ctrl.setValidators(Validators.required);
+      this.validators.push(Validators.required);
+    this.ctrl = new FormControl(this.initialValue, this.validators)
     this.sendCtrl.emit(this.ctrl);
   }
 

@@ -25,6 +25,8 @@
       [consultant]="mission.consultant"
       [inMissionView]="true">
     </app-consultant-edit>
+    <a [href]="'/consultants/' + mission.consultant.id" mat-button color="accent">Accéder à la page du consultant</a>
+    <button *ngIf="writingRights" mat-button color="warn">Indiquer la sortie des effectifs</button>
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>

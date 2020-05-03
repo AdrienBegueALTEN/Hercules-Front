@@ -34,12 +34,12 @@ export class ConsultantService {
   }
 
   updateConsultant(id : number, fieldName : String, value : any) : Observable<any> {
-    return this._httpClient.post(AppSettings.CONSULTANT_API,
+    return this._httpClient.put(AppSettings.CONSULTANT_API,
       {
         id : id,
         fieldName : fieldName,
         value : value,
       },
-      AppSettings.HTTP_OPTIONS);
+      {observe: 'response'});
   }
 }

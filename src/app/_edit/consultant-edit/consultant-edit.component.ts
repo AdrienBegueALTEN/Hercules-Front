@@ -1,34 +1,73 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { HttpStatus } from './../../_enums/http-status.enum';
+import { ConsultantService } from 'src/app/_services/consultant.service';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-const FIRSTNAME_KEY = 'firstname';
-const LASTNAME_KEY = 'lastname';
-const EMAIL_KEY = 'email';
-const XP_KEY = 'xp';
-const RELEASE_DATE_KEY = 'releaseDate';
+const XP_KEY = 'experience';
 
 @Component({
   selector: 'app-consultant-edit',
   templateUrl: './consultant-edit.component.html',
   styleUrls: ['./consultant-edit.component.scss']
 })
-export class ConsultantEditComponent implements OnInit {
+export class ConsultantEditComponent {
   @Input() consultant : any;
   @Input() inMissionView : boolean = false;
 
+  private _oldValues : object = {}
   grp : FormGroup = new FormBuilder().group({});
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  constructor(
+    private _consultantService : ConsultantService,
+    private _dialog : MatDialog,
+    private _snackBar: MatSnackBar
+  ) { }
 
   addCtrl(key : string, ctrl : FormControl) : void {
     this.grp.addControl(key, ctrl);
   }
 
   valueChange(key : string) : void {
-    if (!this.grp.controls[key].valid) return;
+    if (!this._doUpdate(key))
+      return;
+    const newValue : any = (key === XP_KEY) ? 
+      Number(this.grp.controls[key].value) : this.grp.controls[key].value;
+    this._consultantService
+      .updateConsultant(this.consultant.id, key, newValue).subscribe(
+        () => {
+          this.consultant[key] = newValue;
+          this._oldValues[key] = newValue;
+          this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+        },
+        error => { this._handleError(error.status); }
+      )
   }
 
+  private _doUpdate(key : string) {
+    return this.grp.controls[key].valid &&
+      this._oldValues[key] != this.grp.controls[key].value;
+  }
+
+  private _handleError(status : number) : void {
+    let message : string;
+    switch(status) {
+      case HttpStatus.CONFLICT :
+        message = 'Cette adresse mail est indisponible.';
+        break;
+      default :
+        message = 'Impossible de mettre à jour ce champ.';
+    }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      title : 'Echec de la modification',
+      message : message,
+      ok: 'OK'
+    };
+    this._dialog.open(OkDialogComponent, dialogConfig);
+  }
 }

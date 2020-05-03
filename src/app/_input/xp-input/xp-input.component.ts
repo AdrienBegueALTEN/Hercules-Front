@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MyInput } from '../input';
-import { Validators, FormControl } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { CtrlError } from 'src/app/_enums/ctrl-error.enum';
 import { InputType } from 'src/app/_enums/input-type.enum';
 
@@ -10,13 +10,7 @@ import { InputType } from 'src/app/_enums/input-type.enum';
   styleUrls: ['../input.scss']
 })
 export class XpInputComponent extends MyInput {
-  constructor() { super("Années d'expérience", InputType.NUMBER); }
-
-  ngOnInit() : void {
-    const value = (this.initialValue && typeof this.initialValue === 'number') ? this.initialValue : 0;
-    this.ctrl = new FormControl(value, [Validators.min(0), Validators.maxLength(100)]);
-    super.ngOnInit();
-  }
+  constructor() { super("Années d'expérience", InputType.NUMBER, [Validators.min(0), Validators.max(75)]); }
 
    public getError() : string {
     return  this.ctrl.hasError(CtrlError.MIN) ? 'Le nombre d\'années d\'expérience ne peut pas être négatif' :

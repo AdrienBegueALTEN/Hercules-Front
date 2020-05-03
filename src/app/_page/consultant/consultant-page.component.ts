@@ -26,7 +26,7 @@ export class ConsultantPageComponent implements OnInit {
         this.consultant = consultant;
         const user = this._authService.getUser();
         this.writingRights = 
-          user.roles.includes(Role.MANAGER) && consultant.manager == user.id;
+          user.roles.includes(Role.MANAGER) && consultant.manager.id == user.id;
       },
       () => window.location.replace('not-found')
     )

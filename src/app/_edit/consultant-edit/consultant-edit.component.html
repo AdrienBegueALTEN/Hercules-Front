@@ -22,9 +22,9 @@
           [required]="true">
         </app-email-input>
         <app-xp-input *ngIf="!inMissionView"
-          (sendCtrl)="addCtrl('xp', $event)"
-          (valueChange)="valueChange('xp')"
-          [initialValue]="consultant.xp">
+          (sendCtrl)="addCtrl('experience', $event)"
+          (valueChange)="valueChange('experience')"
+          [initialValue]="consultant.experience">
       </app-xp-input>
       </mat-card-content>
     </mat-card>
@@ -33,14 +33,14 @@
       <mat-card-content>
           <app-xp-input 
             (sendCtrl)="addCtrl('startXp', $event)"
-            (valueChange)="valueChange('startXp')"
-            [initialValue]="consultant.startXp"
+            (valueChange)="valueChange('startExperience')"
+            [initialValue]="consultant.startExperience"
             label="Au début de la mission">
           </app-xp-input>
           <app-xp-input 
-            (sendCtrl)="addCtrl('xp', $event)"
-            (valueChange)="valueChange('xp')"
-            [initialValue]="consultant.xp"
+            (sendCtrl)="addCtrl('experience', $event)"
+            (valueChange)="valueChange('experience')"
+            [initialValue]="consultant.experience"
             label="Actuellement">
           </app-xp-input>
         </mat-card-content>
@@ -51,6 +51,4 @@
       <mat-card-content>
       </mat-card-content>
     </mat-card>
-  <a [href]="'/consultants/' + consultant.id" mat-button color="accent">Accéder à la page du consultant</a>
-  <button mat-button color="warn">Indiquer la sortie des effectifs</button>
 </div>
