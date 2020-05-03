@@ -1,20 +1,18 @@
-<form class="example-form" (ngSubmit)="onSubmit()">
-    <mat-form-field class="example-full-width">
+<form class="full-width" >
+    <mat-form-field class="full-width">
       <input matInput
              placeholder="Manager"
              aria-label="Manager"
              [matAutocomplete]="auto"
              [formControl]="managerCtrl"
-             value="aaa">
+             (keyup.enter)="onSubmit()">
+      <mat-hint>Pressez "entrer" pour sauvegarder un manager</mat-hint>
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="getManagerSelected">
         <mat-option *ngFor="let manager of filteredManagers | async" [value]="manager">
-          <span>{{manager.firstname}} {{manager.lastname}}</span> |
-          <small>{{manager.email}}</small>
+          <span>{{manager.firstname}} {{manager.lastname}}</span> -
+          <i>{{manager.email}}</i>
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
-    <button style="display: inline-block;" type="submit" mat-icon-button style="color: green">
-      <span class="material-icons">done</span>
-    </button>
   
   </form>

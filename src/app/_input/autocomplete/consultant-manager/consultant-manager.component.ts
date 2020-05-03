@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Router } from '@angular/router';
 import { ManagerService } from 'src/app/_services/manager.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-consultant-manager',
@@ -21,7 +22,8 @@ export class ConsultantManagerComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private consultantService: ConsultantService,
     private router: Router,
-    private managerService: ManagerService) {
+    private managerService: ManagerService,
+    private _snackBar: MatSnackBar) {
     
   }
 
@@ -54,13 +56,10 @@ export class ConsultantManagerComponent implements OnInit {
 
   onSubmit(){
     if(this.managerCtrl.value!=null){
-      const json = {
-        fieldName: 'manager',
-        value:this.managerCtrl.value.id,
-        id:this.consultant.id
-      }
-      this.consultantService.updateConsultant(json).subscribe(
-        () => {},
+      this.consultantService.updateConsultant(this.consultant.id,'manager',this.managerCtrl.value.id).subscribe(
+        () => {
+          this._snackBar.open('Mise à jour effectuée', 'x', {duration: 2000});
+        },
         (err) => {
           console.log(err);
         }

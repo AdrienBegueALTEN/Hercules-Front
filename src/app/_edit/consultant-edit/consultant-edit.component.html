@@ -49,6 +49,20 @@
     <mat-card>
       <mat-card-title>Formation</mat-card-title>
       <mat-card-content>
+        <app-consultant-diploma 
+          *ngFor="let diploma of consultant.diplomas" 
+          [diploma]="diploma" 
+          [consultantId]="consultant.id"></app-consultant-diploma>
+          <button  mat-icon-button (click)="createComponent(consultant.id)">
+            <span class="material-icons">add</span>
+          </button>
+          <div #diplomacontainer></div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>Manager</mat-card-title>
+      <mat-card-content>
+        <app-consultant-manager [consultant]="consultant"></app-consultant-manager>
       </mat-card-content>
     </mat-card>
 </div>

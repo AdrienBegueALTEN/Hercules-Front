@@ -36,22 +36,12 @@ export class DeactivateComponent implements OnInit {
   onSubmit(){
     const values = this.releaseForm.value;
 
-    const json = {
-      id: this.data.consultant.id,
-      fieldName: 'releaseDate',
-      value: values.releaseDate
-    };
 
-    /*const json = {
-      id: this.data.consultant.id,
-      releaseDate: new Date(values.releaseDate)
-    };*/
-
-    this.consultantService.updateConsultant(json).subscribe(
+    this.consultantService.updateConsultant(this.data.consultant.id,'releaseDate',values.releaseDate).subscribe(
       ()=>{},
       (err) => {console.log(err)}
     )
-    this.router.navigateByUrl('/consultants/'+this.data.consultant.id);
+    this.router.navigateByUrl('/consultants');
   }
 
 }

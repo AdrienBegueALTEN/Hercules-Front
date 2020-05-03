@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, ViewContainerRef, ComponentFactory
 import { FormArray, Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import {  Router } from '@angular/router';
-import { ConsultantNewDiplomaComponent } from '../consultant-new-diploma/consultant-new-diploma.component';
+import { ConsultantNewDiplomaComponent } from '../../_form/consultant-new-diploma/consultant-new-diploma.component';
 
 @Component({
   selector: 'app-consultant-form',

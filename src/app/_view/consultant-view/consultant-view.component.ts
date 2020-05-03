@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ConsultantService } from 'src/app/_services/consultant.service';
 
 @Component({
   selector: 'app-consultant-view',
@@ -7,4 +8,8 @@ import { Component, Input } from '@angular/core';
 })
 export class ConsultantViewComponent {
   @Input() consultant : any;
+
+  
+  constructor() { }
+
 }

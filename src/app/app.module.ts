@@ -53,15 +53,15 @@ import { MissionPageComponent } from './_page/mission/mission-page.component';
 import { ConsultantEditComponent } from './_edit/consultant-edit/consultant-edit.component';
 import { CustomerEditComponent } from './_edit/customer-edit/customer-edit.component';
 import { CustomerViewComponent } from './_view/customer-view/customer-view.component';
-import { ConsultantManagerComponent } from './consultants/consultant-manager/consultant-manager.component';
-import { ConsultantDiplomaComponent } from './consultants/consultant-diploma/consultant-diploma.component';
+import { ConsultantManagerComponent } from './_input/autocomplete/consultant-manager/consultant-manager.component';
+import { ConsultantDiplomaComponent } from './_form/consultant-diploma/consultant-diploma.component';
 import { ArrayMissionItemComponent } from './array-mission/array-mission-item/array-mission-item.component';
 import { ArrayProjectItemComponent } from './array-mission/array-project-item/array-project-item.component';
 
 import { MissionService } from './_services/mission.service';
 import { ProjectService } from './_services/project.service';
 import { getFrenchPaginatorIntl } from './_services/french-paginator-intl';
-import { ConsultantNewDiplomaComponent } from './consultants/consultant-new-diploma/consultant-new-diploma.component';
+import { ConsultantNewDiplomaComponent } from './_form/consultant-new-diploma/consultant-new-diploma.component';
 import { InputComponent } from './consultants/input/input.component';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { ArrayMissionComponent } from './array-mission/array-mission.component';

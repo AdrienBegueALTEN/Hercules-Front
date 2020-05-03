@@ -28,12 +28,7 @@ export class InputComponent implements OnInit {
     let value = this.ctrl.value;
     if(this.typeInput=='number')
       value = +value
-    const json = {
-      id: this.consultantId,
-      fieldName: this.fieldName,
-      value: value
-    };
-    this.consultantService.updateConsultant(json).subscribe(
+    this.consultantService.updateConsultant(this.consultantId,this.fieldName,value).subscribe(
       ()=>{},
       (err)=>{console.log(err);}
     );

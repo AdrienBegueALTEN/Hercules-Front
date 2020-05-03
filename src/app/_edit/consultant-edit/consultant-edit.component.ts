@@ -1,10 +1,11 @@
 import { HttpStatus } from './../../_enums/http-status.enum';
 import { ConsultantService } from 'src/app/_services/consultant.service';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConsultantNewDiplomaComponent } from 'src/app/_form/consultant-new-diploma/consultant-new-diploma.component';
 
 const XP_KEY = 'experience';
 
@@ -17,13 +18,16 @@ export class ConsultantEditComponent {
   @Input() consultant : any;
   @Input() inMissionView : boolean = false;
 
+  @ViewChild('diplomacontainer', { read: ViewContainerRef }) entry: ViewContainerRef;
+
   private _oldValues : object = {}
   grp : FormGroup = new FormBuilder().group({});
 
   constructor(
     private _consultantService : ConsultantService,
     private _dialog : MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _resolver: ComponentFactoryResolver
   ) { }
 
   addCtrl(key : string, ctrl : FormControl) : void {
@@ -69,5 +73,12 @@ export class ConsultantEditComponent {
       ok: 'OK'
     };
     this._dialog.open(OkDialogComponent, dialogConfig);
+  }
+
+  createComponent(consultantId:number) {
+    this.entry.clear();
+    const factory = this._resolver.resolveComponentFactory(ConsultantNewDiplomaComponent);
+    const componentRef = this.entry.createComponent(factory);
+    componentRef.instance.consultantId=consultantId;
   }
 }
