@@ -64,7 +64,7 @@ export class ConsultantManagerComponent implements OnInit {
           console.log(err);
         }
       )
-      this.router.navigateByUrl('/consultants');
+      this.router.navigateByUrl('/consultants/'+this.consultant.id);
     }
   }
 
