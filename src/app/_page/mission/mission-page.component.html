@@ -7,11 +7,11 @@
           Informations générales
         </ng-template>
         <app-mission-view
-        *ngIf="!canEditSelectedVersion()" 
+        *ngIf="selectedIndex != 0 || !writingRights" 
         [mission]="mission.versions[selectedIndex]">
         </app-mission-view>
         <app-mission-edit
-        *ngIf="canEditSelectedVersion()" 
+        *ngIf="selectedIndex === 0 && writingRights" 
         [mission]="mission.versions[selectedIndex]">
         </app-mission-edit>
       </mat-tab>
@@ -26,7 +26,7 @@
           <mat-icon>person</mat-icon>
           Consultant
         </ng-template>
-        <app-consultant-view
+        <app-consultant-view 
           *ngIf="!writingRights" 
           [consultant]="mission.consultant">
         </app-consultant-view>
@@ -54,6 +54,5 @@
       <mat-button-toggle 
       *ngFor="let version of mission.versions ; index as i" [value]="i">{{version.date | date:'dd/MM/yyyy'}}</mat-button-toggle>
     </mat-button-toggle-group>
-    <button mat-button>Nouvelle version</button>
   </mat-card-actions>
 </mat-card>
