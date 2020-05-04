@@ -37,4 +37,13 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   ngAfterContentChecked() : void {
     this._cdr.detectChanges();
   }
+
+  public canEditSelectedVersion() : boolean {
+      const today : Date = new Date();
+      const versionDate : Date = this.mission.versions[this.selectedIndex];
+      return this.writingRights &&
+      today.getFullYear === versionDate.getFullYear &&
+      today.getMonth === versionDate.getMonth &&
+      today.getDay === versionDate.getDay;
+  }
 }
