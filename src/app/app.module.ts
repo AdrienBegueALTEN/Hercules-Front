@@ -1,3 +1,5 @@
+import { MissionEditComponent } from './_edit/mission-edit/mission-edit.component';
+import { MissionViewComponent } from './_view/mission-view/mission-view.component';
 import { XpInputComponent } from './_input/xp-input/xp-input.component';
 import { ConsultantViewComponent } from './_view/consultant-view/consultant-view.component';
 import { EmailInputComponent } from './_input/email-input/email-input.component';
@@ -30,6 +32,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -97,7 +100,9 @@ import { ArrayMissionComponent } from './array-mission/array-mission.component';
       ArrayMissionItemComponent,
       ArrayProjectItemComponent,
       ConsultantNewDiplomaComponent,
-      ConsultantPageComponent
+      ConsultantPageComponent,
+      MissionViewComponent,
+      MissionEditComponent
    ],
    imports: [
       AppRoutingModule,
@@ -125,7 +130,8 @@ import { ArrayMissionComponent } from './array-mission/array-mission.component';
       MatGridListModule,
       MatCheckboxModule,
       MatDividerModule,
-      MatSnackBarModule
+      MatSnackBarModule,
+      MatButtonToggleModule
    ],
    providers: [
       authInterceptorProviders,
