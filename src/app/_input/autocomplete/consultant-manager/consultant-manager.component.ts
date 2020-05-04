@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { startWith, map } from 'rxjs/operators';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -14,6 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ConsultantManagerComponent implements OnInit {
   @Input() consultant:any;
+  @Output() managerChange = new EventEmitter<any>();
   managerCtrl = new FormControl();
   filteredManagers: Observable<any[]>;
 
@@ -49,22 +50,14 @@ export class ConsultantManagerComponent implements OnInit {
   }
 
   private _filterStates(value: string): any[] {
-    const filterValue = value.toLowerCase();
+    const filterValue = value.toString().toLowerCase();
 
     return this.managers.filter(m => m.email.toLowerCase().includes(filterValue));
   }
 
   onSubmit(){
     if(this.managerCtrl.value!=null){
-      this.consultantService.updateConsultant(this.consultant.id,'manager',this.managerCtrl.value.id).subscribe(
-        () => {
-          this._snackBar.open('Mise à jour effectuée', 'x', {duration: 2000});
-        },
-        (err) => {
-          console.log(err);
-        }
-      )
-      this.router.navigateByUrl('/consultants/'+this.consultant.id);
+      this.managerChange.emit(this.managerCtrl.value);
     }
   }
 

@@ -62,7 +62,7 @@
     <mat-card>
       <mat-card-title>Manager</mat-card-title>
       <mat-card-content>
-        <app-consultant-manager [consultant]="consultant"></app-consultant-manager>
+        <app-consultant-manager [consultant]="consultant" (managerChange)="updateManager($event)"></app-consultant-manager>
       </mat-card-content>
     </mat-card>
 </div>

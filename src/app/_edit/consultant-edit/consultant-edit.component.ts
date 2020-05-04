@@ -6,6 +6,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConsultantNewDiplomaComponent } from 'src/app/_form/consultant-new-diploma/consultant-new-diploma.component';
+import { Router } from '@angular/router';
 
 const XP_KEY = 'experience';
 
@@ -27,7 +28,8 @@ export class ConsultantEditComponent {
     private _consultantService : ConsultantService,
     private _dialog : MatDialog,
     private _snackBar: MatSnackBar,
-    private _resolver: ComponentFactoryResolver
+    private _resolver: ComponentFactoryResolver,
+    private _router: Router
   ) { }
 
   addCtrl(key : string, ctrl : FormControl) : void {
@@ -80,5 +82,18 @@ export class ConsultantEditComponent {
     const factory = this._resolver.resolveComponentFactory(ConsultantNewDiplomaComponent);
     const componentRef = this.entry.createComponent(factory);
     componentRef.instance.consultantId=consultantId;
+  }
+
+  updateManager(manager:any){
+    this._consultantService.updateConsultant(this.consultant.id,'manager',manager.id).subscribe(
+      () => {
+        this.consultant['manager']=manager;
+        this._snackBar.open('Mise à jour effectuée', 'x', {duration: 2000});
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+    this._router.navigateByUrl('/consultants/'+this.consultant.id);
   }
 }
