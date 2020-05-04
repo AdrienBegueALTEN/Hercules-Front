@@ -1,58 +1,39 @@
-<mat-card *ngIf="!!mission">
-  <mat-card-content>
-    <mat-tab-group animationDuration="0ms" mat-align-tabs="center">
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>info</mat-icon>
-          Informations générales
-        </ng-template>
-        <app-mission-view
-        *ngIf="selectedIndex != 0 || !writingRights" 
-        [mission]="mission.versions[selectedIndex]">
-        </app-mission-view>
-        <app-mission-edit
-        *ngIf="selectedIndex === 0 && writingRights" 
-        [mission]="mission.versions[selectedIndex]">
-        </app-mission-edit>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>view_carousel</mat-icon>
-          Projet(s)
-        </ng-template>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>person</mat-icon>
-          Consultant
-        </ng-template>
-        <app-consultant-view 
-          *ngIf="!writingRights" 
-          [consultant]="mission.consultant">
-        </app-consultant-view>
-        <app-consultant-edit 
-          *ngIf="writingRights"
-          [consultant]="mission.consultant"
-          [inMissionView]="true">
-        </app-consultant-edit>
-        <a [href]="'/consultants/' + mission.consultant.id" mat-button color="accent">Accéder à la page du consultant</a>
-        <button *ngIf="writingRights" mat-button color="warn">Indiquer la sortie des effectifs</button>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>work</mat-icon>
-          Client
-        </ng-template>
-        <app-customer-view *ngIf="!writingRights" [customer]="mission.customer"></app-customer-view>
-        <app-customer-edit *ngIf="writingRights" [customer]="mission.customer"></app-customer-edit>
-      </mat-tab>
-    </mat-tab-group>
-  </mat-card-content>
-  <mat-card-actions>
-    Version du :
-    <mat-button-toggle-group [(value)]="selectedIndex">
-      <mat-button-toggle 
-      *ngFor="let version of mission.versions ; index as i" [value]="i">{{version.date | date:'dd/MM/yyyy'}}</mat-button-toggle>
-    </mat-button-toggle-group>
-  </mat-card-actions>
-</mat-card>
+<mat-tab-group *ngIf="!!mission" animationDuration="0ms" mat-align-tabs="center">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>info</mat-icon>
+      Informations générales
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>view_carousel</mat-icon>
+      Projet(s)
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>person</mat-icon>
+      Consultant
+    </ng-template>
+    <app-consultant-view 
+      *ngIf="!writingRights" 
+      [consultant]="mission.consultant">
+    </app-consultant-view>
+    <app-consultant-edit 
+      *ngIf="writingRights"
+      [consultant]="mission.consultant"
+      [inMissionView]="true">
+    </app-consultant-edit>
+    <a [href]="'/consultants/' + mission.consultant.id" mat-button color="accent">Accéder à la page du consultant</a>
+    <button *ngIf="writingRights" mat-button color="warn">Indiquer la sortie des effectifs</button>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>work</mat-icon>
+      Client
+    </ng-template>
+    <app-customer-view *ngIf="!writingRights" [customer]="mission.customer"></app-customer-view>
+    <app-customer-edit *ngIf="writingRights" [customer]="mission.customer"></app-customer-edit>
+  </mat-tab>
+</mat-tab-group>

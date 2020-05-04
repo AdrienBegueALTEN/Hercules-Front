@@ -1,6 +1,6 @@
 import { AuthService } from 'src/app/_services/auth.service';
 import { MissionService } from '../../_services/mission.service';
-import { Component, OnInit, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Role } from '../../_enums/role.enum';
 
@@ -9,13 +9,11 @@ import { Role } from '../../_enums/role.enum';
   templateUrl: './mission-page.component.html',
   styleUrls: ['./mission-page.component.scss']
 })
-export class MissionPageComponent implements OnInit, AfterContentChecked {
+export class MissionPageComponent implements OnInit {
   mission : any;
-  selectedIndex : number = 0;
   writingRights : boolean = false;
 
   constructor(
-    private _cdr: ChangeDetectorRef,
     private _authService : AuthService,
     private _missionService : MissionService,
     private _route : ActivatedRoute
@@ -32,9 +30,5 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       },
       () => window.location.replace('not-found')
     )
-  }
-
-  ngAfterContentChecked() : void {
-    this._cdr.detectChanges();
   }
 }
