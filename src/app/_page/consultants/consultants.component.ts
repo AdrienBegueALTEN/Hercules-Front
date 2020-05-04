@@ -4,9 +4,9 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ConsultantService } from '../_services/consultant.service';
+import { ConsultantService } from '../../_services/consultant.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { DeactivateComponent } from './deactivate/deactivate.component';
+import { DeactivateComponent } from '../../dialog/deactivate/deactivate.component';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({

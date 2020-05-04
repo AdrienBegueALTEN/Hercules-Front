@@ -44,11 +44,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { authInterceptorProviders } from 'src/app/_helper/auth.interceptor';
 import { NewMissionPageComponent } from 'src/app/_page/new-mission/new-mission-page.component';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
-import { ConsultantsComponent } from './consultants/consultants.component';
-import { ConsultantDetailsComponent } from './consultants/consultant-details/consultant-details.component';
-import { DeactivateComponent } from './consultants/deactivate/deactivate.component';
-import { ConsultantCardComponent } from './consultants/consultant-card/consultant-card.component';
-import { ConsultantFormComponent } from './consultants/consultant-form/consultant-form.component';
+import { ConsultantsComponent } from './_page/consultants/consultants.component';
+import { DeactivateComponent } from './dialog/deactivate/deactivate.component';
 import { MissionPageComponent } from './_page/mission/mission-page.component';
 import { ConsultantEditComponent } from './_edit/consultant-edit/consultant-edit.component';
 import { CustomerEditComponent } from './_edit/customer-edit/customer-edit.component';
@@ -62,7 +59,6 @@ import { MissionService } from './_services/mission.service';
 import { ProjectService } from './_services/project.service';
 import { getFrenchPaginatorIntl } from './_services/french-paginator-intl';
 import { ConsultantNewDiplomaComponent } from './_form/consultant-new-diploma/consultant-new-diploma.component';
-import { InputComponent } from './consultants/input/input.component';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { ArrayMissionComponent } from './array-mission/array-mission.component';
 
@@ -78,11 +74,8 @@ import { ArrayMissionComponent } from './array-mission/array-mission.component';
       OkDialogComponent,
       PageNotFoundComponent,
       ConsultantsComponent,
-      ConsultantDetailsComponent,
       DeactivateComponent,
       YesNoDialogComponent,
-      ConsultantCardComponent,
-      ConsultantFormComponent,
       ConsultantManagerComponent,
       MissionPageComponent,
       ConsultantDiplomaComponent,
@@ -98,8 +91,6 @@ import { ArrayMissionComponent } from './array-mission/array-mission.component';
       ArrayMissionItemComponent,
       ArrayProjectItemComponent,
       ConsultantNewDiplomaComponent,
-      InputComponent,
-      
       ConsultantPageComponent
    ],
    imports: [

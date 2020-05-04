@@ -1,7 +1,0 @@
-<mat-form-field [ngSwitch]="typeInput">
-    <mat-label>{{title}}</mat-label>
-    <input matInput *ngSwitchCase="'text'"  type="text" [formControl]="ctrl" (keyup.enter)="update()" (blur)="update()">
-    <input *ngSwitchCase="'number'" matInput type="number" [formControl]="ctrl" (keyup.enter)="update()" (blur)="update()">
-    <input *ngSwitchCase="'email'" matInput type="email" [formControl]="ctrl" (keyup.enter)="update()" (blur)="update()">
-</mat-form-field>
-&nbsp;

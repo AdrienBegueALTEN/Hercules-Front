@@ -5,7 +5,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ConsultantsComponent } from './consultants/consultants.component';
+import { ConsultantsComponent } from './_page/consultants/consultants.component';
 import { NoAuthGuard } from './_services/guard/no-auth-guard.service';
 import { MissionPageComponent } from './_page/mission/mission-page.component';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
