@@ -31,7 +31,6 @@ export class CustomersComponent implements OnInit {
       (data) => {
         this.customers = data;
         this.createDatasource(data);
-        console.log(this.customers);
       },
       (err) => {
         console.log(err);
