@@ -1,3 +1,5 @@
+import { MissionEditComponent } from './_edit/mission-edit/mission-edit.component';
+import { MissionViewComponent } from './_view/mission-view/mission-view.component';
 import { XpInputComponent } from './_input/xp-input/xp-input.component';
 import { ConsultantViewComponent } from './_view/consultant-view/consultant-view.component';
 import { EmailInputComponent } from './_input/email-input/email-input.component';
@@ -97,7 +99,10 @@ import { CustomersComponent } from './_page/customers/customers.component';
       ArrayProjectItemComponent,
       ConsultantNewDiplomaComponent,
       ConsultantPageComponent,
-      CustomersComponent
+      CustomersComponent,
+      MissionPageComponent,
+      MissionViewComponent,
+      MissionEditComponent
    ],
    imports: [
       AppRoutingModule,
