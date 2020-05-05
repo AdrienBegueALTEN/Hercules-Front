@@ -59,7 +59,8 @@
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-        class="example-element-row">
+        class="example-element-row"
+        [class.manager-gone-color]="element.manager.releaseDate!=null">
     </tr>
   </table>
   

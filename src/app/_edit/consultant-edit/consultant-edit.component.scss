@@ -10,3 +10,18 @@
     flex: 1 1 auto;
 }
 mat-card { margin: 10px; }
+
+
+
+.manager-gone-background{
+    background-color:orange;
+    animation-name: alert;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes alert {
+    0%   {background-color: orange;}
+    50%  {background-color: white;}
+    100% {background-color: orange;}
+}
