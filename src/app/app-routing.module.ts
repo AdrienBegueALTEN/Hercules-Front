@@ -10,6 +10,7 @@ import { NoAuthGuard } from './_services/guard/no-auth-guard.service';
 import { MissionPageComponent } from './_page/mission/mission-page.component';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { HomeComponent } from './home/home.component';
+import { CustomersComponent } from './_page/customers/customers.component';
 
 const routes: Routes = [
   { path: 'login', canActivate: [NoAuthGuard], component: LoginComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'missions/:id', canActivate: [AuthGuard], component: MissionPageComponent },
   { path: 'consultants', canActivate: [AuthGuard], component: ConsultantsComponent, runGuardsAndResolvers: 'always' },
   { path: 'consultants/:id', canActivate: [AuthGuard], component: ConsultantPageComponent, runGuardsAndResolvers: 'always' },
+  { path: 'customers', canActivate: [AuthGuard], component: CustomersComponent, runGuardsAndResolvers: 'always' },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];

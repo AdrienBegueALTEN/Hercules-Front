@@ -30,6 +30,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSortModule } from '@angular/material/sort';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -61,6 +62,7 @@ import { getFrenchPaginatorIntl } from './_services/french-paginator-intl';
 import { ConsultantNewDiplomaComponent } from './_form/consultant-new-diploma/consultant-new-diploma.component';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { ArrayMissionComponent } from './array-mission/array-mission.component';
+import { CustomersComponent } from './_page/customers/customers.component';
 
 @NgModule({
    declarations: [
@@ -91,7 +93,8 @@ import { ArrayMissionComponent } from './array-mission/array-mission.component';
       ArrayMissionItemComponent,
       ArrayProjectItemComponent,
       ConsultantNewDiplomaComponent,
-      ConsultantPageComponent
+      ConsultantPageComponent,
+      CustomersComponent
    ],
    imports: [
       AppRoutingModule,
@@ -119,7 +122,8 @@ import { ArrayMissionComponent } from './array-mission/array-mission.component';
       MatGridListModule,
       MatCheckboxModule,
       MatDividerModule,
-      MatSnackBarModule
+      MatSnackBarModule,
+      MatSortModule
    ],
    providers: [
       authInterceptorProviders,
