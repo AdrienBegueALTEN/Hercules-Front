@@ -1,58 +1,101 @@
-<mat-card *ngIf="!!mission">
+<mat-card *ngIf="mission">
   <mat-card-content>
-    <mat-tab-group animationDuration="0ms" mat-align-tabs="center">
+    <mat-tab-group animationDuration="0ms" mat-align-tabs="center" #tabGrp>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>info</mat-icon>
           Informations générales
-        </ng-template>
-        <app-mission-view
-        *ngIf="selectedIndex != 0 || !writingRights" 
-        [mission]="mission.versions[selectedIndex]">
-        </app-mission-view>
-        <app-mission-edit
-        *ngIf="selectedIndex === 0 && writingRights" 
-        [mission]="mission.versions[selectedIndex]">
-        </app-mission-edit>
+        </ng-template>      
+        <div *ngIf="showVersions(); then versions"></div>
+        <div *ngIf="mission.versions[selectedIndex]">
+          <div *ngIf="showMissionEdit(); then missionEdit else missionView"></div>
+        </div>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>view_carousel</mat-icon>
           Projet(s)
         </ng-template>
+        <div *ngIf="showVersions(); then versions"></div>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>person</mat-icon>
           Consultant
         </ng-template>
-        <app-consultant-view 
-          *ngIf="!writingRights" 
-          [consultant]="mission.consultant">
-        </app-consultant-view>
-        <app-consultant-edit 
-          *ngIf="writingRights"
-          [consultant]="mission.consultant"
-          [inMissionView]="true">
-        </app-consultant-edit>
-        <a [href]="'/consultants/' + mission.consultant.id" mat-button color="accent">Accéder à la page du consultant</a>
-        <button *ngIf="writingRights" mat-button color="warn">Indiquer la sortie des effectifs</button>
+        <div *ngIf="mission.consultant">
+          <div *ngIf="userIsConsultantManager; then consultantEdit else consultantView"></div>
+        </div>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>work</mat-icon>
           Client
         </ng-template>
-        <app-customer-view *ngIf="!writingRights" [customer]="mission.customer"></app-customer-view>
-        <app-customer-edit *ngIf="writingRights" [customer]="mission.customer"></app-customer-edit>
+        <div *ngIf="mission.customer">
+          <div *ngIf="userIsManager; then customerEdit else customerView"></div>
+        </div>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>
-  <mat-card-actions>
-    Version du :
-    <mat-button-toggle-group [(value)]="selectedIndex">
-      <mat-button-toggle 
-      *ngFor="let version of mission.versions ; index as i" [value]="i">{{version.date | date:'dd/MM/yyyy'}}</mat-button-toggle>
-    </mat-button-toggle-group>
+  <mat-card-actions [ngSwitch]="tabGrp.selectedIndex">
+    <div *ngSwitchDefault>
+      <button *ngIf="showNewVersion()" mat-button color="primary" (click)="onNewVersion()">
+        Nouvelle version
+      </button>
+    </div>
+    <div *ngSwitchCase="CONSULTANT_TAB_INDEX">
+      <a [href]="'/consultants/' + mission.consultant.id" mat-button color="accent">
+        Page personnelle de {{mission.consultant.firstname}} {{mission.consultant.lastname}}
+      </a>
+      <button *ngIf="userIsConsultantManager" mat-button color="warn">Indiquer la sortie des effectifs</button>
+    </div>
+    <div *ngSwitchCase="CUSTOMER_TAB_INDEX">
+      <a  [href]="'/customers/' + mission.customer.id" mat-button color="accent">
+        Page de {{mission.customer.name}}
+      </a>
+  </div>
   </mat-card-actions>
 </mat-card>
+<ng-template #versions>
+  Versions
+  <mat-button-toggle-group [(value)]="selectedIndex">
+    <mat-button-toggle
+      *ngFor="let version of mission.versions ; index as i" [value]="i">{{version.versionDate | date:'dd/MM/yyyy'}}</mat-button-toggle>
+    </mat-button-toggle-group>
+</ng-template>
+
+<ng-template #missionEdit>
+  <app-mission-edit
+    [missionId]="mission.id"
+    [version]="mission.versions[selectedIndex]"
+    (update)="updateTodayVersion($event)">
+  </app-mission-edit>
+</ng-template>
+
+<ng-template #missionView>
+  <app-mission-view
+    [version]="mission.versions[selectedIndex]">
+  </app-mission-view>
+</ng-template>
+
+<ng-template #consultantEdit>
+  <app-consultant-edit 
+    [consultant]="mission.consultant"
+    [inMissionView]="true">
+  </app-consultant-edit>
+</ng-template>
+
+<ng-template #consultantView>
+  <app-consultant-view 
+    [consultant]="mission.consultant">
+  </app-consultant-view>
+</ng-template>
+
+<ng-template #customerEdit>
+  <app-customer-edit [customer]="mission.customer"></app-customer-edit>
+</ng-template>
+
+<ng-template #customerView>
+  <app-customer-view [customer]="mission.customer"></app-customer-view>
+</ng-template>

@@ -33,6 +33,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -125,7 +127,9 @@ import { ArrayMissionComponent } from './array-mission/array-mission.component';
       MatCheckboxModule,
       MatDividerModule,
       MatSnackBarModule,
-      MatButtonToggleModule
+      MatButtonToggleModule,
+      MatRadioModule,
+      MatChipsModule
    ],
    providers: [
       authInterceptorProviders,

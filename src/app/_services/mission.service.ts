@@ -19,6 +19,10 @@ export class MissionService {
     AppSettings.HTTP_OPTIONS);
   }
 
+  addVersion(mission : number) : Observable<any> {
+    return this._httpClient.post(AppSettings.MISSION_API + 'new-version/' + mission, AppSettings.HTTP_OPTIONS);
+  }
+
   getMissionDetails(mission : number) : Observable<any> {
     return this._httpClient.get(AppSettings.MISSION_API + mission, AppSettings.HTTP_OPTIONS);
   }
@@ -26,9 +30,17 @@ export class MissionService {
   getMissions(): Observable<Mission[]> {
     return of(missions);
   }
+
+  updateMission(id : number, fieldName : String, value : any) : Observable<any> {
+    return this._httpClient.put(AppSettings.MISSION_API,
+      {
+        id : id,
+        fieldName : fieldName,
+        value : value,
+      },
+      AppSettings.HTTP_OPTIONS);
+  }
 }
-
-
 
 export interface Mission {
   id: number;

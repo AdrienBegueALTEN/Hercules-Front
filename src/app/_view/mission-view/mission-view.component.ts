@@ -6,12 +6,24 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./mission-view.component.scss']
 })
 export class MissionViewComponent {
-  @Input() mission : any;
+  @Input() version : any;
 
   constructor() {}
 
+  public getConsultantStartXpToString() : string {
+    if (!this.version.consultantStartXp) return "Non renseignée"
+    switch (this.version.consultantStartXp) {
+      case 0 :
+        return 'Débutant';
+      case 1 : 
+        return '1 an';
+      default :
+        return this.version.consultantStartXp + ' ans';
+    }
+  }
+
   public getContractTypeToString() : string {
-    switch (this.mission.contractType) {
+    switch (this.version.contractType) {
       case 'flat_fee' :
         return 'Forfait'
       case 'services_center' : 
@@ -24,20 +36,18 @@ export class MissionViewComponent {
   }
 
   public getLocalisationToString() : string {
-    return !!this.mission.city ?
-      (!!this.mission.country ? 
-        this.mission.city + ' (' + this.mission.country + ')' :
-        this.mission.city) :
-      !!this.mission.country ?
-      this.mission.country :
-      'Non renseignée';
+    let str : string;
+    if (this.version.city) {
+      str = this.version.city;
+      if (this.version.country)
+        str = str.concat(' (', this.version.country , ')');
+    } else str = this.version.country || 'Non renseigné';
+    return str
   }
 
   public getContractTeamSizeToString() : string {
-    return !!this.mission.teamSize ?
-      (this.mission.teamSize > 1 ? 
-        this.mission.teamSize + ' personnes' :
-        'Travail en autonomie') :
-      'Non renseignée';
+    if (!this.version.teamSize) return "Non renseignée"
+    return this.version.teamSize > 1 ? 
+        this.version.teamSize + ' personnes' : 'Travail en autonomie';
   }
 }

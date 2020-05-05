@@ -1,14 +1,22 @@
-<mat-list *ngIf="!!mission">
+<mat-list *ngIf="version">
   <mat-list-item>
-    <h1 matLine>Intitulé</h1>
-    <p matLine>{{!!mission.title ? mission.title : 'Non renseigné'}}</p>
+    <h1 matLine>Intitulé de la mission</h1>
+    <p matLine>{{version.title || 'Non renseigné'}}</p>
   </mat-list-item>
   <mat-list-item>
-    <h1 matLine>Description</h1>
-    <p matLine>{{!!mission.description ? mission.description : 'Pas de description'}}</p>
+    <h1 matLine>Role du consultant</h1>
+    <p matLine>{{version.consultantRole || 'Non renseigné'}}</p>
   </mat-list-item>
   <mat-list-item>
-    <h1 matLine>Emplacement</h1>
+    <h1 matLine>Expérience du consultant au début de la mission</h1>
+    <p matLine>{{getConsultantStartXpToString()}}</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h1 matLine>Description de la mission</h1>
+    <p matLine>{{version.description || 'Pas de description'}}</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h1 matLine>Emplacement de la mission</h1>
     <p matLine>{{getLocalisationToString()}}</p>
   </mat-list-item>
   <mat-list-item>
@@ -21,6 +29,6 @@
   </mat-list-item>
   <mat-list-item>
     <h1 matLine>Commentaire du client / manager</h1>
-    <p matLine>{{!!mission.comment ? mission.comment : 'Aucun commentaire'}}</p>
+    <p matLine>{{version.comment || 'Aucun commentaire'}}</p>
   </mat-list-item>
 </mat-list>
