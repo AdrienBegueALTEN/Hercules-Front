@@ -45,7 +45,7 @@
           <span class="material-icons">more_horiz</span>
         </button>&nbsp;
         <button mat-icon-button color="warn" 
-          [disabled]="element.releaseDate!=null || element.missions.length>0 || element.manager.id!=user.id" 
+          [disabled]="element.releaseDate!=null || !!element.missions || element.manager.id!=user.id" 
           (click)="delete(element)">
           <span class="material-icons">delete</span>
         </button>&nbsp;
@@ -59,7 +59,8 @@
 
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-        class="example-element-row">
+        class="example-element-row"
+        [class.manager-gone-color]="element.manager.releaseDate!=null">
     </tr>
   </table>
   

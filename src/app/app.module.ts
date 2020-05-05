@@ -1,5 +1,3 @@
-import { MissionEditComponent } from './_edit/mission-edit/mission-edit.component';
-import { MissionViewComponent } from './_view/mission-view/mission-view.component';
 import { XpInputComponent } from './_input/xp-input/xp-input.component';
 import { ConsultantViewComponent } from './_view/consultant-view/consultant-view.component';
 import { EmailInputComponent } from './_input/email-input/email-input.component';
@@ -35,6 +33,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatSortModule } from '@angular/material/sort';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -66,6 +65,7 @@ import { getFrenchPaginatorIntl } from './_services/french-paginator-intl';
 import { ConsultantNewDiplomaComponent } from './_form/consultant-new-diploma/consultant-new-diploma.component';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { ArrayMissionComponent } from './array-mission/array-mission.component';
+import { CustomersComponent } from './_page/customers/customers.component';
 
 @NgModule({
    declarations: [
@@ -97,8 +97,7 @@ import { ArrayMissionComponent } from './array-mission/array-mission.component';
       ArrayProjectItemComponent,
       ConsultantNewDiplomaComponent,
       ConsultantPageComponent,
-      MissionViewComponent,
-      MissionEditComponent
+      CustomersComponent
    ],
    imports: [
       AppRoutingModule,
@@ -129,7 +128,8 @@ import { ArrayMissionComponent } from './array-mission/array-mission.component';
       MatSnackBarModule,
       MatButtonToggleModule,
       MatRadioModule,
-      MatChipsModule
+      MatChipsModule,
+      MatSortModule
    ],
    providers: [
       authInterceptorProviders,

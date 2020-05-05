@@ -1,9 +1,19 @@
 <mat-card>
-  <p><span *ngIf="consultant.releaseDate" class="material-icons">meeting_room</span> {{consultant.releaseDate | date:'dd/MM/yyyy'}}</p>
-  <p><span class="material-icons">alternate_email</span> {{consultant.email}}</p>
-  <p><span class="material-icons">grade</span> {{consultant.experience}} années d'expériences</p>
-  <p><span class="material-icons">supervisor_account</span> {{consultant?.manager?.firstname}} {{consultant?.manager?.lastname}}</p>
+  <p *ngIf="consultant.releaseDate">
+    <mat-icon>meeting_room</mat-icon> {{consultant.releaseDate | date:'dd/MM/yyyy'}}
+  </p>
+  <p>
+    <mat-icon>alternate_email</mat-icon> {{consultant.email}}
+  </p>
+  <p>
+    <mat-icon>grade</mat-icon> {{consultant.experience}} années d'expériences
+  </p>
+  <p *ngIf="consultant.manager" [class.manager-gone-color]="consultant.manager.releaseDate!=null">
+    <mat-icon>supervisor_account</mat-icon> {{consultant.manager.firstname}} {{consultant.manager.lastname}}
+  </p>
   <div class="diplomas" *ngFor="let d of consultant.diplomas">
-      <p><span class="material-icons">school</span> <span class="bold"> {{d.diplomaName.name}}</span> à {{d.diplomaLocation.school}} ({{d.diplomaLocation.city}}, {{d.graduationYear}})</p>
+      <p>
+        <mat-icon>school</mat-icon> <span class="bold"> {{d.diplomaName.name}}</span> à {{d.diplomaLocation.school}} ({{d.diplomaLocation.city}}, {{d.graduationYear}})
+      </p>
   </div>
 </mat-card>

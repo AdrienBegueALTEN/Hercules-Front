@@ -26,8 +26,8 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   @ViewChild('tabGrp') tabGrp : MatTabGroup;
 
   constructor(
-    private _cdr: ChangeDetectorRef,
     private _authService : AuthService,
+    private _cdr : ChangeDetectorRef,
     private _dialog : MatDialog,
     private _missionService : MissionService,
     private _route : ActivatedRoute
