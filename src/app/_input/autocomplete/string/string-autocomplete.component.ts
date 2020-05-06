@@ -5,11 +5,10 @@ import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-string-autocomplete',
-  templateUrl: './string-autocomplete.component.html',
-  styleUrls: ['./string-autocomplete.component.css']
+  templateUrl: './string-autocomplete.component.html'
 })
 export class StringAutocompleteComponent extends MyInput {
-  constructor() { super('', InputType.TEXT); }
+  constructor() { super('', InputType.TEXT, []); }
 
   ngOnInit() : void {
     const value = (this.initialValue && typeof this.initialValue === 'string') ? this.initialValue : ''

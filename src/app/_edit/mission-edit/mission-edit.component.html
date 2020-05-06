@@ -4,7 +4,7 @@
     <input matInput type="text" maxLength="255"
       [formControlName]="TITLE_KEY" (change)="onChange(TITLE_KEY)">
   </mat-form-field>
-  <table>
+  <table class="inputable">
     <tr>
       <td><mat-form-field>
         <mat-label>Rôle du consultant</mat-label>
@@ -24,7 +24,7 @@
       [formControlName]="DESCRIPTION_KEY" (change)="onChange(DESCRIPTION_KEY)" ></textarea>
     <mat-hint>{{grp.controls['description'].value?.length || 0}} / 1000</mat-hint>
   </mat-form-field>
-  <table>
+  <table class="inputable">
     <tr>
       <td><mat-form-field>
         <mat-label>Ville</mat-label>

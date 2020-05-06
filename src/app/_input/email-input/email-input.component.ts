@@ -7,8 +7,7 @@ import { InputType } from 'src/app/_enums/input-type.enum';
 
 @Component({
   selector: 'app-email-input',
-  templateUrl: '../input.html',
-  styleUrls: ['../input.scss']
+  templateUrl: '../input.html'
 })
 export class EmailInputComponent extends MyInput {
   constructor() { super("Adresse email", InputType.EMAIL, [Validators.pattern(AppSettings.EMAIL_PATTERN), Validators.maxLength(255)]); }

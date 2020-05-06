@@ -1,35 +1,9 @@
 <div id="app">
-  <header *ngIf="!!user">
-    <div class="head">
-        <nav>
-            <ul>
-                <li><a routerLink="/customers">Clients</a></li>
-                <li><a routerLink="/consultants">Consultants</a></li>
-                <li *ngIf="userIsManager" class="firstOfSection"><a routerLink="/new-mission" title="Créer une nouvelle mission">Nouvelle mission</a></li>
-                <div *ngIf="userIsAdmin">
-                    <li class="firstOfSection"><a routerLink="/recruitement-officers">CDR</a></li>
-                    <li><a routerLink="/managers">Managers</a></li>
-                </div>
-            </ul>
-        </nav>
-        <button mat-mini-fab id="logout" class="blue-shape" title="Déconnexion" (click)="onLogout()">
-            <mat-icon>exit_to_app</mat-icon>
-        </button>
+    <app-header *ngIf="user" [user]="user"></app-header>
+    <div id="app-container">
+        <router-outlet></router-outlet>
     </div>
-    <div class="foot">
-        <a title="Page d'accueil" routerLink="/home"><img id="home" src="assets/img/logo/alten.png" alt="Logo ALTEN"></a>
-        <div class="content">
-            <div class="user">
-                <mat-icon>account_circle</mat-icon>
-                {{user.firstname}} {{user.lastname}}
-            </div>
-        </div>
-    </div>
-</header>
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
-<footer>
-  <p>ALTEN Group - Copyright © 2020</p>
-</footer>
+    <footer>
+        <p>ALTEN Group - Copyright © 2020</p>
+    </footer>
 </div>

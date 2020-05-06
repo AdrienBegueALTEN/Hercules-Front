@@ -7,9 +7,7 @@
           Informations générales
         </ng-template>      
         <div *ngIf="showVersions(); then versions"></div>
-        <div *ngIf="mission.versions[selectedIndex]">
-          <div *ngIf="showMissionEdit(); then missionEdit else missionView"></div>
-        </div>
+        <div *ngIf="showMissionEdit(); then missionEdit else missionView"></div>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
@@ -23,18 +21,14 @@
           <mat-icon>person</mat-icon>
           Consultant
         </ng-template>
-        <div *ngIf="mission.consultant">
           <div *ngIf="userIsConsultantManager; then consultantEdit else consultantView"></div>
-        </div>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>work</mat-icon>
           Client
         </ng-template>
-        <div *ngIf="mission.customer">
           <div *ngIf="userIsManager; then customerEdit else customerView"></div>
-        </div>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>
@@ -57,6 +51,7 @@
   </div>
   </mat-card-actions>
 </mat-card>
+
 <ng-template #versions>
   Versions
   <mat-button-toggle-group [(value)]="selectedIndex">

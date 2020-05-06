@@ -17,15 +17,14 @@ const _filterGrpConsultants = (consultants : any[], value : string) : any[] => {
 
 @Component({
   selector: 'app-consultant-autocomplete',
-  templateUrl: './consultant-autocomplete.component.html',
-  styleUrls: ['./consultant-autocomplete.component.scss']
+  templateUrl: './consultant-autocomplete.component.html'
 })
 export class ConsultantAutocompleteComponent implements OnInit {
   ctrl = new FormControl('', [Validators.required, this._checkSelection]);
   consultants : any[];
   filteredConsultants: Observable<any[]>;
   showNewOpt : boolean = false;
-  displayInGrps: boolean =false;
+  displayInGrps: boolean = false;
 
   @Input() canCreateNew : boolean = false;
 

@@ -6,8 +6,7 @@ import { InputType } from 'src/app/_enums/input-type.enum';
 
 @Component({
   selector: 'app-xp-input',
-  templateUrl: '../input.html',
-  styleUrls: ['../input.scss']
+  templateUrl: '../input.html'
 })
 export class XpInputComponent extends MyInput {
   constructor() { super("Années d'expérience", InputType.NUMBER, [Validators.min(0), Validators.max(75)]); }

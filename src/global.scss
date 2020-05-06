@@ -1,0 +1,55 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+@import 'src/vars';
+
+.blue-shape {
+    background-image: url(src/assets/img/shape-background/blue.png);
+    background-repeat: no-repeat;
+}
+
+.blue-shape * {
+    color: white;
+}
+
+.white-shape {
+    background-image: url(src/assets/img/shape-background/white.png);
+    background-repeat: no-repeat;
+}
+
+.white-shape * {
+    color: $usual-primary-blue;
+}
+
+body * {
+    font-family: Raleway, Arial, sans-serif;
+}
+
+app-firstname-input mat-form-field,
+app-lastname-input mat-form-field,
+app-email-input mat-form-field,
+app-consultant-autocomplete mat-form-field,
+app-customer-autocomplete mat-form-field {
+    width: 100%;
+}
+
+.inputable {
+    width: 100%;
+}
+
+.inputable td {
+    padding: 0 8px;
+}
+
+.inputable tr td:first-child {
+    padding-left: 0;
+}
+
+.inputable tr td:last-child {
+    padding-right: 0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    width: 100%;
+    background-color: rgb(240, 243, 246);
+}

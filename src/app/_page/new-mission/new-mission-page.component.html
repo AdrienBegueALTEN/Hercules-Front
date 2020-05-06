@@ -10,9 +10,6 @@
           </app-consultant-autocomplete>
           <app-new-consultant *ngIf="newConsultant" (sendFormGrp)="getConsultantForm($event)"></app-new-consultant>
       </mat-step>
-      <ng-template matStepperIcon="consultant">
-        <mat-icon>person</mat-icon>
-      </ng-template>
       <mat-step [stepControl]="customerForm" label="Client" state="customer">
           <app-customer-autocomplete *ngIf="!newCustomer"
           [customers]="customers"
@@ -22,14 +19,8 @@
           </app-customer-autocomplete>
           <app-new-customer *ngIf="newCustomer" [customers]="customers" (sendFormGrp)="getCustomerForm($event)"></app-new-customer>
       </mat-step>
-      <ng-template matStepperIcon="customer">
-        <mat-icon>business_center</mat-icon>
-      </ng-template>
         <mat-step label="Créer la mission" state="mission">
         </mat-step>
-      <ng-template matStepperIcon="mission">
-        <mat-icon>post_add</mat-icon>
-      </ng-template>
     </mat-vertical-stepper>
   </mat-card-content>
 </mat-card>

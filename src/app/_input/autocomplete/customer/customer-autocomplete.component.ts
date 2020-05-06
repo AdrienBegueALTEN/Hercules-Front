@@ -9,8 +9,7 @@ const _filter = (name : string, value : string) : boolean => {
 
 @Component({
   selector: 'app-customer-autocomplete',
-  templateUrl: './customer-autocomplete.component.html',
-  styleUrls: ['./customer-autocomplete.component.scss']
+  templateUrl: './customer-autocomplete.component.html'
 })
 export class CustomerAutocompleteComponent implements OnInit {
   ctrl = new FormControl('', [Validators.required, this._checkSelection]);

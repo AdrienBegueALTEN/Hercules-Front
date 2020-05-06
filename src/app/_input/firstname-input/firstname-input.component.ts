@@ -7,8 +7,7 @@ import { InputType } from 'src/app/_enums/input-type.enum';
 
 @Component({
   selector: 'app-firstname-input',
-  templateUrl: '../input.html',
-  styleUrls: ['../input.scss']
+  templateUrl: '../input.html'
 })
 export class FirstnameInputComponent extends MyInput {
   constructor() {  super("Prénom", InputType.TEXT, [Validators.pattern(AppSettings.NAME_PATTERN), Validators.maxLength(100)]); }

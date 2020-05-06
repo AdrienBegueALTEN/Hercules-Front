@@ -1,14 +1,18 @@
 <form>
-  <app-firstname-input 
-    (sendCtrl)="addCtrl('firstname', $event)" 
-    (valueChange)="autoCompleteEmail()"
-    [required]="true">
-  </app-firstname-input>
-  <app-lastname-input
-    (sendCtrl)="addCtrl('lastname', $event)"
-    (valueChange)="autoCompleteEmail()"
-    [required]="true">
-  </app-lastname-input>
+  <table class="inputable">
+    <tr>
+      <td><app-firstname-input 
+        (sendCtrl)="addCtrl('firstname', $event)" 
+        (valueChange)="autoCompleteEmail()"
+        [required]="true">
+      </app-firstname-input></td>
+      <td><app-lastname-input
+        (sendCtrl)="addCtrl('lastname', $event)"
+        (valueChange)="autoCompleteEmail()"
+        [required]="true">
+      </app-lastname-input></td>
+    </tr>
+  </table>
   <app-email-input
     (sendCtrl)="addCtrl('email', $event)"
     [required]="true">

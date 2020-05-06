@@ -49,7 +49,7 @@ import { LoginComponent } from 'src/app/login//login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { authInterceptorProviders } from 'src/app/_helper/auth.interceptor';
 import { NewMissionPageComponent } from 'src/app/_page/new-mission/new-mission-page.component';
-import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from 'src/app/_page/not-found/not-found.component';
 import { ConsultantsComponent } from './_page/consultants/consultants.component';
 import { DeactivateComponent } from './dialog/deactivate/deactivate.component';
 import { MissionPageComponent } from './_page/mission/mission-page.component';
@@ -68,6 +68,7 @@ import { ConsultantNewDiplomaComponent } from './_form/consultant-new-diploma/co
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { ArrayMissionComponent } from './array-mission/array-mission.component';
 import { CustomersComponent } from './_page/customers/customers.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
    declarations: [
@@ -102,7 +103,8 @@ import { CustomersComponent } from './_page/customers/customers.component';
       CustomersComponent,
       MissionPageComponent,
       MissionViewComponent,
-      MissionEditComponent
+      MissionEditComponent,
+      HeaderComponent
    ],
    imports: [
       AppRoutingModule,
@@ -139,10 +141,7 @@ import { CustomersComponent } from './_page/customers/customers.component';
    providers: [
       authInterceptorProviders,
       MissionService,
-      ProjectService,
-      {  provide: MatPaginatorIntl, 
-         useValue: getFrenchPaginatorIntl() 
-      }
+      ProjectService
    ],
    bootstrap: [
       AppComponent

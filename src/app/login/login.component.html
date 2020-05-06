@@ -4,13 +4,10 @@
             <img src="/assets/img/logo/alten.png" alt="Logo ALTEN">Connexion</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <form [formGroup]="loginForm">
+        <div [formGroup]="loginForm">
             <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
                 <input matInput type="email" formControlName="email" placeholder="prenom.nom@alten.com" >
-                <mat-error *ngIf="!loginForm.controls['email'].valid && loginForm.controls['email'].touched">
-                  {{getEmailErr()}}
-                </mat-error>
               </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Mot de passe</mat-label>
@@ -18,15 +15,12 @@
                 <button mat-icon-button matSuffix (click)="onVisibility()">
                   <mat-icon>{{hidden ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
-                <mat-error *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched">
-                  {{getPasswordErr()}}
-                </mat-error>
             </mat-form-field>
             <p *ngIf="isLoginFailed">Identifiants incorrects</p>
             <mat-card-actions>
                 <a>Mot de passe oublié ?</a>
-                <button mat-raised-button class="blue-shape" type="submit" (click)="onSubmit()" [disabled]="!loginForm.valid">Se connecter</button>
+                <button mat-raised-button class="blue-shape" type="submit" (click)="onSubmit()">Se connecter</button>
             </mat-card-actions>
-        </form>
+          </div>
     </mat-card-content>
 </mat-card>

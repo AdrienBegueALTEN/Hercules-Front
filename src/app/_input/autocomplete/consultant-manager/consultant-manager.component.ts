@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { startWith, map } from 'rxjs/operators';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Router } from '@angular/router';
@@ -9,8 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-consultant-manager',
-  templateUrl: './consultant-manager.component.html',
-  styleUrls: ['./consultant-manager.component.scss']
+  templateUrl: './consultant-manager.component.html'
 })
 export class ConsultantManagerComponent implements OnInit {
   @Input() consultant:any;

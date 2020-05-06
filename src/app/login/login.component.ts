@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     return new FormBuilder().group({
-      email: ['', [Validators.required, Validators.pattern(AppSettings.EMAIL_PATTERN)]],
-      password: ['', [Validators.required]]
+      email: [''],
+      password: ['']
     });
   }
 
@@ -54,14 +54,5 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
       }
     );
-  }
-
-  getEmailErr(): String {
-    return  this.loginForm.get(EMAIL_KEY).hasError('required') ? 'Email obligatoire' :
-            this.loginForm.get(EMAIL_KEY).hasError('pattern') ? 'Format du email invalide' : '';
-  }
-
-  getPasswordErr(): String {
-    return this.loginForm.get(PASSWORD_KEY).hasError('required') ? 'Mot de passe obligatoire' : '';
   }
 }

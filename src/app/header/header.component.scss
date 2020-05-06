@@ -1,0 +1,116 @@
+@import 'src/vars';
+
+#home {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    height: 90px;
+    width: auto;
+}
+
+#logout {
+    float: right;
+}
+
+header {
+    flex-shrink: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+}
+
+header .head {
+    background-color: white;
+    padding: 16px 20px 16px 94px;
+    height: 40px;
+    line-height: 32px;
+    color: #043962;
+}
+
+header .head, header .foot .content {
+    position: relative;
+}
+
+header nav {
+    height: 32px;
+    max-height: 32px;
+    overflow: hidden;
+    position: relative;
+    float: left;
+    width: 75%;
+    margin: 4px 0;
+}
+
+header .foot .content {
+    height: 28px;
+    padding-left: 98px;
+}
+
+header nav ul {
+    text-transform: uppercase;
+    list-style-type: none;
+    margin: 0;
+    max-height: 32px;
+    padding: 0;
+
+}
+
+header nav {
+    max-height: 32px;
+}
+  
+header nav ul li {
+    float: left;
+}
+
+.border {
+    border-left: solid $usual-secondary-blue 2px;
+    border-right: solid $usual-secondary-blue 2px;
+}
+  
+header nav ul li a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-style: normal;
+    padding: 0 16px;
+    color: #043962;
+}
+
+header .foot {
+    background: linear-gradient(to right, $usual-primary-blue, $usual-secondary-blue, $usual-tertiary-blue);
+    height: 38px;
+    color: white;
+    line-height: 28px;
+    font-size: 16px;
+}
+
+header .user {
+    float: left;
+    position: relative;
+    padding: 5px 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+
+}
+
+header .user mat-icon {
+    float: left;
+    margin: 2px 10px 2px 0;
+}
+
+header .foot .content > mat-icon {
+    float: right;
+    margin: 18px 0 18px 20px;
+    cursor: pointer;
+}
+
+.firstOfSection {
+    border-left: solid 2px $usual-secondary-blue;
+    padding-left: 16px;
+    margin-left: 16px;
+}

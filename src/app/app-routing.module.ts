@@ -1,7 +1,7 @@
 import { ManagerGuard } from './_services/guard/manager-guard.service';
 import { AuthGuard } from './_services/guard/auth-guard.service';
 import { NewMissionPageComponent } from './_page/new-mission/new-mission-page.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './_page/not-found/not-found.component';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';

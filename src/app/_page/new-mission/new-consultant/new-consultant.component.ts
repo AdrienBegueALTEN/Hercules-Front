@@ -8,8 +8,7 @@ const EMAIL_KEY = 'email';
 
 @Component({
   selector: 'app-new-consultant',
-  templateUrl: './new-consultant.component.html',
-  styleUrls: ['../new-mission-page.component.scss']
+  templateUrl: './new-consultant.component.html'
 })
 export class NewConsultantComponent implements OnInit {
   grp : FormGroup = new FormBuilder().group({});
