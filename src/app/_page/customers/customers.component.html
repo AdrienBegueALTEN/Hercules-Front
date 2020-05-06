@@ -28,7 +28,7 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element">
-            <button mat-icon-button matTooltip="Voir plus de {{element.name}}">
+            <button mat-icon-button matTooltip="Voir plus de {{element.name}}" [routerLink]="[element.id]">
                 <mat-icon>more_horiz</mat-icon>
             </button>
             <button mat-icon-button color="warn"

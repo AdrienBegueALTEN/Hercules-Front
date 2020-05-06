@@ -11,6 +11,7 @@ import { MissionPageComponent } from './_page/mission/mission-page.component';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { HomeComponent } from './home/home.component';
 import { CustomersComponent } from './_page/customers/customers.component';
+import { CustomerPageComponent } from './_page/customer-page/customer-page.component';
 
 const routes: Routes = [
   { path: 'login', canActivate: [NoAuthGuard], component: LoginComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'consultants', canActivate: [AuthGuard], component: ConsultantsComponent, runGuardsAndResolvers: 'always' },
   { path: 'consultants/:id', canActivate: [AuthGuard], component: ConsultantPageComponent, runGuardsAndResolvers: 'always' },
   { path: 'customers', canActivate: [AuthGuard], component: CustomersComponent, runGuardsAndResolvers: 'always' },
+  { path: 'customers/:id', canActivate: [AuthGuard], component: CustomerPageComponent, runGuardsAndResolvers: 'always' },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];

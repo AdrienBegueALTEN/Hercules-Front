@@ -14,6 +14,10 @@ constructor(private _httpClient : HttpClient) {}
     return this._httpClient.get<any[]>(AppSettings.CUSTOMER_API, AppSettings.HTTP_OPTIONS);
   }
 
+  getById(id: number) : Observable<any[]> {
+    return this._httpClient.get<any[]>(AppSettings.CUSTOMER_API + id, AppSettings.HTTP_OPTIONS);
+  }
+
   newCustomer(name : string, activitySector : string) : Observable<any> {
     return this._httpClient.post(AppSettings.CUSTOMER_API,
       {
@@ -25,5 +29,9 @@ constructor(private _httpClient : HttpClient) {}
 
   deleteCustomer(id : number) : Observable<any> {
     return this._httpClient.delete(AppSettings.CUSTOMER_API + id, AppSettings.HTTP_OPTIONS);
+  }
+
+  updateCustomer(cust: any) {
+    return this._httpClient.put(AppSettings.CUSTOMER_API, cust, AppSettings.HTTP_OPTIONS);
   }
 }

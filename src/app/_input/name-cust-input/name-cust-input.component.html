@@ -1,0 +1,5 @@
+<mat-form-field class="full-width">
+    
+    <input matInput placeholder="Nom" aria-label="Nom" [formControl]="nameCtrl" (keyup.enter)="onSubmit()" (blur)="onSubmit()">
+    <mat-hint style="color: red;">{{message}}</mat-hint>
+</mat-form-field>
