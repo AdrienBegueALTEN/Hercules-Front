@@ -1,6 +1,5 @@
-import { AppSettings } from './../app-settings';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
 
 const EMAIL_KEY : string = 'email';
@@ -44,13 +43,13 @@ export class LoginComponent implements OnInit {
     this._authService.login(credentials).subscribe(
       data => {
         this._authService.saveToken(data.accessToken);
-        this._authService.saveUser(data);
+        this._authService.saveUser(data.user);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         window.location.replace('home');
       },
-      err => {
+      () => {
         this.isLoginFailed = true;
       }
     );
