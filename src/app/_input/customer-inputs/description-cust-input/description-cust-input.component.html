@@ -1,0 +1,10 @@
+<mat-form-field class="full-width">
+    <textarea matInput 
+        #input maxlength="1000"
+        placeholder="Description" 
+        aria-label="Description" 
+        [formControl]="descriptionCtrl" 
+        (keyup.enter)="onSubmit()" 
+        (blur)="onSubmit()"></textarea>
+    <mat-hint align="end">{{input.value?.length || 0}}/1000</mat-hint>
+</mat-form-field>

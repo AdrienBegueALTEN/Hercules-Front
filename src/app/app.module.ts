@@ -70,8 +70,10 @@ import { ArrayMissionComponent } from './array-mission/array-mission.component';
 import { CustomersComponent } from './_page/customers/customers.component';
 import { HeaderComponent } from './header/header.component';
 import { CustomerPageComponent } from './_page/customer-page/customer-page.component';
-import { NameCustInputComponent } from './_input/name-cust-input/name-cust-input.component';
-import { ActivitySectorCustInputComponent } from './_input/activity-sector-cust-input/activity-sector-cust-input.component';
+import { NameCustInputComponent } from './_input/customer-inputs/name-cust-input/name-cust-input.component';
+import { ActivitySectorCustInputComponent } from './_input/customer-inputs/activity-sector-cust-input/activity-sector-cust-input.component';
+import { DescriptionCustInputComponent } from './_input/customer-inputs/description-cust-input/description-cust-input.component';
+import { LogoCustInputComponent } from './_input/customer-inputs/logo-cust-input/logo-cust-input.component';
 
 @NgModule({
    declarations: [
@@ -110,7 +112,9 @@ import { ActivitySectorCustInputComponent } from './_input/activity-sector-cust-
       HeaderComponent,
       CustomerPageComponent,
       NameCustInputComponent,
-      ActivitySectorCustInputComponent
+      ActivitySectorCustInputComponent,
+      DescriptionCustInputComponent,
+      LogoCustInputComponent
    ],
    imports: [
       AppRoutingModule,

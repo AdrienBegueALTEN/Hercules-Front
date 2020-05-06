@@ -4,5 +4,11 @@
         [customer]="customer"></app-name-cust-input><br>
     <app-activity-sector-cust-input
         (customerChange)="updateCustomer($event)" 
-        [customer]="customer"></app-activity-sector-cust-input>
+        [customer]="customer"></app-activity-sector-cust-input><br>
+    <app-description-cust-input
+        (customerChange)="updateCustomer($event)" 
+        [customer]="customer"></app-description-cust-input><br>
+    <app-logo-cust-input
+        (customerChange)="updateCustomer($event)" 
+        [customer]="customer"></app-logo-cust-input>
 </mat-card>
