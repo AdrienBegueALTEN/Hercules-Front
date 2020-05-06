@@ -30,7 +30,6 @@ export class NameCustInputComponent implements OnInit {
   check(): boolean{
     const val = this.nameCtrl.value as string;
     if(val == this.customer.name ){
-      this.message = "Le nom est le même."
       return false;
     }
     if(val.length<=0){

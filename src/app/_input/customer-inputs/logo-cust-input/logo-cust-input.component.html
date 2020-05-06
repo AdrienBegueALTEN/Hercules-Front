@@ -1,8 +1,10 @@
-<input  
-        type="file"
+
+<span style="color:red;" *ngIf="message">{{message}}</span>
+<input  #file
+        type="file" accept='image/*'
         placeholder="Description" 
         aria-label="Description" 
         [formControl]="logoCtrl" 
         (change)="onFileChange($event)"><br>
-<img src="{{src}}" alt="Aperçu">
+        <img [src]="imgURL" height="100" *ngIf="imgURL">
 

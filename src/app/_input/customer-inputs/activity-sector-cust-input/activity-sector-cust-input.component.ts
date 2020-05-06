@@ -30,7 +30,6 @@ export class ActivitySectorCustInputComponent implements OnInit {
   check(): boolean{
     const val = this.activitySectorCtrl.value as string;
     if(val == this.customer.activitySector ){
-      this.message = "Le secteur d'activité est le même."
       return false;
     }
     if(val.length<=0){
