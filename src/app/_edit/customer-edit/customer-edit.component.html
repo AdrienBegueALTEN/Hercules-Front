@@ -1,5 +1,8 @@
 <mat-card>
     <app-name-cust-input
         (customerChange)="updateCustomer($event)" 
-        [customer]="customer"></app-name-cust-input>
+        [customer]="customer"></app-name-cust-input><br>
+    <app-activity-sector-cust-input
+        (customerChange)="updateCustomer($event)" 
+        [customer]="customer"></app-activity-sector-cust-input>
 </mat-card>
