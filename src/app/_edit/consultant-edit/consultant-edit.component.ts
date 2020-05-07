@@ -1,6 +1,6 @@
 import { HttpStatus } from './../../_enums/http-status.enum';
 import { ConsultantService } from 'src/app/_services/consultant.service';
-import { Component, Input, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef, ComponentFactoryResolver, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
@@ -18,7 +18,7 @@ const XP_KEY = 'experience';
 export class ConsultantEditComponent {
   @Input() consultant : any;
   @Input() inMissionView : boolean = false;
-
+  @Output() reload = new EventEmitter<any>();
   @ViewChild('diplomacontainer', { read: ViewContainerRef }) entry: ViewContainerRef;
 
   private _oldValues : object = {}
@@ -89,11 +89,16 @@ export class ConsultantEditComponent {
       () => {
         this.consultant['manager']=manager;
         this._snackBar.open('Mise à jour effectuée', 'x', {duration: 2000});
+        this.sendReload();
       },
       (err) => {
         console.log(err);
       }
     )
-    this._router.navigateByUrl('/consultants/'+this.consultant.id);
+  }
+  
+  sendReload(){
+    console.log("send reload page");
+    this.reload.emit();
   }
 }

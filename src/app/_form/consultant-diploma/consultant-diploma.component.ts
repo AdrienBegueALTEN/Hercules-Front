@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { DiplomaService } from 'src/app/_services/diploma.service';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ export class ConsultantDiplomaComponent implements OnInit {
 
   @Input() diploma:any;
   @Input() consultantId:number;
+  @Output() reload = new EventEmitter<any>();
   diplomaForm: FormGroup;
   diplomas : any[];
 
@@ -88,8 +89,7 @@ export class ConsultantDiplomaComponent implements OnInit {
       }
     )
 
-    this.router.navigateByUrl('/consultants/'+this.consultantId);
-    
+    //this.router.navigateByUrl('/consultants/'+this.consultantId);
   }
 
   onDelete(){
@@ -98,12 +98,14 @@ export class ConsultantDiplomaComponent implements OnInit {
       diplomaId: this.diploma.id
     }
     this.diplomaService.deleteDiploma(req).subscribe(
-      ()=>{},
+      ()=>{
+        this.reload.emit();
+      },
       (err) => {
         console.log(err);
       }
     )
-    this.router.navigateByUrl('/consultants/'+this.consultantId);
+    
   }
 
 }

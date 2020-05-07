@@ -9,10 +9,9 @@ import { Role } from 'src/app/_enums/role.enum';
   templateUrl: './consultant-page.component.html',
   styleUrls: ['./consultant-page.component.scss']
 })
-export class ConsultantPageComponent implements OnInit, OnDestroy {
+export class ConsultantPageComponent implements OnInit {
   consultant : any;
   writingRights : boolean = false;
-  navigationSubscription;   
 
   constructor(
     private _authService : AuthService,
@@ -20,12 +19,6 @@ export class ConsultantPageComponent implements OnInit, OnDestroy {
     private _route : ActivatedRoute,
     private _router: Router
   ) {
-    this.navigationSubscription = this._router.events.subscribe((e: any) => {
-      // If it is a NaviggetConsultantd event re-initalise the component
-      if (e instanceof NavigationEnd) {
-        this.initialize();
-      }
-    });
   }
 
   initialize(){
@@ -45,9 +38,8 @@ export class ConsultantPageComponent implements OnInit, OnDestroy {
     this.initialize();
   }
 
-  ngOnDestroy(){
-    if (this.navigationSubscription) {
-      this.navigationSubscription.unsubscribe();
-    }
+  onReload(){
+    console.log("reload page")
+    this.ngOnInit();
   }
 }

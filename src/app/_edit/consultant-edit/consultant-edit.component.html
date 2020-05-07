@@ -52,7 +52,8 @@
         <app-consultant-diploma 
           *ngFor="let diploma of consultant.diplomas" 
           [diploma]="diploma" 
-          [consultantId]="consultant.id"></app-consultant-diploma>
+          [consultantId]="consultant.id"
+          (reload)="sendReload()"></app-consultant-diploma>
           <button  mat-icon-button (click)="createComponent(consultant.id)">
             <span class="material-icons">add</span>
           </button>

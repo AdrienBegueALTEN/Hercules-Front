@@ -10,7 +10,8 @@
     </app-consultant-view>
     <app-consultant-edit 
       *ngIf="writingRights"
-      [consultant]="consultant">
+      [consultant]="consultant"
+      (reload)="onReload()">
     </app-consultant-edit>
   </mat-tab>
   <mat-tab>
