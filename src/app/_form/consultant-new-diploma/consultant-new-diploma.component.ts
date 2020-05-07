@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DiplomaService } from 'src/app/_services/diploma.service';
 import { Observable } from 'rxjs';
+import { debugOutputAstAsTypeScript } from '@angular/compiler';
 
 @Component({
   selector: 'app-consultant-new-diploma',
@@ -11,6 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class ConsultantNewDiplomaComponent implements OnInit {
   @Input() consultantId:number;
+  @Output() reload = new EventEmitter<any>();
   diplomaForm: FormGroup;
   
   constructor(private formBuilder: FormBuilder,
@@ -25,11 +27,11 @@ export class ConsultantNewDiplomaComponent implements OnInit {
 
   initForm(){
     this.diplomaForm = this.formBuilder.group({
-      city: new FormControl(),
-      school: new FormControl(),
-      year: new FormControl(),
-      level: new FormControl(),
-      diploma: new FormControl()
+      city: '',
+      school: ['', Validators.required],
+      year: ['', Validators.required],
+      level: '',
+      diploma: ['', Validators.required]
     });
   }
 
@@ -46,12 +48,12 @@ export class ConsultantNewDiplomaComponent implements OnInit {
     }
 
     this.diplomaService.addDiploma(dipl).subscribe(
-      ()=> {},
+      ()=> {
+        this.reload.emit();
+        this.diplomaForm.reset();
+      },
       (err) => {console.log(err);}
     );
-
-    this.router.navigateByUrl('/consultants/'+this.consultantId);
-    
   }
 
 }

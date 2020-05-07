@@ -54,10 +54,9 @@
           [diploma]="diploma" 
           [consultantId]="consultant.id"
           (reload)="sendReload()"></app-consultant-diploma>
-          <button  mat-icon-button (click)="createComponent(consultant.id)">
-            <span class="material-icons">add</span>
-          </button>
-          <div #diplomacontainer></div>
+        <app-consultant-new-diploma 
+          [consultantId]="consultant.id"
+          (reload)="sendReload()"></app-consultant-new-diploma>
       </mat-card-content>
     </mat-card>
     <mat-card [class.manager-gone-background]="consultant.manager.releaseDate!=null">

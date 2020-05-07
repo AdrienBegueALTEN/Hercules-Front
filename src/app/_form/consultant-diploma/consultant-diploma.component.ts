@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { DiplomaService } from 'src/app/_services/diploma.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -75,11 +75,11 @@ export class ConsultantDiplomaComponent implements OnInit {
     
     const dipl = {
       id:this.diploma.id,
-      graduationYear:values.year,
+      graduationYear:[values.year, Validators.required],
       graduationCity:values.city,
-      diplomaName:values.diploma,
+      diplomaName:[values.diploma, Validators.required],
       levelName:values.level,
-      school:values.school
+      school:[values.school, Validators.required]
     }
 
     this.diplomaService.updateDiploma(dipl).subscribe(

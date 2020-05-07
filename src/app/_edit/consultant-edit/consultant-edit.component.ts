@@ -19,7 +19,6 @@ export class ConsultantEditComponent {
   @Input() consultant : any;
   @Input() inMissionView : boolean = false;
   @Output() reload = new EventEmitter<any>();
-  @ViewChild('diplomacontainer', { read: ViewContainerRef }) entry: ViewContainerRef;
 
   private _oldValues : object = {}
   grp : FormGroup = new FormBuilder().group({});
@@ -75,13 +74,6 @@ export class ConsultantEditComponent {
       ok: 'OK'
     };
     this._dialog.open(OkDialogComponent, dialogConfig);
-  }
-
-  createComponent(consultantId:number) {
-    this.entry.clear();
-    const factory = this._resolver.resolveComponentFactory(ConsultantNewDiplomaComponent);
-    const componentRef = this.entry.createComponent(factory);
-    componentRef.instance.consultantId=consultantId;
   }
 
   updateManager(manager:any){

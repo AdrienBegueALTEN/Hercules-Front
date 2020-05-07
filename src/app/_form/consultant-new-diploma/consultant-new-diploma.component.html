@@ -1,15 +1,15 @@
-<form style="vertical-align: top;" [formGroup]="diplomaForm" (ngSubmit)="onSubmit()">
+<form style="vertical-align: top;" [formGroup]="diplomaForm">
     <mat-form-field>
         <mat-label>Ville</mat-label>
         <input matInput type="text" formControlName="city">
     </mat-form-field>&nbsp;
     <mat-form-field>
         <mat-label>Ecole</mat-label>
-        <input matInput type="text"  formControlName="school">
+        <input matInput type="text"  formControlName="school" required>
     </mat-form-field> &nbsp;
     <mat-form-field>
         <mat-label>Année</mat-label >
-        <input matInput type="number"  formControlName="year">
+        <input matInput type="number"  formControlName="year" required>
     </mat-form-field>&nbsp;
     <mat-form-field>
         <mat-label>Niveau</mat-label>
@@ -17,11 +17,11 @@
     </mat-form-field>&nbsp;
     <mat-form-field>
         <mat-label>Diplôme</mat-label>
-        <input matInput type="text"  formControlName="diploma">
+        <input matInput type="text"  formControlName="diploma" required>
     </mat-form-field> &nbsp;
 
-    <button type="submit" mat-button>
-        <span class="material-icons">done</span>
+    <button type="submit" mat-button [disabled]="diplomaForm.invalid" (click)="onSubmit()">
+        <mat-icon>add</mat-icon>
     </button>
 </form>
 
