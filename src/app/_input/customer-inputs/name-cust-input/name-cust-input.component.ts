@@ -30,6 +30,7 @@ export class NameCustInputComponent implements OnInit {
   check(): boolean{
     const val = this.nameCtrl.value as string;
     if(val == this.customer.name ){
+      this.message = ""
       return false;
     }
     if(val.length<=0){
