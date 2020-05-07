@@ -8,6 +8,8 @@ import { ConsultantService } from '../../_services/consultant.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DeactivateComponent } from '../../dialog/deactivate/deactivate.component';
 import { Router, NavigationEnd } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
 
 @Component({
   selector: 'app-consultants',
@@ -38,15 +40,9 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
 
   constructor(private consultantService: ConsultantService, 
     private _bottomSheet: MatBottomSheet,
+    private _dialog: MatDialog,
     private _authService: AuthService,
-    private router:Router) {
-      this.navigationSubscription = this.router.events.subscribe((e: any) => {
-        // If it is a NavigationEnd event re-initalise the component
-        if (e instanceof NavigationEnd) {
-          this.initialize();
-        }
-      });
-  }
+    private router:Router) {}
 
   ngOnInit() {
     this.initialize();
@@ -150,16 +146,34 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
     this.createDatasource(this.consultants);
   }
 
-  delete(element){
-    if(confirm("Voulez-vous continuer?")){
-      this.consultantService.deleteConsultant(element.id).subscribe(
-        ()=>{},
-        (err) => {
-          console.log(err);
+  private delete(consultant:any){
+    this.consultantService.deleteConsultant(consultant.id).subscribe(
+      ()=>{
+        this.ngOnInit();
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+  }
+
+  openDeleteDialog(element: any): void {
+    const dialog = this._dialog.open(YesNoDialogComponent, {
+      data: { 
+        title: 'Supprimer le consultant '+element.firstname+' '+element.lastname+'.' ,
+        message: 'Voulez-vous continuer ?',
+        yes:'Supprimer '+element.firstname+' '+element.lastname,
+        no:'Annuler'
+      },
+    });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        if(result){
+          this.delete(element);
         }
-      )
-      this.router.navigateByUrl('/consultants');
-    }
+      }
+    );
   }
 }
 

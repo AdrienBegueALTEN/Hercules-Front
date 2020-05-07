@@ -44,14 +44,17 @@
         <button matTooltip="Voir plus de {{element.firstname}} {{element.lastname}}" mat-icon-button [routerLink]="[element.id]">
           <mat-icon>more_horiz</mat-icon>
         </button>&nbsp;
+
         <button mat-icon-button (click)="openBottomSheet(element)"
-          [disabled]="element.releaseDate!=null || element.manager.id!=user.id">
+          [disabled]="element.releaseDate!=null || element.manager.id!=user.id"
+          [matTooltip]="element.releaseDate | date:'dd/MM/yyyy'">
           <mat-icon *ngIf="element.releaseDate!=null">lock</mat-icon>
           <mat-icon *ngIf="element.releaseDate==null">lock_open</mat-icon>
         </button>&nbsp;
+
         <button mat-icon-button color="warn" 
-          *ngIf="element.releaseDate==null && element.missions && element.manager.id==user.id" 
-          (click)="delete(element)">
+          *ngIf="userIsManager && element.releaseDate==null && element.missions.length==0 && element.manager.id==user.id" 
+          (click)="openDeleteDialog(element)">
           <mat-icon>delete</mat-icon>
         </button>&nbsp;
         
