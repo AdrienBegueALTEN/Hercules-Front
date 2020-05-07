@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ConsultantService } from 'src/app/_services/consultant.service';
@@ -17,6 +17,7 @@ export class DeactivateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private consultantService: ConsultantService,
     private router: Router) {}
+    @Output() deactivationDate = new EventEmitter<any>();
 
     ngOnInit(): void {
       this.initForm();
@@ -35,13 +36,7 @@ export class DeactivateComponent implements OnInit {
 
   onSubmit(){
     const values = this.releaseForm.value;
-
-
-    this.consultantService.updateConsultant(this.data.consultant.id,'releaseDate',values.releaseDate).subscribe(
-      ()=>{},
-      (err) => {console.log(err)}
-    )
-    this.router.navigateByUrl('/consultants');
+    this.deactivationDate.emit(values.releaseDate);
   }
 
 }

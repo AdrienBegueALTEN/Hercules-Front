@@ -3,6 +3,8 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Role } from 'src/app/_enums/role.enum';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { DeactivateComponent } from 'src/app/dialog/deactivate/deactivate.component';
 
 @Component({
   selector: 'app-consultant-page',
@@ -17,7 +19,8 @@ export class ConsultantPageComponent implements OnInit {
     private _authService : AuthService,
     private _consultantService : ConsultantService,
     private _route : ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _bottomSheet: MatBottomSheet,
   ) {
   }
 
@@ -28,7 +31,8 @@ export class ConsultantPageComponent implements OnInit {
         this.consultant = consultant;
         const user = this._authService.getUser();
         this.writingRights = 
-          user.roles.includes(Role.MANAGER) && consultant.manager.id == user.id;
+          user.roles.includes(Role.MANAGER) && consultant.manager.id == user.id
+          && consultant.releaseDate==null;
       },
       () => window.location.replace('not-found')
     )
@@ -36,6 +40,25 @@ export class ConsultantPageComponent implements OnInit {
 
   ngOnInit() {
     this.initialize();
+  }
+
+  openBottomSheet(): void {
+    const bootomSheet = this._bottomSheet.open(DeactivateComponent, {
+      data: { consultant: this.consultant },
+    });
+    bootomSheet.instance.deactivationDate.subscribe(
+      (data) => {
+        this._consultantService.updateConsultant(this.consultant.id,'releaseDate',data).subscribe(
+          ()=>{
+            this.ngOnInit();
+          },
+          (err) => {console.log(err)}
+        )
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   onReload(){

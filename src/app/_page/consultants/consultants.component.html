@@ -1,4 +1,4 @@
-<br>
+
 <mat-form-field style="width: 100%;">
   <mat-label>Chercher un consultant</mat-label>
   <input matInput (keyup)="applyFilter($event)" placeholder="Chercher un consultant">
@@ -42,18 +42,19 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
         <button matTooltip="Voir plus de {{element.firstname}} {{element.lastname}}" mat-icon-button [routerLink]="[element.id]">
-          <span class="material-icons">more_horiz</span>
-        </button>&nbsp;
-        <button mat-icon-button color="warn" 
-          [disabled]="element.releaseDate!=null || !!element.missions || element.manager.id!=user.id" 
-          (click)="delete(element)">
-          <span class="material-icons">delete</span>
+          <mat-icon>more_horiz</mat-icon>
         </button>&nbsp;
         <button mat-icon-button (click)="openBottomSheet(element)"
           [disabled]="element.releaseDate!=null || element.manager.id!=user.id">
-          <span *ngIf="element.releaseDate!=null" class="material-icons">lock</span>
-          <span *ngIf="element.releaseDate==null" class="material-icons">lock_open</span>
-        </button>
+          <mat-icon *ngIf="element.releaseDate!=null">lock</mat-icon>
+          <mat-icon *ngIf="element.releaseDate==null">lock_open</mat-icon>
+        </button>&nbsp;
+        <button mat-icon-button color="warn" 
+          *ngIf="element.releaseDate==null && element.missions && element.manager.id==user.id" 
+          (click)="delete(element)">
+          <mat-icon>delete</mat-icon>
+        </button>&nbsp;
+        
       </td>
     </ng-container>
 
@@ -63,7 +64,7 @@
         [class.manager-gone-color]="element.manager.releaseDate!=null">
     </tr>
   </table>
-  
-  <br>
   <mat-paginator style="background-color: transparent;" [pageSizeOptions]="[ 5, 10, 25]"></mat-paginator>
+
+
   
