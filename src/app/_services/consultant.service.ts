@@ -11,11 +11,11 @@ export class ConsultantService {
   constructor(private _httpClient : HttpClient) {}
 
   getConsultants(enabled : boolean) : Observable<any[]> {
-    return this._httpClient.get<any[]>(AppSettings.CONSULTANT_API + '?enabled=' + enabled, AppSettings.HTTP_OPTIONS);
+    return this._httpClient.get<any[]>(AppSettings.CONSULTANT_API + '?enabled=' + enabled, AppSettings.HTTP_JSON_CONTENT);
   }
 
   getConsultant(id:number){
-    return this._httpClient.get<any>(AppSettings.CONSULTANT_API + id, AppSettings.HTTP_OPTIONS);
+    return this._httpClient.get<any>(AppSettings.CONSULTANT_API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 
   newConsultant(email : string, firstname : string, lastname : string, manager : number) : Observable<any> {
@@ -30,7 +30,7 @@ export class ConsultantService {
   }
 
   deleteConsultant(id : number) : Observable<any> {
-    return this._httpClient.delete(AppSettings.CONSULTANT_API + id, AppSettings.HTTP_OPTIONS);
+    return this._httpClient.delete(AppSettings.CONSULTANT_API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 
   updateConsultant(id : number, fieldName : String, value : any) : Observable<any> {
