@@ -29,10 +29,12 @@ export class MissionService {
     return this._httpClient.get(AppSettings.MISSION_API + 'new-version/' + mission);
   }
 
-  getMissionDetails(mission : number, token? : string) : Observable<any> {
-    return (!!token) ?
-      this._notInteceptedHttpClient.get(AppSettings.MISSION_API + mission, { headers: new HttpHeaders({ 'Authorization': token }) }) :
-      this._httpClient.get(AppSettings.MISSION_API + mission);
+  getMissionDetails(mission : number) : Observable<any> {
+    return this._httpClient.get(AppSettings.MISSION_API + mission);
+  }
+
+  getMissionDetailsFromToken(token : string) : Observable<any> {
+    return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'from-token', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) });
   }
 
   getMissions(): Observable<Mission[]> {

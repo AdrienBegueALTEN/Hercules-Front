@@ -11,12 +11,14 @@ import { MissionPageComponent } from './_page/mission/mission-page.component';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { HomeComponent } from './home/home.component';
 import { CustomersComponent } from './_page/customers/customers.component';
+import { MissionSheetPageComponent } from './_page/mission-sheet/mission-sheet-page.component';
 
 const routes: Routes = [
   { path: 'login', canActivate: [NoAuthGuard], component: LoginComponent },
   { path: 'home', canActivate: [AuthGuard], component: HomeComponent },
   { path: 'new-mission', canActivate: [AuthGuard, ManagerGuard], component: NewMissionPageComponent },
   { path: 'missions/:id', canActivate: [AuthGuard], component: MissionPageComponent },
+  { path: 'mission-sheet/:token', component: MissionSheetPageComponent },
   { path: 'consultants', canActivate: [AuthGuard], component: ConsultantsComponent, runGuardsAndResolvers: 'always' },
   { path: 'consultants/:id', canActivate: [AuthGuard], component: ConsultantPageComponent, runGuardsAndResolvers: 'always' },
   { path: 'customers', canActivate: [AuthGuard], component: CustomersComponent, runGuardsAndResolvers: 'always' },
