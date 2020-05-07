@@ -8,10 +8,10 @@ import { AppSettings } from './../app-settings';
 })
 export class CustomerService {
 
-constructor(private _httpClient : HttpClient) {}
+  constructor(private _httpClient : HttpClient) {}
 
   getAll() : Observable<any[]> {
-    return this._httpClient.get<any[]>(AppSettings.CUSTOMER_API, AppSettings.HTTP_OPTIONS);
+    return this._httpClient.get<any[]>(AppSettings.CUSTOMER_API, AppSettings.HTTP_JSON_CONTENT);
   }
 
   newCustomer(name : string, activitySector : string) : Observable<any> {
@@ -24,6 +24,6 @@ constructor(private _httpClient : HttpClient) {}
   }
 
   deleteCustomer(id : number) : Observable<any> {
-    return this._httpClient.delete(AppSettings.CUSTOMER_API + id, AppSettings.HTTP_OPTIONS);
+    return this._httpClient.delete(AppSettings.CUSTOMER_API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 }
