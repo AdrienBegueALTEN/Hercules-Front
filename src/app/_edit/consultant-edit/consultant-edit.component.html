@@ -52,11 +52,11 @@
         <app-consultant-diploma 
           *ngFor="let diploma of consultant.diplomas" 
           [diploma]="diploma" 
-          [consultantId]="consultant.id"></app-consultant-diploma>
-          <button  mat-icon-button (click)="createComponent(consultant.id)">
-            <span class="material-icons">add</span>
-          </button>
-          <div #diplomacontainer></div>
+          [consultantId]="consultant.id"
+          (reload)="sendReload()"></app-consultant-diploma>
+        <app-consultant-new-diploma 
+          [consultantId]="consultant.id"
+          (reload)="sendReload()"></app-consultant-new-diploma>
       </mat-card-content>
     </mat-card>
     <mat-card [class.manager-gone-background]="consultant.manager.releaseDate!=null">

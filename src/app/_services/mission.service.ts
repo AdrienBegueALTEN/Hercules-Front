@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AppSettings } from '../app-settings';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpBackend, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MissionService {
 
-  constructor(private _httpClient : HttpClient) {}
+  private _notInteceptedHttpClient : HttpClient;
+
+  constructor(
+    private _httpBackend: HttpBackend,
+    private _httpClient : HttpClient) {
+      this._notInteceptedHttpClient = new HttpClient(this._httpBackend);
+    }
 
   newMission(consultant : number, customer : number) : Observable<any> {
     return this._httpClient.post(AppSettings.MISSION_API,
@@ -16,15 +22,19 @@ export class MissionService {
         consultant : consultant,
         customer : customer,
       },
-    AppSettings.HTTP_OPTIONS);
+    AppSettings.HTTP_JSON_CONTENT);
   }
 
   addVersion(mission : number) : Observable<any> {
-    return this._httpClient.post(AppSettings.MISSION_API + 'new-version/' + mission, AppSettings.HTTP_OPTIONS);
+    return this._httpClient.get(AppSettings.MISSION_API + 'new-version/' + mission);
   }
 
   getMissionDetails(mission : number) : Observable<any> {
-    return this._httpClient.get(AppSettings.MISSION_API + mission, AppSettings.HTTP_OPTIONS);
+    return this._httpClient.get(AppSettings.MISSION_API + mission);
+  }
+
+  getMissionDetailsFromToken(token : string) : Observable<any> {
+    return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'from-token', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) });
   }
 
   getMissions(): Observable<Mission[]> {
@@ -38,7 +48,7 @@ export class MissionService {
         fieldName : fieldName,
         value : value,
       },
-      AppSettings.HTTP_OPTIONS);
+      AppSettings.HTTP_JSON_CONTENT);
   }
 }
 

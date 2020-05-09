@@ -15,7 +15,7 @@ export class AuthService {
     return this._http.post(AppSettings.AUTH_API + 'signin', {
       email: credentials.email,
       password: credentials.password
-    }, AppSettings.HTTP_OPTIONS);
+    }, AppSettings.HTTP_JSON_CONTENT);
   }
 
   public logout() : void {

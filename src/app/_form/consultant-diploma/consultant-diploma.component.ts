@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { DiplomaService } from 'src/app/_services/diploma.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -14,6 +14,7 @@ export class ConsultantDiplomaComponent implements OnInit {
 
   @Input() diploma:any;
   @Input() consultantId:number;
+  @Output() reload = new EventEmitter<any>();
   diplomaForm: FormGroup;
   diplomas : any[];
 
@@ -74,11 +75,11 @@ export class ConsultantDiplomaComponent implements OnInit {
     
     const dipl = {
       id:this.diploma.id,
-      graduationYear:values.year,
+      graduationYear:[values.year, Validators.required],
       graduationCity:values.city,
-      diplomaName:values.diploma,
+      diplomaName:[values.diploma, Validators.required],
       levelName:values.level,
-      school:values.school
+      school:[values.school, Validators.required]
     }
 
     this.diplomaService.updateDiploma(dipl).subscribe(
@@ -88,8 +89,7 @@ export class ConsultantDiplomaComponent implements OnInit {
       }
     )
 
-    this.router.navigateByUrl('/consultants/'+this.consultantId);
-    
+    //this.router.navigateByUrl('/consultants/'+this.consultantId);
   }
 
   onDelete(){
@@ -98,12 +98,14 @@ export class ConsultantDiplomaComponent implements OnInit {
       diplomaId: this.diploma.id
     }
     this.diplomaService.deleteDiploma(req).subscribe(
-      ()=>{},
+      ()=>{
+        this.reload.emit();
+      },
       (err) => {
         console.log(err);
       }
     )
-    this.router.navigateByUrl('/consultants/'+this.consultantId);
+    
   }
 
 }
