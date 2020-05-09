@@ -3,7 +3,7 @@
     <mat-label>Chercher un client</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Nom, secteur d'activité">
 </mat-form-field>
-<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort matSortActive="name" matSortDisableClear matSortDirection="asc">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
       <td mat-cell *matCellDef="let element">

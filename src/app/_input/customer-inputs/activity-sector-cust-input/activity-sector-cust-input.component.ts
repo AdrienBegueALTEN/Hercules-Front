@@ -28,7 +28,7 @@ export class ActivitySectorCustInputComponent implements OnInit {
         this.filteredSectors = this.activitySectorCtrl.valueChanges
           .pipe(
             delay(500),
-            startWith(''),
+            startWith(this.customer.activitySector),
             map(value => this._filter(value))
           );
       }
