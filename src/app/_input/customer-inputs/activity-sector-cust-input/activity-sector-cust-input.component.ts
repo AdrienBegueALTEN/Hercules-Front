@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { CustomerService } from 'src/app/_services/customer.service';
+import { Observable } from 'rxjs';
+import { startWith, map, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-activity-sector-cust-input',
@@ -11,10 +14,30 @@ export class ActivitySectorCustInputComponent implements OnInit {
   @Output() customerChange = new EventEmitter<any>();
   activitySectorCtrl = new FormControl();
   message = "";
-  constructor() { }
+  sectors: string[];
+  filteredSectors: Observable<string[]>;
+
+  constructor(private _customerService: CustomerService) { }
 
   ngOnInit(): void {
     this.activitySectorCtrl.setValue(this.customer.activitySector);
+    this._customerService.getAll().subscribe(
+      (data) => {
+        this.sectors = Array.from(new Set(data.map(cust => cust.activitySector)));
+        console.log(this.sectors);
+        this.filteredSectors = this.activitySectorCtrl.valueChanges
+          .pipe(
+            delay(500),
+            startWith(''),
+            map(value => this._filter(value))
+          );
+      }
+    );
+    this.customerChange.subscribe(
+      () => {
+        this.ngOnInit();
+      }
+    )
   }
 
   onSubmit(){
@@ -38,5 +61,11 @@ export class ActivitySectorCustInputComponent implements OnInit {
     }
     this.message = ""
     return true;
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.sectors.filter(option => option.toLowerCase().includes(filterValue));
   }
 }

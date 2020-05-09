@@ -1,4 +1,14 @@
 <mat-form-field class="full-width">
-    <input matInput placeholder="Secteur d'activité" aria-label="Secteur d'activité" [formControl]="activitySectorCtrl" (keyup.enter)="onSubmit()" (blur)="onSubmit()">
+    <input matInput 
+        placeholder="Secteur d'activité" 
+        aria-label="Secteur d'activité" 
+        [formControl]="activitySectorCtrl" 
+        (keyup.enter)="onSubmit()" (blur)="onSubmit()"
+        [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredSectors | async" [value]="option">
+            {{option}}
+        </mat-option>
+    </mat-autocomplete>
     <mat-hint style="color: red;">{{message}}</mat-hint>
 </mat-form-field>
