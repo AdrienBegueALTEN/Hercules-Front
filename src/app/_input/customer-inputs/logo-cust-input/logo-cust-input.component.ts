@@ -49,8 +49,7 @@ export class LogoCustInputComponent implements OnInit {
     reader.onload = (_event) => {
       this.imgURL = reader.result;
       this.customer.logo = this.imgURL;
-      this.customerChange.emit(this.customer);
-      console.log(this.imgURL);
+      //this.customerChange.emit(this.customer);
     };
   }
 
