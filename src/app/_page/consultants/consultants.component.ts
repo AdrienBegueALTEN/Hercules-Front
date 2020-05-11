@@ -59,8 +59,8 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
 
     if (this.isAuthenticated) {
       this.user = this._authService.getUser();
-      this.userIsAdmin = this.user.role == 'ADMIN';
-      this.userIsManager = this.userIsAdmin || this.user.role == 'MANAGER';
+      
+      this.userIsManager = this.user.roles.includes('MANAGER');
     }
 
     this.consultantService.getConsultants(false).subscribe(
@@ -98,7 +98,7 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
   }
 
   createDatasource(data) {
-    if (this.onlyMyConsultantChecked) {
+    if (this.onlyMyConsultantChecked && this.userIsManager) {
       this.dataSource = new MatTableDataSource(data.filter((cons) => cons.manager.id == this.user.id));
     }
     else {

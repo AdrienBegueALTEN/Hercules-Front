@@ -4,7 +4,7 @@
   <input matInput (keyup)="applyFilter($event)" placeholder="Chercher un consultant">
 </mat-form-field>
 
-<mat-slide-toggle (click)="showOnlyMyConsultant()" [checked]="true">Afficher uniquement mes consultants.</mat-slide-toggle>
+<mat-slide-toggle (click)="showOnlyMyConsultant()" [checked]="true" *ngIf="userIsManager">Afficher uniquement mes consultants.</mat-slide-toggle>
 <br>
 <br>
 
