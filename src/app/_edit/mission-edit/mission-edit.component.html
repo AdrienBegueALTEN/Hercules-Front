@@ -7,12 +7,12 @@
   <table class="inputable">
     <tr>
       <td><mat-form-field>
-        <mat-label>Rôle du consultant</mat-label>
+        <mat-label>{{getLabel(ROLE_KEY)}}</mat-label>
         <input matInput type="text" maxlength="100"
           [formControlName]="ROLE_KEY" (change)="onChange(ROLE_KEY)">
       </mat-form-field></td>
       <td><mat-form-field>
-        <mat-label>Années d'expérience du consultant au début de la mission</mat-label>
+        <mat-label>{{getLabel(XP_KEY)}}</mat-label>
         <input matInput type="text"
           [formControlName]="XP_KEY" (change)="onChange(XP_KEY)">
       </mat-form-field></td>

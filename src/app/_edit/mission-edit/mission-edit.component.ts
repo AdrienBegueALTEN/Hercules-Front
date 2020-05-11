@@ -1,7 +1,5 @@
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
-import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
 
 const NUMBER_PATTERN = '^\\d*$';
 
@@ -11,6 +9,7 @@ const NUMBER_PATTERN = '^\\d*$';
   styleUrls: ['./mission-edit.component.scss']
 })
 export class MissionEditComponent implements OnInit {
+  @Input() targatedLabels : boolean = false;
   @Input() version : any;
 
   readonly CITY_KEY = 'city';
@@ -49,6 +48,19 @@ export class MissionEditComponent implements OnInit {
       const newValue : any = (key === this.TEAM_KEY || key === this.XP_KEY) ? 
       Number(this.grp.controls[key].value) : this.grp.controls[key].value;
       this.update.emit({key : key, value : newValue});
+    }
+  }
+
+  public getLabel(key : string) : string {
+    switch (key) {
+      case this.ROLE_KEY :
+        return (this.targatedLabels ? 'Votre rôle' : 'Rôle du consultant')
+          .concat(' au sein de la mission');
+      case this.XP_KEY :
+        return (this.targatedLabels ? 'Votre niveau d\expérience' : 'Expérience du consultant')
+          .concat(' au début de la mission (en années)');
+      default :
+        return '';
     }
   }
 
