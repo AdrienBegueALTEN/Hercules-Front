@@ -42,4 +42,8 @@ export class ConsultantService {
       },
       {observe: 'response'});
   }
+
+  updateForRgpd() {
+    return this._httpClient.put(AppSettings.CONSULTANT_API+'rgpd',null);
+  }
 }

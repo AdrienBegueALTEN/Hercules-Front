@@ -175,5 +175,16 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  rgpd(){
+    this.consultantService.updateForRgpd().subscribe(
+      ()=>{
+        this.ngOnInit();
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+  }
 }
 
