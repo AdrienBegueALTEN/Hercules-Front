@@ -50,6 +50,15 @@ export class MissionService {
       },
       AppSettings.HTTP_JSON_CONTENT);
   }
+
+  updateMissionFromToken(token : string, fieldName : String, value : any) : Observable<any> {
+    return this._httpClient.put(AppSettings.MISSION_API + 'from-token',
+      {
+        fieldName : fieldName,
+        value : value,
+      },
+      { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) });
+  }
 }
 
 export interface Mission {

@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SheetStatus } from './../../_enums/sheet-status.enum';
 import { AuthService } from 'src/app/_services/auth.service';
 import { MissionService } from '../../_services/mission.service';
@@ -30,7 +31,8 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     private _cdr : ChangeDetectorRef,
     private _dialog : MatDialog,
     private _missionService : MissionService,
-    private _route : ActivatedRoute
+    private _route : ActivatedRoute,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -53,15 +55,22 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     this._cdr.detectChanges();
   }
 
+  public updateMission(event : any) : void {
+    this._missionService
+      .updateMission(this.mission.id, event.key, event.value).subscribe(
+        () => {
+          this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+          this.mission.versions[this.todayVersionIndex][event.key] = event.value;
+        },
+        () => { this._handleUpdateError(); }
+      )
+  }
+
   public onNewVersion() : void {
     this._missionService.addVersion(this.mission.id).subscribe(
       () => { this.ngOnInit(); },
-      () => { this._handleError(); }
+      () => { this._handleNewVersionError(); }
     );
-  }
-
-  public updateTodayVersion(update : any) : void {
-    this.mission.versions[this.todayVersionIndex][update.key] = update.value;
   }
 
   public showMissionEdit() : boolean {
@@ -94,13 +103,25 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       && today.getFullYear() == date.getFullYear();
   }
 
-  private _handleError() : void {
+  private _handleNewVersionError() : void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
       title : 'Impossible de créer une nouvelle version',
       message : 'Une erreur s\'est produite lors de la tentative de création d\'une nouvelle version pour cette fiche mission.',
+      ok: 'OK'
+    };
+    this._dialog.open(OkDialogComponent, dialogConfig);
+  }
+
+  private _handleUpdateError() : void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      title : 'Echec de la modification',
+      message : 'Une erreur s\'est produite lors de la tentative de mise à jour',
       ok: 'OK'
     };
     this._dialog.open(OkDialogComponent, dialogConfig);

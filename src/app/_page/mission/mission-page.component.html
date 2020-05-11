@@ -62,9 +62,8 @@
 
 <ng-template #missionEdit>
   <app-mission-edit
-    [missionId]="mission.id"
     [version]="mission.versions[selectedIndex]"
-    (update)="updateTodayVersion($event)">
+    (update)="updateMission($event)">
   </app-mission-edit>
 </ng-template>
 

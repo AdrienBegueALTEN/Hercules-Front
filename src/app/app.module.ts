@@ -1,3 +1,4 @@
+import { MissionSheetPageComponent } from './_page/mission-sheet/mission-sheet-page.component';
 import { MissionEditComponent } from './_edit/mission-edit/mission-edit.component';
 import { MissionViewComponent } from './_view/mission-view/mission-view.component';
 import { XpInputComponent } from './_input/xp-input/xp-input.component';
@@ -114,7 +115,8 @@ import { LogoCustInputComponent } from './_input/customer-inputs/logo-cust-input
       NameCustInputComponent,
       ActivitySectorCustInputComponent,
       DescriptionCustInputComponent,
-      LogoCustInputComponent
+      LogoCustInputComponent,
+      MissionSheetPageComponent
    ],
    imports: [
       AppRoutingModule,
