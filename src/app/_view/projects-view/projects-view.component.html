@@ -1,7 +1,13 @@
 <br>
-<app-project-single-view [project]="0"></app-project-single-view>
+<app-project-single-view *ngIf="projects.length>0" [project]="projects[currentIndex]"></app-project-single-view>
+<div *ngIf="projects.length<=0">Aucun projets pour cette version.</div>
 <div class="center">
     <div style="display: inline-block;" *ngFor="let project of projects; let i=index;">
-        <button matRipple  class="yellow-rounded-button">{{i+1}}</button><span *ngIf="i != projects.length">&nbsp;</span>
+        <button 
+            class="yellow-rounded-button" 
+            (click)="changeProject(i)"
+            [class.active]="currentIndex == i">
+        </button>
+        <span *ngIf="i != projects.length">&nbsp;</span>
     </div>
 </div>

@@ -7,10 +7,16 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProjectsViewComponent implements OnInit {
   @Input() projects;
+  currentIndex: number;
   constructor() { }
 
   ngOnInit(): void {
+    this.currentIndex = 0; 
     console.log(this.projects);
+  }
+
+  changeProject(index:number){
+    this.currentIndex = index;
   }
 
 }
