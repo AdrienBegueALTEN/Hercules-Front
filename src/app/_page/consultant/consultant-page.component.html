@@ -17,6 +17,11 @@
     <ng-template mat-tab-label>
       Ses missions
     </ng-template>
+    <ul>
+      <li *ngFor="let m of consultant.missions">
+        <a routerLink="/missions/{{m.id}}">{{m.versions[0].title}}</a>
+      </li>
+    </ul>
   </mat-tab>
   <mat-tab *ngIf="writingRights">
     <ng-template mat-tab-label>
