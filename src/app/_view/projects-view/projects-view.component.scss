@@ -1,0 +1,20 @@
+.center {
+    text-align: center;
+}
+
+.yellow-rounded-button{
+    text-align: center;
+    border-radius: 100px;
+    height: 30px;
+    width: 30px;
+    border: 0;
+    background-color: #ffba00;
+    color: white;
+    font-weight: bold;
+    border: solid 1px #ffba00;
+}
+
+.yellow-rounded-button:hover{
+    background-color: white;
+    color: #ffba00;
+}

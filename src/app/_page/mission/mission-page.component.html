@@ -15,6 +15,7 @@
           Projet(s)
         </ng-template>
         <div *ngIf="showVersions(); then versions"></div>
+        <app-projects-view [projects]="mission.versions[selectedIndex].projects"></app-projects-view>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>

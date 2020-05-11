@@ -1,0 +1,7 @@
+<br>
+<app-project-single-view [project]="0"></app-project-single-view>
+<div class="center">
+    <div style="display: inline-block;" *ngFor="let project of projects; let i=index;">
+        <button matRipple  class="yellow-rounded-button">{{i+1}}</button><span *ngIf="i != projects.length">&nbsp;</span>
+    </div>
+</div>

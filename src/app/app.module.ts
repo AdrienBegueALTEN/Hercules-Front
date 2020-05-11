@@ -74,6 +74,8 @@ import { NameCustInputComponent } from './_input/customer-inputs/name-cust-input
 import { ActivitySectorCustInputComponent } from './_input/customer-inputs/activity-sector-cust-input/activity-sector-cust-input.component';
 import { DescriptionCustInputComponent } from './_input/customer-inputs/description-cust-input/description-cust-input.component';
 import { LogoCustInputComponent } from './_input/customer-inputs/logo-cust-input/logo-cust-input.component';
+import { ProjectsViewComponent } from "./_view/projects-view/projects-view.component";
+import { ProjectSingleViewComponent } from './_view/project-single-view/project-single-view.component';
 
 @NgModule({
    declarations: [
@@ -114,7 +116,9 @@ import { LogoCustInputComponent } from './_input/customer-inputs/logo-cust-input
       NameCustInputComponent,
       ActivitySectorCustInputComponent,
       DescriptionCustInputComponent,
-      LogoCustInputComponent
+      LogoCustInputComponent,
+      ProjectsViewComponent,
+      ProjectSingleViewComponent
    ],
    imports: [
       AppRoutingModule,
