@@ -20,7 +20,10 @@ export class ProjectsEditComponent implements OnInit {
 
   getIndex(index:number){
     this.currentIndex = index;
-    this.projectSingleEdit.setProject(this.projects[this.currentIndex]);
+    if(index>=0)
+      this.projectSingleEdit.setProject(this.projects[this.currentIndex]);
+    else
+      alert("Ajout d'un projet vide à cette version");
   }
 
   createProject(){
