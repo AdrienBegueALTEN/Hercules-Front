@@ -16,6 +16,11 @@ export class ProjectSingleEditComponent implements OnInit {
     this.initExistingForm();
   }
 
+  public setProject(project: any){
+    this.project = project;
+    this.ngOnInit();
+  }
+
   initExistingForm(){
     this.projectForm = this._formBuilder.group({
       description: new FormControl(this.project.description),

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { ProjectSingleEditComponent } from '../project-single-edit/project-single-edit.component';
 
 @Component({
   selector: 'app-projects-edit',
@@ -6,19 +7,20 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./projects-edit.component.scss']
 })
 export class ProjectsEditComponent implements OnInit {
-
+  @ViewChild(ProjectSingleEditComponent, { static: false }) private projectSingleEdit: ProjectSingleEditComponent;
   @Input() projects;
   currentIndex: number;
 
   constructor() { 
-    this.currentIndex = 0; 
   }
 
   ngOnInit(): void {
+    this.currentIndex = 0; 
   }
 
-  changeProject(index:number){
+  getIndex(index:number){
     this.currentIndex = index;
+    this.projectSingleEdit.setProject(this.projects[this.currentIndex]);
   }
 
   createProject(){

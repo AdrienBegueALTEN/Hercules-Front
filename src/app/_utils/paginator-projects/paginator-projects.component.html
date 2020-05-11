@@ -1,0 +1,21 @@
+<div class="center">
+    <div style="display: inline-block;" *ngFor="let project of projects; let i=index;">
+        <button 
+            class="yellow-rounded-button" 
+            (click)="onClick(i)"
+            [class.active]="currentIndex == i">
+            <mat-icon>
+                fiber_manual_record
+            </mat-icon>
+        </button>
+        &nbsp;
+    </div>
+    <div *ngIf="optionAdd" style="display: inline-block;">
+        <button 
+            class="yellow-rounded-button"
+            (click)="onClick(-1)"
+            [class.active]="currentIndex == -1">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</div>

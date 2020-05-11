@@ -1,13 +1,4 @@
 <br>
 <app-project-single-view *ngIf="projects.length>0" [project]="projects[currentIndex]"></app-project-single-view>
 <div *ngIf="projects.length<=0">Aucun projets pour cette version.</div>
-<div class="center">
-    <div style="display: inline-block;" *ngFor="let project of projects; let i=index;">
-        <button 
-            class="yellow-rounded-button" 
-            (click)="changeProject(i)"
-            [class.active]="currentIndex == i">
-        </button>
-        <span *ngIf="i != projects.length">&nbsp;</span>
-    </div>
-</div>
+<app-paginator-projects [projects]="projects" [optionAdd]="false" (index)="getIndex($event)"></app-paginator-projects>

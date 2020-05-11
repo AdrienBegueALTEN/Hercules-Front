@@ -78,6 +78,7 @@ import { ProjectsViewComponent } from "./_view/projects-view/projects-view.compo
 import { ProjectSingleViewComponent } from './_view/project-single-view/project-single-view.component';
 import { ProjectsEditComponent } from './_edit/projects-edit/projects-edit.component';
 import { ProjectSingleEditComponent } from './_edit/project-single-edit/project-single-edit.component';
+import { PaginatorProjectsComponent } from './_utils/paginator-projects/paginator-projects.component';
 
 @NgModule({
    declarations: [
@@ -122,7 +123,8 @@ import { ProjectSingleEditComponent } from './_edit/project-single-edit/project-
       ProjectsViewComponent,
       ProjectSingleViewComponent,
       ProjectsEditComponent,
-      ProjectSingleEditComponent
+      ProjectSingleEditComponent,
+      PaginatorProjectsComponent
    ],
    imports: [
       AppRoutingModule,

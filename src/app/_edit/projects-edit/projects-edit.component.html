@@ -1,22 +1,2 @@
-<app-project-single-edit *ngIf="projects.length!=0" [project]="projects[currentIndex]"></app-project-single-edit>
-<div class="center">
-    <div style="display: inline-block;" *ngFor="let project of projects; let i=index;">
-        <button 
-            class="yellow-rounded-button" 
-            (click)="changeProject(i)"
-            [class.active]="currentIndex == i">
-            <mat-icon>
-                fiber_manual_record
-            </mat-icon>
-        </button>
-        &nbsp;
-    </div>
-    <div style="display: inline-block;">
-        <button 
-            class="yellow-rounded-button"
-            (click)="createProject()"
-            [class.active]="currentIndex == -1">
-            <mat-icon>add</mat-icon>
-        </button>
-    </div>
-</div>
+<app-project-single-edit *ngIf="projects.length!=0" [project]="projects[0]"></app-project-single-edit>
+<app-paginator-projects [projects]="projects" [optionAdd]="true" (index)="getIndex($event)"></app-paginator-projects>

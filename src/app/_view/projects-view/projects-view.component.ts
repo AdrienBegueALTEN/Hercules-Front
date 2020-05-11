@@ -15,7 +15,7 @@ export class ProjectsViewComponent implements OnInit {
     console.log(this.projects);
   }
 
-  changeProject(index:number){
+  getIndex(index:number){
     this.currentIndex = index;
   }
 
