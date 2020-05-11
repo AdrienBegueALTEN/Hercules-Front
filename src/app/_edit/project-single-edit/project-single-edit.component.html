@@ -1,0 +1,14 @@
+<form [formGroup]="projectForm">
+    <mat-form-field style="width: 100%;">
+        <mat-label>Description</mat-label>
+        <textarea matInput type="text" formControlName="description"></textarea>
+    </mat-form-field><br>
+    <mat-form-field>
+        <mat-label>Début</mat-label>
+        <input matInput type="date" formControlName="beginDate">
+    </mat-form-field>&nbsp;
+    <mat-form-field>
+        <mat-label>Fin</mat-label>
+        <input matInput type="date" formControlName="endDate">
+    </mat-form-field>
+</form>

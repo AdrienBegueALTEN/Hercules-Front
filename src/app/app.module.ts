@@ -76,6 +76,8 @@ import { DescriptionCustInputComponent } from './_input/customer-inputs/descript
 import { LogoCustInputComponent } from './_input/customer-inputs/logo-cust-input/logo-cust-input.component';
 import { ProjectsViewComponent } from "./_view/projects-view/projects-view.component";
 import { ProjectSingleViewComponent } from './_view/project-single-view/project-single-view.component';
+import { ProjectsEditComponent } from './_edit/projects-edit/projects-edit.component';
+import { ProjectSingleEditComponent } from './_edit/project-single-edit/project-single-edit.component';
 
 @NgModule({
    declarations: [
@@ -118,7 +120,9 @@ import { ProjectSingleViewComponent } from './_view/project-single-view/project-
       DescriptionCustInputComponent,
       LogoCustInputComponent,
       ProjectsViewComponent,
-      ProjectSingleViewComponent
+      ProjectSingleViewComponent,
+      ProjectsEditComponent,
+      ProjectSingleEditComponent
    ],
    imports: [
       AppRoutingModule,

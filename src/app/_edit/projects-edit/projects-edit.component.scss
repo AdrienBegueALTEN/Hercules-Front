@@ -1,0 +1,34 @@
+.center {
+    text-align: center;
+    padding:10px;
+}
+
+.center div{
+    vertical-align: middle;
+}
+
+.yellow-rounded-button{
+    text-align: center;
+    color: #ffba00;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    border:none;
+}
+
+.yellow-rounded-button:hover{
+    color: #008bd2;
+}
+
+.active{
+    color: #008bd2;
+}
+
+.plus{
+    text-align: center;
+    color: #ffba00;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    border:none;
+}
