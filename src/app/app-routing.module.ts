@@ -15,16 +15,20 @@ import { CustomerPageComponent } from './_page/customer-page/customer-page.compo
 import { MissionSheetPageComponent } from './_page/mission-sheet/mission-sheet-page.component';
 
 const routes: Routes = [
+  { 
+    path: '', canActivate: [AuthGuard],
+    children: [
+      { path: 'new-mission', canActivate: [ManagerGuard], component: NewMissionPageComponent },
+      { path: 'missions/:id', component: MissionPageComponent },
+      { path: 'consultants', component: ConsultantsComponent },
+      { path: 'consultants/:id', component: ConsultantPageComponent },
+      { path: 'customers', component: CustomersComponent },
+      { path: 'customers/:id', component: CustomerPageComponent,}
+     ],
+    component: HomeComponent
+  }, 
   { path: 'login', canActivate: [NoAuthGuard], component: LoginComponent },
-  { path: 'home', canActivate: [AuthGuard], component: HomeComponent },
-  { path: 'new-mission', canActivate: [AuthGuard, ManagerGuard], component: NewMissionPageComponent },
-  { path: 'missions/:id', canActivate: [AuthGuard], component: MissionPageComponent },
   { path: 'mission-sheet/:token', component: MissionSheetPageComponent },
-  { path: 'consultants', canActivate: [AuthGuard], component: ConsultantsComponent, runGuardsAndResolvers: 'always' },
-  { path: 'consultants/:id', canActivate: [AuthGuard], component: ConsultantPageComponent, runGuardsAndResolvers: 'always' },
-  { path: 'customers', canActivate: [AuthGuard], component: CustomersComponent, runGuardsAndResolvers: 'always' },
-  { path: 'customers/:id', canActivate: [AuthGuard], component: CustomerPageComponent, runGuardsAndResolvers: 'always' },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
 

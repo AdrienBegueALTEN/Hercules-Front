@@ -1,22 +1,24 @@
-<mat-card *ngIf="mission">
-  <mat-card-content>
-    <mat-tab-group animationDuration="0ms" mat-align-tabs="center">
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>info</mat-icon>
-          Informations générales
-        </ng-template>      
-        <app-mission-edit
-        [version]=mission.lastVersion
-        (update)="updateMission($event)">
-      </app-mission-edit>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>view_carousel</mat-icon>
-          Projet(s)
-        </ng-template>
-      </mat-tab>
-    </mat-tab-group>
-  </mat-card-content>
-</mat-card>
+<div id="app">
+  <app-external-header *ngIf="mission" [mission]="mission"></app-external-header>
+  <div id="app-container">
+    <mat-card *ngIf="mission">
+      <mat-card-content>
+        <mat-horizontal-stepper linear="true">
+          <mat-step label="Informations générales">
+            <app-mission-edit
+            [version]=mission.lastVersion
+            (update)="updateMission($event)">
+          </app-mission-edit>
+          </mat-step>
+          <mat-step label="Projets">
+          </mat-step>
+            <mat-step label="Valider la fiche">
+            </mat-step>
+        </mat-horizontal-stepper>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <footer>
+    <p>ALTEN Group - Copyright © 2020</p>
+</footer>
+</div>
