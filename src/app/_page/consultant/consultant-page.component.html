@@ -18,11 +18,11 @@
       Ses missions
     </ng-template>
   </mat-tab>
-  <mat-tab *ngIf="writingRights">
+  <mat-tab *ngIf="writingRights" disabled>
     <ng-template mat-tab-label>
       <button mat-button color="warn" 
-        *ngIf="consultant.releaseDate==null"
-        (click)="openBottomSheet()">Indiquer la sortie des effectifs</button>
+        *ngIf="!consultant.releaseDate"
+        (click)="onSetReleaseDate()">Indiquer la sortie des effectifs</button>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

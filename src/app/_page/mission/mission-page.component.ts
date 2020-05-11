@@ -88,6 +88,21 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       && this.todayVersionIndex === null;
   }
 
+  public getStatusText() : string {
+    let str : string;
+    switch (this.mission.sheetStatus) {
+      case SheetStatus.ON_WAITING :
+        str = 'en attente';
+        break;
+      case SheetStatus.ON_GOING :
+        str = 'en cours';
+        break;
+      case SheetStatus.VALIDATED :
+        str = 'validée';
+    }
+    return 'Fiche '.concat(str);
+  }
+
   private _setTodayVersionIndex() {
     let i = 0;
     do {

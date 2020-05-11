@@ -74,25 +74,6 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
     )
   }
 
-  openBottomSheet(element: any): void {
-    const bootomSheet = this._bottomSheet.open(DeactivateComponent, {
-      data: { consultant: element },
-    });
-    bootomSheet.instance.deactivationDate.subscribe(
-      (data) => {
-        this.consultantService.updateConsultant(element.id,'releaseDate',data).subscribe(
-          ()=>{
-            this.ngOnInit();
-          },
-          (err) => {console.log(err)}
-        )
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
-
   printData(data): void {
     console.log(data);
   }
