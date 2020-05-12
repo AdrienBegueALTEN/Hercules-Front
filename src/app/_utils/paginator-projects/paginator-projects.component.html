@@ -1,28 +1,15 @@
-<div class="center">
-    <div style="display: inline-block;">
-        <button 
-            class="yellow-rounded-button"
-            (click)="onPrevious()"
-            [class.disabled]="currentIndex<=0">
+<div class="right">
+        <button class="paginator-button" (click)="onPrevious()" [class.disabled]="currentIndex<=0">
             <mat-icon>
                 navigate_before
             </mat-icon>
         </button>
-        <button 
-            class="yellow-rounded-button" 
-            (click)="onNext()"
-            [class.disabled]="currentIndex >= projects.length-1">
+        <button class="paginator-button" (click)="onNext()" [class.disabled]="currentIndex >= projects.length-1">
             <mat-icon>
                 navigate_next
             </mat-icon>
         </button>
-        &nbsp;
-    </div>
-    <div *ngIf="optionAdd" style="display: inline-block;">
-        <button 
-            class="yellow-rounded-button"
-            (click)="onAdd()">
+        <button *ngIf="optionAdd" class="paginator-button" (click)="onAdd()">
             <mat-icon>add</mat-icon>
         </button>
-    </div>
 </div>

@@ -1,2 +1,4 @@
-<app-project-single-edit *ngIf="projects.length!=0" [project]="projects[0]"></app-project-single-edit>
+<div class="contours">
+    <app-project-single-edit *ngIf="projects.length!=0" [project]="projects[0]"></app-project-single-edit>
+</div>
 <app-paginator-projects [projects]="projects" [optionAdd]="true" (add)="createProject()" (index)="getIndex($event)"></app-paginator-projects>

@@ -1,13 +1,9 @@
-.center {
-    text-align: center;
+.right {
+    text-align: right;
     padding:10px;
 }
 
-.center div{
-    vertical-align: middle;
-}
-
-.yellow-rounded-button{
+.paginator-button{
     text-align: center;
     color: #ffba00;
     background-color: transparent;
@@ -21,12 +17,12 @@ mat-icon{
     font-size: xx-large
 }
 
-.yellow-rounded-button:hover{
+.paginator-button:hover{
     cursor: pointer;
     color: #008bd2;
 }
 
 .disabled, .disabled:hover{
     pointer-events: none;
-    color: gray;
+    color: gainsboro;
 }
