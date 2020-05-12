@@ -14,7 +14,11 @@
     margin: 0;
     padding: 0;
     border:none;
-    text-shadow: 0 0 3px grey;
+    
+}
+
+mat-icon{
+    font-size: xx-large
 }
 
 .yellow-rounded-button:hover{
@@ -22,15 +26,7 @@
     color: #008bd2;
 }
 
-.active{
-    color: #008bd2;
-}
-
-.plus{
-    text-align: center;
-    color: #ffba00;
-    background-color: transparent;
-    margin: 0;
-    padding: 0;
-    border:none;
+.disabled, .disabled:hover{
+    pointer-events: none;
+    color: gray;
 }

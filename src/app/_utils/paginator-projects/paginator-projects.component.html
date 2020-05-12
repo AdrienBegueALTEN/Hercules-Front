@@ -1,11 +1,19 @@
 <div class="center">
-    <div style="display: inline-block;" *ngFor="let project of projects; let i=index;">
+    <div style="display: inline-block;">
+        <button 
+            class="yellow-rounded-button"
+            (click)="onPrevious()"
+            [class.disabled]="currentIndex<=0">
+            <mat-icon>
+                navigate_before
+            </mat-icon>
+        </button>
         <button 
             class="yellow-rounded-button" 
-            (click)="onClick(i)"
-            [class.active]="currentIndex == i">
+            (click)="onNext()"
+            [class.disabled]="currentIndex >= projects.length-1">
             <mat-icon>
-                fiber_manual_record
+                navigate_next
             </mat-icon>
         </button>
         &nbsp;
@@ -13,8 +21,7 @@
     <div *ngIf="optionAdd" style="display: inline-block;">
         <button 
             class="yellow-rounded-button"
-            (click)="onClick(-1)"
-            [class.active]="currentIndex == -1">
+            (click)="onAdd()">
             <mat-icon>add</mat-icon>
         </button>
     </div>

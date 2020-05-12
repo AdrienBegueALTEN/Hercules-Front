@@ -9,6 +9,7 @@ export class PaginatorProjectsComponent implements OnInit {
   @Input() optionAdd: boolean;
   @Input() projects;
   @Output() index = new EventEmitter<any>();
+  @Output() add = new EventEmitter<any>();
   currentIndex;
   constructor() { }
 
@@ -16,9 +17,22 @@ export class PaginatorProjectsComponent implements OnInit {
     this.currentIndex = 0;
   }
 
-  onClick(idx : number){
-    this.currentIndex = idx;
-    this.index.emit(idx);
+  onNext(){
+    if(this.currentIndex+1 < this.projects.length){
+      this.currentIndex++;
+      this.index.emit(this.currentIndex);
+    }
+  }
+
+  onPrevious(){
+    if(this.currentIndex-1 >= 0){
+      this.currentIndex--;
+      this.index.emit(this.currentIndex);
+    }
+  }
+
+  onAdd(){
+    this.add.emit();
   }
 
 }
