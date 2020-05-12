@@ -23,20 +23,16 @@ body * {
     font-family: Raleway, Arial, sans-serif;
 }
 
-app-firstname-input mat-form-field,
-app-lastname-input mat-form-field,
-app-email-input mat-form-field,
-app-consultant-autocomplete mat-form-field,
-app-customer-autocomplete mat-form-field {
-    width: 100%;
-}
-
 .inputable {
     width: 100%;
 }
 
 .inputable td {
     padding: 0 8px;
+}
+
+.inputable td mat-form-field {
+    display: block;
 }
 
 .inputable tr td:first-child {

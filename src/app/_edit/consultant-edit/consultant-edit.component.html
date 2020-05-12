@@ -1,62 +1,58 @@
-<div *ngIf="!!consultant">
-  <div id="firstRow">
+<div *ngIf="consultant">
   <mat-card id="infos">
     <mat-card-title>Informations personnelles</mat-card-title>
       <mat-card-content>
-        <app-firstname-input
-          (sendCtrl)="addCtrl('firstname', $event)"
-          (valueChange)="valueChange('firstname')"
-          [initialValue]="consultant.firstname"
-          [required]="true">
-        </app-firstname-input>
-        <app-lastname-input
-          (sendCtrl)="addCtrl('lastname', $event)"
-          (valueChange)="valueChange('lastname')"
-          [initialValue]="consultant.lastname"
-          [required]="true">
-        </app-lastname-input>
-        <app-email-input 
-          (sendCtrl)="addCtrl('email', $event)"
-          (valueChange)="valueChange('email')"
-          [initialValue]="consultant.email"
-          [required]="true">
-        </app-email-input>
-        <app-xp-input *ngIf="!inMissionView"
-          (sendCtrl)="addCtrl('experience', $event)"
-          (valueChange)="valueChange('experience')"
-          [initialValue]="consultant.experience">
-      </app-xp-input>
-      </mat-card-content>
-    </mat-card>
-  <mat-card *ngIf="inMissionView" id="xp">
-    <mat-card-title>Années d'expérience</mat-card-title>
-      <mat-card-content>
-          <app-xp-input 
-            (sendCtrl)="addCtrl('startXp', $event)"
-            (valueChange)="valueChange('startExperience')"
-            [initialValue]="consultant.startExperience"
-            label="Au début de la mission">
-          </app-xp-input>
-          <app-xp-input 
+        <table class="inputable">
+          <tr>
+          <td><app-firstname-input
+            (sendCtrl)="addCtrl('firstname', $event)"
+            (valueChange)="valueChange('firstname')"
+            [initialValue]="consultant.firstname"
+            [required]="true">
+          </app-firstname-input></td>
+          <td><app-lastname-input
+            (sendCtrl)="addCtrl('lastname', $event)"
+            (valueChange)="valueChange('lastname')"
+            [initialValue]="consultant.lastname"
+            [required]="true">
+          </app-lastname-input></td>
+        </tr>
+        <tr>
+          <td><app-email-input 
+            (sendCtrl)="addCtrl('email', $event)"
+            (valueChange)="valueChange('email')"
+            [initialValue]="consultant.email"
+            [required]="true">
+          </app-email-input></td>
+          <td><app-xp-input
             (sendCtrl)="addCtrl('experience', $event)"
             (valueChange)="valueChange('experience')"
-            [initialValue]="consultant.experience"
-            label="Actuellement">
-          </app-xp-input>
-        </mat-card-content>
-      </mat-card> 
-    </div> 
+            [initialValue]="consultant.experience">
+        </app-xp-input></td>
+        </tr>
+      </table>
+      </mat-card-content>
+    </mat-card>
     <mat-card>
       <mat-card-title>Formation</mat-card-title>
       <mat-card-content>
-        <app-consultant-diploma 
-          *ngFor="let diploma of consultant.diplomas" 
-          [diploma]="diploma" 
-          [consultantId]="consultant.id"
-          (reload)="sendReload()"></app-consultant-diploma>
-        <app-consultant-new-diploma 
-          [consultantId]="consultant.id"
-          (reload)="sendReload()"></app-consultant-new-diploma>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let diploma of consultant.diplomas">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{diploma.diplomaName.name}}
+              </mat-panel-title>
+              <mat-panel-description>
+                {{diploma.diplomaLocation.school}} ({{diploma.diplomaLocation.city}})
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+          <app-consultant-diploma 
+            [diploma]="diploma" 
+            [consultantId]="consultant.id"
+            (reload)="sendReload()"></app-consultant-diploma>
+          </mat-expansion-panel>
+        </mat-accordion>
+          <div *ngIf="showNewDiploma; then newDiplomaForm else newDiplomaButton"></div>
       </mat-card-content>
     </mat-card>
     <mat-card [class.manager-gone-background]="consultant.manager.releaseDate!=null">
@@ -66,3 +62,15 @@
       </mat-card-content>
     </mat-card>
 </div>
+
+<ng-template #newDiplomaForm>
+  <app-consultant-new-diploma
+  [consultant]="consultant.id"
+  (reload)="sendReload()"></app-consultant-new-diploma>
+</ng-template>
+
+<ng-template #newDiplomaButton>
+  <button mat-mini-fab class="blue-shape" (click)="showNewDiploma = true">
+    <mat-icon>playlist_add</mat-icon>
+  </button>
+</ng-template>

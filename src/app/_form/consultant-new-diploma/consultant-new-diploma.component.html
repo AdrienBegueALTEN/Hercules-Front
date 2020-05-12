@@ -1,27 +1,32 @@
-<form style="vertical-align: top;" [formGroup]="diplomaForm">
-    <mat-form-field>
-        <mat-label>Ville</mat-label>
-        <input matInput type="text" formControlName="city">
-    </mat-form-field>&nbsp;
-    <mat-form-field>
-        <mat-label>Ecole</mat-label>
-        <input matInput type="text"  formControlName="school" required>
-    </mat-form-field> &nbsp;
-    <mat-form-field>
-        <mat-label>Année</mat-label >
-        <input matInput type="number"  formControlName="year" required>
-    </mat-form-field>&nbsp;
-    <mat-form-field>
-        <mat-label>Niveau</mat-label>
-        <input matInput type="text"  formControlName="level">
-    </mat-form-field>&nbsp;
-    <mat-form-field>
-        <mat-label>Diplôme</mat-label>
-        <input matInput type="text"  formControlName="diploma" required>
-    </mat-form-field> &nbsp;
-
-    <button type="submit" mat-button [disabled]="diplomaForm.invalid" (click)="onSubmit()">
-        <mat-icon>add</mat-icon>
-    </button>
+<form [formGroup]="grp">
+    <table class="inputable">
+        <tr>
+            <td><mat-form-field>
+                <mat-label>Intitulé du diplôme</mat-label>
+                <input matInput type="text"  [formControlName]="NAME_KEY" required>
+            </mat-form-field></td>
+            <td><mat-form-field>
+                <mat-label>Année d'obtention du diplôme</mat-label >
+                <input matInput type="number"  [formControlName]="YEAR_KEY" required>
+            </mat-form-field></td>
+            <td><mat-form-field>
+                <mat-label>Niveau du diplôme</mat-label>
+                <input matInput type="text"  [formControlName]="LEVEL_KEY">
+            </mat-form-field></td>
+        </tr>
+        <tr>
+            <td><mat-form-field>
+                <mat-label>Etablissement d'obtention du diplôme</mat-label>
+                <input matInput type="text"  [formControlName]="ETABLISHMENT_KEY" required>
+            </mat-form-field></td>
+            <td><mat-form-field>
+                <mat-label>Ville de l'établissement d'obtention</mat-label>
+                <input matInput type="text" [formControlName]="CITY_KEY">
+            </mat-form-field></td>
+            <td><button type="submit" mat-icon-button *ngIf="grp.valid" (click)="onSubmit()">
+                <mat-icon>playlist_add_check</mat-icon>
+            </button></td>
+        </tr>
+    </table>
 </form>
 
