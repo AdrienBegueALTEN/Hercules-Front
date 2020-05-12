@@ -9,18 +9,27 @@ const NUMBER_PATTERN = '^\\d*$';
   styleUrls: ['./mission-edit.component.scss']
 })
 export class MissionEditComponent implements OnInit {
-  @Input() targatedLabels : boolean = false;
+  @Input() externalVersion : boolean = false;
   @Input() version : any;
 
   readonly CITY_KEY = 'city';
+  readonly CITY_TOOLTIP = 'Ville au sein de laquelle vous avez effectué la mission. En cas de télétravail, ville où se trouve le site du client.';
   readonly COMMENT_KEY = 'comment';
   readonly CONTRACT_KEY = 'contractType';
   readonly COUNTRY_KEY = 'country';
+  readonly COUNTRY_TOOLTIP = 'Ville au sein duquel vous avez effectué la mission. En cas de télétravail, pays où se trouve le site du client.';
   readonly DESCRIPTION_KEY = 'description';
+  readonly DESCRIPTION_TOOLTIP = 'Descritpif complet présentant la mission dans sa globalité.';
+  readonly HELP_ICON = 'help_outline';
   readonly ROLE_KEY = 'consultantRole';
+  readonly ROLE_TOOLTIP = 'Titre représentatif des différentes tâches que vous avez été amené à réaliser durant la mission.';
   readonly TEAM_KEY = 'teamSize';
+  readonly TEAM_TOOLTIP = 'Taille de l\'équipe au sein de laquelle vous avez été amené a travailler durant la mission (vous inclus).';
   readonly TITLE_KEY = 'title';
+  readonly TITLE_TOOLTIP = 'Bref descriptif contenant des mots-clefs représentatifs de la mission.';
+  readonly TOOLTIP_POS = 'before';
   readonly XP_KEY = 'consultantStartXp';
+  readonly XP_TOOLTIP = 'Le nombre d\'années d\'expérience que vous aviez au départ de la mission.';
 
   grp : FormGroup;
 
@@ -40,7 +49,7 @@ export class MissionEditComponent implements OnInit {
       contractType : [this.version[this.CONTRACT_KEY]],
     });
     if (this.version[this.COMMENT_KEY])
-      this.grp.addControl("comment", new FormControl(this.version[this.COMMENT_KEY], [Validators.maxLength(255)]));
+      this.grp.addControl(this.COMMENT_KEY, new FormControl(this.version[this.COMMENT_KEY], [Validators.maxLength(255)]));
   }
 
   public onChange(key : string) : void {
@@ -51,13 +60,13 @@ export class MissionEditComponent implements OnInit {
     }
   }
 
-  public getLabel(key : string) : string {
+  public getLabelText(key : string) : string {
     switch (key) {
       case this.ROLE_KEY :
-        return (this.targatedLabels ? 'Votre rôle' : 'Rôle du consultant')
+        return (this.externalVersion ? 'Votre rôle' : 'Rôle du consultant')
           .concat(' au sein de la mission');
       case this.XP_KEY :
-        return (this.targatedLabels ? 'Votre niveau d\expérience' : 'Expérience du consultant')
+        return (this.externalVersion ? 'Votre niveau d\'expérience' : 'Expérience du consultant')
           .concat(' au début de la mission (en années)');
       default :
         return '';

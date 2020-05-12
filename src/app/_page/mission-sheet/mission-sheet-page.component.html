@@ -6,7 +6,7 @@
         <mat-horizontal-stepper linear="true">
           <mat-step label="Informations générales">
             <app-mission-edit
-            [targatedLabels]=true
+            [externalVersion]=true
             [version]=mission.lastVersion
             (update)="updateMission($event)">
           </app-mission-edit>
