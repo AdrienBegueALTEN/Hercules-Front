@@ -13,6 +13,6 @@ export class ManagerGuard implements CanActivate {
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (this._authService.getUser().roles.includes(Role.MANAGER)) return true;
-    else window.location.replace('home');
+    else window.location.replace('not-found');
   }
 }

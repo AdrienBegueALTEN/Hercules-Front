@@ -5,6 +5,7 @@ import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Role } from 'src/app/_enums/role.enum';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DeactivateComponent } from 'src/app/dialog/deactivate/deactivate.component';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-consultant-page',
@@ -19,8 +20,7 @@ export class ConsultantPageComponent implements OnInit {
     private _authService : AuthService,
     private _consultantService : ConsultantService,
     private _route : ActivatedRoute,
-    private _router: Router,
-    private _bottomSheet: MatBottomSheet,
+    private _dialog: MatDialog,
   ) {
   }
 
@@ -42,27 +42,25 @@ export class ConsultantPageComponent implements OnInit {
     this.initialize();
   }
 
-  openBottomSheet(): void {
-    const bootomSheet = this._bottomSheet.open(DeactivateComponent, {
-      data: { consultant: this.consultant },
-    });
-    bootomSheet.instance.deactivationDate.subscribe(
-      (data) => {
-        this._consultantService.updateConsultant(this.consultant.id,'releaseDate',data).subscribe(
-          ()=>{
-            this.ngOnInit();
-          },
-          (err) => {console.log(err)}
-        )
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+  onSetReleaseDate() : void {
+    const dialogConfig = new MatDialogConfig();
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+          firstname : this.consultant.firsrname,
+          lastname : this.consultant.lastname
+        };
+    const dialogRef = this._dialog.open(DeactivateComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if (data) {
+          this._consultantService.updateConsultant(this.consultant.id,'releaseDate',data).subscribe(
+            () => this.consultant.releaseDate = data, err => {console.log(err)}
+          )
+        }
+      }); 
   }
 
   onReload(){
-    console.log("reload page")
     this.ngOnInit();
   }
 }

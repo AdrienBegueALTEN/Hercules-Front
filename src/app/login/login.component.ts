@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        window.location.replace('home');
+        window.location.replace('');
       },
       () => {
         this.isLoginFailed = true;

@@ -1,3 +1,5 @@
+import { MissionSheetPageComponent } from './_page/mission-sheet/mission-sheet-page.component';
+import { HomeComponent } from './home/home.component';
 import { MissionEditComponent } from './_edit/mission-edit/mission-edit.component';
 import { MissionViewComponent } from './_view/mission-view/mission-view.component';
 import { XpInputComponent } from './_input/xp-input/xp-input.component';
@@ -68,7 +70,7 @@ import { ConsultantNewDiplomaComponent } from './_form/consultant-new-diploma/co
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { ArrayMissionComponent } from './array-mission/array-mission.component';
 import { CustomersComponent } from './_page/customers/customers.component';
-import { HeaderComponent } from './header/header.component';
+import { NavHeaderComponent } from './_header/nav/nav-header.component';
 import { CustomerPageComponent } from './_page/customer-page/customer-page.component';
 import { NameCustInputComponent } from './_input/customer-inputs/name-cust-input/name-cust-input.component';
 import { ActivitySectorCustInputComponent } from './_input/customer-inputs/activity-sector-cust-input/activity-sector-cust-input.component';
@@ -79,6 +81,7 @@ import { ProjectSingleViewComponent } from './_view/project-single-view/project-
 import { ProjectsEditComponent } from './_edit/projects-edit/projects-edit.component';
 import { ProjectSingleEditComponent } from './_edit/project-single-edit/project-single-edit.component';
 import { PaginatorProjectsComponent } from './_utils/paginator-projects/paginator-projects.component';
+import { ExternalHeaderComponent } from './_header/external/external-header.component';
 
 @NgModule({
    declarations: [
@@ -114,7 +117,7 @@ import { PaginatorProjectsComponent } from './_utils/paginator-projects/paginato
       MissionPageComponent,
       MissionViewComponent,
       MissionEditComponent,
-      HeaderComponent,
+      NavHeaderComponent,
       CustomerPageComponent,
       NameCustInputComponent,
       ActivitySectorCustInputComponent,
@@ -124,7 +127,10 @@ import { PaginatorProjectsComponent } from './_utils/paginator-projects/paginato
       ProjectSingleViewComponent,
       ProjectsEditComponent,
       ProjectSingleEditComponent,
-      PaginatorProjectsComponent
+      PaginatorProjectsComponent,
+      HomeComponent,
+      MissionSheetPageComponent,
+      ExternalHeaderComponent
    ],
    imports: [
       AppRoutingModule,

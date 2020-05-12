@@ -1,42 +1,20 @@
-import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
-import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { ConsultantService } from 'src/app/_services/consultant.service';
-import { Router } from '@angular/router';
+import { Component, Inject } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-deactivate',
   templateUrl: './deactivate.component.html',
   styleUrls: ['./deactivate.component.scss']
 })
-export class DeactivateComponent implements OnInit {
-  releaseForm: FormGroup;
+export class DeactivateComponent {
+  ctrl : FormControl = new FormControl(new Date().toISOString().substr(0, 10));
 
-  constructor(private _bottomSheetRef: MatBottomSheetRef<DeactivateComponent>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
-    private formBuilder: FormBuilder,
-    private consultantService: ConsultantService,
-    private router: Router) {}
-    @Output() deactivationDate = new EventEmitter<any>();
-
-    ngOnInit(): void {
-      this.initForm();
-    }
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
-
-  initForm(){
-    this.releaseForm = this.formBuilder.group({
-      releaseDate: new FormControl(new Date().toISOString().substr(0, 10)),
-    });
-  }
+  constructor(
+    private _dialogRef: MatDialogRef<DeactivateComponent>,
+    @Inject(MAT_DIALOG_DATA) public data : any) {};
 
   onSubmit(){
-    const values = this.releaseForm.value;
-    this.deactivationDate.emit(values.releaseDate);
+    this._dialogRef.close(this.ctrl.value);
   }
-
 }

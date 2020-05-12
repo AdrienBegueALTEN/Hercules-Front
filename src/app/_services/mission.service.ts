@@ -3,6 +3,8 @@ import { AppSettings } from '../app-settings';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpBackend, HttpHeaders } from '@angular/common/http';
 
+const TOKEN_PREFIX : string = 'Bearer ';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,7 +36,8 @@ export class MissionService {
   }
 
   getMissionDetailsFromToken(token : string) : Observable<any> {
-    return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'from-token', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) });
+    return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'from-token',
+    { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
   getMissions(): Observable<Mission[]> {
@@ -49,6 +52,15 @@ export class MissionService {
         value : value,
       },
       AppSettings.HTTP_JSON_CONTENT);
+  }
+
+  updateMissionFromToken(token : string, fieldName : String, value : any) : Observable<any> {
+    return this._notInteceptedHttpClient.put(AppSettings.MISSION_API + 'from-token',
+      {
+        fieldName : fieldName,
+        value : value,
+      },
+      { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 }
 
