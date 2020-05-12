@@ -23,6 +23,7 @@ export class ProjectSingleEditComponent implements OnInit {
 
   initExistingForm(){
     this.projectForm = this._formBuilder.group({
+      title: new FormControl(this.project.title),
       description: new FormControl(this.project.description),
       beginDate: new FormControl(this.project.beginDate),
       endDate: new FormControl(this.project.endDate)

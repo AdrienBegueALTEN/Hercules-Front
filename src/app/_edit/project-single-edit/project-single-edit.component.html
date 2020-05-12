@@ -1,7 +1,11 @@
 <form [formGroup]="projectForm">
     <mat-form-field style="width: 100%;">
+        <mat-label>Titre</mat-label>
+        <input matInput type="text" formControlName="title">
+    </mat-form-field><br>
+    <mat-form-field style="width: 100%;">
         <mat-label>Description</mat-label>
-        <textarea matInput type="text" formControlName="description"></textarea>
+        <textarea matInput maxlength="1000" type="text" formControlName="description"></textarea>
     </mat-form-field><br>
     <mat-form-field style="width: 100%;">
         <mat-label>Début</mat-label>

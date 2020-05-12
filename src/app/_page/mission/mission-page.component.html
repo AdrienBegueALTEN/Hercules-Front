@@ -18,10 +18,9 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">view_carousel</mat-icon>
-          Projet(s)
+          Projets
         </ng-template>
-        <app-projects-view [projects]="mission.versions[selectedIndex].projects"></app-projects-view>
-        <app-projects-edit [projects]="mission.versions[selectedIndex].projects"></app-projects-edit>
+        <div *ngIf="userIsManager; then projectsEdit else projectsView"></div>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
@@ -94,4 +93,12 @@
 
 <ng-template #customerView>
   <app-customer-view [customer]="mission.customer"></app-customer-view>
+</ng-template>
+
+<ng-template #projectsEdit>
+  <app-projects-edit [projects]="mission.versions[selectedIndex].projects"></app-projects-edit>
+</ng-template>
+
+<ng-template #projectsView>
+  <app-projects-view [projects]="mission.versions[selectedIndex].projects"></app-projects-view>
 </ng-template>

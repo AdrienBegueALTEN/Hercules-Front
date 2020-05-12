@@ -1,6 +1,6 @@
 <br><br>
 <div class="contours">
     <app-project-single-view *ngIf="projects.length>0" [project]="projects[currentIndex]"></app-project-single-view>
-    <div *ngIf="projects.length<=0">Aucun projets pour cette version.</div>
+    <div *ngIf="projects.length<=0">Aucun projet pour cette version.</div>
 </div>
 <app-paginator-projects [projects]="projects" [optionAdd]="false" (index)="getIndex($event)"></app-paginator-projects>
