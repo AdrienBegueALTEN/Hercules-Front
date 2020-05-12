@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { ProjectService } from 'src/app/_services/project.service';
 
 @Component({
   selector: 'app-project-single-edit',
@@ -10,7 +11,8 @@ export class ProjectSingleEditComponent implements OnInit {
 
   @Input() project;
   projectForm: FormGroup;
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder,
+    private _projectService: ProjectService) { }
 
   ngOnInit(): void {
     this.initExistingForm();
@@ -29,5 +31,9 @@ export class ProjectSingleEditComponent implements OnInit {
       endDate: new FormControl(this.project.endDate)
     });
   }
+
+  /*updateProject(field: string){
+    this._projectService.updateproject(this.project.id,field, null).subscribe();
+  }*/
 
 }
