@@ -78,6 +78,8 @@ import { ActivitySectorCustInputComponent } from './_input/customer-inputs/activ
 import { DescriptionCustInputComponent } from './_input/customer-inputs/description-cust-input/description-cust-input.component';
 import { LogoCustInputComponent } from './_input/customer-inputs/logo-cust-input/logo-cust-input.component';
 import { ExternalHeaderComponent } from './_header/external/external-header.component';
+import { MissionsComponent } from './_page/missions/missions.component';
+
 
 @NgModule({
    declarations: [
@@ -122,6 +124,8 @@ import { ExternalHeaderComponent } from './_header/external/external-header.comp
       HomeComponent,
       MissionSheetPageComponent,
       ExternalHeaderComponent,
+      MissionsComponent,
+      
    ],
    imports: [
       AppRoutingModule,
