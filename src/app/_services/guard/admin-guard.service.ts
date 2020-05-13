@@ -11,6 +11,6 @@ export class AdminGuard implements CanActivate {
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (this._authService.getUser().roles.includes(Role.ADMIN)) return true;
-    else window.location.replace('home');
+    else window.location.replace('not-found');
   }
 }

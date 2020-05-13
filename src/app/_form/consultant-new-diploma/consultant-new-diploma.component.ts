@@ -1,9 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DiplomaService } from 'src/app/_services/diploma.service';
-import { Observable } from 'rxjs';
-import { debugOutputAstAsTypeScript } from '@angular/compiler';
 
 @Component({
   selector: 'app-consultant-new-diploma',
@@ -11,49 +8,46 @@ import { debugOutputAstAsTypeScript } from '@angular/compiler';
   styleUrls: ['./consultant-new-diploma.component.scss']
 })
 export class ConsultantNewDiplomaComponent implements OnInit {
-  @Input() consultantId:number;
+  @Input() consultant : number;
+
+  readonly CITY_KEY : string = 'city';
+  readonly ETABLISHMENT_KEY : string = 'establishment';
+  readonly LEVEL_KEY : string = 'level';
+  readonly NAME_KEY : string = 'name';
+  readonly YEAR_KEY : string = 'year';
+  grp : FormGroup;
+
   @Output() reload = new EventEmitter<any>();
-  diplomaForm: FormGroup;
   
   constructor(private formBuilder: FormBuilder,
-    private diplomaService: DiplomaService,
-    private router: Router) { }
+    private _diplomaService: DiplomaService) { }
 
-  ngOnInit(): void {
-    this.initForm();
-
-    
-  }
-
-  initForm(){
-    this.diplomaForm = this.formBuilder.group({
+  ngOnInit() : void {
+    this.grp = this.formBuilder.group({
       city: '',
-      school: ['', Validators.required],
-      year: ['', Validators.required],
+      establishment: ['', Validators.required],
       level: '',
-      diploma: ['', Validators.required]
+      name: ['', Validators.required],
+      year: ['', Validators.required]
     });
   }
 
-  onSubmit(){
-    const values = this.diplomaForm.value;
-    
-    const dipl = {
-      consultantId:this.consultantId,
-      graduationYear:values.year,
-      graduationCity:values.city,
-      diplomaName:values.diploma,
-      levelName:values.level,
-      school:values.school
+  onSubmit() : void {
+    const diploma = {
+      consultantId: this.consultant,
+      graduationYear: this.grp.controls[this.YEAR_KEY].value,
+      graduationCity: this.grp.controls[this.CITY_KEY].value,
+      diplomaName: this.grp.controls[this.NAME_KEY].value,
+      levelName: this.grp.controls[this.LEVEL_KEY].value,
+      school: this.grp.controls[this.ETABLISHMENT_KEY].value
     }
 
-    this.diplomaService.addDiploma(dipl).subscribe(
-      ()=> {
+    this._diplomaService.addDiploma(diploma).subscribe(
+      ()=> { 
         this.reload.emit();
-        this.diplomaForm.reset();
+        this.ngOnInit()
       },
-      (err) => {console.log(err);}
+      err => { console.log(err); }
     );
   }
-
 }

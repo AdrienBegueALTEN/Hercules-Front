@@ -24,7 +24,6 @@ export class ActivitySectorCustInputComponent implements OnInit {
     this._customerService.getAll().subscribe(
       (data) => {
         this.sectors = Array.from(new Set(data.map(cust => cust.activitySector)));
-        console.log(this.sectors);
         this.filteredSectors = this.activitySectorCtrl.valueChanges
           .pipe(
             delay(500),

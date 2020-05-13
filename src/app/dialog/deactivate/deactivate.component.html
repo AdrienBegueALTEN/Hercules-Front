@@ -1,14 +1,10 @@
-<h1> Notifier la sortie de {{data.consultant.firstname}} {{data.consultant.lastname}}</h1>
-<br>
-<div>
-    <form [formGroup]="releaseForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="legacy">
-            <mat-label>Date de départ</mat-label>
-            <input type="date" matInput formControlName="releaseDate">
-        </mat-form-field>
-
-        <button mat-icon-button style="color: green">
-            <span class="material-icons">done</span>
-        </button>
-    </form>
-</div>
+<h1 mat-dialog-title>Notifier la sortie de {{data.firstname}} {{data.lastname}}</h1>
+<mat-dialog-content>
+    <mat-form-field appearance="legacy">
+        <mat-label>Date de départ</mat-label>
+        <input type="date" matInput [formControl]="ctrl">
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onSubmit()">Confirmer la sortie des effectifs</button>
+</mat-dialog-actions>

@@ -1,9 +1,9 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SheetStatus } from './../../_enums/sheet-status.enum';
 import { AuthService } from 'src/app/_services/auth.service';
 import { MissionService } from '../../_services/mission.service';
 import { Component, OnInit, AfterContentChecked, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Role } from '../../_enums/role.enum';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
 import { MatTabGroup } from '@angular/material/tabs';
@@ -30,7 +30,8 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     private _cdr : ChangeDetectorRef,
     private _dialog : MatDialog,
     private _missionService : MissionService,
-    private _route : ActivatedRoute
+    private _route : ActivatedRoute,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -39,10 +40,9 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       mission => {
         this.selectedIndex = 0;
         this.mission = mission;
-        const user = this._authService.getUser();
-        this.userIsManager = user.roles.includes(Role.MANAGER)
-        this.userIsConsultantManager = 
-          this.userIsManager && mission.consultant.manager.id == user.id;
+        this.userIsManager = this._authService.userIsManager();
+        this.userIsConsultantManager = this.userIsManager 
+          && mission.consultant.manager.id == this._authService.getUser().id;
         this._setTodayVersionIndex();
       },
       () => window.location.replace('not-found')
@@ -53,15 +53,22 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     this._cdr.detectChanges();
   }
 
+  public updateMission(event : any) : void {
+    this._missionService
+      .updateMission(this.mission.id, event.key, event.value).subscribe(
+        () => {
+          this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+          this.mission.versions[this.todayVersionIndex][event.key] = event.value;
+        },
+        () => { this._handleUpdateError(); }
+      )
+  }
+
   public onNewVersion() : void {
     this._missionService.addVersion(this.mission.id).subscribe(
       () => { this.ngOnInit(); },
-      () => { this._handleError(); }
+      () => { this._handleNewVersionError(); }
     );
-  }
-
-  public updateTodayVersion(update : any) : void {
-    this.mission.versions[this.todayVersionIndex][update.key] = update.value;
   }
 
   public showMissionEdit() : boolean {
@@ -76,7 +83,22 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
   public showNewVersion() : boolean {
     return this.mission.sheetStatus === SheetStatus.VALIDATED
-      && this.todayVersionIndex === null;
+      && this.todayVersionIndex === null && this.userIsConsultantManager;
+  }
+
+  public getStatusText() : string {
+    let str : string;
+    switch (this.mission.sheetStatus) {
+      case SheetStatus.ON_WAITING :
+        str = 'en attente';
+        break;
+      case SheetStatus.ON_GOING :
+        str = 'en cours';
+        break;
+      case SheetStatus.VALIDATED :
+        str = 'validée';
+    }
+    return 'Fiche '.concat(str);
   }
 
   private _setTodayVersionIndex() {
@@ -94,7 +116,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       && today.getFullYear() == date.getFullYear();
   }
 
-  private _handleError() : void {
+  private _handleNewVersionError() : void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -104,5 +126,21 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       ok: 'OK'
     };
     this._dialog.open(OkDialogComponent, dialogConfig);
+  }
+
+  private _handleUpdateError() : void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      title : 'Echec de la modification',
+      message : 'Une erreur s\'est produite lors de la tentative de mise à jour',
+      ok: 'OK'
+    };
+    this._dialog.open(OkDialogComponent, dialogConfig);
+  }
+
+  onReload(){
+    this.ngOnInit();
   }
 }

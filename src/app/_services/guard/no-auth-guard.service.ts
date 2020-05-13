@@ -10,6 +10,6 @@ export class NoAuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (!this._authService.isAuthenticated()) return true;
-    else window.location.replace('home');
+    else window.location.replace('');
   }
 }

@@ -1,3 +1,5 @@
+import { MissionSheetPageComponent } from './_page/mission-sheet/mission-sheet-page.component';
+import { HomeComponent } from './home/home.component';
 import { MissionEditComponent } from './_edit/mission-edit/mission-edit.component';
 import { MissionViewComponent } from './_view/mission-view/mission-view.component';
 import { XpInputComponent } from './_input/xp-input/xp-input.component';
@@ -60,6 +62,7 @@ import { ConsultantManagerComponent } from './_input/autocomplete/consultant-man
 import { ConsultantDiplomaComponent } from './_form/consultant-diploma/consultant-diploma.component';
 import { ArrayMissionItemComponent } from './array-mission/array-mission-item/array-mission-item.component';
 import { ArrayProjectItemComponent } from './array-mission/array-project-item/array-project-item.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { MissionService } from './_services/mission.service';
 import { ProjectService } from './_services/project.service';
@@ -68,12 +71,18 @@ import { ConsultantNewDiplomaComponent } from './_form/consultant-new-diploma/co
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { ArrayMissionComponent } from './array-mission/array-mission.component';
 import { CustomersComponent } from './_page/customers/customers.component';
-import { HeaderComponent } from './header/header.component';
+import { NavHeaderComponent } from './_header/nav/nav-header.component';
 import { CustomerPageComponent } from './_page/customer-page/customer-page.component';
 import { NameCustInputComponent } from './_input/customer-inputs/name-cust-input/name-cust-input.component';
 import { ActivitySectorCustInputComponent } from './_input/customer-inputs/activity-sector-cust-input/activity-sector-cust-input.component';
 import { DescriptionCustInputComponent } from './_input/customer-inputs/description-cust-input/description-cust-input.component';
 import { LogoCustInputComponent } from './_input/customer-inputs/logo-cust-input/logo-cust-input.component';
+import { ProjectsViewComponent } from "./_view/projects-view/projects-view.component";
+import { ProjectSingleViewComponent } from './_view/project-single-view/project-single-view.component';
+import { ProjectsEditComponent } from './_edit/projects-edit/projects-edit.component';
+import { ProjectSingleEditComponent } from './_edit/project-single-edit/project-single-edit.component';
+import { PaginatorProjectsComponent } from './_utils/paginator-projects/paginator-projects.component';
+import { ExternalHeaderComponent } from './_header/external/external-header.component';
 
 @NgModule({
    declarations: [
@@ -109,12 +118,20 @@ import { LogoCustInputComponent } from './_input/customer-inputs/logo-cust-input
       MissionPageComponent,
       MissionViewComponent,
       MissionEditComponent,
-      HeaderComponent,
+      NavHeaderComponent,
       CustomerPageComponent,
       NameCustInputComponent,
       ActivitySectorCustInputComponent,
       DescriptionCustInputComponent,
-      LogoCustInputComponent
+      LogoCustInputComponent,
+      ProjectsViewComponent,
+      ProjectSingleViewComponent,
+      ProjectsEditComponent,
+      ProjectSingleEditComponent,
+      PaginatorProjectsComponent,
+      HomeComponent,
+      MissionSheetPageComponent,
+      ExternalHeaderComponent,
    ],
    imports: [
       AppRoutingModule,
@@ -146,7 +163,8 @@ import { LogoCustInputComponent } from './_input/customer-inputs/logo-cust-input
       MatButtonToggleModule,
       MatRadioModule,
       MatChipsModule,
-      MatSortModule
+      MatSortModule,
+      MatExpansionModule
    ],
    providers: [
       authInterceptorProviders,

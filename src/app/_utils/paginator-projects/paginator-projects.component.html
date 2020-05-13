@@ -1,0 +1,18 @@
+<div class="right" >
+        <button *ngIf="projects" class="paginator-button" (click)="onPrevious()" [class.disabled]="currentIndex<=0">
+            <mat-icon>
+                navigate_before
+            </mat-icon>
+        </button>
+        <button *ngIf="projects" class="paginator-button" (click)="onNext()" [class.disabled]="currentIndex >= projects.length-1">
+            <mat-icon>
+                navigate_next
+            </mat-icon>
+        </button>
+        <button *ngIf="optionAdd && projects" class="paginator-button" (click)="onAdd()" [class.disabled]="projects.length==5">
+            <mat-icon>add</mat-icon>
+        </button>
+        <button *ngIf="optionAdd && !projects" class="paginator-button" (click)="onAdd()">
+            <mat-icon>add</mat-icon>
+        </button>
+</div>

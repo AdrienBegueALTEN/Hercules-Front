@@ -4,6 +4,7 @@ import { DiplomaService } from 'src/app/_services/diploma.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-consultant-diploma',
@@ -23,7 +24,7 @@ export class ConsultantDiplomaComponent implements OnInit {
   
   constructor(private formBuilder: FormBuilder,
     private diplomaService: DiplomaService,
-    private router: Router) { }
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -75,15 +76,18 @@ export class ConsultantDiplomaComponent implements OnInit {
     
     const dipl = {
       id:this.diploma.id,
-      graduationYear:[values.year, Validators.required],
+      graduationYear:values.year,
       graduationCity:values.city,
-      diplomaName:[values.diploma, Validators.required],
+      diplomaName:values.diploma,
       levelName:values.level,
-      school:[values.school, Validators.required]
+      school:values.school
     }
 
     this.diplomaService.updateDiploma(dipl).subscribe(
-      ()=>{},
+      ()=>{
+        this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+        this.reload.emit();
+      },
       (err) => {
         console.log(err);
       }
