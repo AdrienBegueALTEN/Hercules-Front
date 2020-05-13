@@ -1,41 +1,54 @@
-<form [formGroup]="diplomaForm">
+<form [formGroup]="diplomaForm" (keydown.enter)="onSubmit()">
     <table class="inputable">
         <tr>
-            <td><mat-form-field>
-                <mat-label>Intitulé du diplôme</mat-label>
-                <input matInput type="text" formControlName="diploma">
-            </mat-form-field></td>
-            <td><mat-form-field>
-                <mat-label>Année d'obtention du diplôme</mat-label >
-                <input matInput type="number"  formControlName="year">
-            </mat-form-field></td>
-            <td><mat-form-field>
-                <mat-label>Niveau du diplôme</mat-label>
-                <input matInput type="text"  formControlName="level">
-            </mat-form-field></td>
+            <td>
+                <mat-form-field>
+                    <mat-label>Intitulé du diplôme</mat-label>
+                    <input matInput type="text" formControlName="diploma" (blur)="onSubmit()">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field>
+                    <mat-label>Année d'obtention du diplôme</mat-label>
+                    <input matInput type="number" formControlName="year" (blur)="onSubmit()">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field>
+                    <mat-label>Niveau du diplôme</mat-label>
+                    <input matInput type="text" formControlName="level" (blur)="onSubmit()">
+                </mat-form-field>
+            </td>
         </tr>
         <tr>
-            <td><mat-form-field>
-                <mat-label>Etablissement d'obtention du diplôme</mat-label>
-                <input matInput type="text"  formControlName="school"  [matAutocomplete]="school">
-                <mat-autocomplete #school="matAutocomplete">
-                    <mat-option *ngFor="let diploma of filteredDiplomasSchool | async" [value]="diploma.diplomaLocation.school">
-                        {{diploma.diplomaLocation.school}}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field></td>
-            <td><mat-form-field>
-                <mat-label>Ville de l'établissement d'obtention</mat-label>
-                <input matInput type="text" formControlName="city" [matAutocomplete]="city">
-                <mat-autocomplete #city="matAutocomplete">
-                    <mat-option *ngFor="let diploma of filteredDiplomasCity | async" [value]="diploma.diplomaLocation.city">
-                        {{diploma.diplomaLocation.city}}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field></td>
-            <td><button mat-icon-button color="warn" (click)="onDelete()">
-                <span class="material-icons">remove</span>
-            </button></td>
+            <td>
+                <mat-form-field>
+                    <mat-label>Etablissement d'obtention du diplôme</mat-label>
+                    <input matInput type="text" formControlName="school" [matAutocomplete]="school" (blur)="onSubmit()">
+                    <mat-autocomplete #school="matAutocomplete">
+                        <mat-option *ngFor="let diploma of filteredDiplomasSchool | async"
+                            [value]="diploma.diplomaLocation.school">
+                            {{diploma.diplomaLocation.school}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field>
+                    <mat-label>Ville de l'établissement d'obtention</mat-label>
+                    <input matInput type="text" formControlName="city" [matAutocomplete]="city" (blur)="onSubmit()">
+                    <mat-autocomplete #city="matAutocomplete">
+                        <mat-option *ngFor="let diploma of filteredDiplomasCity | async"
+                            [value]="diploma.diplomaLocation.city">
+                            {{diploma.diplomaLocation.city}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </td>
+            <td></td>
         </tr>
     </table>
 </form>
+<button mat-icon-button color="warn" (click)="onDelete()">
+    <span class="material-icons">remove</span>
+</button>

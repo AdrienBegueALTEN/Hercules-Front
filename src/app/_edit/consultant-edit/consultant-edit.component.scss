@@ -26,3 +26,18 @@ mat-card { margin: 10px; }
     100% {background-color: orange;}
 }
 
+mat-expansion-panel{
+    background-color: whitesmoke;
+    box-shadow: none !important;
+}
+
+mat-expansion-panel:hover{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.title{
+    color: #008BD2;
+    font-weight: bolder;
+    padding-right: 10px;
+}

@@ -76,7 +76,8 @@
 
 <ng-template #consultantEdit>
   <app-consultant-edit 
-    [consultant]="mission.consultant">
+    [consultant]="mission.consultant"
+    (reload)="onReload()">
   </app-consultant-edit>
 </ng-template>
 

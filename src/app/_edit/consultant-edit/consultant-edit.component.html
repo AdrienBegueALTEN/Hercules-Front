@@ -40,19 +40,25 @@
           <mat-expansion-panel *ngFor="let diploma of consultant.diplomas">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{diploma.diplomaName.name}}
+                <span class="title">{{diploma.diplomaName.name}}</span>{{diploma.diplomaLocation.school}}
               </mat-panel-title>
-              <mat-panel-description>
-                {{diploma.diplomaLocation.school}} ({{diploma.diplomaLocation.city}})
-              </mat-panel-description>
             </mat-expansion-panel-header>
-          <app-consultant-diploma 
-            [diploma]="diploma" 
-            [consultantId]="consultant.id"
-            (reload)="sendReload()"></app-consultant-diploma>
+            <app-consultant-diploma 
+              [diploma]="diploma" 
+              [consultantId]="consultant.id"
+              (reload)="sendReload()"></app-consultant-diploma>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>add</mat-icon>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-consultant-new-diploma
+              [consultant]="consultant.id"
+              (reload)="sendReload()"></app-consultant-new-diploma>
           </mat-expansion-panel>
         </mat-accordion>
-          <div *ngIf="showNewDiploma; then newDiplomaForm else newDiplomaButton"></div>
       </mat-card-content>
     </div>
     <div class="contours" [class.manager-gone-background]="consultant.manager.releaseDate!=null">

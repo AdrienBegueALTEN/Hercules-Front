@@ -23,7 +23,7 @@
                 <mat-label>Ville de l'établissement d'obtention</mat-label>
                 <input matInput type="text" [formControlName]="CITY_KEY">
             </mat-form-field></td>
-            <td><button type="submit" mat-icon-button *ngIf="grp.valid" (click)="onSubmit()">
+            <td><button type="submit" mat-icon-button [disabled]="!grp.valid" (click)="onSubmit()">
                 <mat-icon>playlist_add_check</mat-icon>
             </button></td>
         </tr>

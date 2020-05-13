@@ -139,4 +139,8 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     };
     this._dialog.open(OkDialogComponent, dialogConfig);
   }
+
+  onReload(){
+    this.ngOnInit();
+  }
 }
