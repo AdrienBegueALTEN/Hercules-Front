@@ -35,6 +35,10 @@ body * {
     display: block;
 }
 
+mat-form-field {
+    width: 100%;
+}
+
 .inputable tr td:first-child {
     padding-left: 0;
 }

@@ -18,8 +18,8 @@ export class NavHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.user = this._authService.getUser();
-    this.userIsAdmin = this.user.roles.includes(Role.ADMIN);
-    this.userIsManager = this.userIsAdmin || this.user.roles.includes(Role.MANAGER);
+    this.userIsAdmin = this._authService.userIsAdmin();
+    this.userIsManager = this.userIsAdmin ||  this._authService.userIsManager();
   }
 
   onLogout() { this._authService.logout(); }
