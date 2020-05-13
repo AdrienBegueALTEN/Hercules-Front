@@ -1,20 +1,18 @@
-<mat-tab-group *ngIf="!!customer" animationDuration="0ms" mat-align-tabs="center">
+<mat-card>
+  <mat-tab-group *ngIf="!!customer" animationDuration="0ms" mat-align-tabs="center">
     <mat-tab>
       <ng-template mat-tab-label>
         {{customer.name}}
       </ng-template>
-      <app-customer-view 
-        *ngIf="!writingRights" 
-        [customer]="customer">
+      <app-customer-view *ngIf="!writingRights" [customer]="customer">
       </app-customer-view>
-      <app-customer-edit 
-        *ngIf="writingRights"
-        [customer]="customer">
+      <app-customer-edit *ngIf="writingRights" [customer]="customer">
       </app-customer-edit>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon>view_carousel</mat-icon>&nbsp;Les missions du client
+        Les missions du client
       </ng-template>
     </mat-tab>
   </mat-tab-group>
+</mat-card>
