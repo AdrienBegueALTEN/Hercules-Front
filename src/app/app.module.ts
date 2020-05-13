@@ -62,6 +62,7 @@ import { ConsultantManagerComponent } from './_input/autocomplete/consultant-man
 import { ConsultantDiplomaComponent } from './_form/consultant-diploma/consultant-diploma.component';
 import { ArrayMissionItemComponent } from './array-mission/array-mission-item/array-mission-item.component';
 import { ArrayProjectItemComponent } from './array-mission/array-project-item/array-project-item.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { MissionService } from './_services/mission.service';
 import { ProjectService } from './_services/project.service';
@@ -130,7 +131,7 @@ import { ExternalHeaderComponent } from './_header/external/external-header.comp
       PaginatorProjectsComponent,
       HomeComponent,
       MissionSheetPageComponent,
-      ExternalHeaderComponent
+      ExternalHeaderComponent,
    ],
    imports: [
       AppRoutingModule,
@@ -162,7 +163,8 @@ import { ExternalHeaderComponent } from './_header/external/external-header.comp
       MatButtonToggleModule,
       MatRadioModule,
       MatChipsModule,
-      MatSortModule
+      MatSortModule,
+      MatExpansionModule
    ],
    providers: [
       authInterceptorProviders,

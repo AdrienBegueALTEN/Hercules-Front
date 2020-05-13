@@ -2,6 +2,7 @@ import { AppSettings } from './../app-settings';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Role } from '../_enums/role.enum';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -42,4 +43,16 @@ export class AuthService {
   }
 
   public isAuthenticated() : boolean { return !!this.getToken(); }
+
+  public userIsAdmin() : boolean {
+    return this._userHasRole(Role.ADMIN);
+  }
+
+  public userIsManager() : boolean {
+    return this._userHasRole(Role.MANAGER);
+  }
+
+  private _userHasRole(role : Role) : boolean {
+    return !!this.getUser() && this.getUser().roles.includes(role);
+  }
 }

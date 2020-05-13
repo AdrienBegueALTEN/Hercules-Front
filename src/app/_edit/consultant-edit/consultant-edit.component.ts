@@ -1,12 +1,10 @@
 import { HttpStatus } from './../../_enums/http-status.enum';
 import { ConsultantService } from 'src/app/_services/consultant.service';
-import { Component, Input, ViewChild, ViewContainerRef, ComponentFactoryResolver, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ConsultantNewDiplomaComponent } from 'src/app/_form/consultant-new-diploma/consultant-new-diploma.component';
-import { Router } from '@angular/router';
 
 const XP_KEY = 'experience';
 
@@ -15,21 +13,23 @@ const XP_KEY = 'experience';
   templateUrl: './consultant-edit.component.html',
   styleUrls: ['./consultant-edit.component.scss']
 })
-export class ConsultantEditComponent {
+export class ConsultantEditComponent implements OnInit {
   @Input() consultant : any;
-  @Input() inMissionView : boolean = false;
-  @Output() reload = new EventEmitter<any>();
 
-  private _oldValues : object = {}
+  showNewDiploma : boolean;
   grp : FormGroup = new FormBuilder().group({});
+
+  @Output() reload = new EventEmitter<any>();
 
   constructor(
     private _consultantService : ConsultantService,
     private _dialog : MatDialog,
-    private _snackBar: MatSnackBar,
-    private _resolver: ComponentFactoryResolver,
-    private _router: Router
+    private _snackBar: MatSnackBar
   ) { }
+
+  ngOnInit(): void {
+    this.showNewDiploma = false;
+  }
 
   addCtrl(key : string, ctrl : FormControl) : void {
     this.grp.addControl(key, ctrl);
@@ -44,7 +44,6 @@ export class ConsultantEditComponent {
       .updateConsultant(this.consultant.id, key, newValue).subscribe(
         () => {
           this.consultant[key] = newValue;
-          this._oldValues[key] = newValue;
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
         },
         error => { this._handleError(error.status); }
@@ -52,8 +51,7 @@ export class ConsultantEditComponent {
   }
 
   private _doUpdate(key : string) {
-    return this.grp.controls[key].valid &&
-      this._oldValues[key] != this.grp.controls[key].value;
+    return this.grp.controls[key].valid && this.grp.controls[key].dirty;
   }
 
   private _handleError(status : number) : void {
@@ -89,8 +87,8 @@ export class ConsultantEditComponent {
     )
   }
   
-  sendReload(){
-    console.log("send reload page");
+  sendReload() {
+    this.ngOnInit();
     this.reload.emit();
   }
 }
