@@ -87,8 +87,8 @@ export class ConsultantEditComponent implements OnInit {
     )
   }
   
-  sendReload(){
-    this.reload.emit();
+  sendReload() {
     this.ngOnInit();
+    this.reload.emit();
   }
 }
