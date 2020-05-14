@@ -81,6 +81,8 @@ import { ProjectsEditComponent } from './_edit/projects-edit/projects-edit.compo
 import { ProjectSingleEditComponent } from './_edit/project-single-edit/project-single-edit.component';
 import { PaginatorProjectsComponent } from './_utils/paginator-projects/paginator-projects.component';
 import { ExternalHeaderComponent } from './_header/external/external-header.component';
+import { MissionsComponent } from './_page/missions/missions.component';
+
 
 @NgModule({
    declarations: [
@@ -129,6 +131,8 @@ import { ExternalHeaderComponent } from './_header/external/external-header.comp
       HomeComponent,
       MissionSheetPageComponent,
       ExternalHeaderComponent,
+      MissionsComponent,
+      
    ],
    imports: [
       AppRoutingModule,

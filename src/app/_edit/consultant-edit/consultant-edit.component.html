@@ -1,5 +1,5 @@
 <div *ngIf="consultant">
-  <mat-card id="infos">
+  <div class="contours" id="infos">
     <mat-card-title>Informations personnelles</mat-card-title>
       <mat-card-content>
         <table class="inputable">
@@ -32,8 +32,8 @@
         </tr>
       </table>
       </mat-card-content>
-    </mat-card>
-    <mat-card>
+    </div>
+    <div class="contours">
       <mat-card-title>Formation</mat-card-title>
       <mat-card-content>
         <mat-accordion>
@@ -50,15 +50,14 @@
           </app-diploma-edit>
           </mat-expansion-panel>
         </mat-accordion>
-          <div *ngIf="showNewDiploma; then newDiplomaForm else newDiplomaButton"></div>
       </mat-card-content>
-    </mat-card>
-    <mat-card [class.manager-gone-background]="consultant.manager.releaseDate!=null">
+    </div>
+    <div class="contours" [class.manager-gone-background]="consultant.manager.releaseDate!=null">
       <mat-card-title>Manager</mat-card-title>
       <mat-card-content>
         <app-consultant-manager [consultant]="consultant" (managerChange)="updateManager($event)"></app-consultant-manager>
       </mat-card-content>
-    </mat-card>
+    </div>
 </div>
 
 <ng-template #newDiplomaForm>

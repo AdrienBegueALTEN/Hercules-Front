@@ -1,0 +1,115 @@
+<p>missions works!</p>
+
+
+<mat-form-field style="width: 100%;">
+    <mat-label>Chercher une mission</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Chercher une mission, une ville, un secteur d'activité...">
+  </mat-form-field>
+  
+  <mat-slide-toggle (click)="showOnlyMyMissions()" *ngIf="userIsManagerInclude" [checked]="true">Afficher uniquement mes missions. </mat-slide-toggle>&nbsp;&nbsp;
+  <mat-slide-toggle (click)="showOnlyMyValidatedMissions()" *ngIf="userIsManagerInclude&&onlyMyMissionsChecked" [checked]="false">Cacher mes missions validées </mat-slide-toggle>
+  <br>
+  <br>
+  
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      [disabled] = "onlyMyMissionsChecked==false"
+                      
+                      
+                      >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)"
+                      
+                      >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="title"> Titre de la mission </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.lastVersion.title}}
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="consultant">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="consultant"> Consultant </th>
+          <td mat-cell *matCellDef="let element" >
+           
+            {{element.consultant.firstname}} {{element.consultant.lastname}}
+             
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="customer">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="customer"> Client </th>
+            <td mat-cell *matCellDef="let element" >               
+               {{element.customer.name}}
+            </td>
+          </ng-container>
+    
+  
+      <ng-container matColumnDef="city">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="city"> Ville </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.lastVersion.city}}
+            
+          </td>
+        </ng-container>
+  
+  
+  
+        <ng-container matColumnDef="manager">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="manager"> Manager </th>
+          <td mat-cell *matCellDef="let element"> 
+            {{element.consultant.manager.firstname}} {{element.consultant.manager.lastname}}
+            
+          </td>
+        </ng-container>
+
+
+        
+  
+      <ng-container matColumnDef="sheetStatus">
+        <th mat-header-cell *matHeaderCellDef disabled> Statut de la fiche </th>
+        <td mat-cell *matCellDef="let element" [ngSwitch]="element.sheetStatus">
+          <i *ngSwitchCase="'ON_WAITING'" style="color: red" class="fas fa-times-circle" matTooltip="Fiche en attente" ></i>
+          <i *ngSwitchCase="'ON_GOING'" style="color: orange" class="fas fa-clock" matTooltip="Fiche en cours de validation"></i>
+          <i *ngSwitchCase="'VALIDATED'" style="color: green" class="fas fa-check-circle" matTooltip="Fiche validée"></i>
+          &nbsp;
+
+          <button mat-icon-button *ngIf="element.consultant.manager.id==this.user.id" [routerLink]="[element.id]">
+            <span class="material-icons" matTooltip="Modifier la mission" >edit</span>
+          </button>&nbsp;
+          
+
+          <button mat-icon-button  color="warn" *ngIf="(element.consultant.manager.id==this.user.id&&element.sheetStatus=='ON_WAITING')">
+            <span class="material-icons" matTooltip="Supprimer la mission en attente" (click)="openDeleteDialog(element)">delete</span>
+          </button>
+
+
+        
+      </td>
+        </ng-container>             
+  
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+          class="example-element-row">
+      </tr>
+    </table>
+
+    <br>
+  <mat-paginator style="background-color: transparent;" [pageSizeOptions]="[3, 5, 10, 25]"></mat-paginator>
+  
+  <br />
+
+
+  <br />

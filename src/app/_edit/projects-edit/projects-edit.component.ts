@@ -24,7 +24,8 @@ export class ProjectsEditComponent implements OnInit {
   createProject(){
     this._projectService.newProject().subscribe(
       (proj) => {
-        
+        if(!this.projects)
+          this.projects = [];
         this.projects.push(proj);
         console.log(this.projects);
         this.ngOnInit();

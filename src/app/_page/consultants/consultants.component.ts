@@ -72,6 +72,8 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     )
+
+    console.log(this.userIsAdmin);
   }
 
   printData(data): void {
