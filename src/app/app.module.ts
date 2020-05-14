@@ -173,7 +173,10 @@ import { MissionsComponent } from './_page/missions/missions.component';
    providers: [
       authInterceptorProviders,
       MissionService,
-      ProjectService
+      ProjectService,
+      {  provide: MatPaginatorIntl, 
+         useValue: getFrenchPaginatorIntl() 
+      }
    ],
    bootstrap: [
       AppComponent
