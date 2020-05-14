@@ -1,3 +1,4 @@
+import { MissionsComponent } from './_page/missions/missions.component';
 import { ManagerGuard } from './_services/guard/manager-guard.service';
 import { AuthGuard } from './_services/guard/auth-guard.service';
 import { NewMissionPageComponent } from './_page/new-mission/new-mission-page.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
     path: '', canActivate: [AuthGuard],
     children: [
       { path: 'new-mission', canActivate: [ManagerGuard], component: NewMissionPageComponent },
+      { path : 'missions', component: MissionsComponent},
       { path: 'missions/:id', component: MissionPageComponent },
       { path: 'consultants', component: ConsultantsComponent },
       { path: 'consultants/:id', component: ConsultantPageComponent },
