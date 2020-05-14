@@ -5,29 +5,29 @@
         <table class="inputable">
           <tr>
           <td><app-firstname-input
-            (sendCtrl)="addCtrl('firstname', $event)"
-            (valueChange)="valueChange('firstname')"
-            [initialValue]="consultant.firstname"
+            (sendCtrl)="addCtrl(FIRSTNAME_KEY, $event)"
+            (valueChange)="valueChange(FIRSTNAME_KEY)"
+            [initialValue]="consultant[FIRSTNAME_KEY]"
             [required]="true">
           </app-firstname-input></td>
           <td><app-lastname-input
-            (sendCtrl)="addCtrl('lastname', $event)"
-            (valueChange)="valueChange('lastname')"
-            [initialValue]="consultant.lastname"
+            (sendCtrl)="addCtrl(LASTNAME_KEY, $event)"
+            (valueChange)="valueChange(LASTNAME_KEY)"
+            [initialValue]="consultant[LASTNAME_KEY]"
             [required]="true">
           </app-lastname-input></td>
         </tr>
         <tr>
           <td><app-email-input 
-            (sendCtrl)="addCtrl('email', $event)"
-            (valueChange)="valueChange('email')"
-            [initialValue]="consultant.email"
+            (sendCtrl)="addCtrl(EMAIL_KEY, $event)"
+            (valueChange)="valueChange(EMAIL_KEY)"
+            [initialValue]="consultant[EMAIL_KEY]"
             [required]="true">
           </app-email-input></td>
           <td><app-xp-input
-            (sendCtrl)="addCtrl('experience', $event)"
-            (valueChange)="valueChange('experience')"
-            [initialValue]="consultant.experience">
+            (sendCtrl)="addCtrl(XP_KEY, $event)"
+            (valueChange)="valueChange(XP_KEY)"
+            [initialValue]="consultant[XP_KEY]">
         </app-xp-input></td>
         </tr>
       </table>
@@ -37,19 +37,17 @@
       <mat-card-title>Formation</mat-card-title>
       <mat-card-content>
         <mat-accordion>
-          <mat-expansion-panel *ngFor="let diploma of consultant.diplomas">
+          <mat-expansion-panel *ngFor="let diploma of consultant.diplomas; let i = index">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{diploma.diplomaName.name}}
+                {{diploma.entitled}}
               </mat-panel-title>
-              <mat-panel-description>
-                {{diploma.diplomaLocation.school}} ({{diploma.diplomaLocation.city}})
-              </mat-panel-description>
             </mat-expansion-panel-header>
-          <app-consultant-diploma 
+          <app-diploma-edit
             [diploma]="diploma" 
-            [consultantId]="consultant.id"
-            (reload)="sendReload()"></app-consultant-diploma>
+            [consultant]="consultant.id"
+            (deletion)="consultant.diplomas.splice(i, 1)">
+          </app-diploma-edit>
           </mat-expansion-panel>
         </mat-accordion>
           <div *ngIf="showNewDiploma; then newDiplomaForm else newDiplomaButton"></div>
@@ -64,13 +62,14 @@
 </div>
 
 <ng-template #newDiplomaForm>
-  <app-consultant-new-diploma
+  <app-diploma-edit
+  [new]="true" 
   [consultant]="consultant.id"
-  (reload)="sendReload()"></app-consultant-new-diploma>
+  (reload)="sendReload()"></app-diploma-edit>
 </ng-template>
 
 <ng-template #newDiplomaButton>
-  <button mat-mini-fab class="blue-shape" (click)="showNewDiploma = true">
-    <mat-icon>playlist_add</mat-icon>
+  <button mat-button color="primary" (click)="showNewDiploma = true">
+      Ajouter un nouveau diplôme
   </button>
 </ng-template>

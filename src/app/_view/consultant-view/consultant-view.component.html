@@ -11,9 +11,9 @@
   <p *ngIf="consultant.manager" [class.manager-gone-color]="consultant.manager.releaseDate!=null">
     <mat-icon>supervisor_account</mat-icon> {{consultant.manager.firstname}} {{consultant.manager.lastname}}
   </p>
-  <div class="diplomas" *ngFor="let d of consultant.diplomas">
+  <div class="diplomas" *ngFor="let diploma of consultant.diplomas">
       <p>
-        <mat-icon>school</mat-icon> <span class="bold"> {{d.diplomaName.name}}</span> à {{d.diplomaLocation.school}} ({{d.diplomaLocation.city}}, {{d.graduationYear}})
+        <mat-icon>school</mat-icon> <span class="bold"> {{diploma.entitled}}</span> à {{diploma.etablishment}} ({{diploma.city}}, {{diploma.year}})
       </p>
   </div>
 </mat-card>

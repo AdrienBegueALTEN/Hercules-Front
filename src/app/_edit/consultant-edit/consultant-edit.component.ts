@@ -6,15 +6,17 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-const XP_KEY = 'experience';
-
 @Component({
   selector: 'app-consultant-edit',
-  templateUrl: './consultant-edit.component.html',
-  styleUrls: ['./consultant-edit.component.scss']
+  templateUrl: './consultant-edit.component.html'
 })
 export class ConsultantEditComponent implements OnInit {
   @Input() consultant : any;
+
+  readonly EMAIL_KEY = 'email';
+  readonly FIRSTNAME_KEY = 'firstname';
+  readonly LASTNAME_KEY = 'lastname';
+  readonly XP_KEY = 'experience';
 
   showNewDiploma : boolean;
   grp : FormGroup = new FormBuilder().group({});
@@ -38,7 +40,7 @@ export class ConsultantEditComponent implements OnInit {
   valueChange(key : string) : void {
     if (!this._doUpdate(key))
       return;
-    const newValue : any = (key === XP_KEY) ? 
+    const newValue : any = (key === this.XP_KEY) ? 
       Number(this.grp.controls[key].value) : this.grp.controls[key].value;
     this._consultantService
       .updateConsultant(this.consultant.id, key, newValue).subscribe(
