@@ -77,6 +77,11 @@ import { NameCustInputComponent } from './_input/customer-inputs/name-cust-input
 import { ActivitySectorCustInputComponent } from './_input/customer-inputs/activity-sector-cust-input/activity-sector-cust-input.component';
 import { DescriptionCustInputComponent } from './_input/customer-inputs/description-cust-input/description-cust-input.component';
 import { LogoCustInputComponent } from './_input/customer-inputs/logo-cust-input/logo-cust-input.component';
+import { ProjectsViewComponent } from "./_view/projects-view/projects-view.component";
+import { ProjectSingleViewComponent } from './_view/project-single-view/project-single-view.component';
+import { ProjectsEditComponent } from './_edit/projects-edit/projects-edit.component';
+import { ProjectSingleEditComponent } from './_edit/project-single-edit/project-single-edit.component';
+import { PaginatorProjectsComponent } from './_utils/paginator-projects/paginator-projects.component';
 import { ExternalHeaderComponent } from './_header/external/external-header.component';
 import { MissionsComponent } from './_page/missions/missions.component';
 
@@ -121,6 +126,11 @@ import { MissionsComponent } from './_page/missions/missions.component';
       ActivitySectorCustInputComponent,
       DescriptionCustInputComponent,
       LogoCustInputComponent,
+      ProjectsViewComponent,
+      ProjectSingleViewComponent,
+      ProjectsEditComponent,
+      ProjectSingleEditComponent,
+      PaginatorProjectsComponent,
       HomeComponent,
       MissionSheetPageComponent,
       ExternalHeaderComponent,

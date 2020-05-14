@@ -1,0 +1,28 @@
+.right {
+    text-align: right;
+    padding:10px;
+}
+
+.paginator-button{
+    text-align: center;
+    color: #ffba00;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    border:none;
+    
+}
+
+mat-icon{
+    font-size: xx-large
+}
+
+.paginator-button:hover{
+    cursor: pointer;
+    color: #008bd2;
+}
+
+.disabled, .disabled:hover{
+    pointer-events: none;
+    color: gainsboro;
+}

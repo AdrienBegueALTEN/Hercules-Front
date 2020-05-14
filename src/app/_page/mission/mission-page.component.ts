@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { MissionService } from '../../_services/mission.service';
 import { Component, OnInit, AfterContentChecked, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Role } from '../../_enums/role.enum';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
 import { MatTabGroup } from '@angular/material/tabs';
@@ -41,10 +40,9 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       mission => {
         this.selectedIndex = 0;
         this.mission = mission;
-        const user = this._authService.getUser();
-        this.userIsManager = user.roles.includes(Role.MANAGER)
-        this.userIsConsultantManager = 
-          this.userIsManager && mission.consultant.manager.id == user.id;
+        this.userIsManager = this._authService.userIsManager();
+        this.userIsConsultantManager = this.userIsManager 
+          && mission.consultant.manager.id == this._authService.getUser().id;
         this._setTodayVersionIndex();
       },
       () => window.location.replace('not-found')
@@ -85,7 +83,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
   public showNewVersion() : boolean {
     return this.mission.sheetStatus === SheetStatus.VALIDATED
-      && this.todayVersionIndex === null;
+      && this.todayVersionIndex === null && this.userIsConsultantManager;
   }
 
   public getStatusText() : string {
@@ -140,5 +138,9 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       ok: 'OK'
     };
     this._dialog.open(OkDialogComponent, dialogConfig);
+  }
+
+  onReload(){
+    this.ngOnInit();
   }
 }

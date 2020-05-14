@@ -1,11 +1,31 @@
 import {Observable, Subject, of} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { AppSettings } from '../app-settings';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class ProjectService {
-  constructor() {
+  constructor(private _http: HttpClient) {
   }
 
   getProjects(): Observable<Project[]> {
     return of(projects);
+  }
+
+  newProject(): Observable<any>{
+    return this._http.post(AppSettings.PROJECT_API,null,AppSettings.HTTP_JSON_CONTENT);
+  }
+
+  updateproject(id : number, fieldName : String, value : any) : Observable<any> {
+    return this._http.put(AppSettings.PROJECT_API,
+      {
+        id : id,
+        fieldName : fieldName,
+        value : value,
+      },
+      {observe: 'response'});
   }
 
 
