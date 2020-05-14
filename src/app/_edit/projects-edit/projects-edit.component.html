@@ -1,5 +1,5 @@
 <div class="contours" *ngIf="!!projects">
-    <app-project-single-edit *ngIf="projects.length!=0" [project]="projects[0]"></app-project-single-edit>
+    <app-project-single-edit *ngIf="projects.length!=0" [project]="projects[0]" (reload)="sendReload()"></app-project-single-edit>
 </div>
 <div class="contours" *ngIf="!projects">
     Aucun projet pour cette version. Vous pouvez en ajouter un nouveau.

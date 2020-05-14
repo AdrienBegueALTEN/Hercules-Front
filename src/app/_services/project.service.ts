@@ -14,8 +14,8 @@ export class ProjectService {
     return of(projects);
   }
 
-  newProject(): Observable<any>{
-    return this._http.post(AppSettings.PROJECT_API,null,AppSettings.HTTP_JSON_CONTENT);
+  newProject(mission:number): Observable<any>{
+    return this._http.post(AppSettings.PROJECT_API,{missionId:mission},AppSettings.HTTP_JSON_CONTENT);
   }
 
   updateproject(id : number, fieldName : String, value : any) : Observable<any> {

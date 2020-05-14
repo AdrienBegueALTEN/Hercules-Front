@@ -96,7 +96,7 @@
 </ng-template>
 
 <ng-template #projectsEdit>
-  <app-projects-edit [projects]="mission.versions[selectedIndex].projects"></app-projects-edit>
+  <app-projects-edit [projects]="mission.versions[selectedIndex].projects" [mission]="mission" (reload)="onReload()"></app-projects-edit>
 </ng-template>
 
 <ng-template #projectsView>

@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ProjectSingleEditComponent } from '../project-single-edit/project-single-edit.component';
 import { ProjectService } from 'src/app/_services/project.service';
+import { MissionService } from 'src/app/_services/mission.service';
 
 @Component({
   selector: 'app-projects-edit',
@@ -10,11 +11,14 @@ import { ProjectService } from 'src/app/_services/project.service';
 export class ProjectsEditComponent implements OnInit {
   @ViewChild(ProjectSingleEditComponent, { static: false }) private projectSingleEdit: ProjectSingleEditComponent;
   @Input() projects;
+  @Input() mission;
+  @Output() reload = new EventEmitter<any>();
 
   constructor(private _projectService: ProjectService) { 
   }
 
   ngOnInit(): void {
+    console.log(this.mission);
   }
 
   getIndex(index:number){
@@ -22,13 +26,9 @@ export class ProjectsEditComponent implements OnInit {
   }
 
   createProject(){
-    this._projectService.newProject().subscribe(
+    this._projectService.newProject(this.mission.id).subscribe(
       (proj) => {
-        if(!this.projects)
-          this.projects = [];
-        this.projects.push(proj);
-        console.log(this.projects);
-        this.ngOnInit();
+        this.reload.emit(proj);
       },
       (err) => {
         console.error(err);
@@ -36,4 +36,7 @@ export class ProjectsEditComponent implements OnInit {
     );
   }
 
+  sendReload(){
+    this.reload.emit();
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ProjectService } from 'src/app/_services/project.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ProjectSingleEditComponent implements OnInit {
 
   @Input() project;
+  @Output() reload = new EventEmitter<any>();
   projectForm: FormGroup;
   constructor(private _formBuilder: FormBuilder,
     private _projectService: ProjectService,
@@ -37,6 +38,7 @@ export class ProjectSingleEditComponent implements OnInit {
   updateProject(field: string){
       this._projectService.updateproject(this.project.id,field, this.projectForm.controls[field].value).subscribe(
         () => {
+          this.reload.emit();
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
         },
         (err) => {
