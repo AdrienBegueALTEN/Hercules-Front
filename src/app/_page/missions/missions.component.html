@@ -6,8 +6,8 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="Chercher une mission, une ville, un secteur d'activité...">
   </mat-form-field>
   
-  <mat-slide-toggle (click)="showOnlyMyMissions()" [checked]="true">Afficher uniquement mes missions. </mat-slide-toggle>&nbsp;&nbsp;
-  <mat-slide-toggle (click)="showOnlyMyValidatedMissions()" *ngIf="onlyMyMissionsChecked" [checked]="false">Cacher mes missions validées </mat-slide-toggle>
+  <mat-slide-toggle (click)="showOnlyMyMissions()" *ngIf="userIsManagerInclude" [checked]="true">Afficher uniquement mes missions. </mat-slide-toggle>&nbsp;&nbsp;
+  <mat-slide-toggle (click)="showOnlyMyValidatedMissions()" *ngIf="userIsManagerInclude&&onlyMyMissionsChecked" [checked]="false">Cacher mes missions validées </mat-slide-toggle>
   <br>
   <br>
   
@@ -85,12 +85,13 @@
           <i *ngSwitchCase="'ON_GOING'" style="color: orange" class="fas fa-clock" matTooltip="Fiche en cours de validation"></i>
           <i *ngSwitchCase="'VALIDATED'" style="color: green" class="fas fa-check-circle" matTooltip="Fiche validée"></i>
           &nbsp;
-          <button mat-icon-button [disabled]="element.consultant.manager.id!=this.user.id" [routerLink]="[element.id]">
+
+          <button mat-icon-button *ngIf="element.consultant.manager.id==this.user.id" [routerLink]="[element.id]">
             <span class="material-icons" matTooltip="Modifier la mission" >edit</span>
           </button>&nbsp;
           
 
-          <button mat-icon-button  color="warn" [disabled]="!(element.consultant.manager.id==this.user.id&&element.sheetStatus=='ON_WAITING')" [routerLink]="[element.id]">
+          <button mat-icon-button  color="warn" *ngIf="(element.consultant.manager.id==this.user.id&&element.sheetStatus=='ON_WAITING')">
             <span class="material-icons" matTooltip="Supprimer la mission en attente" (click)="openDeleteDialog(element)">delete</span>
           </button>
 

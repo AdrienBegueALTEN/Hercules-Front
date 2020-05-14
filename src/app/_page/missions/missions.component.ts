@@ -1,3 +1,5 @@
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Role } from 'src/app/_enums/role.enum';
 import { MatDialog } from '@angular/material/dialog';
 import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
 import { ActivatedRoute } from '@angular/router';
@@ -8,6 +10,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
+
 
 
 @Component({
@@ -21,6 +24,7 @@ export class MissionsComponent implements OnInit {
   isAuthenticated = false;
   userIsAdmin = false;
   userIsManager = false;
+  userIsManagerInclude = false;
   checkBoxDisabled = true;
   onlyMyValidatedMissions = false;
 
@@ -28,6 +32,7 @@ export class MissionsComponent implements OnInit {
   selectedIndex : number = 0;
   todayVersionIndex : number = null;
   userIsConsultantManager : boolean = false;
+  userId : number = null;
 
   onlyMyMissionsChecked = true;
   missions:any[];
@@ -44,11 +49,16 @@ export class MissionsComponent implements OnInit {
     private _missionService : MissionService,
     private _route : ActivatedRoute,
     private _dialog: MatDialog,
+    private _snackBar: MatSnackBarModule,
   ) {}
 
   ngOnInit(): void {
 
 
+    const user = this._authService.getUser();
+    this.userIsManagerInclude = user.roles.includes(Role.MANAGER);
+
+    this.userId = this._authService.getUser().id;
     this.isAuthenticated = !!this._authService.getToken();
 
     if (this.isAuthenticated) {
@@ -59,14 +69,11 @@ export class MissionsComponent implements OnInit {
 
 
 
-    this._missionService.getMissions(1).subscribe(
+    this._missionService.getMissions(this.userId).subscribe(
       (data) => {
         this.missions = data;
-        console.log(data);
         this.createDatasource(data);
         
-    
-        console.log(this.dataSource);
       },
       (err) => {
         console.log(err);
@@ -84,12 +91,12 @@ export class MissionsComponent implements OnInit {
 
 
   createDatasource(data) {
-    if (this.onlyMyMissionsChecked) {
+    if (this.onlyMyMissionsChecked&&this.userIsManagerInclude) {
       this.dataSource = new MatTableDataSource(data.filter((miss) => miss.consultant.manager.id == this.user.id));
-      if(this.onlyMyValidatedMissions)
+      if(this.onlyMyValidatedMissions&&this.userIsManagerInclude)
     {
       this.dataSource = new MatTableDataSource(data.filter((miss) => miss.sheetStatus == "ON_GOING" || miss.sheetStatus == "ON_WAITING"));
-    }
+    } 
     }
     else {
       this.dataSource = new MatTableDataSource(data);
@@ -111,7 +118,6 @@ export class MissionsComponent implements OnInit {
       
     };
 
-    console.log(this.dataSource);
     this.dataSource.filterPredicate = (data, filter: string) => {
       const accumulator = (currentTerm, key) => {
         return this.nestedFilterCheck(currentTerm, data, key);
@@ -136,21 +142,29 @@ nestedFilterCheck(search, data, key) {
   } else {
     search += data[key];
   }
-  console.log(search);
   return search;
 }
 
 applyFilter(event: Event) {
 
   const filterValue = (event.target as HTMLInputElement).value;
-  //console.log(filterValue);
   this.dataSource.filter = filterValue.trim().toLowerCase();
 }
 
 
 showOnlyMyMissions() {
-  this.onlyMyMissionsChecked = !this.onlyMyMissionsChecked;
+
+ this.onlyMyMissionsChecked = !this.onlyMyMissionsChecked;
+ this.createDatasource(this.missions);
+
+ if(this.onlyMyMissionsChecked&&this.onlyMyValidatedMissions)
+ {
+ 
+  this.onlyMyValidatedMissions= !this.onlyMyValidatedMissions;
   this.createDatasource(this.missions);
+  
+ }
+
 }
 
 
