@@ -50,6 +50,7 @@
           </app-diploma-edit>
           </mat-expansion-panel>
         </mat-accordion>
+        <div *ngIf="showNewDiploma; then newDiplomaForm else newDiplomaButton"></div>
       </mat-card-content>
     </div>
     <div class="contours" [class.manager-gone-background]="consultant.manager.releaseDate!=null">

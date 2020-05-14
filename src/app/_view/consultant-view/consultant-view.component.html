@@ -1,19 +1,33 @@
-<mat-card>
-  <p *ngIf="consultant.releaseDate">
-    <mat-icon>meeting_room</mat-icon> {{consultant.releaseDate | date:'dd/MM/yyyy'}}
-  </p>
-  <p>
-    <mat-icon>alternate_email</mat-icon> {{consultant.email}}
-  </p>
-  <p>
-    <mat-icon>grade</mat-icon> {{consultant.experience}} années d'expériences
-  </p>
-  <p *ngIf="consultant.manager" [class.manager-gone-color]="consultant.manager.releaseDate!=null">
-    <mat-icon>supervisor_account</mat-icon> {{consultant.manager.firstname}} {{consultant.manager.lastname}}
-  </p>
-  <div class="diplomas" *ngFor="let diploma of consultant.diplomas">
-      <p>
-        <mat-icon>school</mat-icon> <span class="bold"> {{diploma.entitled}}</span> à {{diploma.etablishment}} ({{diploma.city}}, {{diploma.year}})
-      </p>
-  </div>
-</mat-card>
+<mat-list *ngIf="consultant">
+  <mat-list-item>
+    <h1 matLine>Prénom</h1>
+    <p matLine>{{consultant[FIRSTNAME_KEY]}}</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h1 matLine>Nom</h1>
+    <p matLine>{{consultant[LASTNAME_KEY]}}</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h1 matLine>Adresse email</h1>
+    <p matLine>{{consultant[EMAIL_KEY]}}</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h1 matLine>Niveau d'expérience</h1>
+    <p matLine>{{getXpToText()}}</p>
+  </mat-list-item>
+    <div *ngIf="consultant[RELEASE_DATE_KEY]; then releaseDate else manager"></div>
+</mat-list>
+
+<ng-template #releaseDate>
+  <mat-list-item>
+    <h1 matLine>Date de sortie des effectifs</h1>
+    <p matLine>{{consultant[RELEASE_DATE_KEY] | date:'dd/MM/yyyy'}}</p>
+  </mat-list-item>
+</ng-template>
+
+<ng-template #manager>
+  <mat-list-item>
+    <h1 matLine>Manager</h1>
+    <p matLine>{{consultant.manager[FIRSTNAME_KEY]}} {{consultant.manager[LASTNAME_KEY]}}</p>
+  </mat-list-item>
+</ng-template>
