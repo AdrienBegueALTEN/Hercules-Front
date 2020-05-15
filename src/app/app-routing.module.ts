@@ -15,12 +15,15 @@ import { CustomerPageComponent } from './_page/customer-page/customer-page.compo
 import { MissionSheetPageComponent } from './_page/mission-sheet/mission-sheet-page.component';
 import { RecruitmentOfficerPageComponent } from './_page/recruitment-officer-page/recruitment-officer-page.component';
 import { RecruitmentOfficersComponent } from './_page/recruitment-officers/recruitment-officers.component';
+import { AdminGuard } from './_services/guard/admin-guard.service';
+import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/new-recruitment-officer.component';
 
 const routes: Routes = [
   { 
     path: '', canActivate: [AuthGuard],
     children: [
       { path: 'new-mission', canActivate: [ManagerGuard], component: NewMissionPageComponent },
+      { path: 'new-recruitment-officer', canActivate: [AdminGuard], component: NewRecruitmentOfficerComponent},
       { path: 'missions/:id', component: MissionPageComponent },
       { path: 'consultants', component: ConsultantsComponent },
       { path: 'consultants/:id', component: ConsultantPageComponent },

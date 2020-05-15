@@ -28,12 +28,6 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Statut </th>
-      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
-        {{element.status}}
-      </td>
-    </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
@@ -51,4 +45,8 @@
         [class.manager-gone-color]="element.manager.releaseDate!=null">
     </tr>
   </table>
+  
+  <div>
+    <button mat-button (click)="goToCreateNewRecruitmentOfficer()">Ajouter un CDR</button>
+  </div>
   <mat-paginator style="background-color: transparent;" [pageSizeOptions]="[ 5, 10, 25, 50, 100]"></mat-paginator>

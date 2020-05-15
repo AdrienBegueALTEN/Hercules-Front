@@ -14,5 +14,6 @@ export class AppSettings {
     public static DIPLOMA_API : string = AppSettings.API_ENDPOINT + 'diplomas/';
     public static MANAGER_API : string = AppSettings.API_ENDPOINT + 'managers/';
     public static PROJECT_API : string = AppSettings.API_ENDPOINT + 'projects/';
+    public static RECRUITMENTOFFICER_API : string = AppSettings.API_ENDPOINT + 'recruitment-officers/';
     public static HTTP_JSON_CONTENT = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 }

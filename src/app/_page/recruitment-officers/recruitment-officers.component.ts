@@ -24,7 +24,7 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
   navigationSubscription : Subscription;
   recruitmentOfficers : any[];
   dataSource: MatTableDataSource<any>;
-  columnsToDisplay = ['firstname', 'lastname', 'email', 'status', 'actions'];
+  columnsToDisplay = ['firstname', 'lastname', 'email', 'actions'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -34,7 +34,7 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
     private _bottomSheet: MatBottomSheet,
     private _dialog: MatDialog,
     private _authService: AuthService,
-    private router:Router) { }
+    private _router:Router) { }
 
   ngOnInit(): void {
     this.initialize();
@@ -56,7 +56,7 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
       this.userIsManager = this._authService.userIsManager();
     }
 
-    this.recruitmentOfficerService.getRecruitmentOfficers(false).subscribe(
+    this.recruitmentOfficerService.getRecruitmentOfficers().subscribe(
       (data) => {
         this.recruitmentOfficers = data;
         this.createDatasource(data);
@@ -78,5 +78,11 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  goToCreateNewRecruitmentOfficer(){
+    this._router.navigate(['/new-recruitment-officer']);
+  }
+
+  
 
 }

@@ -85,6 +85,7 @@ import { PaginatorProjectsComponent } from './_utils/paginator-projects/paginato
 import { ExternalHeaderComponent } from './_header/external/external-header.component';
 import { RecruitmentOfficersComponent } from './_page/recruitment-officers/recruitment-officers.component';
 import { RecruitmentOfficerPageComponent } from './_page/recruitment-officer-page/recruitment-officer-page.component';
+import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/new-recruitment-officer.component';
 
 
 @NgModule({
@@ -137,6 +138,7 @@ import { RecruitmentOfficerPageComponent } from './_page/recruitment-officer-pag
       ExternalHeaderComponent,
       RecruitmentOfficersComponent,
       RecruitmentOfficerPageComponent,
+      NewRecruitmentOfficerComponent,
    ],
    imports: [
       AppRoutingModule,
