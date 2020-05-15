@@ -18,17 +18,16 @@ export class ProjectsEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.mission);
   }
 
   getIndex(index:number){
     this.projectSingleEdit.setProject(this.projects[index]);
   }
 
-  createProject(){
+  onCreate(){
     this._projectService.newProject(this.mission.id).subscribe(
       (proj) => {
-        this.reload.emit(proj);
+        this.reload.emit();
       },
       (err) => {
         console.error(err);
@@ -37,6 +36,6 @@ export class ProjectsEditComponent implements OnInit {
   }
 
   sendReload(){
-    this.reload.emit();
+    //this.reload.emit();
   }
 }

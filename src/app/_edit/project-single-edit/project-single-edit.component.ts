@@ -38,7 +38,8 @@ export class ProjectSingleEditComponent implements OnInit {
   updateProject(field: string){
       this._projectService.updateproject(this.project.id,field, this.projectForm.controls[field].value).subscribe(
         () => {
-          this.reload.emit();
+          //this.reload.emit();
+          this.project[field]=this.projectForm.controls[field].value;
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
         },
         (err) => {
