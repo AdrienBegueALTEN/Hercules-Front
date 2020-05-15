@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
 import { MatTabGroup } from '@angular/material/tabs';
+import { saveAs } from "file-saver";
 
 @Component({
   selector: 'app-mission-page',
@@ -60,30 +61,41 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
           this.mission.versions[this.todayVersionIndex][event.key] = event.value;
         },
-        () => { this._handleUpdateError(); }
+        () => this._showErrorDialog("Impossible de mettre à jour les données.")
       )
   }
 
   public onNewVersion() : void {
     this._missionService.addVersion(this.mission.id).subscribe(
       () => { this.ngOnInit(); },
-      () => { this._handleNewVersionError(); }
+      () => this._showErrorDialog("Impossible de créer une nouvelle version.")
+    );
+  }
+
+  public onDownloadEmail() : void {
+    this._missionService.downloadEmailAccess(this.mission.id).subscribe(
+      blob => {
+        const fileName = ''.concat(
+          this.mission.consultant.firstname,
+          '_',
+          this.mission.consultant.lastname,
+          '_',
+          this.mission.customer.name,
+          ".eml").toLowerCase();
+        saveAs(blob, fileName);
+      },
+      () => this._showErrorDialog("Impossible de télécharger le fichier.")
     );
   }
 
   public showMissionEdit() : boolean {
     return this.userIsConsultantManager && 
-      (this.selectedIndex === this.todayVersionIndex ||
-        this.mission.sheetStatus !== SheetStatus.VALIDATED)
+      this.selectedIndex === 0 &&
+      this.mission.sheetStatus !== SheetStatus.VALIDATED
   }
 
   public showVersions() : boolean {
-    return this.mission.sheetStatus === SheetStatus.VALIDATED;
-  }
-
-  public showNewVersion() : boolean {
-    return this.mission.sheetStatus === SheetStatus.VALIDATED
-      && this.todayVersionIndex === null && this.userIsConsultantManager;
+    return this.mission.versions.length > 1;
   }
 
   public getStatusText() : string {
@@ -101,6 +113,10 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     return 'Fiche '.concat(str);
   }
 
+  public missionIsValidated() : boolean {
+    return this.mission.sheetStatus === SheetStatus.VALIDATED;
+  }
+
   private _setTodayVersionIndex() {
     let i = 0;
     do {
@@ -116,25 +132,12 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       && today.getFullYear() == date.getFullYear();
   }
 
-  private _handleNewVersionError() : void {
+  private _showErrorDialog(message : string) : void {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
-      title : 'Impossible de créer une nouvelle version',
-      message : 'Une erreur s\'est produite lors de la tentative de création d\'une nouvelle version pour cette fiche mission.',
-      ok: 'OK'
-    };
-    this._dialog.open(OkDialogComponent, dialogConfig);
-  }
-
-  private _handleUpdateError() : void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      title : 'Echec de la modification',
-      message : 'Une erreur s\'est produite lors de la tentative de mise à jour',
+      title : 'Erreur',
+      message : message,
       ok: 'OK'
     };
     this._dialog.open(OkDialogComponent, dialogConfig);
