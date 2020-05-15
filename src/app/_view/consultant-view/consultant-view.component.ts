@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { ConsultantService } from 'src/app/_services/consultant.service';
 
 @Component({
   selector: 'app-consultant-view',
@@ -9,7 +8,23 @@ import { ConsultantService } from 'src/app/_services/consultant.service';
 export class ConsultantViewComponent {
   @Input() consultant : any;
 
-  
+  readonly EMAIL_KEY = 'email';
+  readonly FIRSTNAME_KEY = 'firstname';
+  readonly LASTNAME_KEY = 'lastname';
+  readonly RELEASE_DATE_KEY = 'releaseDate';
+  readonly XP_KEY = 'experience';
+
   constructor() { }
 
+  public getXpToText() : string {
+    if (!this.consultant[this.XP_KEY]) return "Non renseignée"
+    switch (this.consultant[this.XP_KEY]) {
+      case 0 :
+        return 'Débutant';
+      case 1 : 
+        return '1 an';
+      default :
+        return this.consultant[this.XP_KEY] + ' ans';
+    }
+  }
 }

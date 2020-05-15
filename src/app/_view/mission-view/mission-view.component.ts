@@ -10,7 +10,7 @@ export class MissionViewComponent {
 
   constructor() {}
 
-  public getConsultantStartXpToString() : string {
+  public getConsultantStartXpToText() : string {
     if (!this.version.consultantStartXp) return "Non renseignée"
     switch (this.version.consultantStartXp) {
       case 0 :
