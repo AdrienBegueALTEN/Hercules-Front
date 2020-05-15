@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./project-single-edit.component.scss']
 })
 export class ProjectSingleEditComponent implements OnInit {
-
+  @Input() mission;
   @Input() project;
   @Output() reload = new EventEmitter<any>();
   projectForm: FormGroup;
@@ -46,6 +46,18 @@ export class ProjectSingleEditComponent implements OnInit {
           this._snackBar.open(err.error, 'X', {duration: 2000});
         }
       );
+  }
+
+  onDelete(){
+    console.log(this.mission.id + ' '+ this.project.id);
+    this._projectService.deleteProject(this.mission.id,this.project.id).subscribe(
+      () => {
+        this.reload.emit();
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
   }
 
 }

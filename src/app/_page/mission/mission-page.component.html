@@ -20,7 +20,7 @@
           <mat-icon class="tab-icon">view_carousel</mat-icon>
           Projets
         </ng-template>
-        <div *ngIf="userIsConsultantManager; then projectsEdit else projectsView"></div>
+        <div *ngIf="showMissionEdit(); then projectsEdit else projectsView"></div>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>

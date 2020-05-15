@@ -36,6 +36,6 @@ export class ProjectsEditComponent implements OnInit {
   }
 
   sendReload(){
-    //this.reload.emit();
+    this.reload.emit();
   }
 }

@@ -15,10 +15,10 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span class="title">{{project.title || "Projet à définir"}}</span>
-          {{project.beginDate | date:'dd/MM/yyyy'}} {{project.endDate | date:' - dd/MM/yyyy'}}
+          {{project.beginDate | date:'dd/MM/yyyy - '}}{{project.endDate | date:'dd/MM/yyyy'}}
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-project-single-edit *ngIf="projects.length!=0" [project]="project" (reload)="sendReload()">
+      <app-project-single-edit *ngIf="projects.length!=0" [mission]="mission" [project]="project" (reload)="sendReload()">
       </app-project-single-edit>
     </mat-expansion-panel>
   </mat-accordion>

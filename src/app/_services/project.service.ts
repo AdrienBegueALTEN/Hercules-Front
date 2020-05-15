@@ -1,6 +1,6 @@
 import {Observable, Subject, of} from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppSettings } from '../app-settings';
 
 @Injectable({
@@ -26,6 +26,18 @@ export class ProjectService {
         value : value,
       },
       {observe: 'response'});
+  }
+
+  deleteProject(missionId, projectId){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), 
+      body: {
+        missionId: missionId,
+        projectId: projectId
+      }
+    };
+
+    return this._http.delete(AppSettings.PROJECT_API, httpOptions);
   }
 
 
