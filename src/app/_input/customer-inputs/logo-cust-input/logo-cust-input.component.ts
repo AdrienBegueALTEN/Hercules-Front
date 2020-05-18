@@ -15,6 +15,7 @@ export class LogoCustInputComponent implements OnInit {
   @Output() reload = new EventEmitter<any>();
   selectedFiles: FileList;
   currentFile: File;
+  currentFileRealName = 'Choisir un fichier en cliquant ici.';
   progress = 0;
   message = '';
 
@@ -25,6 +26,7 @@ export class LogoCustInputComponent implements OnInit {
 
   selectFile(event) {
     this.selectedFiles = event.target.files;
+    this.currentFileRealName = this.selectedFiles.item(0).name;
   }
 
   upload() {

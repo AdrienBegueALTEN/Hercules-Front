@@ -1,5 +1,9 @@
-<input type="file" (change)="selectFile($event)" />
-<button [disabled]="!selectedFiles" (click)="upload()">Upload </button>
+<!--<input type="file" (change)="selectFile($event)" />-->
+<label class="file-upload" (change)="selectFile($event)">
+    <input type="file" accept="image/*">
+    {{currentFileRealName}}
+</label>
+<button mat-button [disabled]="!selectedFiles" (click)="upload()">Charger le fichier</button>
 <p>{{message}}</p>
 
       
