@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { CustomerService } from 'src/app/_services/customer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,11 +10,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CustomerEditComponent implements OnInit {
   @Input() customer : any;
-  
+  @Output() reload = new EventEmitter<any>();
+  srcLogo;
   constructor(private _customerService: CustomerService,
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.srcLogo = 'http://localhost:8080/hercules/customers/downloadFile/'+this.customer.logo;
   }
 
   updateCustomer(customer: any){
@@ -26,6 +28,11 @@ export class CustomerEditComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  setSrc(name){
+    this.customer.logo = name;
+    this.ngOnInit();
   }
 
 
