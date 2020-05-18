@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppSettings } from './../app-settings';
 
@@ -33,5 +33,17 @@ export class CustomerService {
 
   updateCustomer(cust: any) {
     return this._httpClient.put(AppSettings.CUSTOMER_API, cust, AppSettings.HTTP_JSON_CONTENT);
+  }
+
+  upload(file: File, id: number): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    const req = new HttpRequest('POST', AppSettings.CUSTOMER_API + id + '/upload-logo', formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+    return this._httpClient.request(req);
   }
 }

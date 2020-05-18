@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { CustomerService } from 'src/app/_services/customer.service';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-logo-cust-input',
@@ -9,48 +11,42 @@ import { FormControl } from '@angular/forms';
 export class LogoCustInputComponent implements OnInit {
 
   @Input() customer: any;
-  @Output() customerChange = new EventEmitter<any>();
-  logoCtrl = new FormControl();
-  imgURL: any;
-  public imagePath;
-  public message: string;
+  selectedFiles: FileList;
+  currentFile: File;
+  progress = 0;
+  message = '';
 
-  constructor() { }
+  constructor(private _customerService: CustomerService) { }
 
   ngOnInit(): void {
   }
 
-  onFileChange(event){
-    /*let reader = new FileReader();
-    if(event.target.files && event.target.files.length) {
-      const file = event.target.files[0];
-      console.log(file);
-      reader.readAsDataURL(file);
-    
-      reader.onload = () => {
-        this.customer.logo = reader.result as ArrayBuffer;
-        this.customerChange.emit(this.customer);
-        
-      };
-    }*/
-    let files = event.target.files;
-    if(files.length === 0)
-      return;
-
-    var mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.message = "Only images are supported.";
-      return;
-    }
-
-    var reader = new FileReader();
-    this.imagePath = files;
-    reader.readAsDataURL(files[0]);
-    reader.onload = (_event) => {
-      this.imgURL = reader.result;
-      this.customer.logo = this.imgURL;
-      //this.customerChange.emit(this.customer);
-    };
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
   }
+
+  upload() {
+    this.progress = 0;
+  
+    this.currentFile = this.selectedFiles.item(0);
+    this._customerService.upload(this.currentFile, this.customer.id).subscribe(
+      event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round(100 * event.loaded / event.total);
+          console.log(this.progress);
+        } else if (event instanceof HttpResponse) {
+          this.message = event.body.message;
+        }
+      },
+      err => {
+        this.progress = 0;
+        this.message = 'Could not upload the file!';
+        this.currentFile = undefined;
+      });
+  
+    this.selectedFiles = undefined;
+  }
+
+  
 
 }

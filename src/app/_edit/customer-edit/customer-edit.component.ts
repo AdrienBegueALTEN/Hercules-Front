@@ -10,11 +10,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CustomerEditComponent implements OnInit {
   @Input() customer : any;
-  
+  srcLogo;
   constructor(private _customerService: CustomerService,
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.srcLogo = 'http://localhost:8080/hercules/customers/downloadFile/'+this.customer.logo;
   }
 
   updateCustomer(customer: any){
