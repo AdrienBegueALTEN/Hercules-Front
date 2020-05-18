@@ -9,7 +9,7 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { HttpStatus } from '../../_enums/http-status.enum';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
-import { OkDialogComponent } from '../../dialog/ok/ok-dialog.component';
+import { MessageDialogComponent } from '../../dialog/message/message-dialog.component';
 import { ConsultantAutocompleteComponent } from '../../_input/autocomplete/consultant/consultant-autocomplete.component';
 
 const CONSULTANT_STEP : number = 0;
@@ -120,26 +120,15 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
 
   private _handleNewConsultantError(error : Response) : void {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
     switch(error.status) {
       case HttpStatus.CONFLICT :
-        const email = this.consultantForm.value.email;
-        dialogConfig.data = {
-          title : 'Email indisponible',
-          message : 'L\'adresse email "' + email + '" est déjà utilisée.',
-          ok: 'Modifier l\'email'
-        };
-        const dialogRef = this._dialog.open(OkDialogComponent, dialogConfig);
-        dialogRef.afterClosed().subscribe(() => { this.stepper.selectedIndex = CONSULTANT_STEP; });  
+        dialogConfig.data = 'L\'adresse email renseignée pour le consultant n\'est pas disponible. Merci de bien vouloir en choisir une autre.';
+        const dialogRef = this._dialog.open(MessageDialogComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(() => this.stepper.selectedIndex = CONSULTANT_STEP);  
         break;
       default :
-        dialogConfig.data = {
-          title : 'Echec de la création du consultant',
-          message : 'Le consultant n\'a pas pu être créé.',
-          ok: 'OK'
-        };
-        this._dialog.open(OkDialogComponent, dialogConfig);
+        dialogConfig.data = 'Le consultant n\'a pas pu être créé.';
+        this._dialog.open(MessageDialogComponent, dialogConfig);
     }
   }
 
@@ -149,7 +138,6 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
         const customer = this.customerForm.value.name;
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
         dialogConfig.data = {
           title : 'Client existant',
           message : 'Le client "' + customer + '" existe déjà. Que souhaitez vous faire ?',
@@ -182,14 +170,8 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
       this._consultantService.deleteConsultant(consultantId).subscribe();
 
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      title : 'Echec de la création du client',
-      message : 'Le client n\'a pas pu être créé.',
-      ok: 'OK'
-    };
-    this._dialog.open(OkDialogComponent, dialogConfig);
+    dialogConfig.data = 'Le client n\'a pas pu être créé.';
+    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 
   private _handleNewMissionError(consultantId : number, newConsultant : boolean, customerId : number, newCustomer : boolean) : void {
@@ -202,13 +184,9 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      title : 'Echec de la création de la mission',
-      message : 'La mission n\'a pas pu être créée.',
-      ok: 'OK'
-    };
-    const dialogRef = this._dialog.open(OkDialogComponent, dialogConfig);
+    dialogConfig.data = 'La mission n\'a pas pu être créée.';
+    const dialogRef = this._dialog.open(MessageDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
-      () => {window.location.replace('home/')});
+      () => { window.location.replace('') });
   }
 }

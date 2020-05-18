@@ -13,5 +13,6 @@ export class AppSettings {
     public static MISSION_API : string = AppSettings.API_ENDPOINT + 'missions/';
     public static MANAGER_API : string = AppSettings.API_ENDPOINT + 'managers/';
     public static PROJECT_API : string = AppSettings.API_ENDPOINT + 'projects/';
+    public static GRDP_API : string = AppSettings.API_ENDPOINT + 'grdp/';
     public static HTTP_JSON_CONTENT = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 }
