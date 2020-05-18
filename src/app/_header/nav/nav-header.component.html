@@ -1,4 +1,4 @@
-<header>
+<header *ngIf="user">
   <div class="head">
       <nav>
           <ul>
@@ -11,9 +11,14 @@
               </div>
           </ul>
       </nav>
-      <button mat-mini-fab id="logout" class="blue-shape" title="Déconnexion" (click)="onLogout()">
-          <mat-icon>exit_to_app</mat-icon>
-      </button>
+      <div id="actions">
+        <button mat-mini-fab color="accent" title="Appliquer RGPD" (click)="onGRDP()">
+            <mat-icon>error</mat-icon>
+        </button>
+        <button mat-mini-fab class="blue-shape" title="Déconnexion" (click)="onLogout()">
+            <mat-icon>exit_to_app</mat-icon>
+        </button>
+    </div>
   </div>
   <div class="foot">
       <a title="Page d'accueil" routerLink=""><img id="home" src="assets/img/logo/alten.png" alt="Logo ALTEN"></a>
