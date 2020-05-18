@@ -1,3 +1,4 @@
+import { MissionEditComponent } from './../../_edit/mission-edit/mission-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SheetStatus } from './../../_enums/sheet-status.enum';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -8,6 +9,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 import { MatTabGroup } from '@angular/material/tabs';
 import { saveAs } from "file-saver";
+import { ProjectService } from 'src/app/_services/project.service';
 
 @Component({
   selector: 'app-mission-page',
@@ -20,7 +22,6 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   
   mission : any;
   selectedIndex : number = 0;
-  todayVersionIndex : number = null;
   userIsManager : boolean = false;
   userIsConsultantManager : boolean = false;
 
@@ -31,6 +32,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     private _cdr : ChangeDetectorRef,
     private _dialog : MatDialog,
     private _missionService : MissionService,
+    private _projectService : ProjectService,
     private _route : ActivatedRoute,
     private _snackBar: MatSnackBar
   ) {}
@@ -44,7 +46,6 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
         this.userIsManager = this._authService.userIsManager();
         this.userIsConsultantManager = this.userIsManager 
           && mission.consultant.manager.id == this._authService.getUser().id;
-        this._setTodayVersionIndex();
       },
       () => window.location.replace('not-found')
     )
@@ -59,7 +60,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       .updateMission(this.mission.id, event.key, event.value).subscribe(
         () => {
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
-          this.mission.versions[this.todayVersionIndex][event.key] = event.value;
+          this.mission.versions[0][event.key] = event.value;
         },
         () => this._showErrorDialog("Impossible de mettre à jour les données.")
       )
@@ -117,29 +118,35 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     return this.mission.sheetStatus === SheetStatus.VALIDATED;
   }
 
-  private _setTodayVersionIndex() {
-    let i = 0;
-    do {
-      if (!this._isToday(this.mission.versions[i].versionDate)) ++i
-      else this.todayVersionIndex = i;
-    } while (this.todayVersionIndex == null && i < this.mission.versions.length)
-  }
-
-  private _isToday(str : string) : boolean {
-    const today : Date = new Date();
-    const date : Date = new Date(str);
-    return today.getDate() == date.getDate()
-      && today.getFullYear() == date.getFullYear();
-  }
-
   private _showErrorDialog(message : string) : void {
     const dialogConfig = new MatDialogConfig();
-    //dialogConfig.autoFocus = true;
     dialogConfig.data = message;
     this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 
-  onReload(){
-    this.ngOnInit();
+  public createNewProject() : void {
+    this._projectService.newProject(this.mission.id).subscribe(
+      () => this.ngOnInit(),
+      () => this._showErrorDialog("Impossible de créer un nouveau projet.")
+    )
+  }
+
+  public updateProject(event : any) : void {
+    const projectId = this.mission.versions[0].projects[event.index].id;
+      this._projectService.updateProject(projectId, event.key, event.value).subscribe(
+        () => {
+          this.mission.versions[0].projects[event.index][event.key] = event.value;
+          this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+        },
+        () => this._showErrorDialog("Impossible de mettre à jour le projet.")
+      );
+  }
+
+  public deleteProject(index : number) : void {
+    const projectId = this.mission.versions[0].projects[index].id;
+    this._projectService.deleteProject(this.mission.id, projectId).subscribe(
+      () => this.mission.versions[0].projects.splice(index, 1),
+      () => this._showErrorDialog("Impossible de supprimer le projet.")
+    )
   }
 }

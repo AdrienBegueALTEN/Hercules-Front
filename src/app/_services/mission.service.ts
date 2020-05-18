@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppSettings } from '../app-settings';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpBackend, HttpHeaders } from '@angular/common/http';
 
 const TOKEN_PREFIX : string = 'Bearer ';

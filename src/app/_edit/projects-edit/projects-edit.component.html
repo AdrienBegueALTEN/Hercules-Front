@@ -1,27 +1,18 @@
-<!--<div class="contours" *ngIf="!!projects">
-    <app-project-single-edit *ngIf="projects.length!=0" [project]="projects[0]" (reload)="sendReload()"></app-project-single-edit>
-</div>
-<div class="contours" *ngIf="!projects">
-    Aucun projet pour cette version. Vous pouvez en ajouter un nouveau.
-</div>
-<app-paginator-projects [projects]="projects" [optionAdd]="true" (add)="createProject()" (index)="getIndex($event)"></app-paginator-projects>
--->
-<div class="contours" *ngIf="!projects">
-  Aucun projet pour cette version. Vous pouvez en ajouter un nouveau.
-</div>
 <div *ngIf="!!projects">
+  <div *ngIf="projects.length === 0">Aucun projet</div>
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let project of projects">
+    <mat-expansion-panel *ngFor="let project of projects; let i = index">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <span class="title">{{project.title || "Projet à définir"}}</span>
+          <span>{{project.title || "Projet à définir"}}</span>
           {{project.beginDate | date:'dd/MM/yyyy - '}}{{project.endDate | date:'dd/MM/yyyy'}}
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-project-single-edit *ngIf="projects.length!=0" [mission]="mission" [project]="project" (reload)="sendReload()">
+      <app-project-single-edit [project]="project"
+        (update)="update.emit({index: i, key: $event.key, value: $event.value})"
+        (deletion)="deletion.emit(i)">
       </app-project-single-edit>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
-<button color="primary" *ngIf="!!projects" mat-button (click)="onCreate()" [class.disabled]="projects.length==5">Ajouter un projet</button>
-<button color="primary" *ngIf="!projects" mat-button (click)="onCreate()">Ajouter un projet</button>
+<button color="primary" *ngIf="!projects || projects.length < 5" mat-button (click)="new.emit()">Ajouter un projet</button>
