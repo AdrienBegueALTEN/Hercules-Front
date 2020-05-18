@@ -5,7 +5,7 @@ import { MissionService } from '../../_services/mission.service';
 import { Component, OnInit, AfterContentChecked, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
+import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 import { MatTabGroup } from '@angular/material/tabs';
 import { saveAs } from "file-saver";
 
@@ -134,13 +134,9 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
   private _showErrorDialog(message : string) : void {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      title : 'Erreur',
-      message : message,
-      ok: 'OK'
-    };
-    this._dialog.open(OkDialogComponent, dialogConfig);
+    //dialogConfig.autoFocus = true;
+    dialogConfig.data = message;
+    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 
   onReload(){

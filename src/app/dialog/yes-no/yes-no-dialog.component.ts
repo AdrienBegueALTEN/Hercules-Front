@@ -3,8 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-yes-no-dialog',
-  templateUrl: './yes-no-dialog.component.html',
-  styleUrls: ['./yes-no-dialog.component.scss']
+  templateUrl: './yes-no-dialog.component.html'
 })
 export class YesNoDialogComponent {
   title : string;

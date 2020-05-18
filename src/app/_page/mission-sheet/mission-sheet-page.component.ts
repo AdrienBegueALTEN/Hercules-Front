@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MissionService } from 'src/app/_services/mission.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
-import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
+import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 
 @Component({
   selector: 'app-mission-sheet-page',
@@ -39,13 +39,7 @@ export class MissionSheetPageComponent implements OnInit {
   
   private _handleError() : void {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      title : 'Modification impossible',
-      message : 'Une erreur s\'est produite.',
-      ok: 'OK'
-    };
-    this._dialog.open(OkDialogComponent, dialogConfig);
+    dialogConfig.data = 'Echec de la mise à jour';
+    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 }

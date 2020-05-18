@@ -7,7 +7,7 @@ import { ConsultantViewComponent } from './_view/consultant-view/consultant-view
 import { EmailInputComponent } from './_input/email-input/email-input.component';
 import { LastnameInputComponent } from './_input/lastname-input/lastname-input.component';
 import { FirstnameInputComponent } from './_input/firstname-input/firstname-input.component';
-import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
+import { MessageDialogComponent } from './dialog/message/message-dialog.component';
 import { YesNoDialogComponent } from './dialog/yes-no/yes-no-dialog.component';
 import { NewCustomerComponent } from './_page/new-mission/new-customer/new-customer.component';
 import { NewConsultantComponent } from './_page/new-mission/new-consultant/new-consultant.component';
@@ -93,7 +93,7 @@ import { MissionsComponent } from './_page/missions/missions.component';
       NewConsultantComponent,
       NewCustomerComponent,
       NewMissionPageComponent,
-      OkDialogComponent,
+      MessageDialogComponent,
       PageNotFoundComponent,
       ConsultantsComponent,
       DeactivateComponent,
@@ -131,8 +131,7 @@ import { MissionsComponent } from './_page/missions/missions.component';
       HomeComponent,
       MissionSheetPageComponent,
       ExternalHeaderComponent,
-      MissionsComponent,
-      
+      MissionsComponent
    ],
    imports: [
       AppRoutingModule,
@@ -176,7 +175,7 @@ import { MissionsComponent } from './_page/missions/missions.component';
       AppComponent
    ],
    entryComponents: [
-      OkDialogComponent,
+      MessageDialogComponent,
       YesNoDialogComponent
    ]
 })

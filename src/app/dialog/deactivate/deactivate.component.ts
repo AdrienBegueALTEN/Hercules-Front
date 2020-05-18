@@ -4,8 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-deactivate',
-  templateUrl: './deactivate.component.html',
-  styleUrls: ['./deactivate.component.scss']
+  templateUrl: './deactivate.component.html'
 })
 export class DeactivateComponent {
   ctrl : FormControl = new FormControl(new Date().toISOString().substr(0, 10));

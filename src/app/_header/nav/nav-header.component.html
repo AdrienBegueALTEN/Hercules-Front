@@ -2,17 +2,19 @@
   <div class="head">
       <nav>
           <ul>
-              <li><a routerLink="/customers">Clients</a></li>
-              <li><a routerLink="/consultants">Consultants</a></li>
-              <li *ngIf="userIsManager" class="firstOfSection"><a routerLink="/new-mission" title="Créer une nouvelle mission">Nouvelle mission</a></li>
-              <div *ngIf="userIsAdmin">
-                  <li class="firstOfSection"><a routerLink="/recruitement-officers">CDR</a></li>
-                  <li><a routerLink="/managers">Managers</a></li>
-              </div>
+            <li><a routerLink="/customers" title="Liste des clients">Clients</a></li>
+            <li><a routerLink="/consultants" title="Liste des consultants">Consultants</a></li>
+            <div *ngIf="userIsManager">
+                <li class="firstOfSection"><a routerLink="/new-mission" title="Créer une nouvelle mission">Nouvelle mission</a></li>
+                <div *ngIf="userIsAdmin">
+                    <li class="firstOfSection"><a routerLink="/recruitement-officers" title="Liste des chargés de recrutement">CDR</a></li>
+                    <li><a routerLink="/managers" title="Liste des managers">Managers</a></li>
+                </div>
+            </div>
           </ul>
       </nav>
       <div id="actions">
-        <button mat-mini-fab color="accent" title="Appliquer RGPD" (click)="onGRDP()">
+        <button *ngIf="userIsAdmin" mat-mini-fab color="accent" title="Appliquer RGPD" (click)="onGRDP()">
             <mat-icon>error</mat-icon>
         </button>
         <button mat-mini-fab class="blue-shape" title="Déconnexion" (click)="onLogout()">
@@ -21,7 +23,7 @@
     </div>
   </div>
   <div class="foot">
-      <a title="Page d'accueil" routerLink=""><img id="home" src="assets/img/logo/alten.png" alt="Logo ALTEN"></a>
+      <a title="Liste des missions" routerLink=""><img id="home" src="assets/img/logo/alten.png" alt="Logo ALTEN"></a>
         <div class="user">
             <mat-icon>account_circle</mat-icon>
             {{user.firstname}} {{user.lastname}}
