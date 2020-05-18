@@ -1,6 +1,5 @@
 <input type="file" (change)="selectFile($event)" />
-      
-      <button [disabled]="!selectedFiles" (click)="upload()">Upload </button>
-      
-      <div>{{ message }}</div>
+<button [disabled]="!selectedFiles" (click)="upload()">Upload </button>
+<p>{{message}}</p>
+
       

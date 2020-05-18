@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { CustomerService } from 'src/app/_services/customer.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+
+import * as sha1 from 'js-sha1';
 
 @Component({
   selector: 'app-logo-cust-input',
@@ -11,6 +12,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 export class LogoCustInputComponent implements OnInit {
 
   @Input() customer: any;
+  @Output() reload = new EventEmitter<any>();
   selectedFiles: FileList;
   currentFile: File;
   progress = 0;
@@ -27,15 +29,22 @@ export class LogoCustInputComponent implements OnInit {
 
   upload() {
     this.progress = 0;
-  
-    this.currentFile = this.selectedFiles.item(0);
+    let name = sha1(this.customer.name+"logo");
+    let extension = this.selectedFiles.item(0).name.split('.').pop(); 
+    let renamedFile = new File([this.selectedFiles.item(0)],name+'.'+extension);
+    this.currentFile = renamedFile;
     this._customerService.upload(this.currentFile, this.customer.id).subscribe(
       event => {
         if (event.type === HttpEventType.UploadProgress) {
           this.progress = Math.round(100 * event.loaded / event.total);
-          console.log(this.progress);
         } else if (event instanceof HttpResponse) {
-          this.message = event.body.message;
+          if(event.status==200){
+            this.message = "Le fichier est chargé.";
+            this.reload.emit(name+'.'+extension);
+          }
+          else
+            this.message  ="Une erreur est survenu ("+event.status+").";
+          this.progress = 0;
         }
       },
       err => {
