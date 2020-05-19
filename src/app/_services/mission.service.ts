@@ -67,8 +67,13 @@ export class MissionService {
     return this._httpClient.get(AppSettings.MISSION_API + 'email-access/' + mission, {responseType: 'blob'});
   }
 
-  public newProject(mission : number): Observable<any>{
+  public newProject(mission : number): Observable<any> {
     return this._httpClient.get(AppSettings.MISSION_API + 'new-project/' + mission);
+  }
+
+  public newProjectFromToken(token : string): Observable<any> {
+    return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'new-project-from-token',
+    { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
   public updateProject(id : number, fieldName : String, value : any) : Observable<any> {
@@ -81,7 +86,22 @@ export class MissionService {
       AppSettings.HTTP_JSON_CONTENT);
   }
 
+  public updateProjectFromToken(token : string, id : number, fieldName : String, value : any) : Observable<any> {
+    return this._notInteceptedHttpClient.put(AppSettings.MISSION_API + 'projects/from-token',
+      {
+        id : id,
+        fieldName : fieldName,
+        value : value,
+      },
+      { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
+  }
+
   public deleteProject(project : number){
     return this._httpClient.delete(AppSettings.MISSION_API + 'projects/' + project);
+  }
+
+  public deleteProjectFromToken(token : string, project : number){
+    return this._notInteceptedHttpClient.delete(AppSettings.MISSION_API + 'projects/from-token/' + project,
+    { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 }
