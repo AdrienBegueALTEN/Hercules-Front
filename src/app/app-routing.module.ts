@@ -25,7 +25,7 @@ const routes: Routes = [
       { path: 'consultants', component: ConsultantsComponent },
       { path: 'consultants/:id', component: ConsultantPageComponent },
       { path: 'customers', component: CustomersComponent },
-      { path: 'customers/:id', component: CustomerPageComponent,}
+      { path: 'customers/:id', component: CustomerPageComponent,},
      ],
     component: HomeComponent
   }, 

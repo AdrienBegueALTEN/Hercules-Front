@@ -1,3 +1,5 @@
+import { CdkDetailRowDirective } from './_directive/cdk-detail-row.directive';
+
 import { MissionSheetPageComponent } from './_page/mission-sheet/mission-sheet-page.component';
 import { HomeComponent } from './home/home.component';
 import { MissionEditComponent } from './_edit/mission-edit/mission-edit.component';
@@ -14,6 +16,8 @@ import { NewConsultantComponent } from './_page/new-mission/new-consultant/new-c
 import { ConsultantAutocompleteComponent } from './_input/autocomplete/consultant/consultant-autocomplete.component';
 import { CustomerAutocompleteComponent } from './_input/autocomplete/customer/customer-autocomplete.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
+import {CdkTableModule} from '@angular/cdk/table';
+import {CdkTreeModule} from '@angular/cdk/tree';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -86,7 +90,9 @@ import { ExternalHeaderComponent } from './_header/external/external-header.comp
 import { MissionsComponent } from './_page/missions/missions.component';
 
 
+
 @NgModule({
+
    declarations: [
       AppComponent,
       ConsultantAutocompleteComponent,
@@ -135,6 +141,7 @@ import { MissionsComponent } from './_page/missions/missions.component';
       MissionSheetPageComponent,
       ExternalHeaderComponent,
       MissionsComponent,
+      CdkDetailRowDirective,
       
    ],
    imports: [
@@ -168,7 +175,10 @@ import { MissionsComponent } from './_page/missions/missions.component';
       MatRadioModule,
       MatChipsModule,
       MatSortModule,
-      MatExpansionModule
+      MatExpansionModule,
+      CdkTableModule,
+      CdkTreeModule,
+     
    ],
    providers: [
       authInterceptorProviders,
@@ -178,12 +188,16 @@ import { MissionsComponent } from './_page/missions/missions.component';
          useValue: getFrenchPaginatorIntl() 
       }
    ],
+   
+
    bootstrap: [
       AppComponent
    ],
    entryComponents: [
       OkDialogComponent,
-      YesNoDialogComponent
-   ]
+      YesNoDialogComponent,
+
+   ],
+   
 })
 export class AppModule { }

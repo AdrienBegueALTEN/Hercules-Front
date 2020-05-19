@@ -1,3 +1,5 @@
+import { FormGroup } from '@angular/forms';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Role } from 'src/app/_enums/role.enum';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,10 +15,18 @@ import { SelectionModel } from '@angular/cdk/collections';
 
 
 
+
 @Component({
   selector: 'app-missions',
   templateUrl: './missions.component.html',
-  styleUrls: ['./missions.component.scss']
+  styleUrls: ['./missions.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('void', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
+      state('*', style({ height: '*', visibility: 'visible' })),
+      transition('void <=> *', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class MissionsComponent implements OnInit {
 
@@ -27,22 +37,27 @@ export class MissionsComponent implements OnInit {
   userIsManagerInclude = false;
   checkBoxDisabled = true;
   onlyMyValidatedMissions = false;
-
-
-  selectedIndex : number = 0;
-  todayVersionIndex : number = null;
+  checked = false;
+  
   userIsConsultantManager : boolean = false;
   userId : number = null;
 
   onlyMyMissionsChecked = true;
   missions:any[];
   dataSource: MatTableDataSource<any>;
+  dataSourceProjects: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
-  columnsToDisplay = ['select','title', 'consultant', 'customer', 'city', 'manager', 'sheetStatus'];
+  
+  displayedColumns: string[] = ['select','title','consultant','customer','city','manager','numberOfProjects','sheetStatus'];
+  innerDisplayedColumns: string[] = ['select','project-name','project-description'];
 
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
+
 
   constructor(
     private _authService : AuthService,
@@ -79,12 +94,7 @@ export class MissionsComponent implements OnInit {
         console.log(err);
       }
     )
-
-
-    
-
-
-
+   
 
   }
 
@@ -100,6 +110,7 @@ export class MissionsComponent implements OnInit {
     }
     else {
       this.dataSource = new MatTableDataSource(data);
+      
     }
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -112,7 +123,7 @@ export class MissionsComponent implements OnInit {
         case 'city' : return item.lastVersion.city;
         case 'manager' : return item.consultant.manager.firstname;
         case 'sheetStatus' : return item.sheetStatus;
-        
+        case 'numberOfProjects' : return item.lastVersion.projects?.length;
         default: return item[property];
       }
       
@@ -127,6 +138,7 @@ export class MissionsComponent implements OnInit {
       const transformedFilter = filter.trim().toLowerCase();
       return dataStr.indexOf(transformedFilter) !== -1;
     };
+
 
 }
 
@@ -177,6 +189,8 @@ isAllSelected() {
   }
 }
 
+
+
 masterToggle() {
   this.isAllSelected() ?
       this.selection.clear() :
@@ -206,5 +220,7 @@ openDeleteDialog(element: any): void {
     }
   );
 }
+
+
 
 }
