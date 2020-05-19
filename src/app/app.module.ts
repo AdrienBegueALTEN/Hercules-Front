@@ -86,7 +86,11 @@ import { ProjectsEditComponent } from './_edit/projects-edit/projects-edit.compo
 import { ProjectSingleEditComponent } from './_edit/project-single-edit/project-single-edit.component';
 import { PaginatorProjectsComponent } from './_utils/paginator-projects/paginator-projects.component';
 import { ExternalHeaderComponent } from './_header/external/external-header.component';
+import { RecruitmentOfficersComponent } from './_page/recruitment-officers/recruitment-officers.component';
+import { RecruitmentOfficerPageComponent } from './_page/recruitment-officer-page/recruitment-officer-page.component';
+import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/new-recruitment-officer.component';
 import { MissionsComponent } from './_page/missions/missions.component';
+import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
 
 
 
@@ -140,7 +144,10 @@ import { MissionsComponent } from './_page/missions/missions.component';
       ExternalHeaderComponent,
       MissionsComponent,
       CdkDetailRowDirective,
-      
+      RecruitmentOfficersComponent,
+      RecruitmentOfficerPageComponent,
+      NewRecruitmentOfficerComponent,
+      OkDialogComponent
    ],
    imports: [
       AppRoutingModule,

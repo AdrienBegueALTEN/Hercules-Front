@@ -14,6 +14,10 @@ import { HomeComponent } from './home/home.component';
 import { CustomersComponent } from './_page/customers/customers.component';
 import { CustomerPageComponent } from './_page/customer-page/customer-page.component';
 import { MissionSheetPageComponent } from './_page/mission-sheet/mission-sheet-page.component';
+import { RecruitmentOfficerPageComponent } from './_page/recruitment-officer-page/recruitment-officer-page.component';
+import { RecruitmentOfficersComponent } from './_page/recruitment-officers/recruitment-officers.component';
+import { AdminGuard } from './_services/guard/admin-guard.service';
+import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/new-recruitment-officer.component';
 
 const routes: Routes = [
   { 
@@ -21,11 +25,14 @@ const routes: Routes = [
     children: [
       { path: '', component: MissionsComponent},
       { path: 'new-mission', canActivate: [ManagerGuard], component: NewMissionPageComponent },
+      { path: 'new-recruitment-officer', canActivate: [AdminGuard], component: NewRecruitmentOfficerComponent},
       { path: 'missions/:id', component: MissionPageComponent },
       { path: 'consultants', component: ConsultantsComponent },
       { path: 'consultants/:id', component: ConsultantPageComponent },
       { path: 'customers', component: CustomersComponent },
-      { path: 'customers/:id', component: CustomerPageComponent}
+      { path: 'customers/:id', component: CustomerPageComponent},
+      { path: 'recruitment-officers', component: RecruitmentOfficersComponent},
+      { path: 'recruitment-officers/:id', component: RecruitmentOfficerPageComponent}
      ],
     component: HomeComponent
   }, 
