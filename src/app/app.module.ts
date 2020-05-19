@@ -7,7 +7,7 @@ import { ConsultantViewComponent } from './_view/consultant-view/consultant-view
 import { EmailInputComponent } from './_input/email-input/email-input.component';
 import { LastnameInputComponent } from './_input/lastname-input/lastname-input.component';
 import { FirstnameInputComponent } from './_input/firstname-input/firstname-input.component';
-import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
+import { MessageDialogComponent } from './dialog/message/message-dialog.component';
 import { YesNoDialogComponent } from './dialog/yes-no/yes-no-dialog.component';
 import { NewCustomerComponent } from './_page/new-mission/new-customer/new-customer.component';
 import { NewConsultantComponent } from './_page/new-mission/new-consultant/new-consultant.component';
@@ -59,15 +59,12 @@ import { ConsultantEditComponent } from './_edit/consultant-edit/consultant-edit
 import { CustomerEditComponent } from './_edit/customer-edit/customer-edit.component';
 import { CustomerViewComponent } from './_view/customer-view/customer-view.component';
 import { ConsultantManagerComponent } from './_input/autocomplete/consultant-manager/consultant-manager.component';
-import { ConsultantDiplomaComponent } from './_form/consultant-diploma/consultant-diploma.component';
+import { ConsultantDiplomaComponent } from './_edit/consultant-edit/diploma/diploma-edit.component';
 import { ArrayMissionItemComponent } from './array-mission/array-mission-item/array-mission-item.component';
 import { ArrayProjectItemComponent } from './array-mission/array-project-item/array-project-item.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { MissionService } from './_services/mission.service';
-import { ProjectService } from './_services/project.service';
-import { getFrenchPaginatorIntl } from './_services/french-paginator-intl';
-import { ConsultantNewDiplomaComponent } from './_form/consultant-new-diploma/consultant-new-diploma.component';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { ArrayMissionComponent } from './array-mission/array-mission.component';
 import { CustomersComponent } from './_page/customers/customers.component';
@@ -86,6 +83,7 @@ import { ExternalHeaderComponent } from './_header/external/external-header.comp
 import { RecruitmentOfficersComponent } from './_page/recruitment-officers/recruitment-officers.component';
 import { RecruitmentOfficerPageComponent } from './_page/recruitment-officer-page/recruitment-officer-page.component';
 import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/new-recruitment-officer.component';
+import { MissionsComponent } from './_page/missions/missions.component';
 
 
 @NgModule({
@@ -97,7 +95,7 @@ import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/
       NewConsultantComponent,
       NewCustomerComponent,
       NewMissionPageComponent,
-      OkDialogComponent,
+      MessageDialogComponent,
       PageNotFoundComponent,
       ConsultantsComponent,
       DeactivateComponent,
@@ -116,7 +114,6 @@ import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/
       ArrayMissionComponent,
       ArrayMissionItemComponent,
       ArrayProjectItemComponent,
-      ConsultantNewDiplomaComponent,
       ConsultantPageComponent,
       CustomersComponent,
       MissionPageComponent,
@@ -139,6 +136,7 @@ import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/
       RecruitmentOfficersComponent,
       RecruitmentOfficerPageComponent,
       NewRecruitmentOfficerComponent,
+      MissionsComponent
    ],
    imports: [
       AppRoutingModule,
@@ -174,15 +172,13 @@ import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/
       MatExpansionModule
    ],
    providers: [
-      authInterceptorProviders,
-      MissionService,
-      ProjectService
+      authInterceptorProviders
    ],
    bootstrap: [
       AppComponent
    ],
    entryComponents: [
-      OkDialogComponent,
+      MessageDialogComponent,
       YesNoDialogComponent
    ]
 })

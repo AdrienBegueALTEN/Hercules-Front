@@ -5,9 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ConsultantService } from '../../_services/consultant.service';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { DeactivateComponent } from '../../dialog/deactivate/deactivate.component';
-import { Router, NavigationEnd } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
 
@@ -34,15 +31,13 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<any>;
   columnsToDisplay = ['firstname', 'lastname', 'email', 'manager', 'actions'];
 
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private consultantService: ConsultantService, 
-    private _bottomSheet: MatBottomSheet,
+  constructor(
+    private consultantService: ConsultantService, 
     private _dialog: MatDialog,
-    private _authService: AuthService,
-    private router:Router) {}
+    private _authService: AuthService) {}
 
   ngOnInit() {
     this.initialize();
@@ -74,17 +69,10 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
     )
   }
 
-  printData(data): void {
-    console.log(data);
-  }
-
   createDatasource(data) {
-    if (this.onlyMyConsultantChecked) {
-      this.dataSource = new MatTableDataSource(data.filter((cons) => cons.manager.id == this.user.id));
-    }
-    else {
+    this.dataSource = this.onlyMyConsultantChecked ?
+      this.dataSource = new MatTableDataSource(data.filter((cons) => cons.manager.id == this.user.id)) :
       this.dataSource = new MatTableDataSource(data);
-    }
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = (data, filter: string) => {

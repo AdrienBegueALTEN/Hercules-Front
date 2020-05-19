@@ -1,21 +1,37 @@
-<form [formGroup]="projectForm">
-    <mat-form-field style="width: 100%;">
-        <mat-label>Titre</mat-label>
-        <input matInput type="text" formControlName="title" (blur)="updateProject('title')" (keyup.enter)="updateProject('title')">
-    </mat-form-field><br>
-    <mat-form-field style="width: 100%;">
-        <mat-label>Description</mat-label>
-        <textarea matInput maxlength="1000" type="text" formControlName="description" (blur)="updateProject('description')"
-        (keyup.enter)="updateProject('description')"></textarea>
-    </mat-form-field><br>
-    <mat-form-field style="width: 100%;">
-        <mat-label>Début</mat-label>
-        <input matInput type="date" formControlName="beginDate" (blur)="updateProject('beginDate')"
-        (keyup.enter)="updateProject('beginDate')">
-    </mat-form-field><br>
-    <mat-form-field style="width: 100%;">
-        <mat-label>Fin</mat-label>
-        <input matInput type="date" formControlName="endDate" (blur)="updateProject('endDate')"
-        (keyup.enter)="updateProject('endDate')">
-    </mat-form-field>
+<div *ngIf="!!project">
+<form [formGroup]="grp">
+    <table class="inputable">
+        <tr>
+            <td colspan="2">
+                <mat-form-field>
+                    <mat-label>Titre</mat-label>
+                    <input matInput type="text" [formControlName]="TITLE_KEY" (change)="onChange(TITLE_KEY)">
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <mat-form-field>
+                    <mat-label>Description</mat-label>
+                    <textarea matInput maxlength="1000" type="text" [formControlName]="DESCRIPTION_KEY" (change)="onChange(DESCRIPTION_KEY)"></textarea>
+                </mat-form-field>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <mat-form-field>
+                    <mat-label>Début</mat-label>
+                    <input matInput type="date" [formControlName]="BEGIN_KEY" (blur)="onChange(BEGIN_KEY)">
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field>
+                    <mat-label>Fin</mat-label>
+                    <input matInput type="date" [formControlName]="END_KEY" (blur)="onChange(END_KEY)">
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
 </form>
+<button color="warn"  mat-button (click)="onDelete()">Supprimer ce projet</button>
+</div>

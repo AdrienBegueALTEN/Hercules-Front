@@ -1,0 +1,26 @@
+
+
+table {
+    width: 100%;
+  }
+  
+  td,th, .icon{
+    vertical-align: middle;
+  }
+  
+  .example-element-row td {
+    border-bottom-width: 0;
+  }
+
+  .mat-sort-header-button {
+    font-size: 12px;
+
+  }
+
+  .mat-row:nth-child(even){
+    background-color:#ffffff;
+    }
+
+.mat-row:nth-child(odd){
+    background-color:#f2f2f2;
+    }

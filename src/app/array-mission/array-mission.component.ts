@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MissionService} from '../_services/mission.service';
-import {ProjectService} from '../_services/project.service';
 
 @Component({
   selector: 'app-array-mission',
@@ -20,12 +19,8 @@ export class ArrayMissionComponent implements OnInit {
   orderByConsultant = 0;
   orderByCustomer = 0;
   missions: any[];
-  projects: any[];
-  
 
-  constructor(private missionService: MissionService, private projectService: ProjectService) {
-
-  }
+  constructor(private missionService: MissionService) {}
 
   ngOnInit(): void {
     this.missionService.getMissions().subscribe(
@@ -33,17 +28,19 @@ export class ArrayMissionComponent implements OnInit {
         this.missions = data;
       }
     );
-    this.projectService.getProjects().subscribe(
-      (data) => {
-        this.projects = data;
-      }
-    );
     this.dataSource = new MatTableDataSource(this.missions);
     this.dataSource.paginator = this.paginator;
   }
 
   getProjects(idM: number) {
-    return this.projects.filter(project => project.idMission === idM);
+    let i : number = 0;
+    let res : any[];
+    while (i < this.missions.length) {
+      if (this.missions[i].missionId === idM)
+        res = this.missions[i].projects;
+      else ++i;
+    }
+    return res;
   }
 
   toggleOrderTitle() {

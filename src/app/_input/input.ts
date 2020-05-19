@@ -27,9 +27,5 @@ export abstract class MyInput implements OnInit {
     this.sendCtrl.emit(this.ctrl);
   }
 
-  public onChange() : void{
-    this.valueChange.emit();
-  }
-
   public abstract getError() : string
 }

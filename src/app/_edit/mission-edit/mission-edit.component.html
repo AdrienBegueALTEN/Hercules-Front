@@ -69,7 +69,7 @@
       </mat-radio-group></td>
     </tr>
   </table>
-  <mat-form-field appearance="fill" *ngIf="version[COMMENT_KEY]">
+  <mat-form-field *ngIf="version[COMMENT_KEY]">
     <mat-label>Commentaire client/manager</mat-label>
     <textarea matInput maxlength="255"
       [formControlName]="COMMENT_KEY" (change)="onChange(COMMENT_KEY)" ></textarea>

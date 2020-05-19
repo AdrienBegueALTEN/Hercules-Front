@@ -1,0 +1,10 @@
+input[type='file']{
+    display: none;
+}
+
+.file-upload {
+    border-bottom: 1px solid grey;
+    color: grey;
+    padding: 5px;
+    cursor: pointer;
+}

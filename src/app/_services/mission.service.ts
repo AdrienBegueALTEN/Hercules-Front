@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppSettings } from '../app-settings';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpBackend, HttpHeaders } from '@angular/common/http';
 
 const TOKEN_PREFIX : string = 'Bearer ';
@@ -18,7 +18,7 @@ export class MissionService {
       this._notInteceptedHttpClient = new HttpClient(this._httpBackend);
     }
 
-  newMission(consultant : number, customer : number) : Observable<any> {
+  public newMission(consultant : number, customer : number) : Observable<any> {
     return this._httpClient.post(AppSettings.MISSION_API,
       {
         consultant : consultant,
@@ -27,24 +27,24 @@ export class MissionService {
     AppSettings.HTTP_JSON_CONTENT);
   }
 
-  addVersion(mission : number) : Observable<any> {
+  public addVersion(mission : number) : Observable<any> {
     return this._httpClient.get(AppSettings.MISSION_API + 'new-version/' + mission);
   }
 
-  getMissionDetails(mission : number) : Observable<any> {
+  public getMissionDetails(mission : number) : Observable<any> {
     return this._httpClient.get(AppSettings.MISSION_API + mission);
   }
 
-  getMissionDetailsFromToken(token : string) : Observable<any> {
+  public getMissionDetailsFromToken(token : string) : Observable<any> {
     return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'from-token',
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
-  getMissions(manager? : number) : Observable<any> {
+  public getMissions(manager? : number) : Observable<any> {
     return this._httpClient.get(AppSettings.MISSION_API + (manager ? '?manager=' + manager : ''));
   }
 
-  updateMission(id : number, fieldName : String, value : any) : Observable<any> {
+  public updateMission(id : number, fieldName : String, value : any) : Observable<any> {
     return this._httpClient.put(AppSettings.MISSION_API,
       {
         id : id,
@@ -54,12 +54,54 @@ export class MissionService {
       AppSettings.HTTP_JSON_CONTENT);
   }
 
-  updateMissionFromToken(token : string, fieldName : String, value : any) : Observable<any> {
+  public updateMissionFromToken(token : string, fieldName : String, value : any) : Observable<any> {
     return this._notInteceptedHttpClient.put(AppSettings.MISSION_API + 'from-token',
       {
         fieldName : fieldName,
         value : value,
       },
       { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
+  }
+
+  public downloadEmailAccess(mission : number) : Observable<any> {
+    return this._httpClient.get(AppSettings.MISSION_API + 'email-access/' + mission, {responseType: 'blob'});
+  }
+
+  public newProject(mission : number): Observable<any> {
+    return this._httpClient.get(AppSettings.MISSION_API + 'new-project/' + mission);
+  }
+
+  public newProjectFromToken(token : string): Observable<any> {
+    return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'new-project-from-token',
+    { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
+  }
+
+  public updateProject(id : number, fieldName : String, value : any) : Observable<any> {
+    return this._httpClient.put(AppSettings.MISSION_API + 'projects',
+      {
+        id : id,
+        fieldName : fieldName,
+        value : value,
+      },
+      AppSettings.HTTP_JSON_CONTENT);
+  }
+
+  public updateProjectFromToken(token : string, id : number, fieldName : String, value : any) : Observable<any> {
+    return this._notInteceptedHttpClient.put(AppSettings.MISSION_API + 'projects/from-token',
+      {
+        id : id,
+        fieldName : fieldName,
+        value : value,
+      },
+      { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
+  }
+
+  public deleteProject(project : number){
+    return this._httpClient.delete(AppSettings.MISSION_API + 'projects/' + project);
+  }
+
+  public deleteProjectFromToken(token : string, project : number){
+    return this._notInteceptedHttpClient.delete(AppSettings.MISSION_API + 'projects/from-token/' + project,
+    { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 }

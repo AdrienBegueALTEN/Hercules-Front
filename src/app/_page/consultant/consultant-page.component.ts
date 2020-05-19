@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/_services/auth.service';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Role } from 'src/app/_enums/role.enum';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DeactivateComponent } from 'src/app/dialog/deactivate/deactivate.component';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 
@@ -23,8 +22,7 @@ export class ConsultantPageComponent implements OnInit {
     private _dialog: MatDialog,
   ) {
   }
-
-  initialize(){
+  ngOnInit() {
     const id : number = this._route.snapshot.params['id'];
     this._consultantService.getConsultant(id).subscribe(
       consultant => {
@@ -36,10 +34,6 @@ export class ConsultantPageComponent implements OnInit {
       },
       () => window.location.replace('not-found')
     )
-  }
-
-  ngOnInit() {
-    this.initialize();
   }
 
   onSetReleaseDate() : void {
@@ -58,9 +52,5 @@ export class ConsultantPageComponent implements OnInit {
           )
         }
       }); 
-  }
-
-  onReload(){
-    this.ngOnInit();
   }
 }
