@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import * as sha1 from 'js-sha1';
 import { ProjectService } from 'src/app/_services/project.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-project-single-edit',
@@ -36,10 +36,10 @@ export class ProjectSingleEditComponent implements OnInit {
       description: [this.project[this.DESCRIPTION_KEY]],
       beginDate: [this.project[this.BEGIN_KEY] ? 
         new Date(this.project[this.BEGIN_KEY]).toISOString().substr(0, 10) :
-        null],
+        null, Validators.required],
       endDate: [this.project[this.END_KEY] ? 
         new Date(this.project[this.END_KEY]).toISOString().substr(0, 10) :
-        null],
+        null, Validators.required],
     });
   }
 

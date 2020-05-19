@@ -22,13 +22,13 @@
             <td>
                 <mat-form-field>
                     <mat-label>Début</mat-label>
-                    <input matInput type="date" [formControlName]="BEGIN_KEY" (change)="onChange(BEGIN_KEY)">
+                    <input matInput type="date" [formControlName]="BEGIN_KEY" (blur)="onChange(BEGIN_KEY)">
                 </mat-form-field>
             </td>
             <td>
                 <mat-form-field>
                     <mat-label>Fin</mat-label>
-                    <input matInput type="date" [formControlName]="END_KEY" (change)="onChange(END_KEY)">
+                    <input matInput type="date" [formControlName]="END_KEY" (blur)="onChange(END_KEY)">
                 </mat-form-field>
             </td>
         </tr>

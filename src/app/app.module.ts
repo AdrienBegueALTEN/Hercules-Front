@@ -1,3 +1,5 @@
+import { CdkDetailRowDirective } from './_directive/cdk-detail-row.directive';
+
 import { MissionSheetPageComponent } from './_page/mission-sheet/mission-sheet-page.component';
 import { HomeComponent } from './home/home.component';
 import { MissionEditComponent } from './_edit/mission-edit/mission-edit.component';
@@ -14,6 +16,8 @@ import { NewConsultantComponent } from './_page/new-mission/new-consultant/new-c
 import { ConsultantAutocompleteComponent } from './_input/autocomplete/consultant/consultant-autocomplete.component';
 import { CustomerAutocompleteComponent } from './_input/autocomplete/customer/customer-autocomplete.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
+import {CdkTableModule} from '@angular/cdk/table';
+import {CdkTreeModule} from '@angular/cdk/tree';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -64,8 +68,9 @@ import { ArrayMissionItemComponent } from './array-mission/array-mission-item/ar
 import { ArrayProjectItemComponent } from './array-mission/array-project-item/array-project-item.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+
 import { MissionService } from './_services/mission.service';
-import { ProjectService } from './_services/project.service';
+import { getFrenchPaginatorIntl } from './_services/french-paginator-intl';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { ArrayMissionComponent } from './array-mission/array-mission.component';
 import { CustomersComponent } from './_page/customers/customers.component';
@@ -81,10 +86,16 @@ import { ProjectsEditComponent } from './_edit/projects-edit/projects-edit.compo
 import { ProjectSingleEditComponent } from './_edit/project-single-edit/project-single-edit.component';
 import { PaginatorProjectsComponent } from './_utils/paginator-projects/paginator-projects.component';
 import { ExternalHeaderComponent } from './_header/external/external-header.component';
+import { RecruitmentOfficersComponent } from './_page/recruitment-officers/recruitment-officers.component';
+import { RecruitmentOfficerPageComponent } from './_page/recruitment-officer-page/recruitment-officer-page.component';
+import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/new-recruitment-officer.component';
 import { MissionsComponent } from './_page/missions/missions.component';
+import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
+
 
 
 @NgModule({
+
    declarations: [
       AppComponent,
       ConsultantAutocompleteComponent,
@@ -131,7 +142,12 @@ import { MissionsComponent } from './_page/missions/missions.component';
       HomeComponent,
       MissionSheetPageComponent,
       ExternalHeaderComponent,
-      MissionsComponent
+      MissionsComponent,
+      CdkDetailRowDirective,
+      RecruitmentOfficersComponent,
+      RecruitmentOfficerPageComponent,
+      NewRecruitmentOfficerComponent,
+      OkDialogComponent
    ],
    imports: [
       AppRoutingModule,
@@ -164,13 +180,20 @@ import { MissionsComponent } from './_page/missions/missions.component';
       MatRadioModule,
       MatChipsModule,
       MatSortModule,
-      MatExpansionModule
+      MatExpansionModule,
+      CdkTableModule,
+      CdkTreeModule,
+     
    ],
    providers: [
       authInterceptorProviders,
       MissionService,
-      ProjectService
+      {  provide: MatPaginatorIntl, 
+         useValue: getFrenchPaginatorIntl() 
+      }
    ],
+   
+
    bootstrap: [
       AppComponent
    ],

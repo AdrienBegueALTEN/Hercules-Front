@@ -2,15 +2,15 @@
   <div class="head">
       <nav>
           <ul>
-            <li><a routerLink="/customers" title="Liste des clients">Clients</a></li>
-            <li><a routerLink="/consultants" title="Liste des consultants">Consultants</a></li>
-            <div *ngIf="userIsManager">
+              <li><a routerLink="/customers" title="Liste des clients">Clients</a></li>
+              <li><a routerLink="/consultants" title="Liste des consultants">Consultants</a></li>
+              <div *ngIf="userIsAdmin">
                 <li class="firstOfSection"><a routerLink="/new-mission" title="Créer une nouvelle mission">Nouvelle mission</a></li>
                 <div *ngIf="userIsAdmin">
-                    <li class="firstOfSection"><a routerLink="/recruitement-officers" title="Liste des chargés de recrutement">CDR</a></li>
-                    <li><a routerLink="/managers" title="Liste des managers">Managers</a></li>
+                  <li class="firstOfSection"><a routerLink="/recruitment-officers" title="Liste des chargés de recrutement">CDR</a></li>
+                  <li><a routerLink="/managers" title="Liste des managers">Managers</a></li>
                 </div>
-            </div>
+              </div>
           </ul>
       </nav>
       <div id="actions">

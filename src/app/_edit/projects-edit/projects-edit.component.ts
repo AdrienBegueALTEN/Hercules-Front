@@ -1,6 +1,4 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { ProjectSingleEditComponent } from '../project-single-edit/project-single-edit.component';
-import { ProjectService } from 'src/app/_services/project.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-projects-edit',
