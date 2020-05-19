@@ -28,8 +28,12 @@ export class ProjectSingleEditComponent implements OnInit {
     this.grp = new FormBuilder().group({
       title: [this.project[this.TITLE_KEY]],
       description: [this.project[this.DESCRIPTION_KEY]],
-      beginDate: [this.project[this.BEGIN_KEY]],
-      endDate: [this.project[this.END_KEY]]
+      beginDate: [this.project[this.BEGIN_KEY] ? 
+        new Date(this.project[this.BEGIN_KEY]).toISOString().substr(0, 10) :
+        null],
+      endDate: [this.project[this.END_KEY] ? 
+        new Date(this.project[this.END_KEY]).toISOString().substr(0, 10) :
+        null],
     });
   }
 

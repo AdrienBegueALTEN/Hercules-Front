@@ -4,7 +4,7 @@
     <mat-expansion-panel *ngFor="let project of projects; let i = index">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <span>{{project.title || "Projet à définir"}}</span>
+          {{project.title || "Projet à définir"}}
           {{project.beginDate | date:'dd/MM/yyyy - '}}{{project.endDate | date:'dd/MM/yyyy'}}
         </mat-panel-title>
       </mat-expansion-panel-header>
