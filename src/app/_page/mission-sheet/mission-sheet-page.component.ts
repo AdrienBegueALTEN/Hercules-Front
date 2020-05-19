@@ -22,8 +22,8 @@ export class MissionSheetPageComponent implements OnInit {
   ngOnInit() {
     this._token = this._route.snapshot.params['token'];
     this._missionService.getMissionDetailsFromToken(this._token).subscribe(
-      mission => { this.mission = mission },
-      err => console.log(err)
+      mission => this.mission = mission ,
+      () => window.location.replace('not-found')
     )
   }
 
@@ -33,13 +33,36 @@ export class MissionSheetPageComponent implements OnInit {
       () => {
         this.mission[event.key] = event.value;
       },
-      () => { this._handleError(); }
+      () => this._showErrorDialog("Impossible de mettre à jour les données.")
+    )
+  }
+
+  public createNewProject() : void {
+    this._missionService.newProjectFromToken(this._token).subscribe(
+      () => this.ngOnInit(),
+      () => this._showErrorDialog("Impossible de créer un nouveau projet.")
+    )
+  }
+
+  public updateProject(event : any) : void { 
+    const projectId = this.mission.lastVersion.projects[event.index].id;
+      this._missionService.updateProjectFromToken(this._token, projectId, event.key, event.value).subscribe(
+        () => this.mission.lastVersion.projects[event.index][event.key] = event.value,
+        err => this._showErrorDialog("Impossible de mettre à jour le projet.")
+      );
+  }
+
+  public deleteProject(index : number) : void {
+    const projectId = this.mission.lastVersion.projects[index].id;
+    this._missionService.deleteProjectFromToken(this._token, projectId).subscribe(
+      () => this.mission.lastVersion.projects.splice(index, 1),
+      () => this._showErrorDialog("Impossible de supprimer le projet.")
     )
   }
   
-  private _handleError() : void {
+  private _showErrorDialog(message : string) : void {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = 'Echec de la mise à jour';
+    dialogConfig.data = message;
     this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 }

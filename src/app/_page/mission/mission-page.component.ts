@@ -58,6 +58,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
         () => {
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
           this.mission.versions[0][event.key] = event.value;
+          this.mission.sheetStatus = SheetStatus.ON_GOING;
         },
         () => this._showErrorDialog("Impossible de mettre à jour les données.")
       )
@@ -133,6 +134,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       this._missionService.updateProject(projectId, event.key, event.value).subscribe(
         () => {
           this.mission.versions[0].projects[event.index][event.key] = event.value;
+          this.mission.sheetStatus = SheetStatus.ON_GOING;
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
         },
         () => this._showErrorDialog("Impossible de mettre à jour le projet.")
@@ -142,7 +144,10 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   public deleteProject(index : number) : void {
     const projectId = this.mission.versions[0].projects[index].id;
     this._missionService.deleteProject(projectId).subscribe(
-      () => this.mission.versions[0].projects.splice(index, 1),
+      () => {
+        this.mission.versions[0].projects.splice(index, 1);
+        this.mission.sheetStatus = SheetStatus.ON_GOING;
+      },
       () => this._showErrorDialog("Impossible de supprimer le projet.")
     )
   }
