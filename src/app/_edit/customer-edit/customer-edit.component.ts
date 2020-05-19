@@ -16,7 +16,7 @@ export class CustomerEditComponent implements OnInit {
     private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.srcLogo = 'http://localhost:8080/hercules/customers/downloadFile/'+this.customer.logo;
+    this.srcLogo = 'http://localhost:8080/hercules/customers/logo/'+this.customer.logo;
   }
 
   updateCustomer(customer: any){
