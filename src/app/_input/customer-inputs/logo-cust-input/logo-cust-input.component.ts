@@ -30,7 +30,7 @@ export class LogoCustInputComponent implements OnInit {
 
   upload() {
     this.progress = 0;
-    let name = sha1(this.customer.name+"logo");
+    let name = sha1(this.customer.name+this.customer.id+"logo");
     let extension = this.selectedFiles.item(0).name.split('.').pop(); 
     let renamedFile = new File([this.selectedFiles.item(0)],name+'.'+extension);
     this.currentFile = renamedFile;
