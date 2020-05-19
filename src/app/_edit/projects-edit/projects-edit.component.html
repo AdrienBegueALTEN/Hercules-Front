@@ -1,19 +1,21 @@
-<div *ngIf="!!projects" class="contours">
-  <div *ngIf="projects.length === 0">Aucun projet</div>
-  <mat-accordion>
-    <mat-expansion-panel *ngFor="let project of projects; let i = index">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <span>{{project.title || "Projet à définir"}}</span>
-          {{project.beginDate | date:'dd/MM/yyyy - '}}{{project.endDate | date:'dd/MM/yyyy'}}
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <app-project-single-edit [project]="project"
-        (update)="update.emit({index: i, key: $event.key, value: $event.value})"
-        (deletion)="deletion.emit(i)">
-      </app-project-single-edit>
-    </mat-expansion-panel>
-  </mat-accordion>
+<div class="contours">
+  <div *ngIf="!!projects">
+    <div *ngIf="projects.length === 0">Aucun projet</div>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let project of projects; let i = index">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span>{{project.title || "Projet à définir"}}</span>
+            {{project.beginDate | date:'dd/MM/yyyy - '}}{{project.endDate | date:'dd/MM/yyyy'}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-project-single-edit [project]="project"
+          (update)="update.emit({index: i, key: $event.key, value: $event.value})"
+          (deletion)="deletion.emit(i)">
+        </app-project-single-edit>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
   <button color="primary" *ngIf="!projects || projects.length < 5" mat-button (click)="new.emit()">Ajouter un projet</button>
 </div>
 
