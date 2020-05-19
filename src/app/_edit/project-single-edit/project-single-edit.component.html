@@ -8,6 +8,7 @@
                     <input matInput type="text" [formControlName]="TITLE_KEY" (change)="onChange(TITLE_KEY)">
                 </mat-form-field>
             </td>
+            <td rowspan="3"><img style="margin-left: auto; margin-right: auto;" height="400px" [src]="srcPic" alt="Image"></td>
         </tr>
         <tr>
             <td colspan="2">
@@ -33,5 +34,13 @@
         </tr>
     </table>
 </form>
+<label class="file-upload" (change)="selectFile($event)">
+    <input type="file" accept="image/*" style="display: none;">
+    {{currentFileRealName}}
+</label>
+<button mat-button [disabled]="!selectedFiles" (click)="upload()">Charger le fichier</button>
+<br>
+
+<br>
 <button color="warn"  mat-button (click)="onDelete()">Supprimer ce projet</button>
 </div>

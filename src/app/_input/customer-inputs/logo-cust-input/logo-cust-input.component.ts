@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CustomerService } from 'src/app/_services/customer.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-
 import * as sha1 from 'js-sha1';
 
 @Component({

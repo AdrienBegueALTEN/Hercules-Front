@@ -1,6 +1,6 @@
 import {Observable, of} from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpBackend, HttpEvent, HttpRequest } from '@angular/common/http';
 import { AppSettings } from '../app-settings';
 
 @Injectable({
@@ -43,6 +43,18 @@ export class ProjectService {
     };
 
     return this._httpClient.delete(AppSettings.PROJECT_API, httpOptions);
+  }
+
+  upload(file: File, id: number): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    const req = new HttpRequest('POST', AppSettings.PROJECT_API + id + '/upload-picture', formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+    return this._httpClient.request(req);
   }
 
 
