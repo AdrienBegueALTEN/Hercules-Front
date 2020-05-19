@@ -84,6 +84,7 @@ import { RecruitmentOfficersComponent } from './_page/recruitment-officers/recru
 import { RecruitmentOfficerPageComponent } from './_page/recruitment-officer-page/recruitment-officer-page.component';
 import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/new-recruitment-officer.component';
 import { MissionsComponent } from './_page/missions/missions.component';
+import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
 
 
 @NgModule({
@@ -136,7 +137,8 @@ import { MissionsComponent } from './_page/missions/missions.component';
       RecruitmentOfficersComponent,
       RecruitmentOfficerPageComponent,
       NewRecruitmentOfficerComponent,
-      MissionsComponent
+      MissionsComponent,
+      OkDialogComponent
    ],
    imports: [
       AppRoutingModule,
