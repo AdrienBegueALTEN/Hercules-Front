@@ -65,7 +65,6 @@ import { ArrayProjectItemComponent } from './array-mission/array-project-item/ar
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { MissionService } from './_services/mission.service';
-import { ProjectService } from './_services/project.service';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { ArrayMissionComponent } from './array-mission/array-mission.component';
 import { CustomersComponent } from './_page/customers/customers.component';
@@ -167,9 +166,7 @@ import { MissionsComponent } from './_page/missions/missions.component';
       MatExpansionModule
    ],
    providers: [
-      authInterceptorProviders,
-      MissionService,
-      ProjectService
+      authInterceptorProviders
    ],
    bootstrap: [
       AppComponent

@@ -66,4 +66,22 @@ export class MissionService {
   public downloadEmailAccess(mission : number) : Observable<any> {
     return this._httpClient.get(AppSettings.MISSION_API + 'email-access/' + mission, {responseType: 'blob'});
   }
+
+  public newProject(mission : number): Observable<any>{
+    return this._httpClient.get(AppSettings.MISSION_API + 'new-project/' + mission);
+  }
+
+  public updateProject(id : number, fieldName : String, value : any) : Observable<any> {
+    return this._httpClient.put(AppSettings.MISSION_API + 'projects',
+      {
+        id : id,
+        fieldName : fieldName,
+        value : value,
+      },
+      AppSettings.HTTP_JSON_CONTENT);
+  }
+
+  public deleteProject(project : number){
+    return this._httpClient.delete(AppSettings.MISSION_API + 'projects/' + project);
+  }
 }

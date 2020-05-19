@@ -1,4 +1,3 @@
-import { MissionEditComponent } from './../../_edit/mission-edit/mission-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SheetStatus } from './../../_enums/sheet-status.enum';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -9,7 +8,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 import { MatTabGroup } from '@angular/material/tabs';
 import { saveAs } from "file-saver";
-import { ProjectService } from 'src/app/_services/project.service';
 
 @Component({
   selector: 'app-mission-page',
@@ -32,7 +30,6 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     private _cdr : ChangeDetectorRef,
     private _dialog : MatDialog,
     private _missionService : MissionService,
-    private _projectService : ProjectService,
     private _route : ActivatedRoute,
     private _snackBar: MatSnackBar
   ) {}
@@ -125,7 +122,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   }
 
   public createNewProject() : void {
-    this._projectService.newProject(this.mission.id).subscribe(
+    this._missionService.newProject(this.mission.id).subscribe(
       () => this.ngOnInit(),
       () => this._showErrorDialog("Impossible de créer un nouveau projet.")
     )
@@ -133,7 +130,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
   public updateProject(event : any) : void {
     const projectId = this.mission.versions[0].projects[event.index].id;
-      this._projectService.updateProject(projectId, event.key, event.value).subscribe(
+      this._missionService.updateProject(projectId, event.key, event.value).subscribe(
         () => {
           this.mission.versions[0].projects[event.index][event.key] = event.value;
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
@@ -144,7 +141,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
   public deleteProject(index : number) : void {
     const projectId = this.mission.versions[0].projects[index].id;
-    this._projectService.deleteProject(this.mission.id, projectId).subscribe(
+    this._missionService.deleteProject(projectId).subscribe(
       () => this.mission.versions[0].projects.splice(index, 1),
       () => this._showErrorDialog("Impossible de supprimer le projet.")
     )
