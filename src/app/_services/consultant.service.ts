@@ -42,4 +42,35 @@ export class ConsultantService {
       },
       {observe: 'response'});
   }
+
+  addDiploma(consultant : number, establishment : string, entitled : string, level : string, year : number) : Observable<any> {
+    return this._httpClient.put(AppSettings.CONSULTANT_API + "add-diploma",
+      {
+        consultant: consultant,
+        establishment: establishment,
+        entitled: entitled,
+        level: level,
+        year: year
+      },
+      AppSettings.HTTP_JSON_CONTENT);
+    }
+  
+  updateDiploma(diploma : number, fieldName : string, value : any) : Observable<any> {
+    return this._httpClient.put(AppSettings.CONSULTANT_API + "update-diploma",
+      {
+        id: diploma,
+        fieldName: fieldName,
+        value: value
+      },
+      AppSettings.HTTP_JSON_CONTENT);
+  }
+
+  removeDiploma(consultant : number, diploma : number): Observable<any> {
+    return this._httpClient.put(AppSettings.CONSULTANT_API + "remove-diploma",
+    {
+      consultant: consultant,
+      diploma: diploma
+    }
+    , AppSettings.HTTP_JSON_CONTENT);
+  }
 }

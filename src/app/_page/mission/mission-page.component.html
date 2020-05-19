@@ -20,7 +20,7 @@
           <mat-icon class="tab-icon">view_carousel</mat-icon>
           Projets
         </ng-template>
-        <div *ngIf="userIsConsultantManager; then projectsEdit else projectsView"></div>
+        <div *ngIf="showMissionEdit(); then projectsEdit else projectsView"></div>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
@@ -43,19 +43,21 @@
   </mat-card-content>
   <mat-card-actions [ngSwitch]="tabGrp.selectedIndex">
     <div *ngSwitchDefault>
-      <button *ngIf="showNewVersion()" mat-button color="primary" (click)="onNewVersion()">
-        Nouvelle version
-      </button>
+      <div *ngIf="userIsConsultantManager">
+        <div *ngIf="missionIsValidated(); then newVersion else downloadEmail"></div>
+      </div>
     </div>
     <div *ngSwitchCase="CONSULTANT_TAB_INDEX">
       <a [href]="'/consultants/' + mission.consultant.id" mat-button color="accent">
-        Page personnelle de {{mission.consultant.firstname}} {{mission.consultant.lastname}}
+        Se rendre sur la page personnelle de {{mission.consultant.firstname}} {{mission.consultant.lastname}}
       </a>
-      <button *ngIf="userIsConsultantManager" mat-button color="warn">Indiquer la sortie des effectifs</button>
+      <button *ngIf="userIsConsultantManager && !mission.consultant.releaseDate" mat-button color="warn">
+        Indiquer la sortie des effectifs de {{mission.consultant.firstname}} {{mission.consultant.lastname}}
+      </button>
     </div>
     <div *ngSwitchCase="CUSTOMER_TAB_INDEX">
       <a  [href]="'/customers/' + mission.customer.id" mat-button color="accent">
-        Page de {{mission.customer.name}}
+        Se rendre sur la page dédiée à {{mission.customer.name}}
       </a>
   </div>
   </mat-card-actions>
@@ -77,7 +79,7 @@
 <ng-template #consultantEdit>
   <app-consultant-edit 
     [consultant]="mission.consultant"
-    (reload)="onReload()">
+    (reload)="ngOnInit()">
   </app-consultant-edit>
 </ng-template>
 
@@ -96,9 +98,26 @@
 </ng-template>
 
 <ng-template #projectsEdit>
-  <app-projects-edit [projects]="mission.versions[selectedIndex].projects"></app-projects-edit>
+  <app-projects-edit [projects]="mission.versions[selectedIndex].projects"
+  (new)="createNewProject()"
+  (update)="updateProject($event)"
+  (deletion)="deleteProject($event)"></app-projects-edit>
 </ng-template>
 
 <ng-template #projectsView>
   <app-projects-view [projects]="mission.versions[selectedIndex].projects"></app-projects-view>
+</ng-template>
+
+<ng-template #newVersion>
+  <button mat-button color="primary" (click)="onNewVersion()">
+    Nouvelle version
+  </button>
+</ng-template>
+
+<ng-template #downloadEmail>
+  <button *ngIf="!mission.consultant.releaseDate"
+    mat-button color="primary" (click)="onDownloadEmail()">
+    Télécharger un email contenant un lien d'accès pour 
+    {{mission.consultant.firstname}} {{mission.consultant.lastname}}
+  </button>
 </ng-template>

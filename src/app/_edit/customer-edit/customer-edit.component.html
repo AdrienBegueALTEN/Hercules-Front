@@ -1,14 +1,26 @@
 <div class="contours">
-    <app-name-cust-input
-        (customerChange)="updateCustomer($event)" 
-        [customer]="customer"></app-name-cust-input><br>
-    <app-activity-sector-cust-input
-        (customerChange)="updateCustomer($event)" 
-        [customer]="customer"></app-activity-sector-cust-input><br>
-    <app-description-cust-input
-        (customerChange)="updateCustomer($event)" 
-        [customer]="customer"></app-description-cust-input><br>
-    <app-logo-cust-input
-        (customerChange)="updateCustomer($event)" 
-        [customer]="customer"></app-logo-cust-input>
+    
+    <table>
+        <tr>
+            <td>
+                <app-name-cust-input
+                    (customerChange)="updateCustomer($event)" 
+                    [customer]="customer"></app-name-cust-input>
+                <app-activity-sector-cust-input
+                    (customerChange)="updateCustomer($event)" 
+                    [customer]="customer"></app-activity-sector-cust-input>
+            </td>
+            <td class="img"><img width="100px" [src]="srcLogo" alt="Logo"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><app-description-cust-input
+                (customerChange)="updateCustomer($event)" 
+                [customer]="customer"></app-description-cust-input></td>
+        </tr>
+        <tr>
+            <td colspan="2"><app-logo-cust-input
+                (reload)="setSrc($event)" 
+                [customer]="customer"></app-logo-cust-input></td>
+        </tr>
+    </table>
 </div>

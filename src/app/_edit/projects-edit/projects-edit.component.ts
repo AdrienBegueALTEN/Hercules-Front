@@ -1,39 +1,13 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { ProjectSingleEditComponent } from '../project-single-edit/project-single-edit.component';
-import { ProjectService } from 'src/app/_services/project.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-projects-edit',
-  templateUrl: './projects-edit.component.html',
-  styleUrls: ['./projects-edit.component.scss']
+  templateUrl: './projects-edit.component.html'
 })
-export class ProjectsEditComponent implements OnInit {
-  @ViewChild(ProjectSingleEditComponent, { static: false }) private projectSingleEdit: ProjectSingleEditComponent;
+export class ProjectsEditComponent {
   @Input() projects;
 
-  constructor(private _projectService: ProjectService) { 
-  }
-
-  ngOnInit(): void {
-  }
-
-  getIndex(index:number){
-    this.projectSingleEdit.setProject(this.projects[index]);
-  }
-
-  createProject(){
-    this._projectService.newProject().subscribe(
-      (proj) => {
-        if(!this.projects)
-          this.projects = [];
-        this.projects.push(proj);
-        console.log(this.projects);
-        this.ngOnInit();
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
-  }
-
+  @Output() new : EventEmitter<void> = new EventEmitter<void>();
+  @Output() update : EventEmitter<any> = new EventEmitter<any>();
+  @Output() deletion : EventEmitter<number> = new EventEmitter<number>();
 }

@@ -5,8 +5,9 @@ import { MissionService } from '../../_services/mission.service';
 import { Component, OnInit, AfterContentChecked, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
+import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 import { MatTabGroup } from '@angular/material/tabs';
+import { saveAs } from "file-saver";
 
 @Component({
   selector: 'app-mission-page',
@@ -19,7 +20,6 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   
   mission : any;
   selectedIndex : number = 0;
-  todayVersionIndex : number = null;
   userIsManager : boolean = false;
   userIsConsultantManager : boolean = false;
 
@@ -43,7 +43,6 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
         this.userIsManager = this._authService.userIsManager();
         this.userIsConsultantManager = this.userIsManager 
           && mission.consultant.manager.id == this._authService.getUser().id;
-        this._setTodayVersionIndex();
       },
       () => window.location.replace('not-found')
     )
@@ -58,32 +57,43 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       .updateMission(this.mission.id, event.key, event.value).subscribe(
         () => {
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
-          this.mission.versions[this.todayVersionIndex][event.key] = event.value;
+          this.mission.versions[0][event.key] = event.value;
         },
-        () => { this._handleUpdateError(); }
+        () => this._showErrorDialog("Impossible de mettre à jour les données.")
       )
   }
 
   public onNewVersion() : void {
     this._missionService.addVersion(this.mission.id).subscribe(
       () => { this.ngOnInit(); },
-      () => { this._handleNewVersionError(); }
+      () => this._showErrorDialog("Impossible de créer une nouvelle version.")
+    );
+  }
+
+  public onDownloadEmail() : void {
+    this._missionService.downloadEmailAccess(this.mission.id).subscribe(
+      blob => {
+        const fileName = ''.concat(
+          this.mission.consultant.firstname,
+          '_',
+          this.mission.consultant.lastname,
+          '_',
+          this.mission.customer.name,
+          ".eml").toLowerCase();
+        saveAs(blob, fileName);
+      },
+      () => this._showErrorDialog("Impossible de télécharger le fichier.")
     );
   }
 
   public showMissionEdit() : boolean {
     return this.userIsConsultantManager && 
-      (this.selectedIndex === this.todayVersionIndex ||
-        this.mission.sheetStatus !== SheetStatus.VALIDATED)
+      this.selectedIndex === 0 &&
+      this.mission.sheetStatus !== SheetStatus.VALIDATED
   }
 
   public showVersions() : boolean {
-    return this.mission.sheetStatus === SheetStatus.VALIDATED;
-  }
-
-  public showNewVersion() : boolean {
-    return this.mission.sheetStatus === SheetStatus.VALIDATED
-      && this.todayVersionIndex === null && this.userIsConsultantManager;
+    return this.mission.versions.length > 1;
   }
 
   public getStatusText() : string {
@@ -101,46 +111,39 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     return 'Fiche '.concat(str);
   }
 
-  private _setTodayVersionIndex() {
-    let i = 0;
-    do {
-      if (!this._isToday(this.mission.versions[i].versionDate)) ++i
-      else this.todayVersionIndex = i;
-    } while (this.todayVersionIndex == null && i < this.mission.versions.length)
+  public missionIsValidated() : boolean {
+    return this.mission.sheetStatus === SheetStatus.VALIDATED;
   }
 
-  private _isToday(str : string) : boolean {
-    const today : Date = new Date();
-    const date : Date = new Date(str);
-    return today.getDate() == date.getDate()
-      && today.getFullYear() == date.getFullYear();
-  }
-
-  private _handleNewVersionError() : void {
+  private _showErrorDialog(message : string) : void {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      title : 'Impossible de créer une nouvelle version',
-      message : 'Une erreur s\'est produite lors de la tentative de création d\'une nouvelle version pour cette fiche mission.',
-      ok: 'OK'
-    };
-    this._dialog.open(OkDialogComponent, dialogConfig);
+    dialogConfig.data = message;
+    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 
-  private _handleUpdateError() : void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      title : 'Echec de la modification',
-      message : 'Une erreur s\'est produite lors de la tentative de mise à jour',
-      ok: 'OK'
-    };
-    this._dialog.open(OkDialogComponent, dialogConfig);
+  public createNewProject() : void {
+    this._missionService.newProject(this.mission.id).subscribe(
+      () => this.ngOnInit(),
+      () => this._showErrorDialog("Impossible de créer un nouveau projet.")
+    )
   }
 
-  onReload(){
-    this.ngOnInit();
+  public updateProject(event : any) : void {
+    const projectId = this.mission.versions[0].projects[event.index].id;
+      this._missionService.updateProject(projectId, event.key, event.value).subscribe(
+        () => {
+          this.mission.versions[0].projects[event.index][event.key] = event.value;
+          this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+        },
+        () => this._showErrorDialog("Impossible de mettre à jour le projet.")
+      );
+  }
+
+  public deleteProject(index : number) : void {
+    const projectId = this.mission.versions[0].projects[index].id;
+    this._missionService.deleteProject(projectId).subscribe(
+      () => this.mission.versions[0].projects.splice(index, 1),
+      () => this._showErrorDialog("Impossible de supprimer le projet.")
+    )
   }
 }

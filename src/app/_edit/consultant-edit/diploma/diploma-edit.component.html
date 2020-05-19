@@ -1,0 +1,49 @@
+<div *ngIf="!!new || diploma">
+    <form [formGroup]="grp">
+        <table class="inputable">
+            <tr>
+                <td><mat-form-field>
+                    <mat-label>Intitulé du diplôme</mat-label>
+                    <input matInput type="text"
+                    [formControlName]="ENTITLED_KEY"
+                    (change)="onChange(ENTITLED_KEY)"
+                    >
+                </mat-form-field></td>
+                <td><mat-form-field>
+                    <mat-label>Niveau du diplôme</mat-label>
+                    <input matInput type="text"
+                    [formControlName]="LEVEL_KEY"
+                    (change)="onChange(LEVEL_KEY)">
+                </mat-form-field></td>
+            </tr>
+            <tr>
+                <td><mat-form-field>
+                    <mat-label>Etablissement d'obtention du diplôme</mat-label>
+                    <input matInput type="text"
+                    [formControlName]="ESTABLISHMENT_KEY"
+                    (change)="onChange(ESTABLISHMENT_KEY)">
+                </mat-form-field></td>
+                <td><mat-form-field>
+                    <mat-label>Année d'obtention du diplôme</mat-label >
+                    <input matInput type="number"
+                    [formControlName]="YEAR_KEY"
+                    (change)="onChange(YEAR_KEY)">
+                </mat-form-field></td>
+            </tr>
+        </table>
+    </form>
+    <div *ngIf="new; then create else delete"></div>
+</div>
+
+<ng-template #create>
+    <button mat-raised-button color="primary"
+    (click)="onCreate()" [disabled]="grp.invalid">
+        Ajouter le diplôme
+    </button>
+</ng-template>
+
+<ng-template #delete>
+    <button mat-raised-button color="warn" (click)="onDelete()">
+        Supprimer ce diplôme
+    </button>
+</ng-template>

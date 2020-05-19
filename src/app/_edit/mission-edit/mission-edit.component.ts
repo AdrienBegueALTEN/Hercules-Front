@@ -53,11 +53,10 @@ export class MissionEditComponent implements OnInit {
   }
 
   public onChange(key : string) : void {
-    if (this._doUpdate(key)) {
+    if (!this._doUpdate(key)) return;
       const newValue : any = (key === this.TEAM_KEY || key === this.XP_KEY) ? 
       Number(this.grp.controls[key].value) : this.grp.controls[key].value;
       this.update.emit({key : key, value : newValue});
-    }
   }
 
   public getLabelText(key : string) : string {

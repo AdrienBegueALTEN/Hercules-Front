@@ -12,7 +12,6 @@ export class ProjectsViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentIndex = 0; 
-    console.log(this.projects);
   }
 
   getIndex(index:number){

@@ -19,13 +19,13 @@ const routes: Routes = [
   { 
     path: '', canActivate: [AuthGuard],
     children: [
+      { path: '', component: MissionsComponent},
       { path: 'new-mission', canActivate: [ManagerGuard], component: NewMissionPageComponent },
-      { path : 'missions', component: MissionsComponent},
       { path: 'missions/:id', component: MissionPageComponent },
       { path: 'consultants', component: ConsultantsComponent },
       { path: 'consultants/:id', component: ConsultantPageComponent },
       { path: 'customers', component: CustomersComponent },
-      { path: 'customers/:id', component: CustomerPageComponent,},
+      { path: 'customers/:id', component: CustomerPageComponent}
      ],
     component: HomeComponent
   }, 

@@ -84,7 +84,7 @@
               <i *ngSwitchCase="'VALIDATED'" style="color: green" class="fas fa-check-circle" matTooltip="Fiche validée"></i>
               &nbsp;
     
-              <button mat-icon-button *ngIf="element.consultant.manager.id==this.user.id" [routerLink]="[element.id]">
+              <button mat-icon-button *ngIf="element.consultant.manager.id==this.user.id" [routerLink]="['/missions', element.id]">
                 <span class="material-icons" matTooltip="Modifier la mission" >edit</span>
               </button>&nbsp;
               
