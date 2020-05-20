@@ -68,7 +68,7 @@ export class MissionSheetPageComponent implements OnInit {
   }
 
   public addImage(imageFile){
-    this._missionService.uploadFromToken(imageFile.file, imageFile.project).subscribe(
+    this._missionService.uploadFromToken(imageFile.file, imageFile.project, this._token).subscribe(
       event => {
         if (event instanceof HttpResponse) {
           if(event.status==200){
