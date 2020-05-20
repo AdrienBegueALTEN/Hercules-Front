@@ -177,13 +177,9 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
   private _handleNewMissionError(consultantId : number, newConsultant : boolean, customerId : number, newCustomer : boolean) : void {
     if (newConsultant)
       this._consultantService.deleteConsultant(consultantId).subscribe();
-
     if (newCustomer)
       this._customerService.deleteCustomer(customerId).subscribe();
-
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
     dialogConfig.data = 'La mission n\'a pas pu être créée.';
     const dialogRef = this._dialog.open(MessageDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(

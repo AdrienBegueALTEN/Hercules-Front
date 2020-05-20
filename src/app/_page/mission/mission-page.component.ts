@@ -1,3 +1,4 @@
+import { ProjectsEditComponent } from './../../_edit/projects-edit/projects-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SheetStatus } from './../../_enums/sheet-status.enum';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -25,6 +26,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   userIsConsultantManager : boolean = false;
 
   @ViewChild('tabGrp') tabGrp : MatTabGroup;
+  @ViewChild('projectsEditComponent') projectsEdit : ProjectsEditComponent;
 
   constructor(
     private _authService : AuthService,
@@ -35,7 +37,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     private _snackBar: MatSnackBar
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() : void {
     const id : number = this._route.snapshot.params['id'];
     this._missionService.getMissionDetails(id).subscribe(
       mission => {
@@ -67,7 +69,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
   public onNewVersion() : void {
     this._missionService.addVersion(this.mission.id).subscribe(
-      () => { this.ngOnInit(); },
+      () => this.ngOnInit(),
       () => this._showErrorDialog("Impossible de créer une nouvelle version.")
     );
   }
@@ -130,7 +132,10 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
   public createNewProject() : void {
     this._missionService.newProject(this.mission.id).subscribe(
-      () => this.ngOnInit(),
+      () => {
+        this.ngOnInit();
+        this.projectsEdit.tabGrp.selectedIndex = this.mission.versions[0].projects.length;
+      },
       () => this._showErrorDialog("Impossible de créer un nouveau projet.")
     )
   }
@@ -153,6 +158,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       () => {
         this.mission.versions[0].projects.splice(index, 1);
         this.mission.sheetStatus = SheetStatus.ON_GOING;
+        this.projectsEdit.tabGrp.selectedIndex = 0;
       },
       () => this._showErrorDialog("Impossible de supprimer le projet.")
     )

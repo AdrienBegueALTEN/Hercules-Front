@@ -7,12 +7,17 @@
 
 .step-nav {
     vertical-align: middle;
+    margin: 24px;
 }
 
 .next {
-    margin-left: 24px;
+    margin-right: 0;
 }
 
 .previous {
-    margin-right: 24px;
+    margin-left: 0;
 }
+
+.flex-row-container {
+    align-items: center;
+ }
