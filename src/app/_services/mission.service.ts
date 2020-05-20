@@ -44,6 +44,10 @@ export class MissionService {
     return this._httpClient.get(AppSettings.MISSION_API + (manager ? '?manager=' + manager : ''));
   }
 
+  deleteMission(id : number) : Observable<any> {
+    return this._httpClient.delete(AppSettings.MISSION_API + id);
+  }
+
   public updateMission(id : number, fieldName : String, value : any) : Observable<any> {
     return this._httpClient.put(AppSettings.MISSION_API,
       {

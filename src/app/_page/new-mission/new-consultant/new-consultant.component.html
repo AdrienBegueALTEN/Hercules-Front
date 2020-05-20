@@ -12,9 +12,9 @@
         [required]="true">
       </app-lastname-input></td>
     </tr>
+    <tr><td colspan="2"><app-email-input
+      (sendCtrl)="addCtrl('email', $event)"
+      [required]="true">
+    </app-email-input></td></tr>
   </table>
-  <app-email-input
-    (sendCtrl)="addCtrl('email', $event)"
-    [required]="true">
-  </app-email-input>
 </form>

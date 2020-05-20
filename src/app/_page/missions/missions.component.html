@@ -1,9 +1,14 @@
 
+
 <div class="example-header">
+  <button mat-mini-fab color="primary" [routerLink]="['/new-mission']" matTooltip="Ajouter une mission">
+    <mat-icon>add</mat-icon>
+  </button>
   <mat-form-field>
       <mat-label>Chercher une mission</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Chercher une mission, une ville, un secteur d'activité...">
     </mat-form-field>
+    
   </div>
 
   <mat-slide-toggle (click)="showOnlyMyMissions()" *ngIf="userIsManagerInclude" [checked]="true">Afficher uniquement mes missions. </mat-slide-toggle>&nbsp;&nbsp;
@@ -30,10 +35,12 @@
                           >
             </mat-checkbox>
           </mat-header-cell>
-          <mat-header-cell *matCellDef="let row">
+          <mat-header-cell *matCellDef="let row; let element">
             <mat-checkbox (click)="$event.stopPropagation()"
                           (change)="$event ? selection.toggle(row) : null"
                           [checked]="selection.isSelected(row)"
+                          
+
                           
                           
                           
@@ -72,16 +79,17 @@
       <ng-container matColumnDef="numberOfProjects">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre de projets </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          {{element.lastVersion.projects?.length}}          
+          <i *ngIf= "element.lastVersion.projects?.length>0">{{element.lastVersion.projects?.length}}</i>
+          <i *ngIf= "element.lastVersion.projects?.length==null">Aucun</i>          
         </mat-cell>
           </ng-container>
 
       <ng-container matColumnDef="sheetStatus">
           <mat-header-cell *matHeaderCellDef>Statut de la fiche</mat-header-cell>
           <mat-header-cell *matCellDef="let element" [ngSwitch]="element.sheetStatus">
-              <i *ngSwitchCase="'ON_WAITING'" style="color: red" class="fas fa-times-circle" matTooltip="Fiche en attente" ></i>
-              <i *ngSwitchCase="'ON_GOING'" style="color: orange" class="fas fa-clock" matTooltip="Fiche en cours de validation"></i>
-              <i *ngSwitchCase="'VALIDATED'" style="color: green" class="fas fa-check-circle" matTooltip="Fiche validée"></i>
+              <span *ngSwitchCase="'ON_WAITING'" style="color: red" class="material-icons" matTooltip="Fiche en attente" >highlight_off</span>
+              <span *ngSwitchCase="'ON_GOING'" style="color: orange" class="material-icons" matTooltip="Fiche en cours de validation">schedule</span>
+              <span *ngSwitchCase="'VALIDATED'" style="color: green" class="material-icons" matTooltip="Fiche validée">done</span>
               &nbsp;
     
               <button mat-icon-button *ngIf="element.consultant.manager.id==this.user.id" [routerLink]="['/missions', element.id]">
@@ -89,7 +97,7 @@
               </button>&nbsp;
               
     
-              <button mat-icon-button  color="warn" *ngIf="(element.consultant.manager.id==this.user.id&&element.sheetStatus=='ON_WAITING')">
+              <button mat-icon-button  color="warn" *ngIf="(element.versions?.length==null&&element.lastVersion.versionDate==null&&element.consultant.manager.id==this.user.id&&element.sheetStatus=='ON_WAITING')">
                 <span class="material-icons" matTooltip="Supprimer la mission en attente" (click)="openDeleteDialog(element)">delete</span>
               </button>
               
@@ -132,13 +140,13 @@
 </ng-container>
 
 <mat-header-row *matHeaderRowDef="innerDisplayedColumns"></mat-header-row>
-<mat-row *matRowDef="let row; columns: innerDisplayedColumns;" [class.example-element-row]="element?.length" (click)="selection.toggle(row)"></mat-row>
+<mat-row *matRowDef="let row; columns: innerDisplayedColumns;" [class.example-element-row]="element?.lastVersion.projects.length" (click)="element?.lastVersion.projects.length>0&&selection.toggle(row)"></mat-row>
 </mat-table>
 </div>
 </ng-template>
 <br />
 
-<p>Éléments sélectionnés : {{this.selection.selected.length}}</p>
+<p *ngIf="this.selection.selected.length>0">Éléments sélectionnés : {{this.selection.selected.length}}</p>
 
 
 

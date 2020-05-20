@@ -1,17 +1,19 @@
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormGroup } from '@angular/forms';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Role } from 'src/app/_enums/role.enum';
 import { MatDialog } from '@angular/material/dialog';
 import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { MissionService } from 'src/app/_services/mission.service';
 import { AuthService } from 'src/app/_services/auth.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatInput } from '@angular/material/input';
+
 
 
 
@@ -55,6 +57,7 @@ export class MissionsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChildren(MatInput) matInputs: QueryList<MatInput>;
 
   isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
 
@@ -202,6 +205,17 @@ showOnlyMyValidatedMissions() {
   this.createDatasource(this.missions);
 }
 
+private delete(mission:any){
+  this._missionService.deleteMission(mission.id).subscribe(
+    ()=>{
+      this.ngOnInit();
+    },
+    (err) => {
+      console.log(err);
+    }
+  )
+}
+
 openDeleteDialog(element: any): void {
   const dialog = this._dialog.open(YesNoDialogComponent, {
     data: { 
@@ -215,12 +229,22 @@ openDeleteDialog(element: any): void {
   dialog.afterClosed().subscribe(
     (result) => {
       if(result){
-        console.log("Mission supprimée");
+        this.delete(element);
       }
     }
   );
 }
 
+clickEvt(e) {
+  e.preventDefault();
+  console.log(e);
+}
 
+
+
+changeValue(element: any) {
+  const input = this.matInputs.find(matInput => matInput.id === element.sheetStatus);
+  //console.log(this.matInputs.find(matInput => matInput.id === element.sheetStatus));
+}
 
 }

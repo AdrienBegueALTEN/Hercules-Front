@@ -5,8 +5,7 @@ const NUMBER_PATTERN = '^\\d*$';
 
 @Component({
   selector: 'app-mission-edit',
-  templateUrl: './mission-edit.component.html',
-  styleUrls: ['./mission-edit.component.scss']
+  templateUrl: './mission-edit.component.html'
 })
 export class MissionEditComponent implements OnInit {
   @Input() externalVersion : boolean = false;
@@ -20,13 +19,13 @@ export class MissionEditComponent implements OnInit {
   readonly COUNTRY_TOOLTIP = 'Ville au sein duquel vous avez effectué la mission. En cas de télétravail, pays où se trouve le site du client.';
   readonly DESCRIPTION_KEY = 'description';
   readonly DESCRIPTION_TOOLTIP = 'Descritpif complet présentant la mission dans sa globalité.';
-  readonly HELP_ICON = 'help_outline';
   readonly ROLE_KEY = 'consultantRole';
   readonly ROLE_TOOLTIP = 'Titre représentatif des différentes tâches que vous avez été amené à réaliser durant la mission.';
   readonly TEAM_KEY = 'teamSize';
   readonly TEAM_TOOLTIP = 'Taille de l\'équipe au sein de laquelle vous avez été amené a travailler durant la mission (vous inclus).';
   readonly TITLE_KEY = 'title';
   readonly TITLE_TOOLTIP = 'Bref descriptif contenant des mots-clefs représentatifs de la mission.';
+  readonly TOOLTIP_ICON = 'help_outline';
   readonly TOOLTIP_POS = 'before';
   readonly XP_KEY = 'consultantStartXp';
   readonly XP_TOOLTIP = 'Le nombre d\'années d\'expérience que vous aviez au départ de la mission.';

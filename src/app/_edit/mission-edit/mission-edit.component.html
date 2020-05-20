@@ -5,7 +5,7 @@
       <input matInput type="text" maxLength="255"
         [formControlName]="TITLE_KEY" (change)="onChange(TITLE_KEY)">
         <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-        [matTooltip]="TITLE_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{HELP_ICON}}</mat-icon>
+        [matTooltip]="TITLE_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
     </mat-form-field></td></tr>
     <tr>
       <td><mat-form-field>
@@ -13,14 +13,14 @@
         <input matInput type="text" maxlength="100"
           [formControlName]="ROLE_KEY" (change)="onChange(ROLE_KEY)">
         <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-          [matTooltip]="ROLE_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{HELP_ICON}}</mat-icon>
+          [matTooltip]="ROLE_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
       </mat-form-field></td>
       <td><mat-form-field>
         <mat-label>{{getLabelText(XP_KEY)}}</mat-label>
         <input matInput type="text"
           [formControlName]="XP_KEY" (change)="onChange(XP_KEY)">
         <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-          [matTooltip]="XP_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{HELP_ICON}}</mat-icon>
+          [matTooltip]="XP_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
       </mat-form-field></td>
     </tr>
     <tr><td colspan="2"><mat-form-field>
@@ -28,7 +28,7 @@
       <textarea matInput maxLength="1000"
         [formControlName]="DESCRIPTION_KEY" (change)="onChange(DESCRIPTION_KEY)" ></textarea>
         <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-          [matTooltip]="DESCRIPTION_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{HELP_ICON}}</mat-icon>
+          [matTooltip]="DESCRIPTION_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
       <mat-hint>{{grp.controls['description'].value?.length || 0}} / 1000</mat-hint>
     </mat-form-field></td></tr>
     <tr>
@@ -37,14 +37,14 @@
         <input matInput type="text" maxlength="100"
           [formControlName]="CITY_KEY" (change)="onChange(CITY_KEY)">
           <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-            [matTooltip]="CITY_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{HELP_ICON}}</mat-icon>
+            [matTooltip]="CITY_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
       </mat-form-field></td>
       <td><mat-form-field>
         <mat-label>Pays</mat-label>
         <input matInput type="text" maxlength="100"
           [formControlName]="COUNTRY_KEY" (change)="onChange(COUNTRY_KEY)">
           <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-          [matTooltip]="COUNTRY_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{HELP_ICON}}</mat-icon>
+          [matTooltip]="COUNTRY_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
       </mat-form-field></td>
     </tr>
     <tr>
@@ -53,7 +53,7 @@
         <input matInput type="text"
           [formControlName]="TEAM_KEY" (change)="onChange(TEAM_KEY)">
         <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-          [matTooltip]="TEAM_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{HELP_ICON}}</mat-icon>
+          [matTooltip]="TEAM_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
       </mat-form-field></td>
       <td><mat-radio-group [formControlName]="CONTRACT_KEY" (change)="onChange(CONTRACT_KEY)">
         <mat-label>Type de contrat</mat-label>
