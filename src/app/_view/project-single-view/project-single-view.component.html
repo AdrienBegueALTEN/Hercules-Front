@@ -1,8 +1,35 @@
-<div>
-    <p class="title">Intitulé du projet</p>
-    <p mat-line>{{project.title || 'Non renseigné'}}</p>
-    <p class="title">Description du projet</p>
-    <p mat-line>{{project.description || 'Non renseigné'}}</p>
-    <p class="title">Dates du projet</p>
-    <p matLine>{{project.beginDate  || 'Début non renseigné'}} - {{project.beginDate || 'Fin non renseignée'}}</p>
-</div>
+<table style="width: 100%;table-layout: fixed;">
+    <tr>
+        <td>
+            <div>
+                <p class="title">Intitulé du projet</p>
+                <p mat-line>{{project.title || 'Non renseigné'}}</p>
+                <p class="title">Description du projet</p>
+                <p mat-line>{{project.description || 'Non renseigné'}}</p>
+                <p class="title">Dates du projet</p>
+                <p matLine>{{project.beginDate  || 'Début non renseigné'}} - {{project.beginDate || 'Fin non renseignée'}}</p>
+            </div>
+        </td>
+        <td>
+            <img style="float: right;" style="height: 300px; float: right;" [src]="src" alt="Image">
+        </td>
+    </tr>
+    
+</table>
+
+<!--<mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile style="text-align: left;">
+        <div>
+            <p class="title">Intitulé du projet</p>
+            <p mat-line>{{project.title || 'Non renseigné'}}</p>
+            <p class="title">Description du projet</p>
+            <p mat-line>{{project.description || 'Non renseigné'}}</p>
+            <p class="title">Dates du projet</p>
+            <p matLine>{{project.beginDate  || 'Début non renseigné'}} - {{project.beginDate || 'Fin non renseignée'}}</p>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <img style="float: right;" style="width: 100%; height: auto;" [src]="src" alt="Image">
+    </mat-grid-tile>
+</mat-grid-list>-->
+   
