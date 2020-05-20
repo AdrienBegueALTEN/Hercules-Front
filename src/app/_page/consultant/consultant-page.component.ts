@@ -48,7 +48,11 @@ export class ConsultantPageComponent implements OnInit {
       data => {
         if (data) {
           this._consultantService.updateConsultant(this.consultant.id,'releaseDate',data).subscribe(
-            () => this.consultant.releaseDate = data, err => {console.log(err)}
+            () => {
+              this.consultant.releaseDate = data;
+              this.ngOnInit();
+            }, 
+            err => {console.log(err)}
           )
         }
       }); 

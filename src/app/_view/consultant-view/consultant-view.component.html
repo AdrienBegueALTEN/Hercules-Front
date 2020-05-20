@@ -1,22 +1,24 @@
+<div class="contours">
 <mat-list *ngIf="consultant">
-  <mat-list-item>
-    <h1 matLine>Prénom</h1>
-    <p matLine>{{consultant[FIRSTNAME_KEY]}}</p>
-  </mat-list-item>
-  <mat-list-item>
-    <h1 matLine>Nom</h1>
-    <p matLine>{{consultant[LASTNAME_KEY]}}</p>
-  </mat-list-item>
-  <mat-list-item>
-    <h1 matLine>Adresse email</h1>
-    <p matLine>{{consultant[EMAIL_KEY]}}</p>
-  </mat-list-item>
-  <mat-list-item>
-    <h1 matLine>Niveau d'expérience</h1>
-    <p matLine>{{getXpToText()}}</p>
-  </mat-list-item>
-    <div *ngIf="consultant[RELEASE_DATE_KEY]; then releaseDate else manager"></div>
-</mat-list>
+    <mat-list-item>
+      <h1 matLine>Prénom</h1>
+      <p matLine>{{consultant[FIRSTNAME_KEY]}}</p>
+    </mat-list-item>
+    <mat-list-item>
+      <h1 matLine>Nom</h1>
+      <p matLine>{{consultant[LASTNAME_KEY]}}</p>
+    </mat-list-item>
+    <mat-list-item>
+      <h1 matLine>Adresse email</h1>
+      <p matLine>{{consultant[EMAIL_KEY]}}</p>
+    </mat-list-item>
+    <mat-list-item>
+      <h1 matLine>Niveau d'expérience</h1>
+      <p matLine>{{getXpToText()}}</p>
+    </mat-list-item>
+      <div *ngIf="consultant[RELEASE_DATE_KEY]; then releaseDate else manager"></div>
+  </mat-list>
+</div>
 
 <ng-template #releaseDate>
   <mat-list-item>
