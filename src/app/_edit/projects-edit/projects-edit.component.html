@@ -1,4 +1,3 @@
-<div class="contours">
   <div *ngIf="!!projects">
     <div *ngIf="projects.length === 0">Aucun projet</div>
     <mat-accordion>
@@ -17,5 +16,3 @@
     </mat-accordion>
   </div>
   <button color="primary" *ngIf="!projects || projects.length < 5" mat-button (click)="new.emit()">Ajouter un projet</button>
-</div>
-

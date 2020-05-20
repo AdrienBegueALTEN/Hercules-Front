@@ -1,12 +1,12 @@
 <form *ngIf="version" [formGroup]="grp">
-  <mat-form-field>
-    <mat-label>Intitulé de la mission</mat-label>
-    <input matInput type="text" maxLength="255"
-      [formControlName]="TITLE_KEY" (change)="onChange(TITLE_KEY)">
-      <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-      [matTooltip]="TITLE_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{HELP_ICON}}</mat-icon>
-  </mat-form-field>
   <table class="inputable">
+    <tr><td colspan="2"><mat-form-field>
+      <mat-label>Intitulé de la mission</mat-label>
+      <input matInput type="text" maxLength="255"
+        [formControlName]="TITLE_KEY" (change)="onChange(TITLE_KEY)">
+        <mat-icon matSuffix *ngIf="externalVersion" color="primary"
+        [matTooltip]="TITLE_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{HELP_ICON}}</mat-icon>
+    </mat-form-field></td></tr>
     <tr>
       <td><mat-form-field>
         <mat-label>{{getLabelText(ROLE_KEY)}}</mat-label>
@@ -23,16 +23,14 @@
           [matTooltip]="XP_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{HELP_ICON}}</mat-icon>
       </mat-form-field></td>
     </tr>
-  </table>
-  <mat-form-field>
-    <mat-label>Description de la mission</mat-label>
-    <textarea matInput maxLength="1000"
-      [formControlName]="DESCRIPTION_KEY" (change)="onChange(DESCRIPTION_KEY)" ></textarea>
-      <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-        [matTooltip]="DESCRIPTION_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{HELP_ICON}}</mat-icon>
-    <mat-hint>{{grp.controls['description'].value?.length || 0}} / 1000</mat-hint>
-  </mat-form-field>
-  <table class="inputable">
+    <tr><td colspan="2"><mat-form-field>
+      <mat-label>Description de la mission</mat-label>
+      <textarea matInput maxLength="1000"
+        [formControlName]="DESCRIPTION_KEY" (change)="onChange(DESCRIPTION_KEY)" ></textarea>
+        <mat-icon matSuffix *ngIf="externalVersion" color="primary"
+          [matTooltip]="DESCRIPTION_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{HELP_ICON}}</mat-icon>
+      <mat-hint>{{grp.controls['description'].value?.length || 0}} / 1000</mat-hint>
+    </mat-form-field></td></tr>
     <tr>
       <td><mat-form-field>
         <mat-label>Ville</mat-label>
@@ -68,11 +66,11 @@
         <mat-radio-button value="flat_fee">Forfait</mat-radio-button>
       </mat-radio-group></td>
     </tr>
+    <tr><td colspan="2"><mat-form-field *ngIf="version[COMMENT_KEY]">
+      <mat-label>Commentaire client/manager</mat-label>
+      <textarea matInput maxlength="255"
+        [formControlName]="COMMENT_KEY" (change)="onChange(COMMENT_KEY)" ></textarea>
+      <mat-hint>{{grp.controls['comment'].value?.length || 0}} / 255</mat-hint>
+    </mat-form-field></td></tr>
   </table>
-  <mat-form-field *ngIf="version[COMMENT_KEY]">
-    <mat-label>Commentaire client/manager</mat-label>
-    <textarea matInput maxlength="255"
-      [formControlName]="COMMENT_KEY" (change)="onChange(COMMENT_KEY)" ></textarea>
-    <mat-hint>{{grp.controls['comment'].value?.length || 0}} / 255</mat-hint>
-  </mat-form-field>
 </form>
