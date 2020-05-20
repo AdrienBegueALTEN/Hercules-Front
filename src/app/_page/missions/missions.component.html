@@ -1,9 +1,12 @@
-
 <div class="example-header">
   <mat-form-field>
       <mat-label>Chercher une mission</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Chercher une mission, une ville, un secteur d'activité...">
     </mat-form-field>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button mat-mini-fab color="primary" [routerLink]="['/new-mission']" matTooltip="Ajouter une mission">
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
 
   <mat-slide-toggle (click)="showOnlyMyMissions()" *ngIf="userIsManagerInclude" [checked]="true">Afficher uniquement mes missions. </mat-slide-toggle>&nbsp;&nbsp;
