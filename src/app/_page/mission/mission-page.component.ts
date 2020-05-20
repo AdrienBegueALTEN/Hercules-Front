@@ -93,6 +93,11 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       this.mission.sheetStatus !== SheetStatus.VALIDATED
   }
 
+  public showConsultantEdit() : boolean {
+    return this.userIsConsultantManager && 
+      !this.mission.consultant.releaseDate;
+  }
+
   public showVersions() : boolean {
     return this.mission.versions.length > 1;
   }
