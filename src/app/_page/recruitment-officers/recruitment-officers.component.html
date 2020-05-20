@@ -1,0 +1,55 @@
+<mat-form-field>
+    <mat-label>Chercher un CDR</mat-label>
+    <input  matInput placeholder="Chercher un CDR" (keyup)="applyFilter($event)" />
+</mat-form-field>
+
+<br>
+<br>
+
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+    <ng-container matColumnDef="firstname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
+      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
+        {{element.firstname}}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="lastname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
+        {{element.lastname}}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </th>
+      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
+        {{element.email}}
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
+        <button matTooltip="Voir plus de {{element.firstname}} {{element.lastname}}" mat-icon-button [routerLink]="[element.id]">
+          <mat-icon>more_horiz</mat-icon>
+        </button>&nbsp;
+        <button matTooltip="Suppression de {{element.firstname}} {{element.lastname}}" mat-icon-button (click)="openDialogDelete(element)">
+          <mat-icon>delete</mat-icon>
+        </button>&nbsp;
+        
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+        class="example-element-row"
+        >
+    </tr>
+  </table>
+  
+  <div>
+    <button mat-button (click)="goToCreateNewRecruitmentOfficer()">Ajouter un CDR</button>
+  </div>
+  <mat-paginator style="background-color: transparent;" [pageSizeOptions]="[ 5, 10, 25, 50, 100]"></mat-paginator>

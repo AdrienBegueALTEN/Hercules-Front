@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppSettings } from '../app-settings';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpBackend, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpBackend, HttpHeaders, HttpEvent, HttpRequest } from '@angular/common/http';
 
 const TOKEN_PREFIX : string = 'Bearer ';
 
@@ -107,5 +107,17 @@ export class MissionService {
   public deleteProjectFromToken(token : string, project : number){
     return this._notInteceptedHttpClient.delete(AppSettings.MISSION_API + 'projects/from-token/' + project,
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
+  }
+
+  upload(file: File, projectId: number): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    const req = new HttpRequest('POST', AppSettings.MISSION_API + "projects/" + projectId + '/upload-picture', formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+    return this._httpClient.request(req);
   }
 }

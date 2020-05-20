@@ -8,6 +8,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 import { MatTabGroup } from '@angular/material/tabs';
 import { saveAs } from "file-saver";
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-mission-page',
@@ -58,6 +59,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
         () => {
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
           this.mission.versions[0][event.key] = event.value;
+          this.mission.sheetStatus = SheetStatus.ON_GOING;
         },
         () => this._showErrorDialog("Impossible de mettre à jour les données.")
       )
@@ -90,6 +92,11 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     return this.userIsConsultantManager && 
       this.selectedIndex === 0 &&
       this.mission.sheetStatus !== SheetStatus.VALIDATED
+  }
+
+  public showConsultantEdit() : boolean {
+    return this.userIsConsultantManager && 
+      !this.mission.consultant.releaseDate;
   }
 
   public showVersions() : boolean {
@@ -133,6 +140,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       this._missionService.updateProject(projectId, event.key, event.value).subscribe(
         () => {
           this.mission.versions[0].projects[event.index][event.key] = event.value;
+          this.mission.sheetStatus = SheetStatus.ON_GOING;
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
         },
         () => this._showErrorDialog("Impossible de mettre à jour le projet.")
@@ -142,8 +150,28 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   public deleteProject(index : number) : void {
     const projectId = this.mission.versions[0].projects[index].id;
     this._missionService.deleteProject(projectId).subscribe(
-      () => this.mission.versions[0].projects.splice(index, 1),
+      () => {
+        this.mission.versions[0].projects.splice(index, 1);
+        this.mission.sheetStatus = SheetStatus.ON_GOING;
+      },
       () => this._showErrorDialog("Impossible de supprimer le projet.")
     )
+  }
+
+  addImage(imageFile){
+    this._missionService.upload(imageFile.file, imageFile.project).subscribe(
+      event => {
+        if (event instanceof HttpResponse) {
+          if(event.status==200){
+            this._snackBar.open('Image changée', 'X', {duration: 2000});
+            this.ngOnInit();
+          }
+          else
+            this._showErrorDialog("Impossible de charger cette image.");
+        }
+      },
+      err => {
+        this._showErrorDialog("Impossible de charger cette image.");
+      });
   }
 }

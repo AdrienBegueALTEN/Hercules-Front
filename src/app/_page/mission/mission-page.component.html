@@ -10,29 +10,32 @@
     <mat-tab-group animationDuration="0ms" mat-align-tabs="center" #tabGrp>
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon class="tab-icon">info</mat-icon>
+          <!--<mat-icon class="tab-icon">info</mat-icon>-->
           Informations générales
-        </ng-template>      
-        <div *ngIf="showMissionEdit(); then missionEdit else missionView"></div>
+        </ng-template>   
+        <div class="contours"  >
+          <div *ngIf="showMissionEdit(); then missionEdit else missionView"></div>
+        </div> 
+        
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon class="tab-icon">view_carousel</mat-icon>
+          <!--<mat-icon class="tab-icon">view_carousel</mat-icon>-->
           Projets
         </ng-template>
         <div *ngIf="showMissionEdit(); then projectsEdit else projectsView"></div>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon class="tab-icon">person</mat-icon>
-          Consultant
+          <!--<mat-icon class="tab-icon">person</mat-icon>-->
+          {{mission.consultant.firstname}} {{mission.consultant.lastname}}
         </ng-template>
-          <div *ngIf="userIsConsultantManager; then consultantEdit else consultantView"></div>
+          <div *ngIf="showConsultantEdit(); then consultantEdit else consultantView"></div>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon class="tab-icon">work</mat-icon>
-          Client
+          <!--<mat-icon class="tab-icon">work</mat-icon>-->
+          {{mission.customer.name}}
         </ng-template>
           <div *ngIf="userIsManager; then customerEdit else customerView"></div>
       </mat-tab>
@@ -101,7 +104,8 @@
   <app-projects-edit [projects]="mission.versions[selectedIndex].projects"
   (new)="createNewProject()"
   (update)="updateProject($event)"
-  (deletion)="deleteProject($event)"></app-projects-edit>
+  (deletion)="deleteProject($event)"
+  (image)="addImage($event)"></app-projects-edit>
 </ng-template>
 
 <ng-template #projectsView>

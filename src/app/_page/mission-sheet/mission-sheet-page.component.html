@@ -1,17 +1,35 @@
-<div id="app">
-  <app-external-header *ngIf="mission" [mission]="mission"></app-external-header>
-  <div id="app-container">
-    <mat-card *ngIf="mission">
+<div *ngIf="mission" class="flex-column-container">
+  <app-external-header [mission]="mission"></app-external-header>
+  <div class="app-container">
+    <mat-card>
       <mat-card-content>
         <mat-horizontal-stepper linear="true">
           <mat-step label="Informations générales">
-            <app-mission-edit
-            [externalVersion]=true
-            [version]=mission.lastVersion
-            (update)="updateMission($event)">
-          </app-mission-edit>
+            <div class="flex-row-container">
+              <app-mission-edit class="step-content"
+                [externalVersion]=true
+                [version]=mission.lastVersion
+                (update)="updateMission($event)">
+              </app-mission-edit>
+              <button mat-fab matStepperNext class="white-shape next step-nav">
+                <mat-icon>navigate_next</mat-icon>
+              </button>
+            </div>
           </mat-step>
           <mat-step label="Projets">
+            <div class="flex-row-container">
+              <button mat-fab matStepperPrevious class="white-shape previous step-nav">
+                <mat-icon>navigate_before</mat-icon>
+              </button>
+              <app-projects-edit class="step-content"
+                [projects]="mission.lastVersion.projects"
+                (new)="createNewProject()"
+                (update)="updateProject($event)"
+                (deletion)="deleteProject($event)"></app-projects-edit>
+              <button mat-fab matStepperNext class="white-shape next step-nav">
+                <mat-icon>done</mat-icon>
+              </button>
+            </div>
           </mat-step>
             <mat-step label="Valider la fiche">
             </mat-step>
