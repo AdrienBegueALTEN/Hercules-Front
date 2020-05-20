@@ -8,16 +8,30 @@
             <mat-label>Prénom *</mat-label>
             <input matInput placeholder=""
                    formControlName="firstname">
+            <mat-error *ngIf="recruitmentOfficerForm.controls['firstname'].hasError('required')">
+                    Un prénom est requis.
+            </mat-error>
         </mat-form-field>
         <mat-form-field appearance="legacy">
             <mat-label>Nom *</mat-label>
             <input matInput placeholder=""
                    formControlName="lastname">
+            <mat-error *ngIf="recruitmentOfficerForm.controls['lastname'].hasError('required')">
+                    Un nom est requis.
+            </mat-error>
         </mat-form-field>
         <mat-form-field appearance="legacy">
             <mat-label>Email *</mat-label>
             <input matInput placeholder=""
                    formControlName="email">
+            <mat-error *ngIf="!recruitmentOfficerForm.controls['email'].hasError('required') && 
+                              (recruitmentOfficerForm.controls['email'].hasError('email') || 
+                              recruitmentOfficerForm.controls['email'].hasError('badDomain') )">
+                    La forme de l'adresse mail est erronée.
+            </mat-error>
+            <mat-error *ngIf="recruitmentOfficerForm.controls['email'].hasError('required')">
+                    Une adresse mail est requise.
+            </mat-error>
         </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
