@@ -9,10 +9,4 @@
                 navigate_next
             </mat-icon>
         </button>
-        <button *ngIf="optionAdd && projects" class="paginator-button" (click)="onAdd()" [class.disabled]="projects.length==5">
-            <mat-icon>add</mat-icon>
-        </button>
-        <button *ngIf="optionAdd && !projects" class="paginator-button" (click)="onAdd()">
-            <mat-icon>add</mat-icon>
-        </button>
 </div>

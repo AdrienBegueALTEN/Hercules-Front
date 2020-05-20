@@ -10,6 +10,8 @@ import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.co
 import { MatTabGroup } from '@angular/material/tabs';
 import { saveAs } from "file-saver";
 import { HttpResponse } from '@angular/common/http';
+import { DeactivateComponent } from 'src/app/dialog/deactivate/deactivate.component';
+import { ConsultantService } from 'src/app/_services/consultant.service';
 
 @Component({
   selector: 'app-mission-page',
@@ -34,7 +36,8 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     private _dialog : MatDialog,
     private _missionService : MissionService,
     private _route : ActivatedRoute,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _consultantService : ConsultantService
   ) {}
 
   public ngOnInit() : void {
@@ -176,5 +179,27 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       err => {
         this._showErrorDialog("Impossible de charger cette image.");
       });
+  }
+
+  onSetReleaseDate() : void {
+    const dialogConfig = new MatDialogConfig();
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+          firstname : this.mission.consultant.firsrname,
+          lastname : this.mission.consultant.lastname
+        };
+    const dialogRef = this._dialog.open(DeactivateComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if (data) {
+          this._consultantService.updateConsultant(this.mission.consultant.id,'releaseDate',data).subscribe(
+            () => {
+              this.mission.consultant.releaseDate = data;
+              this.ngOnInit();
+            }, 
+            err => {console.log(err)}
+          )
+        }
+      }); 
   }
 }

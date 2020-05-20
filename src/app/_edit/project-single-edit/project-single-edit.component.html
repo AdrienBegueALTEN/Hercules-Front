@@ -10,7 +10,7 @@
                         [matTooltip]="ENTITLED_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
                     </mat-form-field>
                 </td>
-                
+                <td rowspan="3" *ngIf="project.picture" style="padding: 0; margin: 0; width: 300px;"><img height="300px" [src]="srcPic" alt="Image"></td>
             </tr>
             <tr>
                 <td colspan="2">
