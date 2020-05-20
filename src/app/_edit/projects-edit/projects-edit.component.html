@@ -9,7 +9,8 @@
           [externalVersion]="externalVersion"
           [project]="project"
           (update)="update.emit({index: i, key: $event.key, value: $event.value})"
-          (deletion)="deletion.emit(i)">
+          (deletion)="deletion.emit(i)"
+          (image)="image.emit($event)">
         </app-project-single-edit>
       </mat-tab>
       <mat-tab *ngIf="!projects || projects.length < 5" disabled>

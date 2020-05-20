@@ -86,7 +86,8 @@
   [projects]="mission.versions[selectedIndex].projects"
   (new)="createNewProject()"
   (update)="updateProject($event)"
-  (deletion)="deleteProject($event)"></app-projects-edit>
+  (deletion)="deleteProject($event)"
+  (image)="addImage($event)"></app-projects-edit>
 </ng-template>
 
 <ng-template #projectsView>
