@@ -3,6 +3,7 @@
 
 .blue-shape {
     background-image: url(src/assets/img/shape-background/blue.png);
+    background-position: center;
     background-repeat: no-repeat;
 }
 
@@ -12,6 +13,7 @@
 
 .white-shape {
     background-image: url(src/assets/img/shape-background/white.png);
+    background-position: center;
     background-repeat: no-repeat;
 }
 
@@ -25,26 +27,6 @@ body * {
 
 .inputable {
     width: 100%;
-}
-
-.inputable td {
-    padding: 0 8px;
-}
-
-.inputable td mat-form-field {
-    display: block;
-}
-
-mat-form-field {
-    width: 100%;
-}
-
-.inputable tr td:first-child {
-    padding-left: 0;
-}
-
-.inputable tr td:last-child {
-    padding-right: 0;
 }
 
 html, body {
@@ -73,3 +55,38 @@ mat-panel-title span{
     font-weight: bolder;
     color:#043962;
 }
+
+.app-container {
+    flex-grow: 1;
+    overflow: auto;
+    min-height: 2em;
+    padding: 16px 32px;
+}
+
+footer {
+    flex-shrink: 0;
+    background-color: $usual-primary-blue;
+    color: white;
+    line-height: 14px;
+    padding-top: 16px;
+ }
+
+ footer p {
+     margin : 0;
+     text-align: center;
+ }
+
+ .flex-column-container, .flex-row-container {
+    display: flex;
+ }
+
+ .flex-column-container {
+    flex-direction: column;
+    height: 100%;
+ }
+
+ .flex-row-container {
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+ }
