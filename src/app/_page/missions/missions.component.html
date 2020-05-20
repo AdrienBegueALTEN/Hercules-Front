@@ -30,10 +30,12 @@
                           >
             </mat-checkbox>
           </mat-header-cell>
-          <mat-header-cell *matCellDef="let row">
+          <mat-header-cell *matCellDef="let row; let element">
             <mat-checkbox (click)="$event.stopPropagation()"
                           (change)="$event ? selection.toggle(row) : null"
                           [checked]="selection.isSelected(row)"
+                          
+
                           
                           
                           
@@ -90,7 +92,7 @@
               </button>&nbsp;
               
     
-              <button mat-icon-button  color="warn" *ngIf="(element.lastVersion.versionDate==null&&element.consultant.manager.id==this.user.id&&element.sheetStatus=='ON_WAITING')">
+              <button mat-icon-button  color="warn" *ngIf="(element.versions?.length==null&&element.lastVersion.versionDate==null&&element.consultant.manager.id==this.user.id&&element.sheetStatus=='ON_WAITING')">
                 <span class="material-icons" matTooltip="Supprimer la mission en attente" (click)="openDeleteDialog(element)">delete</span>
               </button>
               
