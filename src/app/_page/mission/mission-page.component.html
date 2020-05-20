@@ -8,35 +8,16 @@
     </div>
   <mat-card-content>
     <mat-tab-group animationDuration="0ms" mat-align-tabs="center" #tabGrp>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <!--<mat-icon class="tab-icon">info</mat-icon>-->
-          Informations générales
-        </ng-template>   
-        <div class="contours"  >
+      <mat-tab label="Informations générales">
           <div *ngIf="showMissionEdit(); then missionEdit else missionView"></div>
-        </div> 
-        
       </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <!--<mat-icon class="tab-icon">view_carousel</mat-icon>-->
-          Projets
-        </ng-template>
+      <mat-tab label="Projets">
         <div *ngIf="showMissionEdit(); then projectsEdit else projectsView"></div>
       </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <!--<mat-icon class="tab-icon">person</mat-icon>-->
-          {{mission.consultant.firstname}} {{mission.consultant.lastname}}
-        </ng-template>
+      <mat-tab [label]="mission.consultant.firstname + ' ' + mission.consultant.lastname">
           <div *ngIf="showConsultantEdit(); then consultantEdit else consultantView"></div>
       </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <!--<mat-icon class="tab-icon">work</mat-icon>-->
-          {{mission.customer.name}}
-        </ng-template>
+      <mat-tab [label]="mission.customer.name">
           <div *ngIf="userIsManager; then customerEdit else customerView"></div>
       </mat-tab>
       <mat-tab disabled *ngIf="showMissionEdit()" [label]="getStatusText()">
@@ -101,7 +82,8 @@
 </ng-template>
 
 <ng-template #projectsEdit>
-  <app-projects-edit [projects]="mission.versions[selectedIndex].projects"
+  <app-projects-edit #projectsEditComponent
+  [projects]="mission.versions[selectedIndex].projects"
   (new)="createNewProject()"
   (update)="updateProject($event)"
   (deletion)="deleteProject($event)"></app-projects-edit>

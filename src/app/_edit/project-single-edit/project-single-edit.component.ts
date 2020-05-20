@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as sha1 from 'js-sha1';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MissionService } from 'src/app/_services/mission.service';
 
@@ -9,12 +9,20 @@ import { MissionService } from 'src/app/_services/mission.service';
   templateUrl: './project-single-edit.component.html'
 })
 export class ProjectSingleEditComponent implements OnInit {
+  @Input() canBeDeteled : boolean = false;
+  @Input() externalVersion : boolean = false;
   @Input() project : any;
 
-  readonly TITLE_KEY : string = "title";
+  readonly ENTITLED_KEY : string = "title";
+  readonly ENTITLED_TOOLTIP : string = "Bref descriptif contenant des mots-clefs représentatifs du projet.";
   readonly DESCRIPTION_KEY : string = "description";
+  readonly DESCRIPTION_TOOLTIP : string = "Descritpif complet présentant le projet dans sa globalité.";
   readonly BEGIN_KEY : string = "beginDate";
+  readonly BEGIN_TOOLTIP : string = "Date à laquelle le projet à débuté.";
   readonly END_KEY : string = "endDate";
+  readonly END_TOOLTIP : string = "Date à laquelle le projet s'est achevé.";
+  readonly TOOLTIP_ICON = 'help_outline';
+  readonly TOOLTIP_POS = 'before';
 
   grp : FormGroup;
   selectedFiles: FileList;
@@ -32,7 +40,7 @@ export class ProjectSingleEditComponent implements OnInit {
   public ngOnInit() : void {
     this.srcPic = 'http://localhost:8080/hercules/missions/projects/picture/'+this.project.picture;
     this.grp = new FormBuilder().group({
-      title: [this.project[this.TITLE_KEY]],
+      title: [this.project[this.ENTITLED_KEY]],
       description: [this.project[this.DESCRIPTION_KEY]],
       beginDate: [this.project[this.BEGIN_KEY] ? 
         new Date(this.project[this.BEGIN_KEY]).toISOString().substr(0, 10) :

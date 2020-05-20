@@ -27,6 +27,7 @@ body * {
 
 .inputable {
     width: 100%;
+    border-spacing: 20px;
 }
 
 html, body {
@@ -48,6 +49,10 @@ html, body {
     color: grey;
     padding: 5px;
     cursor: pointer;
+}
+
+mat-form-field {
+    display: block !important;
 }
 
 mat-panel-title span{
@@ -86,7 +91,6 @@ footer {
  }
 
  .flex-row-container {
-    align-items: center;
     flex-direction: row;
     width: 100%;
  }

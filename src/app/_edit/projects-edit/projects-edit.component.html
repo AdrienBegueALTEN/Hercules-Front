@@ -1,18 +1,23 @@
   <div *ngIf="!!projects">
-    <div *ngIf="projects.length === 0">Aucun projet</div>
-    <mat-accordion>
-      <mat-expansion-panel *ngFor="let project of projects; let i = index">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <span>{{project.title || "Projet à définir"}}</span>
-            {{project.beginDate | date:'dd/MM/yyyy - '}}{{project.endDate | date:'dd/MM/yyyy'}}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-project-single-edit [project]="project"
+    <mat-tab-group #tabGrp>
+      <mat-tab *ngFor="let project of projects; let i = index">
+        <ng-template mat-tab-label>
+          {{project.title || 'Projet n°' + (i+1)}}
+        </ng-template>   
+        <app-project-single-edit
+          [canBeDeteled]="projects.length > 1"
+          [externalVersion]="externalVersion"
+          [project]="project"
           (update)="update.emit({index: i, key: $event.key, value: $event.value})"
           (deletion)="deletion.emit(i)">
         </app-project-single-edit>
-      </mat-expansion-panel>
-    </mat-accordion>
+      </mat-tab>
+      <mat-tab *ngIf="!projects || projects.length < 5" disabled>
+        <ng-template mat-tab-label>
+          <button mat-icon-button color="primary" (click)="new.emit()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </ng-template>   
+      </mat-tab>
+    </mat-tab-group>
   </div>
-  <button color="primary" *ngIf="!projects || projects.length < 5" mat-button (click)="new.emit()">Ajouter un projet</button>
