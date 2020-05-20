@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MissionService } from 'src/app/_services/mission.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
+import { ProjectsEditComponent } from 'src/app/_edit/projects-edit/projects-edit.component';
 
 @Component({
   selector: 'app-mission-sheet-page',
@@ -13,6 +14,8 @@ export class MissionSheetPageComponent implements OnInit {
   mission : any;
   private _token : string;
 
+  @ViewChild('projectsEditComponent') projectsEdit : ProjectsEditComponent;
+
   constructor(
     private _dialog : MatDialog,
     private _missionService : MissionService,
@@ -22,7 +25,7 @@ export class MissionSheetPageComponent implements OnInit {
   ngOnInit() {
     this._token = this._route.snapshot.params['token'];
     this._missionService.getMissionDetailsFromToken(this._token).subscribe(
-      mission => this.mission = mission ,
+      mission => this.mission = mission,
       () => window.location.replace('not-found')
     )
   }
@@ -55,7 +58,10 @@ export class MissionSheetPageComponent implements OnInit {
   public deleteProject(index : number) : void {
     const projectId = this.mission.lastVersion.projects[index].id;
     this._missionService.deleteProjectFromToken(this._token, projectId).subscribe(
-      () => this.mission.lastVersion.projects.splice(index, 1),
+      () => {
+        this.mission.lastVersion.projects.splice(index, 1);
+        this.projectsEdit.tabGrp.selectedIndex = 0;
+      },
       () => this._showErrorDialog("Impossible de supprimer le projet.")
     )
   }

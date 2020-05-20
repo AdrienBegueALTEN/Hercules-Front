@@ -132,10 +132,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
   public createNewProject() : void {
     this._missionService.newProject(this.mission.id).subscribe(
-      () => {
-        this.ngOnInit();
-        this.projectsEdit.tabGrp.selectedIndex = this.mission.versions[0].projects.length;
-      },
+      () => this.ngOnInit(),
       () => this._showErrorDialog("Impossible de créer un nouveau projet.")
     )
   }

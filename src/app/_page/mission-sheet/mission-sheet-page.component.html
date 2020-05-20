@@ -21,7 +21,7 @@
               <button mat-fab matStepperPrevious class="white-shape previous step-nav">
                 <mat-icon>navigate_before</mat-icon>
               </button>
-              <app-projects-edit class="step-content"
+              <app-projects-edit #projectsEditComponent class="step-content"
                 [projects]="mission.lastVersion.projects"
                 (new)="createNewProject()"
                 (update)="updateProject($event)"
