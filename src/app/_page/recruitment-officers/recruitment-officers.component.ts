@@ -20,9 +20,7 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
 
   user;
   isAuthenticated = false;
-  userIsAdmin = false;
-  userIsManager = false;
-  navigationSubscription : Subscription;
+  recruitmentOfficerSubscription : Subscription;
   recruitmentOfficers : any[];
   dataSource: MatTableDataSource<any>;
   columnsToDisplay = ['firstname', 'lastname', 'email', 'actions'];
@@ -41,8 +39,8 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if(this.navigationSubscription){
-      this.navigationSubscription.unsubscribe();
+    if(this.recruitmentOfficerSubscription){
+      this.recruitmentOfficerSubscription.unsubscribe();
     }
 
   }
@@ -52,8 +50,6 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
 
     if(this.isAuthenticated){
       this.user = this._authService.getUser();
-      this.userIsAdmin = this._authService.userIsAdmin();
-      this.userIsManager = this._authService.userIsManager();
     }
 
     this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(

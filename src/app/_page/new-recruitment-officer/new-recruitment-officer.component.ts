@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RecruitmentOfficerService } from 'src/app/_services/recruitment-officer.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +29,7 @@ export class NewRecruitmentOfficerComponent implements OnInit {
     this.recruitmentOfficerForm=this._formBuilder.group({
         firstname: ['',Validators.required],
         lastname: ['',Validators.required],
-        email: ['',[Validators.required,Validators.email]]
+        email: ['',[Validators.required,Validators.email,this.domainValidator]]
     });
   }
   onSaveRecruitmentOfficer(): void{
@@ -53,6 +53,13 @@ export class NewRecruitmentOfficerComponent implements OnInit {
     });
 
     
+  }
+
+  domainValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    if (control.value.indexOf("@alten.com")==-1) {
+      return { 'badDomain': true };
+    }
+    return null;
   }
 
 }

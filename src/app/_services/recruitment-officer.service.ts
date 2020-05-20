@@ -16,6 +16,11 @@ export class RecruitmentOfficerService {
       return this._httpClient.get<any[]>(AppSettings.RECRUITMENTOFFICER_API, AppSettings.HTTP_JSON_CONTENT);
   }
 
+  getRecruitmentOfficerById(id : String) : Observable<any> {
+    return this._httpClient.get<any>(AppSettings.RECRUITMENTOFFICER_API+ id, AppSettings.HTTP_JSON_CONTENT);
+}
+
+
   addRecruitmentOfficer(firstname: String, lastname: String, email: String) : Observable<any> {
       return this._httpClient.post(AppSettings.RECRUITMENTOFFICER_API,
         { 
@@ -27,12 +32,21 @@ export class RecruitmentOfficerService {
         {observe : 'response' });
   }
 
-  deleteRecruitmentOfficer(id : number) {
+  deleteRecruitmentOfficer(id : String) {
       return this._httpClient.delete(AppSettings.RECRUITMENTOFFICER_API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 
-  updateRecruitmentOfficer(){
-    // à faire quand page consultant est fini
+  updateRecruitmentOfficer(firstname : String, lastname : String, email : String, id : String) : Observable<any>{
+    
+    return this._httpClient.put(AppSettings.RECRUITMENTOFFICER_API,
+      { 
+        "id" : id,
+        "email" : email,
+        "firstname" : firstname,
+        "lastname" : lastname
+        
+      },
+      {observe : 'response' });
   }
   
 
