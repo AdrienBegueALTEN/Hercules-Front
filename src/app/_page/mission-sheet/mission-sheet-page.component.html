@@ -25,7 +25,8 @@
                 [projects]="mission.lastVersion.projects"
                 (new)="createNewProject()"
                 (update)="updateProject($event)"
-                (deletion)="deleteProject($event)"></app-projects-edit>
+                (deletion)="deleteProject($event)"
+                (image)="addImage($event)"></app-projects-edit>
               <button mat-fab matStepperNext class="white-shape next step-nav">
                 <mat-icon>done</mat-icon>
               </button>

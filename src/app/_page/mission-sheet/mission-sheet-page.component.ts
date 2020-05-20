@@ -3,6 +3,7 @@ import { MissionService } from 'src/app/_services/mission.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-mission-sheet-page',
@@ -64,5 +65,22 @@ export class MissionSheetPageComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = message;
     this._dialog.open(MessageDialogComponent, dialogConfig);
+  }
+
+  public addImage(imageFile){
+    this._missionService.uploadFromToken(imageFile.file, imageFile.project).subscribe(
+      event => {
+        if (event instanceof HttpResponse) {
+          if(event.status==200){
+            this.ngOnInit();
+          }
+          else
+            this._showErrorDialog("Impossible de charger cette image.");
+        }
+      },
+      err => {
+        console.log(err);
+        this._showErrorDialog("Impossible de charger cette image.");
+      });
   }
 }

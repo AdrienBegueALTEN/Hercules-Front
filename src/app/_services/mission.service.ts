@@ -116,4 +116,16 @@ export class MissionService {
 
     return this._httpClient.request(req);
   }
+
+  uploadFromToken(file: File, projectId: number): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    const req = new HttpRequest('POST', AppSettings.MISSION_API + "projects/from-token/" + projectId + '/upload-picture', formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+    return this._notInteceptedHttpClient.request(req);
+  }
 }
