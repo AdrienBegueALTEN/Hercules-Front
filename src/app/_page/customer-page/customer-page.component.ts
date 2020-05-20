@@ -30,7 +30,7 @@ export class CustomerPageComponent implements OnInit {
         this.writingRights = user.roles.includes(Role.MANAGER);
       },
       (err) => {
-        console.log(err);
+        window.location.replace('not-found')
       }
     )
   }

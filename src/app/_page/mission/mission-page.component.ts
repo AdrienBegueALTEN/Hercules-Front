@@ -8,6 +8,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 import { MatTabGroup } from '@angular/material/tabs';
 import { saveAs } from "file-saver";
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-mission-page',
@@ -155,5 +156,22 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       },
       () => this._showErrorDialog("Impossible de supprimer le projet.")
     )
+  }
+
+  addImage(imageFile){
+    this._missionService.upload(imageFile.file, imageFile.project).subscribe(
+      event => {
+        if (event instanceof HttpResponse) {
+          if(event.status==200){
+            this._snackBar.open('Image changée', 'X', {duration: 2000});
+            this.ngOnInit();
+          }
+          else
+            this._showErrorDialog("Impossible de charger cette image.");
+        }
+      },
+      err => {
+        this._showErrorDialog("Impossible de charger cette image.");
+      });
   }
 }

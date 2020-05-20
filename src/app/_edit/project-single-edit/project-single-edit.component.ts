@@ -18,14 +18,12 @@ export class ProjectSingleEditComponent implements OnInit {
 
   grp : FormGroup;
   selectedFiles: FileList;
-  currentFile: File;
   currentFileRealName = 'Choisir un fichier en cliquant ici.';
-  message = '';
   srcPic;
 
   @Output() update : EventEmitter<any> = new EventEmitter<any>();
   @Output() deletion : EventEmitter<void> = new EventEmitter<void>();
-
+  @Output() image : EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private _missionService: MissionService) {}
 
@@ -68,25 +66,9 @@ export class ProjectSingleEditComponent implements OnInit {
     let name = sha1(this.project.title+this.project.id+"logo");
     let extension = this.selectedFiles.item(0).name.split('.').pop(); 
     let renamedFile = new File([this.selectedFiles.item(0)],name+'.'+extension);
-    this.currentFile = renamedFile;
-    this._missionService.upload(this.currentFile, this.project.id).subscribe(
-      event => {
-        if (event instanceof HttpResponse) {
-          if(event.status==200){
-            this.message = "Le fichier est chargé.";
-            this.project.picture = name+'.'+extension;
-            this.srcPic = 'http://localhost:8080/hercules/missions/projects/picture/'+this.project.picture;
-            this.ngOnInit();
-          }
-          else
-            this.message  ="Une erreur est survenu ("+event.status+").";
-        }
-      },
-      err => {
-        this.message = 'Le fichier n\'a pas été chargé !';
-        this.currentFile = undefined;
-      });
-  
-    this.selectedFiles = undefined;
+    this.image.emit({
+        file:renamedFile,
+        project:this.project.id
+    });
   }
  }

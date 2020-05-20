@@ -11,7 +11,8 @@
         </mat-expansion-panel-header>
         <app-project-single-edit [project]="project"
           (update)="update.emit({index: i, key: $event.key, value: $event.value})"
-          (deletion)="deletion.emit(i)">
+          (deletion)="deletion.emit(i)"
+          (image)="image.emit($event)">
         </app-project-single-edit>
       </mat-expansion-panel>
     </mat-accordion>
