@@ -184,20 +184,28 @@ showOnlyMyMissions() {
 
 
 isAllSelected() {
-  if(this.dataSource)
-  {
   const numSelected = this.selection.selected.length;
-  const numRows = this.dataSource.data.length;
-  return numSelected === numRows;
-  }
-}
 
+  // const numRows = this.dataSource.data.length;
+  const numRowsMinusExcluded = this.dataSource.data
+    .filter(row => !(row.sheetStatus=='ON_WAITING' && row.versions?.length==null && row.lastVersion.versionDate==null))
+    .length;
+  console.log(numRowsMinusExcluded)
+  return numSelected === numRowsMinusExcluded;
+}
 
 
 masterToggle() {
   this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+    this.selection.clear() :
+    // this.dataSource.data.forEach(row => this.selection.select(row));
+
+    this.dataSource.data.forEach(row => {
+      if (!(row.sheetStatus=='ON_WAITING' && row.versions?.length==null && row.lastVersion.versionDate==null)) {
+        this.selection.select(row);
+      }
+    });
+
 }
 
 showOnlyMyValidatedMissions() {
