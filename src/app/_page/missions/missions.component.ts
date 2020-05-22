@@ -50,6 +50,7 @@ export class MissionsComponent implements OnInit {
   dataSourceProjects: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
   NumberOfCheckboxesExceed = false;
+  NumberOfMaximumCheckboxes = 2;
   
   displayedColumns: string[] = ['select','title','consultant','customer','city','manager','numberOfProjects','sheetStatus'];
   innerDisplayedColumns: string[] = ['select','project-name','project-description'];
@@ -248,10 +249,15 @@ openDeleteDialog(element: any): void {
 
 
 onClick(event,row) {
-  if(this.selection.selected.length>=2&&!(this.selection.isSelected(row))) {
+  if(this.selection.selected.length>=this.NumberOfMaximumCheckboxes&&!(this.selection.isSelected(row))) {
   event.preventDefault();
-  this._snackBar.open('Vous avez dépassé le nombre d\'éléments sélectionnés (2 maximum)', 'X', {duration: 2000});
+  this._snackBar.open('Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : '+this.NumberOfMaximumCheckboxes, 'X', {duration: 2000});
   }
+}
+
+SnackBarMessage()
+{
+  this._snackBar.open('Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : '+this.NumberOfMaximumCheckboxes, 'X', {duration: 2000});
 }
 
 onClickProjects(event)
