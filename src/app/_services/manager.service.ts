@@ -10,7 +10,19 @@ export class ManagerService {
 
   constructor(private _httpClient : HttpClient) { }
 
-  getAll(basic : boolean) : Observable<any[]> {
-    return this._httpClient.get<any[]>(AppSettings.MANAGER_API + '?basic=' + basic, AppSettings.HTTP_JSON_CONTENT);
+  getAll() : Observable<any[]> {
+    return this._httpClient.get<any[]>(AppSettings.MANAGER_API, AppSettings.HTTP_JSON_CONTENT);
+  }
+
+  addManager(email : String, firstname : String, lastname : String, admin : boolean) : Observable<any> {
+    return this._httpClient.post(AppSettings.MANAGER_API,
+      { 
+        "email" : email,
+        "firstname" : firstname,
+        "lastname" : lastname,
+        "isAdmin" : admin
+        
+      },
+      {observe : 'response' });
   }
 }

@@ -9,7 +9,6 @@ export class PaginatorProjectsComponent implements OnInit {
   @Input() optionAdd: boolean;
   @Input() projects;
   @Output() index = new EventEmitter<any>();
-  @Output() add = new EventEmitter<any>();
   currentIndex;
   constructor() { }
 
@@ -31,8 +30,5 @@ export class PaginatorProjectsComponent implements OnInit {
     }
   }
 
-  onAdd(){
-    this.add.emit();
-  }
 
 }

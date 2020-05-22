@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
+import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 
 @Component({
   selector: 'app-recruitment-officers',
@@ -58,7 +59,7 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
         this.createDatasource(data);
       },
       (err) => {
-        console.log(err);
+        this.dialogBadStart();
       }
     );
 
@@ -111,12 +112,18 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
       const dialog = this._dialog.open(OkDialogComponent, {
         data: {
           title: error,
-          message: recruitmentOfficer.firstname+" "+ recruitmentOfficer.lastname,
+          message: recruitmentOfficer.firstname+" "+ recruitmentOfficer.lastname+ " n'a pas pu être supprimé",
           ok: 'Continuer'
         }
       });
 
       
+  }
+
+  dialogBadStart() : void {
+    const  dialog = this._dialog.open(MessageDialogComponent, {
+      data: "Impossible de charger les chargés de recrutement"
+    });
   }
 
 }
