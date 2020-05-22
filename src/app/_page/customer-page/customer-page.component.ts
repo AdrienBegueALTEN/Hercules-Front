@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from 'src/app/_services/customer.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Role } from 'src/app/_enums/role.enum';
+import { MissionService } from 'src/app/_services/mission.service';
 
 @Component({
   selector: 'app-customer-page',
@@ -12,9 +13,12 @@ import { Role } from 'src/app/_enums/role.enum';
 export class CustomerPageComponent implements OnInit {
   customer: any;
   writingRights : boolean = false;
+  missions: any[];
+  cols = ['select', 'title', 'consultant', 'sheetStatus'];
 
   constructor(private _route: ActivatedRoute,
     private _customerService: CustomerService,
+    private _missionService: MissionService,
     private _authService: AuthService) { }
 
   ngOnInit(): void {
@@ -26,12 +30,23 @@ export class CustomerPageComponent implements OnInit {
     this._customerService.getById(id).subscribe(
       (data) => {
         this.customer = data;
+        this.getMissions();
         const user = this._authService.getUser();
         this.writingRights = user.roles.includes(Role.MANAGER);
       },
       (err) => {
         window.location.replace('not-found')
       }
+    )
+  }
+
+  getMissions(){
+    this._missionService.getMissionByCustomer(this.customer.id).subscribe(
+      (data) => {
+        this.missions = data;
+        console.log(this.missions);
+      },
+      (err) => {}
     )
   }
 
