@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { ManagerService } from 'src/app/_services/manager.service';
@@ -8,18 +8,20 @@ import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.compon
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 
 @Component({
   selector: 'app-managers',
   templateUrl: './managers.component.html',
   styleUrls: ['./managers.component.scss']
 })
-export class ManagersComponent implements OnInit {
+export class ManagersComponent implements OnInit,OnDestroy {
 
   user ;
   dataSource : MatTableDataSource<any>;
   managerSubscription :Subscription;
   managers : any[];
+  isAuthenticated : boolean = false;
 
   columnsToDisplay=['firstname','lastname','email','actions','admin'];
 
@@ -36,11 +38,25 @@ export class ManagersComponent implements OnInit {
     this.initialize();
   }
 
+  ngOnDestroy() : void {
+      if(this.managerSubscription){
+        this.managerSubscription.unsubscribe();
+      }
+  }
+
   initialize() : void {
+    this.isAuthenticated = !!this._authService.getToken();
+
+    if(this.isAuthenticated){
+      this.user = this._authService.getUser();
+    }
+
+
+
       this.managerSubscription = this._managerService.getAll().subscribe(
         (data) => { this.managers = data;
                     this.createDataSource(data); },
-        (error) => { console.log(error); }
+        (error) => { this.dialogBadStart(); }
       );
   }
 
@@ -57,6 +73,10 @@ export class ManagersComponent implements OnInit {
 
   goToCreateNewManager() : void {
     this._router.navigate(['/new-manager']);
+  }
+
+  changeAdmin(id : String) : void {
+    //utiliser même fonction de service que pour put mais en changeant juste admin
   }
 
   deleteManager(element : any) : void {
@@ -80,6 +100,12 @@ export class ManagersComponent implements OnInit {
         }
       }
     );
+  }
+
+  dialogBadStart() : void {
+    const  dialog = this._dialog.open(MessageDialogComponent, {
+      data: "Impossible de charger ces chargés de recrutement"
+    });
   }
 
 }
