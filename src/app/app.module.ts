@@ -92,6 +92,9 @@ import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/
 import { MissionsComponent } from './_page/missions/missions.component';
 import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
 import { ArrayMissionsViewComponent } from './_view/array-missions-view/array-missions-view.component';
+import { ManagersComponent } from './_page/managers/managers.component';
+import { ManagerPageComponent } from './_page/manager-page/manager-page.component';
+import { NewManagerComponent } from './_page/new-manager/new-manager.component';
 
 
 
@@ -149,7 +152,10 @@ import { ArrayMissionsViewComponent } from './_view/array-missions-view/array-mi
       RecruitmentOfficerPageComponent,
       NewRecruitmentOfficerComponent,
       OkDialogComponent,
-      ArrayMissionsViewComponent
+      ArrayMissionsViewComponent,
+      ManagersComponent,
+      ManagerPageComponent,
+      NewManagerComponent
    ],
    imports: [
       AppRoutingModule,
