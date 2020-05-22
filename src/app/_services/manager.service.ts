@@ -10,7 +10,7 @@ export class ManagerService {
 
   constructor(private _httpClient : HttpClient) { }
 
-  getAll(basic : boolean) : Observable<any[]> {
-    return this._httpClient.get<any[]>(AppSettings.MANAGER_API + '?basic=' + basic, AppSettings.HTTP_JSON_CONTENT);
+  getAll() : Observable<any[]> {
+    return this._httpClient.get<any[]>(AppSettings.MANAGER_API, AppSettings.HTTP_JSON_CONTENT);
   }
 }
