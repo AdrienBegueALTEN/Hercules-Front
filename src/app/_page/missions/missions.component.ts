@@ -13,7 +13,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatInput } from '@angular/material/input';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -49,6 +49,7 @@ export class MissionsComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   dataSourceProjects: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
+  NumberOfCheckboxesExceed = false;
   
   displayedColumns: string[] = ['select','title','consultant','customer','city','manager','numberOfProjects','sheetStatus'];
   innerDisplayedColumns: string[] = ['select','project-name','project-description'];
@@ -67,7 +68,7 @@ export class MissionsComponent implements OnInit {
     private _missionService : MissionService,
     private _route : ActivatedRoute,
     private _dialog: MatDialog,
-    private _snackBar: MatSnackBarModule,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -190,7 +191,7 @@ isAllSelected() {
   const numRowsMinusExcluded = this.dataSource.data
     .filter(row => !(row.sheetStatus=='ON_WAITING' && row.versions?.length==null && row.lastVersion.versionDate==null))
     .length;
-  console.log(numRowsMinusExcluded)
+  
   return numSelected === numRowsMinusExcluded;
 }
 
@@ -229,7 +230,7 @@ openDeleteDialog(element: any): void {
     data: { 
       title: 'Supprimer la mission '+element.lastVersion.title+' chez '+element.customer.name+'.' ,
       message: 'Voulez-vous continuer ?',
-      yes:'Supprimer la mission '+element.lastVersion.title,
+      yes:'Supprimer la mission',
       no:'Annuler'
     },
   });
@@ -238,21 +239,24 @@ openDeleteDialog(element: any): void {
     (result) => {
       if(result){
         this.delete(element);
+        this._snackBar.open('Mission '+element.lastVersion.title+' chez '+element.customer.name+' supprimée ', 'X', {duration: 2000});
       }
     }
   );
 }
 
-clickEvt(e) {
-  e.preventDefault();
-  console.log(e);
+
+
+onClick(event,row) {
+  if(this.selection.selected.length>=2&&!(this.selection.isSelected(row))) {
+  event.preventDefault();
+  this._snackBar.open('Vous avez dépassé le nombre d\'éléments sélectionnés (2 maximum)', 'X', {duration: 2000});
+  }
 }
 
-
-
-changeValue(element: any) {
-  const input = this.matInputs.find(matInput => matInput.id === element.sheetStatus);
-  //console.log(this.matInputs.find(matInput => matInput.id === element.sheetStatus));
+onClickProjects(event)
+{
+  event.preventDefault();
 }
 
 }
