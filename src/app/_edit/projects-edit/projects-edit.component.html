@@ -1,24 +1,20 @@
-  <div *ngIf="!!projects">
-    <mat-tab-group #tabGrp>
-      <mat-tab *ngFor="let project of projects; let i = index">
-        <ng-template mat-tab-label>
-          {{project.title || 'Projet n°' + (i+1)}}
-        </ng-template>   
-        <app-project-single-edit
-          [canBeDeteled]="projects.length > 1"
-          [externalVersion]="externalVersion"
-          [project]="project"
-          (update)="update.emit({index: i, key: $event.key, value: $event.value})"
-          (deletion)="deletion.emit(i)"
-          (image)="image.emit($event)">
-        </app-project-single-edit>
-      </mat-tab>
-      <mat-tab *ngIf="!projects || projects.length < 5" disabled>
-        <ng-template mat-tab-label>
-          <button mat-icon-button color="primary" (click)="new.emit()">
-            <mat-icon>add</mat-icon>
-          </button>
-        </ng-template>   
-      </mat-tab>
-    </mat-tab-group>
-  </div>
+<mat-tab-group #tabGrp>
+  <ng-container *ngIf="!!projects">
+    <mat-tab *ngFor="let project of projects; let i = index">
+      <ng-template mat-tab-label>
+        {{project.title || 'Projet n°' + (i+1)}}
+      </ng-template>
+      <app-project-single-edit [canBeDeteled]="projects.length > 1" [externalVersion]="externalVersion"
+        [project]="project" (update)="update.emit({index: i, key: $event.key, value: $event.value})"
+        (deletion)="deletion.emit(i)" (image)="image.emit($event)">
+      </app-project-single-edit>
+    </mat-tab>
+  </ng-container>
+  <mat-tab *ngIf="!projects || projects.length < 5" disabled>
+    <ng-template mat-tab-label>
+      <button mat-icon-button color="primary" (click)="new.emit()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
