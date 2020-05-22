@@ -28,23 +28,15 @@
             <mat-checkbox (change)="$event ? masterToggle() : null"
                           [checked]="selection.hasValue() && isAllSelected()"
                           [indeterminate]="selection.hasValue() && !isAllSelected()"
-                          [disabled] = "onlyMyMissionsChecked==false"
-
-                          
-                          
-                          >
+                          [disabled] = "onlyMyMissionsChecked==false">
             </mat-checkbox>
           </mat-header-cell>
-          <mat-header-cell *matCellDef="let row; let element">
-            <mat-checkbox (click)="$event.stopPropagation()"
+
+          <mat-header-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation() || onClick($event,row)"
                           (change)="$event ? selection.toggle(row) : null"
                           [checked]="selection.isSelected(row)"
-                          
-
-                          
-                          
-                          
-                          >
+                          [disabled]="row.sheetStatus=='ON_WAITING'&&row.versions?.length==null&&row.lastVersion.versionDate==null">
             </mat-checkbox>
           </mat-header-cell>
         </ng-container>
@@ -121,11 +113,10 @@
   <ng-container matColumnDef="select">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-header-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()"
+        <mat-checkbox (click)="$event.stopPropagation()|| onClick($event,row)"
                       (change)="$event ? selection.toggle(row) : null"
                       [checked]="selection.isSelected(row)"
-                      
-                      >
+                      [disabled]='!(row?.title.length>0)'>
         </mat-checkbox>
       </mat-header-cell>
     </ng-container>
@@ -140,7 +131,7 @@
 </ng-container>
 
 <mat-header-row *matHeaderRowDef="innerDisplayedColumns"></mat-header-row>
-<mat-row *matRowDef="let row; columns: innerDisplayedColumns;" [class.example-element-row]="element?.lastVersion.projects.length" (click)="element?.lastVersion.projects.length>0&&selection.toggle(row)"></mat-row>
+<mat-row *matRowDef="let row; columns: innerDisplayedColumns;" [class.example-element-row]="element?.lastVersion.projects.length" (click)="row?.title.length>0 ? selection.toggle(row) : null"></mat-row>
 </mat-table>
 </div>
 </ng-template>
