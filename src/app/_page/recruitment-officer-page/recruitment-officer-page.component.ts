@@ -112,6 +112,9 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     if (control.value.indexOf("@alten.com")==-1) {
       return { 'badDomain': true };
     }
+    else if (control.value.indexOf(".") >= control.value.indexOf("@")){
+      return { 'badDomain' : true};
+    }
     return null;
   }
 

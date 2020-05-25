@@ -14,6 +14,10 @@ export class ManagerService {
     return this._httpClient.get<any[]>(AppSettings.MANAGER_API, AppSettings.HTTP_JSON_CONTENT);
   }
 
+  getManagerById(id : String) : Observable<any> {
+    return this._httpClient.get<any[]>(AppSettings.MANAGER_API + id, AppSettings.HTTP_JSON_CONTENT);
+  }
+
   addManager(email : String, firstname : String, lastname : String, admin : boolean) : Observable<any> {
     return this._httpClient.post(AppSettings.MANAGER_API,
       { 
@@ -24,5 +28,21 @@ export class ManagerService {
         
       },
       {observe : 'response' });
+  }
+
+  updateManager(firstname : String, lastname : String, email : String, id : String) : Observable<any> {
+    return this._httpClient.put(AppSettings.MANAGER_API,
+      { 
+        "id" : id,
+        "email" : email,
+        "firstname" : firstname,
+        "lastname" : lastname
+        
+      },
+      {observe : 'response' });
+  }
+
+  deleteManager(id : String) {
+    return this._httpClient.delete(AppSettings.MANAGER_API + id);
   }
 }

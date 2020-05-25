@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
+import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
 
 @Component({
   selector: 'app-managers',
@@ -56,7 +57,7 @@ export class ManagersComponent implements OnInit,OnDestroy {
       this.managerSubscription = this._managerService.getAll().subscribe(
         (data) => { this.managers = data;
                     this.createDataSource(data); },
-        (error) => { this.dialogBadStart(); }
+        (error) => { this.dialogMessage("Impossible de charger ces chargés de recrutement"); }
       );
   }
 
@@ -80,13 +81,18 @@ export class ManagersComponent implements OnInit,OnDestroy {
   }
 
   deleteManager(element : any) : void {
+    this._managerService.deleteManager(element.id).subscribe(
+      () => { this.initialize();
+              this._router.navigate(['/managers']);},
+      (error) => { this.openDialogError(error,element); }
+    );
 
   }
 
   openDialogDelete(element: any): void {
     const dialog = this._dialog.open(YesNoDialogComponent, {
       data: { 
-        title: 'Supprimer le CDR '+element.firstname+" "+element.lastname ,
+        title: 'Supprimer le manager '+element.firstname+" "+element.lastname ,
         message: 'Voulez-vous continuer ?',
         yes:'Supprimer '+element.firstname + " " + element.lastname ,
         no:'Annuler'
@@ -102,9 +108,21 @@ export class ManagersComponent implements OnInit,OnDestroy {
     );
   }
 
-  dialogBadStart() : void {
+  openDialogError(error : String, manager: any) : void {
+    const dialog = this._dialog.open(OkDialogComponent, {
+      data: {
+        title: error,
+        message: manager.firstname+" "+ manager.lastname+ " n'a pas pu être supprimé",
+        ok: 'Continuer'
+      }
+    });
+
+    
+}
+
+  dialogMessage(message : String) : void {
     const  dialog = this._dialog.open(MessageDialogComponent, {
-      data: "Impossible de charger ces chargés de recrutement"
+      data: message
     });
   }
 

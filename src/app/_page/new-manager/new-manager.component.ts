@@ -47,7 +47,7 @@ export class NewManagerComponent implements OnInit {
   dialogSaveError(email : String) : void {
     const dialog = this._dialog.open(OkDialogComponent, {
       data: {
-        title: "Echec de la création du CDR",
+        title: "Echec de la création du manager",
         message: "L'email "+ email + " est déjà utilisé",
         ok: 'Continuer'
       }
@@ -57,6 +57,9 @@ export class NewManagerComponent implements OnInit {
   domainValidator(control: AbstractControl): { [key: string]: boolean } | null {
     if (control.value.indexOf("@alten.com")==-1) {
       return { 'badDomain': true };
+    }
+    else if (control.value.indexOf(".") >= control.value.indexOf("@")){
+      return { 'badDomain' : true};
     }
     return null;
   }
