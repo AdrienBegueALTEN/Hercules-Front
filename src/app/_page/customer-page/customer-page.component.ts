@@ -14,7 +14,7 @@ export class CustomerPageComponent implements OnInit {
   customer: any;
   writingRights : boolean = false;
   missions: any[];
-  cols = ['select', 'title', 'consultant', 'sheetStatus'];
+  cols = ['title', 'consultant', 'sheetStatus'];
 
   constructor(private _route: ActivatedRoute,
     private _customerService: CustomerService,

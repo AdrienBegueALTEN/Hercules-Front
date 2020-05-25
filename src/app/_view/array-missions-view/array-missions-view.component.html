@@ -1,12 +1,20 @@
+<div class="example-header">
+    <mat-form-field>
+        <mat-label>Chercher une mission</mat-label>
+        <input matInput (keyup)="applyFilter($event)"
+            placeholder="Chercher une mission, une ville, un secteur d'activité...">
+    </mat-form-field>
+
+</div>
+
 <mat-slide-toggle (click)="showOnlyMyMissions()" *ngIf="userIsManagerInclude" [checked]="true">Afficher uniquement mes
     missions. </mat-slide-toggle>&nbsp;&nbsp;
 <mat-slide-toggle (click)="showOnlyMyValidatedMissions()" *ngIf="userIsManagerInclude&&onlyMyMissionsChecked"
     [checked]="false">Cacher mes missions validées </mat-slide-toggle>
+<br>
+<br>
 
 <mat-table #table [dataSource]="dataSource" matSort>
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
 
 
     <ng-container matColumnDef="select">
@@ -15,13 +23,17 @@
                 [indeterminate]="selection.hasValue() && !isAllSelected()" [disabled]="onlyMyMissionsChecked==false">
             </mat-checkbox>
         </mat-header-cell>
-        <mat-header-cell *matCellDef="let row; let element">
-            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                [checked]="selection.isSelected(row)">
+
+        <mat-header-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation() || onClick($event,row)"
+                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                [disabled]="row.sheetStatus=='ON_WAITING'&&row.versions?.length==null&&row.lastVersion.versionDate==null">
             </mat-checkbox>
         </mat-header-cell>
     </ng-container>
 
+
+    <!-- Position Column -->
     <ng-container matColumnDef="title">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Titre de la mission </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.lastVersion.title}} </mat-cell>
@@ -58,21 +70,19 @@
     </ng-container>
 
     <ng-container matColumnDef="sheetStatus">
-        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Statut de la fiche</mat-header-cell>
         <mat-header-cell *matCellDef="let element" [ngSwitch]="element.sheetStatus">
-            <mat-icon *ngSwitchCase="'ON_WAITING'" style="color: red" matTooltip="Fiche en attente">
-                cancel
-            </mat-icon>
-            <mat-icon *ngSwitchCase="'ON_GOING'" style="color: orange" matTooltip="Fiche en cours de validation">
-                watch_later
-            </mat-icon>
-            <mat-icon *ngSwitchCase="'VALIDATED'" style="color: green" matTooltip="Fiche validée">
-                check_circle
-            </mat-icon>
+            <span *ngSwitchCase="'ON_WAITING'" style="color: red" class="material-icons"
+                matTooltip="Fiche en attente">cancel</span>
+            <span *ngSwitchCase="'ON_GOING'" style="color: orange" class="material-icons"
+                matTooltip="Fiche en cours de validation">watch_later</span>
+            <span *ngSwitchCase="'VALIDATED'" style="color: green" class="material-icons"
+                matTooltip="Fiche validée">check_circle</span>
             &nbsp;
 
-            <button mat-icon-button [routerLink]="['/missions', element.id]">
-                <mat-icon matTooltip="Voir plus">more_horiz</mat-icon>
+            <button mat-icon-button *ngIf="element.consultant.manager.id==this.user.id"
+                [routerLink]="['/missions', element.id]">
+                <span class="material-icons" matTooltip="Modifier la mission">more_horiz</span>
             </button>&nbsp;
 
 
@@ -95,6 +105,7 @@
 </mat-table>
 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
+
 <ng-template #tpl let-element>
     <div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
 
@@ -102,8 +113,9 @@
             <ng-container matColumnDef="select">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-header-cell *matCellDef="let row">
-                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)">
+                    <mat-checkbox (click)="$event.stopPropagation()|| onClick($event,row)"
+                        (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                        [disabled]='!(row?.title.length>0)'>
                     </mat-checkbox>
                 </mat-header-cell>
             </ng-container>
@@ -120,7 +132,10 @@
             <mat-header-row *matHeaderRowDef="innerDisplayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: innerDisplayedColumns;"
                 [class.example-element-row]="element?.lastVersion.projects.length"
-                (click)="element?.lastVersion.projects.length>0&&selection.toggle(row)"></mat-row>
+                (click)="row?.title.length>0 ? selection.toggle(row) : null"></mat-row>
         </mat-table>
     </div>
 </ng-template>
+<br />
+
+<p *ngIf="this.selection.selected.length>0">Éléments sélectionnés : {{this.selection.selected.length}}</p>
