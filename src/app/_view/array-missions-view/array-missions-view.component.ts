@@ -45,7 +45,8 @@ export class ArrayMissionsViewComponent implements OnInit {
   dataSourceProjects: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
   NumberOfCheckboxesExceed = false;
-  
+  NumberOfMaximumCheckboxes = 2;
+
   innerDisplayedColumns: string[] = ['select','project-name','project-description'];
 
 
@@ -243,9 +244,12 @@ openDeleteDialog(element: any): void {
 
 
 onClick(event,row) {
-  if(this.selection.selected.length>=2&&!(this.selection.isSelected(row))) {
-  event.preventDefault();
-  this._snackBar.open('Vous avez dépassé le nombre d\'éléments sélectionnés (2 maximum)', 'X', {duration: 2000});
+  if(this.selection.selected.length>=this.NumberOfMaximumCheckboxes&&!(this.selection.isSelected(row))) {
+    event.preventDefault();
+    this._snackBar.open(
+      'Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : '+this.NumberOfMaximumCheckboxes, 
+      'X', 
+      {duration: 2000});
   }
 }
 
