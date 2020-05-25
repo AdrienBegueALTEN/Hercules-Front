@@ -257,7 +257,10 @@ onClick(event,row) {
 
 SnackBarMessage()
 {
+  if(this.selection.selected.length>=this.NumberOfMaximumCheckboxes)
+  {
   this._snackBar.open('Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : '+this.NumberOfMaximumCheckboxes, 'X', {duration: 2000});
+  }
 }
 
 onClickProjects(event)

@@ -131,7 +131,7 @@
 </ng-container>
 
 <mat-header-row *matHeaderRowDef="innerDisplayedColumns"></mat-header-row>
-<mat-row *matRowDef="let row; columns: innerDisplayedColumns;" [class.example-element-row]="element?.lastVersion.projects.length" (click)="(row?.title.length>0&&selection.selected.length<NumberOfMaximumCheckboxes)||(row?.title.length>0&&selection.isSelected(row)) ? selection.toggle(row) : null"></mat-row>
+<mat-row *matRowDef="let row; columns: innerDisplayedColumns;" [class.example-element-row]="element?.lastVersion.projects.length" (click)="(row?.title.length>0&&selection.selected.length<NumberOfMaximumCheckboxes)||(row?.title.length>0&&selection.isSelected(row)) ? selection.toggle(row) : SnackBarMessage()"></mat-row>
 </mat-table>
 </div>
 </ng-template>
