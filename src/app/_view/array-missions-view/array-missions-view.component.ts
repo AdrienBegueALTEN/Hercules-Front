@@ -79,8 +79,10 @@ export class ArrayMissionsViewComponent implements OnInit {
       this.userIsManager = this.userIsAdmin || this.user.role == 'MANAGER';
     }
 
+    this.createDatasource(this.missions);
 
 
+/*
     this._missionService.getMissions(this.userId).subscribe(
       (data) => {
         this.missions = data;
@@ -90,7 +92,7 @@ export class ArrayMissionsViewComponent implements OnInit {
       (err) => {
         console.log(err);
       }
-    )
+    )*/
    
 
   }

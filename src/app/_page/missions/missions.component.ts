@@ -31,15 +31,17 @@ export class MissionsComponent implements OnInit {
 
 
   constructor(
-    private _missionService : MissionService
+    private _missionService : MissionService,
+    private _authService : AuthService
   ) {}
 
   ngOnInit(): void {
 
-    this._missionService.getMissions().subscribe(
+    const user = this._authService.getUser();
+
+    this._missionService.getMissions(user.id).subscribe(
       (data) => {
         this.missions = data;
-        
       },
       (err) => {
         console.log(err);
