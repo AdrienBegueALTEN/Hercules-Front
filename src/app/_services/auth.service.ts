@@ -19,6 +19,13 @@ export class AuthService {
     }, AppSettings.HTTP_JSON_CONTENT);
   }
 
+  public changePassword(currentPassword : string, newPassword : string) : Observable<any> {
+    return this._http.put(AppSettings.AUTH_API + 'change-password', {
+      currentPassword: currentPassword,
+      newPassword: newPassword
+    }, AppSettings.HTTP_JSON_CONTENT);
+  }
+
   public logout() : void {
     window.sessionStorage.clear();
     window.location.replace('login');

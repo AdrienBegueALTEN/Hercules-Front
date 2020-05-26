@@ -3,5 +3,6 @@ export enum CtrlError {
   REQUIRED = 'required',
   MAX = 'max',
   MAX_LENGTH = 'maxlength',
-  MIN = 'min'
+  MIN = 'min',
+  MIN_LENGTH = 'minlength'
 }

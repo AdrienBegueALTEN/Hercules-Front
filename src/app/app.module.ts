@@ -42,6 +42,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSortModule } from '@angular/material/sort';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -95,6 +96,7 @@ import { ArrayMissionsViewComponent } from './_view/array-missions-view/array-mi
 import { ManagersComponent } from './_page/managers/managers.component';
 import { ManagerPageComponent } from './_page/manager-page/manager-page.component';
 import { NewManagerComponent } from './_page/new-manager/new-manager.component';
+import { ChangePasswordDialogComponent } from './dialog/change-password/change-password-dialog.component';
 
 
 
@@ -155,7 +157,8 @@ import { NewManagerComponent } from './_page/new-manager/new-manager.component';
       ArrayMissionsViewComponent,
       ManagersComponent,
       ManagerPageComponent,
-      NewManagerComponent
+      NewManagerComponent,
+      ChangePasswordDialogComponent
    ],
    imports: [
       AppRoutingModule,
@@ -191,7 +194,7 @@ import { NewManagerComponent } from './_page/new-manager/new-manager.component';
       MatExpansionModule,
       CdkTableModule,
       CdkTreeModule,
-     
+      MatMenuModule
    ],
    providers: [
       authInterceptorProviders,

@@ -40,7 +40,7 @@ export class MissionService {
   }
 
   public getMissionDetailsFromToken(token : string) : Observable<any> {
-    return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'from-token',
+    return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'anonymous',
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
@@ -63,7 +63,7 @@ export class MissionService {
   }
 
   public updateMissionFromToken(token : string, fieldName : String, value : any) : Observable<any> {
-    return this._notInteceptedHttpClient.put(AppSettings.MISSION_API + 'from-token',
+    return this._notInteceptedHttpClient.put(AppSettings.MISSION_API + 'anonymous',
       {
         fieldName : fieldName,
         value : value,
@@ -80,7 +80,7 @@ export class MissionService {
   }
 
   public newProjectFromToken(token : string): Observable<any> {
-    return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'new-project-from-token',
+    return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'new-project-anonymous',
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
@@ -95,7 +95,7 @@ export class MissionService {
   }
 
   public updateProjectFromToken(token : string, id : number, fieldName : String, value : any) : Observable<any> {
-    return this._notInteceptedHttpClient.put(AppSettings.MISSION_API + 'projects/from-token',
+    return this._notInteceptedHttpClient.put(AppSettings.MISSION_API + 'projects/anonymous',
       {
         id : id,
         fieldName : fieldName,
@@ -109,7 +109,7 @@ export class MissionService {
   }
 
   public deleteProjectFromToken(token : string, project : number){
-    return this._notInteceptedHttpClient.delete(AppSettings.MISSION_API + 'projects/from-token/' + project,
+    return this._notInteceptedHttpClient.delete(AppSettings.MISSION_API + 'projects/anonymous/' + project,
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
@@ -129,7 +129,7 @@ export class MissionService {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
-    const req = new HttpRequest('POST', AppSettings.MISSION_API + "projects/from-token/" + projectId + '/upload-picture', formData, {
+    const req = new HttpRequest('POST', AppSettings.MISSION_API + "projects/anonymous/" + projectId + '/upload-picture', formData, {
       reportProgress: true,
       responseType: 'json',
       headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) 
