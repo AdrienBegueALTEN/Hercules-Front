@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-managers',
@@ -20,11 +21,12 @@ export class ManagersComponent implements OnInit,OnDestroy {
 
   user ;
   dataSource : MatTableDataSource<any>;
+  dataSource2 : MatTableDataSource<any>;
   managerSubscription :Subscription;
   managers : any[];
   isAuthenticated : boolean = false;
 
-  columnsToDisplay=['firstname','lastname','email','actions','admin'];
+  columnsToDisplay=['firstname','lastname','email', 'releaseDate','actions','admin'];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -33,7 +35,8 @@ export class ManagersComponent implements OnInit,OnDestroy {
   constructor(private _managerService : ManagerService,
               private _authService : AuthService,
               private _router : Router,
-              private _dialog : MatDialog) { }
+              private _dialog : MatDialog,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initialize();
@@ -62,9 +65,16 @@ export class ManagersComponent implements OnInit,OnDestroy {
   }
 
   createDataSource(data : any[]) : void {
+    for(let x of data){
+      if(x.releaseDate!=null)
+        x.releaseDate = "Inactif";
+      else
+        x.releaseDate = "Actif";
+    }
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    
   }
 
   applyFilter(event : Event) : void {
@@ -77,13 +87,15 @@ export class ManagersComponent implements OnInit,OnDestroy {
   }
 
   changeAdmin(manager : any) : void {
-
+    
     this._managerService.updateManager(manager.firstname,manager.lastname,manager.email, String(!manager.admin), manager.id).subscribe(
       () => { this.managerSubscription = this._managerService.getAll().subscribe(
                 (data) => { this.managers = data;
                             this.createDataSource(data); },
                 (error) => { this.dialogMessage("Impossible de charger ces chargés de recrutement"); }
-            );},
+            );
+              this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+          },
       (error) => { this.dialogMessage("Les droits d'administrateurs n'ont pas pu être modifiés."); }
     );
   }
@@ -136,5 +148,8 @@ export class ManagersComponent implements OnInit,OnDestroy {
       data: message
     });
   }
+
+  
+  
 
 }
