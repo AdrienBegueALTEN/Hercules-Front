@@ -36,6 +36,8 @@
                     Une adresse mail est requise.
             </mat-error>
         </mat-form-field>
+
+        <mat-slide-toggle (change)="onUpdateManager()" formControlName="admin">Admin</mat-slide-toggle>
     </mat-card-content>
     </form>
 </mat-card>

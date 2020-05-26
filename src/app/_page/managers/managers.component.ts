@@ -76,8 +76,16 @@ export class ManagersComponent implements OnInit,OnDestroy {
     this._router.navigate(['/new-manager']);
   }
 
-  changeAdmin(id : String) : void {
-    //utiliser même fonction de service que pour put mais en changeant juste admin
+  changeAdmin(manager : any) : void {
+
+    this._managerService.updateManager(manager.firstname,manager.lastname,manager.email, String(!manager.admin), manager.id).subscribe(
+      () => { this.managerSubscription = this._managerService.getAll().subscribe(
+                (data) => { this.managers = data;
+                            this.createDataSource(data); },
+                (error) => { this.dialogMessage("Impossible de charger ces chargés de recrutement"); }
+            );},
+      (error) => { this.dialogMessage("Les droits d'administrateurs n'ont pas pu être modifiés."); }
+    );
   }
 
   deleteManager(element : any) : void {

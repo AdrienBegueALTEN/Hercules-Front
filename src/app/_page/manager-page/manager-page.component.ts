@@ -40,7 +40,8 @@ export class ManagerPageComponent implements OnInit {
     this.managerForm = this._formBuilder.group({
         firstname: ['',[Validators.required]],
         lastname: ['',[Validators.required]],
-        email: ['',[Validators.required,Validators.email,this.domainValidator]]
+        email: ['',[Validators.required,Validators.email,this.domainValidator]],
+        admin : ['']
     });
     this._managerService.getManagerById(this._route.snapshot.paramMap.get('id')).subscribe(
       (data) => {
@@ -48,6 +49,7 @@ export class ManagerPageComponent implements OnInit {
         this.managerForm.get('firstname').setValue(this.manager.firstname);
         this.managerForm.get('lastname').setValue(this.manager.lastname);
         this.managerForm.get('email').setValue(this.manager.email);
+        this.managerForm.get('admin').setValue(this.manager.admin);
       },
       (err) => {
         this.dialogBadStart();
@@ -68,7 +70,12 @@ export class ManagerPageComponent implements OnInit {
           const firstname = this.managerForm.get('firstname').value;
           const lastname = this.managerForm.get('lastname').value;
           const email = this.managerForm.get('email').value;
-          this._managerService.updateManager(firstname, lastname, email,this.manager.id).subscribe(
+          const admin = this.managerForm.get('admin').value;
+          this.manager.email = email;
+          this.manager.firstname = firstname;
+          this.manager.lastname = lastname;
+          this.manager.admin = admin;
+          this._managerService.updateManager(firstname, lastname, email, admin, this.manager.id).subscribe(
             (response) => { this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
             () => { this.dialogError(firstname,lastname); }
           );

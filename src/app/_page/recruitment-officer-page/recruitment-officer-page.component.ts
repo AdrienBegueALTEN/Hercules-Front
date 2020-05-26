@@ -76,6 +76,9 @@ export class RecruitmentOfficerPageComponent implements OnInit {
           const firstname = this.recruitmentOfficerForm.get('firstname').value;
           const lastname = this.recruitmentOfficerForm.get('lastname').value;
           const email = this.recruitmentOfficerForm.get('email').value;
+          this.recruitmentOfficer.email = email;
+          this.recruitmentOfficer.firstname = firstname;
+          this.recruitmentOfficer.lastname = lastname;
           this._recruitmentOfficerService.updateRecruitmentOfficer(firstname, lastname, email,this.recruitmentOfficer.id).subscribe(
             (response) => { this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
             () => { this.dialogError(firstname,lastname); }
