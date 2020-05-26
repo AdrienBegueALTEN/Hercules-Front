@@ -82,8 +82,11 @@ export class ManagersComponent implements OnInit,OnDestroy {
 
   deleteManager(element : any) : void {
     this._managerService.deleteManager(element.id).subscribe(
-      () => { this.initialize();
-              this._router.navigate(['/managers']);},
+      () => { this.managerSubscription = this._managerService.getAll().subscribe(
+                (data) => { this.managers = data;
+                            this.createDataSource(data); },
+                (error) => { this.dialogMessage("Impossible de charger ces chargés de recrutement"); }
+      );},
       (error) => { this.openDialogError(error,element); }
     );
 

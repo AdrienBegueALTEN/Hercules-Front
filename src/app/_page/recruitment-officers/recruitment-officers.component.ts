@@ -82,8 +82,15 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
 
   deleteRecruitmentOfficer(recruitmentOfficer : any) : void {
     this._recruitmentOfficerService.deleteRecruitmentOfficer(recruitmentOfficer.id).subscribe(
-      () => { this.initialize();
-              this._router.navigate(['/recruitment-officers']);},
+      () => { this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
+                (data) => {
+                            this.recruitmentOfficers = data;
+                            this.createDatasource(data);
+                          },
+                (err) =>  {
+                            this.dialogBadStart();
+                          }
+              );},
       (error) => { this.openDialogError(error,recruitmentOfficer); }
     );
     
