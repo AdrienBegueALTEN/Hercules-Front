@@ -9,29 +9,44 @@
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
     <ng-container matColumnDef="firstname">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
-      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
+      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate==='Inactif'+element.firstname">
         {{element.firstname}}
       </td>
     </ng-container>
   
     <ng-container matColumnDef="lastname">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
-      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
+      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate==='Inactif'+element.firstname">
         {{element.lastname}}
       </td>
     </ng-container>
   
     <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </th>
-      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
+      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate==='Inactif'+element.firstname">
         {{element.email}}
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="releaseDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Statut </th>
+      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate==='Inactif'+element.firstname">
+        <ng-container *ngIf="element.releaseDate==='Actif'+element.firstname">{{"Actif"}} </ng-container> 
+        <ng-container *ngIf="element.releaseDate==='Inactif'+element.firstname">{{"Inactif"}} </ng-container>
+      </td>
+    </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
+      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate==='Inactif'+element.firstname">
+        <button matTooltip="Rendre inactif {{element.firstname}} {{element.lastname}}" mat-icon-button (click)="openDialogInactive(element)"
+                  *ngIf="element.releaseDate==='Actif'+element.firstname">
+            <mat-icon>lock</mat-icon>
+          </button>&nbsp;
+          <button class="verrou" matTooltip="Rendre actif {{element.firstname}} {{element.lastname}}" mat-icon-button (click)="openDialogActive(element)"
+                  *ngIf="element.releaseDate==='Inactif'+element.firstname">
+            <mat-icon>lock_open</mat-icon>
+          </button>&nbsp;
         <button matTooltip="Voir plus de {{element.firstname}} {{element.lastname}}" mat-icon-button [routerLink]="[element.id]">
           <mat-icon>more_horiz</mat-icon>
         </button>&nbsp;
@@ -48,7 +63,7 @@
         >
     </tr>
   </table>
-  
+   
   
   <mat-paginator style="background-color: transparent;" [pageSizeOptions]="[ 5, 10, 25, 50, 100]"></mat-paginator>
 

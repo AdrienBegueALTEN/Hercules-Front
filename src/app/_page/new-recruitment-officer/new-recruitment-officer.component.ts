@@ -65,4 +65,4 @@ export class NewRecruitmentOfficerComponent implements OnInit {
     return null;
   }
 
-}
+} 

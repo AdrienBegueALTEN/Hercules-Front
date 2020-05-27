@@ -10,6 +10,8 @@ import { MatSort } from '@angular/material/sort';
 import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
+import { ReleaseDateDialogComponent } from 'src/app/dialog/release-date/release-date-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-recruitment-officers',
@@ -24,7 +26,7 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
   recruitmentOfficerSubscription : Subscription;
   recruitmentOfficers : any[];
   dataSource: MatTableDataSource<any>;
-  columnsToDisplay = ['firstname', 'lastname', 'email', 'actions'];
+  columnsToDisplay = ['firstname', 'lastname', 'email', 'releaseDate', 'actions'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -33,7 +35,8 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
   constructor(private _recruitmentOfficerService: RecruitmentOfficerService, 
     private _authService: AuthService,
     private _dialog: MatDialog,
-    private _router:Router) { }
+    private _router:Router,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initialize();
@@ -56,7 +59,7 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
     this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
       (data) => {
         this.recruitmentOfficers = data;
-        this.createDatasource(data);
+        this.createDataSource(data);
       },
       (err) => {
         this.dialogBadStart();
@@ -65,7 +68,13 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
 
   }
 
-  createDatasource(data) : void {
+  createDataSource(data) : void {
+    for(let x of data){
+      if(x.releaseDate!=null)
+        x.releaseDate = "Inactif"+x.firstname;
+      else
+        x.releaseDate = "Actif"+x.firstname;
+    }
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -85,7 +94,7 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
       () => { this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
                 (data) => {
                             this.recruitmentOfficers = data;
-                            this.createDatasource(data);
+                            this.createDataSource(data);
                           },
                 (err) =>  {
                             this.dialogBadStart();
@@ -131,6 +140,68 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
     const  dialog = this._dialog.open(MessageDialogComponent, {
       data: "Impossible de charger les chargés de recrutement"
     });
+  }
+
+  dialogMessage(message : String) : void {
+    const  dialog = this._dialog.open(MessageDialogComponent, {
+      data: message
+    });
+  }
+
+  openDialogInactive(manager : any) : void {
+    const dialog = this._dialog.open(ReleaseDateDialogComponent, {
+      data: { 
+        title: 'Rendre inactif le manager '+manager.firstname+" "+manager.lastname ,
+        message: 'Voulez-vous continuer ?',
+        yes:'Rendre inactif ',
+        no:'Annuler'
+      }
+    });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        if(result){
+          this._recruitmentOfficerService.releaseRecruitmentOfficer(result,manager.id).subscribe(
+            () => { this.recruitmentOfficerSubscription = this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
+                      (data) => { this.recruitmentOfficers = data;
+                                  this.createDataSource(data); },
+                      (error) => { this.dialogMessage("Impossible de charger ces chargés de recrutement"); }
+                  );
+                    this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+                },
+            (error) => { this.dialogMessage("Le manager n'a pas pu être rendu actif."); }
+          );
+        }
+      }
+    );
+  }
+  
+  openDialogActive(manager : any) : void {
+    const dialog = this._dialog.open(YesNoDialogComponent, {
+      data: { 
+        title: 'Rendre actif le manager '+manager.firstname+" "+manager.lastname ,
+        message: 'Voulez-vous continuer ?',
+        yes:'Rendre actif ',
+        no:'Annuler'
+      }
+    });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        if(result){
+          this._recruitmentOfficerService.reviveRecruitmentOfficer(manager.id).subscribe(
+            () => { this.recruitmentOfficerSubscription = this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
+                      (data) => { this.recruitmentOfficers = data;
+                                  this.createDataSource(data); },
+                      (error) => { this.dialogMessage("Impossible de charger ces chargés de recrutement"); }
+                  );
+                    this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+                },
+            (error) => { this.dialogMessage("Le manager n'a pas pu être rendu actif."); }
+          );
+        }
+      }
+    );
   }
 
 }
