@@ -97,6 +97,7 @@ import { ManagersComponent } from './_page/managers/managers.component';
 import { ManagerPageComponent } from './_page/manager-page/manager-page.component';
 import { NewManagerComponent } from './_page/new-manager/new-manager.component';
 import { ChangePasswordDialogComponent } from './dialog/change-password/change-password-dialog.component';
+import { ReleaseDateDialogComponent } from './dialog/release-date/release-date-dialog.component';
 
 
 
@@ -158,7 +159,8 @@ import { ChangePasswordDialogComponent } from './dialog/change-password/change-p
       ManagersComponent,
       ManagerPageComponent,
       NewManagerComponent,
-      ChangePasswordDialogComponent
+      ChangePasswordDialogComponent,
+      ReleaseDateDialogComponent
    ],
    imports: [
       AppRoutingModule,

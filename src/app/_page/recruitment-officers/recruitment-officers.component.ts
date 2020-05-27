@@ -101,7 +101,7 @@ export class RecruitmentOfficersComponent implements OnInit,OnDestroy {
       data: { 
         title: 'Supprimer le CDR '+element.firstname+" "+element.lastname ,
         message: 'Voulez-vous continuer ?',
-        yes:'Supprimer '+element.firstname + " " + element.lastname ,
+        yes:'Supprimer ',
         no:'Annuler'
       }
     });

@@ -53,6 +53,16 @@ export class ManagerService {
       {observe : 'response' });
   }
 
+  reviveManager(id : String) : Observable<any> {
+    return this._httpClient.put(AppSettings.MANAGER_API,
+      { 
+        "id" : id,
+        "revive" : true
+        
+      },
+      {observe : 'response' });
+  }
+
   deleteManager(id : String) {
     return this._httpClient.delete(AppSettings.MANAGER_API + id);
   }
