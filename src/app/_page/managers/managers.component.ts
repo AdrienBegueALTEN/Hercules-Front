@@ -10,6 +10,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ReleaseDateDialogComponent } from 'src/app/dialog/release-date/release-date-dialog.component';
 
 @Component({
   selector: 'app-managers',
@@ -20,11 +22,12 @@ export class ManagersComponent implements OnInit,OnDestroy {
 
   user ;
   dataSource : MatTableDataSource<any>;
+  dataSource2 : MatTableDataSource<any>;
   managerSubscription :Subscription;
   managers : any[];
   isAuthenticated : boolean = false;
 
-  columnsToDisplay=['firstname','lastname','email','actions','admin'];
+  columnsToDisplay=['firstname','lastname','email', 'releaseDate','actions','admin'];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -33,7 +36,8 @@ export class ManagersComponent implements OnInit,OnDestroy {
   constructor(private _managerService : ManagerService,
               private _authService : AuthService,
               private _router : Router,
-              private _dialog : MatDialog) { }
+              private _dialog : MatDialog,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.initialize();
@@ -62,9 +66,16 @@ export class ManagersComponent implements OnInit,OnDestroy {
   }
 
   createDataSource(data : any[]) : void {
+    for(let x of data){
+      if(x.releaseDate!=null)
+        x.releaseDate = "Inactif"+x.firstname;
+      else
+        x.releaseDate = "Actif"+x.firstname;
+    }
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    
   }
 
   applyFilter(event : Event) : void {
@@ -77,13 +88,15 @@ export class ManagersComponent implements OnInit,OnDestroy {
   }
 
   changeAdmin(manager : any) : void {
-
+    
     this._managerService.updateManager(manager.firstname,manager.lastname,manager.email, String(!manager.admin), manager.id).subscribe(
       () => { this.managerSubscription = this._managerService.getAll().subscribe(
                 (data) => { this.managers = data;
                             this.createDataSource(data); },
                 (error) => { this.dialogMessage("Impossible de charger ces chargés de recrutement"); }
-            );},
+            );
+              this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+          },
       (error) => { this.dialogMessage("Les droits d'administrateurs n'ont pas pu être modifiés."); }
     );
   }
@@ -105,7 +118,7 @@ export class ManagersComponent implements OnInit,OnDestroy {
       data: { 
         title: 'Supprimer le manager '+element.firstname+" "+element.lastname ,
         message: 'Voulez-vous continuer ?',
-        yes:'Supprimer '+element.firstname + " " + element.lastname ,
+        yes:'Supprimer ',
         no:'Annuler'
       }
     });
@@ -135,6 +148,62 @@ export class ManagersComponent implements OnInit,OnDestroy {
     const  dialog = this._dialog.open(MessageDialogComponent, {
       data: message
     });
+  }
+
+  openDialogInactive(manager : any) : void {
+    const dialog = this._dialog.open(ReleaseDateDialogComponent, {
+      data: { 
+        title: 'Rendre inactif le manager '+manager.firstname+" "+manager.lastname ,
+        message: 'Voulez-vous continuer ?',
+        yes:'Rendre inactif ',
+        no:'Annuler'
+      }
+    });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        if(result){
+          this._managerService.releaseManager(result,manager.id).subscribe(
+            () => { this.managerSubscription = this._managerService.getAll().subscribe(
+                      (data) => { this.managers = data;
+                                  this.createDataSource(data); },
+                      (error) => { this.dialogMessage("Impossible de charger ces chargés de recrutement"); }
+                  );
+                    this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+                },
+            (error) => { this.dialogMessage("Le manager n'a pas pu être rendu actif."); }
+          );
+        }
+      }
+    );
+  }
+  
+  openDialogActive(manager : any) : void {
+    const dialog = this._dialog.open(YesNoDialogComponent, {
+      data: { 
+        title: 'Rendre actif le manager '+manager.firstname+" "+manager.lastname ,
+        message: 'Voulez-vous continuer ?',
+        yes:'Rendre actif ',
+        no:'Annuler'
+      }
+    });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        if(result){
+          this._managerService.reviveManager(manager.id).subscribe(
+            () => { this.managerSubscription = this._managerService.getAll().subscribe(
+                      (data) => { this.managers = data;
+                                  this.createDataSource(data); },
+                      (error) => { this.dialogMessage("Impossible de charger ces chargés de recrutement"); }
+                  );
+                    this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+                },
+            (error) => { this.dialogMessage("Le manager n'a pas pu être rendu actif."); }
+          );
+        }
+      }
+    );
   }
 
 }

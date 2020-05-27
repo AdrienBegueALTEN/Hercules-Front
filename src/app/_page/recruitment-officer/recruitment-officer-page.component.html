@@ -36,6 +36,15 @@
                     Une adresse mail est requise.
             </mat-error>
         </mat-form-field>
+
+        <mat-form-field appearance="legacy">
+            <mat-label>Date de fin d'activité</mat-label>
+            <input matInput 
+                   type = "date"
+                   formControlName="releaseDate"
+                   (change)="onReleaseRecruitmentOfficer()">
+            
+        </mat-form-field>
     </mat-card-content>
     </form>
-</mat-card>
+</mat-card> 

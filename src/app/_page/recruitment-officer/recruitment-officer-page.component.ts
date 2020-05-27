@@ -45,7 +45,8 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     this.recruitmentOfficerForm = this._formBuilder.group({
         firstname: ['',[Validators.required]],
         lastname: ['',[Validators.required]],
-        email: ['',[Validators.required,Validators.email,this.domainValidator]]
+        email: ['',[Validators.required,Validators.email,this.domainValidator]],
+        releaseDate: ['']
     });
     this._recruitmentOfficerService.getRecruitmentOfficerById(this._route.snapshot.paramMap.get('id')).subscribe(
       (data) => {
@@ -88,6 +89,15 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     else{
       this.dialogError(this.recruitmentOfficer.firstname,this.recruitmentOfficer.lastname);
     }
+  }
+
+  onReleaseRecruitmentOfficer() : void {
+    const releaseDate = this.recruitmentOfficerForm.get('releaseDate').value;
+    this.recruitmentOfficer.releaseDate = releaseDate;
+    this._recruitmentOfficerService.releaseRecruitmentOfficer(releaseDate, this.recruitmentOfficer.id).subscribe(
+      (response) => { this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
+      () => { this.dialogError(this.recruitmentOfficer.firstname,this.recruitmentOfficer.lastname); }
+    );
   }
 
   dialogError(firstname : String, lastname : String) : void {
@@ -151,3 +161,4 @@ export class RecruitmentOfficerPageComponent implements OnInit {
   }
 
 }
+ 

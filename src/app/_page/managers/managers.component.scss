@@ -5,8 +5,9 @@ table{
 td,th, .icon{
     vertical-align: middle;
   }
+
   
-  .example-element-row td {
+  .example-element-row td,p {
     border-bottom-width: 0;
   }
    
@@ -14,5 +15,8 @@ td,th, .icon{
     color: gray;
   }
   
-
+ button.verrou{
+   float: left;;
+ }
+ 
  

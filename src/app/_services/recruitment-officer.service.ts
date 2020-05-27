@@ -48,6 +48,26 @@ export class RecruitmentOfficerService {
       },
       {observe : 'response' });
   }
+
+  releaseRecruitmentOfficer(releaseDate : String, id : String) : Observable<any> {
+    return this._httpClient.put(AppSettings.RECRUITMENTOFFICER_API,
+      { 
+        "id" : id,
+        "releaseDate" : releaseDate
+        
+      },
+      {observe : 'response' });
+  }
+
+  reviveRecruitmentOfficer(id : String) : Observable<any> {
+    return this._httpClient.put(AppSettings.RECRUITMENTOFFICER_API,
+      { 
+        "id" : id,
+        "revive" : true
+        
+      },
+      {observe : 'response' });
+  }
   
 
 }

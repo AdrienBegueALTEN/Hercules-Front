@@ -41,7 +41,8 @@ export class ManagerPageComponent implements OnInit {
         firstname: ['',[Validators.required]],
         lastname: ['',[Validators.required]],
         email: ['',[Validators.required,Validators.email,this.domainValidator]],
-        admin : ['']
+        admin : [''],
+        releaseDate : ['']
     });
     this._managerService.getManagerById(this._route.snapshot.paramMap.get('id')).subscribe(
       (data) => {
@@ -83,6 +84,15 @@ export class ManagerPageComponent implements OnInit {
     else{
       this.dialogError(this.manager.firstname,this.manager.lastname);
     }
+  }
+
+  onReleaseManager() : void {
+    const releaseDate = this.managerForm.get('releaseDate').value;
+    this.manager.releaseDate = releaseDate;
+    this._managerService.releaseManager(releaseDate, this.manager.id).subscribe(
+      (response) => { this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
+      () => { this.dialogError(this.manager.firstname,this.manager.lastname); }
+    );
   }
 
   dialogError(firstname : String, lastname : String) : void {

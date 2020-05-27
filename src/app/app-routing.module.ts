@@ -35,7 +35,7 @@ const routes: Routes = [
       { path: 'customers/:id', component: CustomerPageComponent},
       { path: 'recruitment-officers', component: RecruitmentOfficersComponent},
       { path: 'recruitment-officers/:id', component: RecruitmentOfficerPageComponent},
-      { path: 'managers', component: ManagersComponent},
+      { path: 'managers', canActivate: [AdminGuard], component: ManagersComponent},
       { path: 'managers/:id', component: ManagerPageComponent}
      ],
     component: HomeComponent
