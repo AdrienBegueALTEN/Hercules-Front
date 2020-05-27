@@ -6,14 +6,14 @@ import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-datatable',
   templateUrl: './datatable.component.html',
-  styles: ['./datatable.component.scss']
+  styleUrls: ['./datatable.component.scss']
 })
 export class DatatableComponent implements OnInit {
   @Input() columnsToDisplay : string [];
   @Input() dataSource: MatTableDataSource<any>;
   @Input() label : String;
 
-  @Output() newUser : EventEmitter<void> = new EventEmitter<void>();
+  @Output() newElement : EventEmitter<void> = new EventEmitter<void>();
   @Output() rowClicked : EventEmitter<number> = new EventEmitter<number>();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

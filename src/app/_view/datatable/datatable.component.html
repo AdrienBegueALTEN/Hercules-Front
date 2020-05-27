@@ -6,27 +6,33 @@
 
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
   <ng-container matColumnDef="firstname">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
-    <td mat-cell *matCellDef="let user">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Prénom</th>
+    <td mat-cell *matCellDef="let user" (click)="rowClicked.emit(user.id)">
       {{user.firstname}}
     </td>
   </ng-container>
   <ng-container matColumnDef="lastname">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
-    <td mat-cell *matCellDef="let user">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+    <td mat-cell *matCellDef="let user" (click)="rowClicked.emit(user.id)">
       {{user.lastname}}
     </td>
   </ng-container>
   <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </th>
-    <td mat-cell *matCellDef="let user">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>E-mail</th>
+    <td mat-cell *matCellDef="let user" (click)="rowClicked.emit(user.id)">
       {{user.email}}
     </td>
   </ng-container>
+  <ng-container matColumnDef="releaseDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
+    <td mat-cell *matCellDef="let user" (click)="rowClicked.emit(user.id)">
+      {{user.releaseDate ? 'Sorti des effectifs le ' + user.releaseDate : 'Actif'}}
+    </td>
+  </ng-container>
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let user; columns: columnsToDisplay;" (click)="rowClicked.emit(user.id)"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="[ 5, 10, 25, 50, 100]"></mat-paginator>
 <div>
-  <button mat-raised-button color="primary" (click)="newUser.emit()">Ajouter un {{label}}</button>
+  <button mat-raised-button color="primary" (click)="newElement.emit()">Ajouter un {{label}}</button>
 </div></div>

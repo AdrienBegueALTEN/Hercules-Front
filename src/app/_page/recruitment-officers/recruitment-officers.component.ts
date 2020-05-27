@@ -13,7 +13,6 @@ import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.co
 export class RecruitmentOfficersComponent implements OnInit {
 
   public dataSource: MatTableDataSource<any>;
-  public   columnsToDisplay = ['firstname', 'lastname', 'email', 'releaseDate', 'actions'];
 
   constructor(
     private _recruitmentOfficerService: RecruitmentOfficerService, 
