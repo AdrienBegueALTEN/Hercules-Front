@@ -46,4 +46,8 @@ export class CustomerService {
 
     return this._httpClient.request(req);
   }
+
+  public getMissionByCustomer(customer: number) : Observable<any> {
+    return this._httpClient.get(AppSettings.CUSTOMER_API + customer + '/missions');
+  }
 }

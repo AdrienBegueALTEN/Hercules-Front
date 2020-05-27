@@ -35,10 +35,6 @@ export class MissionService {
     return this._httpClient.get(AppSettings.MISSION_API + mission);
   }
 
-  public getMissionByCustomer(customer: number) : Observable<any> {
-    return this._httpClient.get(AppSettings.MISSION_API + 'by-customer/' + customer);
-  }
-
   public getMissionDetailsFromToken(token : string) : Observable<any> {
     return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'anonymous',
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
