@@ -14,6 +14,8 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 export class ConsultantPageComponent implements OnInit {
   consultant : any;
   writingRights : boolean = false;
+  missions : any[];
+  cols: string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
 
   constructor(
     private _authService : AuthService,
@@ -27,6 +29,7 @@ export class ConsultantPageComponent implements OnInit {
     this._consultantService.getConsultant(id).subscribe(
       consultant => {
         this.consultant = consultant;
+        this.getMissions();
         const user = this._authService.getUser();
         this.writingRights = 
           user.roles.includes(Role.MANAGER) && consultant.manager.id == user.id
@@ -56,5 +59,15 @@ export class ConsultantPageComponent implements OnInit {
           )
         }
       }); 
+  }
+
+  getMissions(){
+    this._consultantService.getMissionByConsultant(this.consultant.id).subscribe(
+      (data) => {
+        this.missions = data;
+        console.log(this.missions);
+      },
+      (err) => {}
+    )
   }
 }

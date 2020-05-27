@@ -11,6 +11,7 @@
         <ng-template mat-tab-label>
           Ses missions
         </ng-template>
+        <app-array-missions-view *ngIf="missions" [missions]="missions" [displayedColumns]="cols"></app-array-missions-view>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>
