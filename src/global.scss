@@ -44,6 +44,15 @@ html, body {
     margin-top: 10px;
 }
 
+.contours-margin{
+    border: transparent 1px solid;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
+    padding-left: 20px;
+    box-shadow: 0px 0px 5px 1px gainsboro;
+}
+
 .file-upload {
     border-bottom: 1px solid grey;
     color: grey;
