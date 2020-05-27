@@ -47,7 +47,8 @@
                   *ngIf="element.releaseDate==='Inactif'+element.firstname">
             <mat-icon>lock_open</mat-icon>
           </button>&nbsp;
-        <button matTooltip="Voir plus de {{element.firstname}} {{element.lastname}}" mat-icon-button [routerLink]="[element.id]">
+        <button matTooltip="Voir plus de {{element.firstname}} {{element.lastname}}" mat-icon-button [routerLink]="[element.id]"
+                [disabled]="element.releaseDate==='Inactif'+element.firstname">
           <mat-icon>more_horiz</mat-icon>
         </button>&nbsp;
         <button matTooltip="Suppression de {{element.firstname}} {{element.lastname}}" mat-icon-button (click)="openDialogDelete(element)">
