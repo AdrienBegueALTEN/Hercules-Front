@@ -4,9 +4,10 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { RecruitmentOfficerService } from 'src/app/_services/recruitment-officer.service';
 import { ActivatedRoute } from '@angular/router';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
 
 @Component({
   selector: 'app-recruitment-officer-page',
@@ -121,5 +122,32 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     return null;
   }
 
+  public onRemove(recruitmentOfficer : any): void {
+    const dialog = this._dialog.open(YesNoDialogComponent, {
+      data: { 
+        title: 'Suppression du compte',
+        message: 'Le compte Chargé De Recrutement .Cette action est irréversible.',
+        yes: 'Supprimer le compte',
+        no: 'Annuler'
+      }
+    });
+
+    dialog.afterClosed().subscribe(
+      (remove) => {
+        if (remove) {
+          this._recruitmentOfficerService.deleteRecruitmentOfficer(recruitmentOfficer.id).subscribe(
+            () => console.log(),
+            () => this._showErrorDialog("Le Chargé De Recrutement n'a pas pu être retirer.")
+          );
+        }
+      }
+    );
+  }
+
+  private _showErrorDialog(message : string) : void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = message;
+    this._dialog.open(MessageDialogComponent, dialogConfig);
+  }
 
 }

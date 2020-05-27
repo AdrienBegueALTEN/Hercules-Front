@@ -1,0 +1,7 @@
+<h1 mat-dialog-title>Nouveau {{label}}</h1>
+<mat-dialog-content>
+  <app-new-user #newUser></app-new-user>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!newUser.grp?.valid">Ajouter</button>
+</mat-dialog-actions>

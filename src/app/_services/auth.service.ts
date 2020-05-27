@@ -10,20 +10,28 @@ const USER_KEY = 'auth-user';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  constructor(private _http : HttpClient) { }
+  constructor(private _httpClient : HttpClient) { }
 
   public login(credentials) : Observable<any> {
-    return this._http.post(AppSettings.AUTH_API + 'signin', {
+    return this._httpClient.post(AppSettings.AUTH_API + 'signin', {
       email: credentials.email,
       password: credentials.password
     }, AppSettings.HTTP_JSON_CONTENT);
   }
 
   public changePassword(currentPassword : string, newPassword : string) : Observable<any> {
-    return this._http.put(AppSettings.AUTH_API + 'change-password', {
+    return this._httpClient.put(AppSettings.AUTH_API + 'change-password', {
       currentPassword: currentPassword,
       newPassword: newPassword
     }, AppSettings.HTTP_JSON_CONTENT);
+  }
+
+  public missionSheetAccess(mission : number) : Observable<any> {
+    return this._httpClient.get(AppSettings.AUTH_API + 'mission-sheet-access/' + mission, {responseType: 'blob'});
+  }
+
+  public passwordCreationAccess(user : number) : Observable<any> {
+    return this._httpClient.get(AppSettings.AUTH_API + 'password-creation-access/' + user, {responseType: 'blob'});
   }
 
   public logout() : void {

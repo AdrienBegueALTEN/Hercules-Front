@@ -78,7 +78,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   }
 
   public onDownloadEmail() : void {
-    this._missionService.downloadEmailAccess(this.mission.id).subscribe(
+    this._authService.missionSheetAccess(this.mission.id).subscribe(
       blob => {
         const fileName = ''.concat(
           this.mission.consultant.firstname,

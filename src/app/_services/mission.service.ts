@@ -71,10 +71,6 @@ export class MissionService {
       { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
-  public downloadEmailAccess(mission : number) : Observable<any> {
-    return this._httpClient.get(AppSettings.MISSION_API + 'email-access/' + mission, {responseType: 'blob'});
-  }
-
   public newProject(mission : number): Observable<any> {
     return this._httpClient.get(AppSettings.MISSION_API + 'new-project/' + mission);
   }

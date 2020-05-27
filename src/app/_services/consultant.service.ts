@@ -10,7 +10,7 @@ export class ConsultantService {
 
   constructor(private _httpClient : HttpClient) {}
 
-  getConsultants(enabled : boolean) : Observable<any[]> {
+  getConsultants(enabled : boolean = false) : Observable<any[]> {
     return this._httpClient.get<any[]>(AppSettings.CONSULTANT_API + '?enabled=' + enabled, AppSettings.HTTP_JSON_CONTENT);
   }
 

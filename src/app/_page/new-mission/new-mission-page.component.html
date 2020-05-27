@@ -2,25 +2,39 @@
   <mat-card-content>
     <mat-vertical-stepper linear="true" (selectionChange)="onStepChange($event)" #stepper>
       <mat-step [stepControl]="consultantForm" label="Consultant" state="consultant">
-          <app-consultant-autocomplete *ngIf="!newConsultant"
-          [canCreateNew]="true"
-          (sendFormCtrl)="getConsultantForm($event)"
-          (newConsultant)="newConsultant = true"
-          #consultantAutocomplete>
-          </app-consultant-autocomplete>
-          <app-new-consultant *ngIf="newConsultant" (sendFormGrp)="getConsultantForm($event)"></app-new-consultant>
+        <div *ngIf="newConsultant; then newConsultantForm else consultantsList"></div>
       </mat-step>
       <mat-step [stepControl]="customerForm" label="Client" state="customer">
-          <app-customer-autocomplete *ngIf="!newCustomer"
-          [customers]="customers"
-          [canCreateNew]="true"
-          (sendFormCtrl)="getCustomerForm($event)"
-          (newCustomer)="newCustomer = true">
-          </app-customer-autocomplete>
-          <app-new-customer *ngIf="newCustomer" [customers]="customers" (sendFormGrp)="getCustomerForm($event)"></app-new-customer>
+        <div *ngIf="newCustomer; then newCustomerForm else customersList"></div>
       </mat-step>
         <mat-step label="Créer la mission" state="mission">
         </mat-step>
     </mat-vertical-stepper>
   </mat-card-content>
 </mat-card>
+
+<ng-template #newConsultantForm>
+  <app-new-user (sendFormGrp)="getConsultantForm($event)"></app-new-user>
+</ng-template>
+
+<ng-template #consultantsList>
+  <app-consultant-autocomplete
+  [canCreateNew]="true"
+  (sendFormCtrl)="getConsultantForm($event)"
+  (newConsultant)="newConsultant = true"
+  #consultantAutocomplete>
+  </app-consultant-autocomplete>
+</ng-template>
+
+<ng-template #newCustomerForm>
+  <app-new-customer [customers]="customers" (sendFormGrp)="getCustomerForm($event)"></app-new-customer>
+</ng-template>
+
+<ng-template #customersList>
+  <app-customer-autocomplete
+  [customers]="customers"
+  [canCreateNew]="true"
+  (sendFormCtrl)="getCustomerForm($event)"
+  (newCustomer)="newCustomer = true">
+  </app-customer-autocomplete>
+</ng-template>

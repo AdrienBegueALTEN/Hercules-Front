@@ -1,3 +1,4 @@
+import { DatatableComponent } from './_view/datatable/datatable.component';
 import { CdkDetailRowDirective } from './_directive/cdk-detail-row.directive';
 
 import { MissionSheetPageComponent } from './_page/mission-sheet/mission-sheet-page.component';
@@ -11,8 +12,8 @@ import { LastnameInputComponent } from './_input/lastname-input/lastname-input.c
 import { FirstnameInputComponent } from './_input/firstname-input/firstname-input.component';
 import { MessageDialogComponent } from './dialog/message/message-dialog.component';
 import { YesNoDialogComponent } from './dialog/yes-no/yes-no-dialog.component';
-import { NewCustomerComponent } from './_page/new-mission/new-customer/new-customer.component';
-import { NewConsultantComponent } from './_page/new-mission/new-consultant/new-consultant.component';
+import { NewCustomerComponent } from './_input/new-customer/new-customer.component';
+import { NewUserComponent } from './_input/new-user/new-user.component';
 import { ConsultantAutocompleteComponent } from './_input/autocomplete/consultant/consultant-autocomplete.component';
 import { CustomerAutocompleteComponent } from './_input/autocomplete/customer/customer-autocomplete.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
@@ -88,8 +89,7 @@ import { ProjectSingleEditComponent } from './_edit/project-single-edit/project-
 import { PaginatorProjectsComponent } from './_utils/paginator-projects/paginator-projects.component';
 import { ExternalHeaderComponent } from './_header/external/external-header.component';
 import { RecruitmentOfficersComponent } from './_page/recruitment-officers/recruitment-officers.component';
-import { RecruitmentOfficerPageComponent } from './_page/recruitment-officer-page/recruitment-officer-page.component';
-import { NewRecruitmentOfficerComponent } from './_page/new-recruitment-officer/new-recruitment-officer.component';
+import { RecruitmentOfficerPageComponent } from './_page/recruitment-officer/recruitment-officer-page.component';
 import { MissionsComponent } from './_page/missions/missions.component';
 import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
 import { ArrayMissionsViewComponent } from './_view/array-missions-view/array-missions-view.component';
@@ -97,6 +97,7 @@ import { ManagersComponent } from './_page/managers/managers.component';
 import { ManagerPageComponent } from './_page/manager-page/manager-page.component';
 import { NewManagerComponent } from './_page/new-manager/new-manager.component';
 import { ChangePasswordDialogComponent } from './dialog/change-password/change-password-dialog.component';
+import { NewUserDialogComponent } from './dialog/new-user/new-user-dialog.component';
 
 
 
@@ -107,7 +108,7 @@ import { ChangePasswordDialogComponent } from './dialog/change-password/change-p
       ConsultantAutocompleteComponent,
       CustomerAutocompleteComponent,
       LoginComponent,
-      NewConsultantComponent,
+      NewUserComponent,
       NewCustomerComponent,
       NewMissionPageComponent,
       MessageDialogComponent,
@@ -152,13 +153,14 @@ import { ChangePasswordDialogComponent } from './dialog/change-password/change-p
       CdkDetailRowDirective,
       RecruitmentOfficersComponent,
       RecruitmentOfficerPageComponent,
-      NewRecruitmentOfficerComponent,
       OkDialogComponent,
       ArrayMissionsViewComponent,
       ManagersComponent,
       ManagerPageComponent,
       NewManagerComponent,
-      ChangePasswordDialogComponent
+      ChangePasswordDialogComponent,
+      DatatableComponent,
+      NewUserDialogComponent
    ],
    imports: [
       AppRoutingModule,
