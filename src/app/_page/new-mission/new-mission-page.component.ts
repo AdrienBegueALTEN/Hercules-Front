@@ -1,3 +1,4 @@
+import { NewUserComponent } from './../../_input/new-user/new-user.component';
 import { AuthService } from 'src/app/_services/auth.service';
 import { YesNoDialogComponent } from '../../dialog/yes-no/yes-no-dialog.component';
 import { MissionService } from '../../_services/mission.service';
@@ -30,6 +31,7 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
 
   @ViewChild('stepper') stepper : MatStepper;
   @ViewChild('consultantAutocomplete') consultantAutocomplete : ConsultantAutocompleteComponent;
+  @ViewChild('newConsultant') newConsultantChild : NewUserComponent;
 
   constructor(
     private _cdr: ChangeDetectorRef,
@@ -42,8 +44,8 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
 
   ngOnInit() : void {
     this._customerService.getAll().subscribe(
-      customers => { this.customers = customers; },
-      err => { console.log(err); }
+      customers => this.customers = customers,
+      () => window.location.replace('') 
     );
   }
 

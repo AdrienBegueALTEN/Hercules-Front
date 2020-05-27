@@ -1,33 +1,86 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { HttpStatus } from './../../_enums/http-status.enum';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
 import { ManagerService } from 'src/app/_services/manager.service';
-import { AuthService } from 'src/app/_services/auth.service';
-import { Router } from '@angular/router';
-import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
-import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ReleaseDateDialogComponent } from 'src/app/dialog/release-date/release-date-dialog.component';
+import { NewUserDialogComponent } from 'src/app/dialog/new-user/new-user-dialog.component';
+import { AuthService } from 'src/app/_services/auth.service';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-managers',
-  templateUrl: './managers.component.html',
-  styleUrls: ['./managers.component.scss']
+  templateUrl: './managers.component.html'
 })
-export class ManagersComponent implements OnInit,OnDestroy {
+export class ManagersComponent implements OnInit {
+  public dataSource: MatTableDataSource<any>;
 
-  user ;
+  readonly LABEL : string = 'manager';
+
+  constructor(
+    private _authService : AuthService,
+    private _managerService : ManagerService, 
+    private _dialog: MatDialog) { }
+
+  public ngOnInit() : void {
+    this._managerService.getAll().subscribe(
+      (data) => this.dataSource = new MatTableDataSource(data),
+      () => window.location.replace("")
+    );
+  }
+
+  public newManager() : void {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      label: this.LABEL,
+      newManager: true
+    }
+    const dialogRef = this._dialog.open(NewUserDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      (user : any) => {
+        if (isUndefined(user)) return;
+        this._managerService.addManager(user.email, user.firstname, user.lastname, user.isAdmin).subscribe(
+          (response) => {
+            const userId : number = parseInt(String(response.body));
+            this._authService.passwordCreationAccess(userId).subscribe(
+              blob => {
+                let fileName = user.firstname + '_' + user.lastname + '.eml';
+                fileName = fileName.toLowerCase();
+                saveAs(blob, fileName);
+              },
+              () => this._showErrorDialog("Impossible de télécharger le fichier.")
+            )
+            this.ngOnInit()
+          },
+          (error) => this._handleError(error)
+        )
+      }
+    )
+  }
+
+  public goToManagerPage(event : number) : void {
+    window.location.replace('managers/' + event);
+  }
+
+  private _handleError(error : Response) {
+    let message : string = "Impossible d'ajouter ce " + this.LABEL + "."
+    if (error.status === HttpStatus.CONFLICT)
+      message = message.concat(" L'adresse email renseignée est indisponible.");
+    this._showErrorDialog(message);
+  }
+
+  private _showErrorDialog(message : string) : void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = message;
+    this._dialog.open(MessageDialogComponent, dialogConfig);
+  }
+
+/*  user ;
   dataSource : MatTableDataSource<any>;
   dataSource2 : MatTableDataSource<any>;
   managerSubscription :Subscription;
   managers : any[];
   isAuthenticated : boolean = false;
-
-  columnsToDisplay=['firstname','lastname','email', 'releaseDate','actions','admin'];
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -204,6 +257,6 @@ export class ManagersComponent implements OnInit,OnDestroy {
         }
       }
     );
-  }
+  }*/
 
 }

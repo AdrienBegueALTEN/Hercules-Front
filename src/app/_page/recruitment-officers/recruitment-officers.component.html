@@ -1,7 +1,7 @@
 <app-datatable *ngIf="!!dataSource"
     [columnsToDisplay]="['firstname', 'lastname', 'email', 'releaseDate']"
     [dataSource]="dataSource"
-    label="chargé de recrutement"
+    [label]="LABEL"
     (newElement)="newRecruitmentOfficer()"
     (rowClicked)="goToRecruitmentOfficerPage($event)">
 </app-datatable>

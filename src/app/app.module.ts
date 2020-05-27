@@ -44,6 +44,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -95,7 +96,6 @@ import { OkDialogComponent } from './dialog/ok/ok-dialog.component';
 import { ArrayMissionsViewComponent } from './_view/array-missions-view/array-missions-view.component';
 import { ManagersComponent } from './_page/managers/managers.component';
 import { ManagerPageComponent } from './_page/manager-page/manager-page.component';
-import { NewManagerComponent } from './_page/new-manager/new-manager.component';
 import { ChangePasswordDialogComponent } from './dialog/change-password/change-password-dialog.component';
 import { NewUserDialogComponent } from './dialog/new-user/new-user-dialog.component';
 import { ReleaseDateDialogComponent } from './dialog/release-date/release-date-dialog.component';
@@ -156,7 +156,6 @@ import { ReleaseDateDialogComponent } from './dialog/release-date/release-date-d
       ArrayMissionsViewComponent,
       ManagersComponent,
       ManagerPageComponent,
-      NewManagerComponent,
       ChangePasswordDialogComponent,
       DatatableComponent,
       NewUserDialogComponent,
@@ -196,7 +195,8 @@ import { ReleaseDateDialogComponent } from './dialog/release-date/release-date-d
       MatExpansionModule,
       CdkTableModule,
       CdkTreeModule,
-      MatMenuModule
+      MatMenuModule,
+      MatBadgeModule
    ],
    providers: [
       authInterceptorProviders,

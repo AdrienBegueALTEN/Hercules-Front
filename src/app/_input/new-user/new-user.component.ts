@@ -2,7 +2,7 @@ import { EmailInputComponent } from './../email-input/email-input.component';
 import { LastnameInputComponent } from './../lastname-input/lastname-input.component';
 import { FirstnameInputComponent } from './../firstname-input/firstname-input.component';
 import { StrUtilsService } from '../../_services/str-utils.service';
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterContentInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 const FIRSTNAME_KEY = 'firstname';
@@ -16,6 +16,8 @@ const EMAIL_KEY = 'email';
 export class NewUserComponent implements OnInit, AfterContentInit  {
   public grp : FormGroup;
 
+  @Output() sendFormGrp : EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+
   @ViewChild('firstname') firstname : FirstnameInputComponent;
   @ViewChild('lastname') lastname : LastnameInputComponent;
   @ViewChild('email') email : EmailInputComponent;
@@ -26,7 +28,6 @@ export class NewUserComponent implements OnInit, AfterContentInit  {
   ) {}
 
   public ngAfterContentInit (): void {
-
     this.grp = new FormBuilder().group(
       {
         firstname: this.firstname.ctrl,
@@ -34,14 +35,11 @@ export class NewUserComponent implements OnInit, AfterContentInit  {
         email: this.email.ctrl
       }
     )
+    this.sendFormGrp.emit(this.grp);
   }
 
   public ngOnInit() : void {
     this._changerDetectorReg.detectChanges();
-  }
-
-  addCtrl(key : string, ctrl : FormControl) : void {
-    this.grp.addControl(key, ctrl);
   }
 
   autoCompleteEmail() : void {

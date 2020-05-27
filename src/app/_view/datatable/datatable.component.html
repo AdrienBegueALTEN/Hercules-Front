@@ -7,30 +7,32 @@
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
   <ng-container matColumnDef="firstname">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Prénom</th>
-    <td mat-cell *matCellDef="let user" (click)="rowClicked.emit(user.id)">
+    <td mat-cell *matCellDef="let user">
       {{user.firstname}}
     </td>
   </ng-container>
   <ng-container matColumnDef="lastname">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
-    <td mat-cell *matCellDef="let user" (click)="rowClicked.emit(user.id)">
+    <td mat-cell *matCellDef="let user">
       {{user.lastname}}
     </td>
   </ng-container>
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>E-mail</th>
-    <td mat-cell *matCellDef="let user" (click)="rowClicked.emit(user.id)">
+    <td mat-cell *matCellDef="let user">
       {{user.email}}
     </td>
   </ng-container>
   <ng-container matColumnDef="releaseDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
-    <td mat-cell *matCellDef="let user" (click)="rowClicked.emit(user.id)">
+    <td mat-cell *matCellDef="let user">
       {{user.releaseDate ? 'Sorti des effectifs le ' + user.releaseDate : 'Actif'}}
+      <mat-icon *ngIf="user.admin" color="accent" matTooltipPosition="after"
+      [matTooltip]="user.firstname + ' ' + user.lastname + ' est administateur.'">brightness_auto</mat-icon>
     </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" (click)="rowClicked.emit(element.id)"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="[ 5, 10, 25, 50, 100]"></mat-paginator>
 <div>

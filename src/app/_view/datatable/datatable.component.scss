@@ -1,6 +1,11 @@
 table {
     width: 100%;
 }
+
+table:first-child {
+  cursor: pointer;
+}
     
-    
-    
+mat-paginator {
+  background: none;
+}
