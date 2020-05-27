@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from 'src/app/_services/customer.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Role } from 'src/app/_enums/role.enum';
-import { MissionService } from 'src/app/_services/mission.service';
 
 @Component({
   selector: 'app-customer-page',
@@ -14,11 +13,10 @@ export class CustomerPageComponent implements OnInit {
   customer: any;
   writingRights : boolean = false;
   missions: any[];
-  cols = ['title', 'consultant', 'sheetStatus'];
+  cols: string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
 
   constructor(private _route: ActivatedRoute,
     private _customerService: CustomerService,
-    private _missionService: MissionService,
     private _authService: AuthService) { }
 
   ngOnInit(): void {
@@ -41,10 +39,9 @@ export class CustomerPageComponent implements OnInit {
   }
 
   getMissions(){
-    this._missionService.getMissionByCustomer(this.customer.id).subscribe(
+    this._customerService.getMissionByCustomer(this.customer.id).subscribe(
       (data) => {
         this.missions = data;
-        console.log(this.missions);
       },
       (err) => {}
     )

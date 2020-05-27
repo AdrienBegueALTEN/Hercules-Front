@@ -108,33 +108,18 @@
 
 <ng-template #tpl let-element>
     <div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
-
-        <mat-table [dataSource]="element.lastVersion.projects" class="mat-elevation-z8">
-            <ng-container matColumnDef="select">
-                <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <mat-header-cell *matCellDef="let row">
-                    <mat-checkbox (click)="$event.stopPropagation()|| onClick($event,row)"
-                        (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
-                        [disabled]='!(row?.title.length>0)'>
-                    </mat-checkbox>
-                </mat-header-cell>
-            </ng-container>
-            <ng-container matColumnDef="project-name">
-                <mat-header-cell *matHeaderCellDef> Titre du projet </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="project-description">
-                <mat-header-cell *matHeaderCellDef> Description du projet </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="innerDisplayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: innerDisplayedColumns;"
-                [class.example-element-row]="element?.lastVersion.projects.length"
-                (click)="(row?.title.length>0&&selection.selected.length<NumberOfMaximumCheckboxes)
-                ||(row?.title.length>0&&selection.isSelected(row)) ? selection.toggle(row) : SnackBarMessage()"></mat-row>
-        </mat-table>
+        <div class="contours-margin" *ngIf="element?.lastVersion?.projects">
+            <div *ngFor="let project of element.lastVersion.projects">
+                <mat-checkbox (click)="$event.stopPropagation()|| onClick($event,project)"
+                    (change)="$event ? selection.toggle(project) : null" [checked]="selection.isSelected(project)"
+                    [disabled]='!(project?.title.length>0)'>
+                        {{project.title || 'Sans titre'}}
+                </mat-checkbox>
+            </div>
+        </div>
+        <div class="contours-margin" *ngIf="!element.lastVersion.projects">
+            Aucun projets.
+        </div>
     </div>
 </ng-template>
 <br />
