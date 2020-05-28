@@ -58,13 +58,6 @@ export class ManagerPageComponent implements OnInit {
           this.managerForm.controls['firstname'].disable();
           this.managerForm.controls['lastname'].disable();
           this.managerForm.controls['email'].disable();
-          //this.managerForm.controls['admin'].disable();
-        }
-        else{
-          this.managerForm.controls['firstname'].enable();
-          this.managerForm.controls['lastname'].enable();
-          this.managerForm.controls['email'].enable();
-          //this.managerForm.controls['admin'].enable();
         }
       },
       (err) => {
