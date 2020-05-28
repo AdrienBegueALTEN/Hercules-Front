@@ -37,21 +37,29 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-slide-toggle (change)="onUpdateManager()" formControlName="admin">Octroyer les droits d'administrateur</mat-slide-toggle>
+        <mat-slide-toggle (change)="onUpdateManager()" 
+                          formControlName="admin">
+            Octroyer les droits d'administrateur
+        </mat-slide-toggle>
 
-        <mat-form-field class="releaseDate" appearance="legacy">
+        <mat-form-field class="releaseDate" 
+                        appearance="legacy">
             <mat-label>Date de fin d'activité</mat-label>
             <input matInput 
                    type = "date"
                    formControlName="releaseDate"
                    (change)="onReleaseManager()">
-            
         </mat-form-field>
-
+        <button mat-raised-button color="primary" 
+                                  (click)="onActivateManager(manager.id)"
+                                  *ngIf="manager.releaseDate!=null">
+            <span>Rendre actif à nouveau</span>
+        </button>
+        
     </mat-card-content>
     </form>
 
-    <button  mat-raised-button color="warn" (click)="onDeleteManager(manager.id)">
+    <button class="buttonDelete" mat-raised-button color="warn" (click)="onDeleteManager(manager.id)">
         <span>Supprimer</span>
     </button>
 

@@ -53,6 +53,8 @@ export class ManagerPageComponent implements OnInit {
         this.managerForm.get('lastname').setValue(this.manager.lastname);
         this.managerForm.get('email').setValue(this.manager.email);
         this.managerForm.get('admin').setValue(this.manager.admin);
+
+        this.managerForm.get('releaseDate').setValue(this.manager.releaseDate.substr(0,10));
       },
       (err) => {
         this.dialogMessage("Impossible de charger ce manager");
@@ -102,6 +104,10 @@ export class ManagerPageComponent implements OnInit {
     );
   }
 
+  onActivateManager(id : String) : void {
+    this.dialogActive();
+  }
+
   dialogError(firstname : String, lastname : String) : void {
     const dialog = this._dialog.open(OkDialogComponent, {
       data: {
@@ -123,7 +129,7 @@ export class ManagerPageComponent implements OnInit {
   dialogDelete() : void {
     const dialog = this._dialog.open(YesNoDialogComponent,{
       data:{ 
-        title: "Êtes-vous sûr de vouloir supprimer le manager "+this.manager.firstname+" "+this.manager.lastname,
+        title: "Êtes-vous sûr de vouloir supprimer le manager "+this.manager.firstname+" "+this.manager.lastname+" ?",
         message: "La suppression sera définitive.",
         yes: "Supprimer",
         no: "Annuler"
@@ -137,6 +143,29 @@ export class ManagerPageComponent implements OnInit {
             () => { this._router.navigate(['/managers']);
                 },
             (error) => { this.dialogMessage("Le manager n'a pas pu être supprimé."); }
+          );
+        }
+      }
+    );
+  }
+
+  dialogActive() : void {
+    const dialog = this._dialog.open(YesNoDialogComponent,{
+      data:{ 
+        title: "Voulez- vous rendre actif le manager "+this.manager.firstname+" "+this.manager.lastname+" ?",
+        message: "",
+        yes: "Oui",
+        no: "Non"
+      }
+    });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        if(result){
+          this._managerService.reviveManager(this.manager.id).subscribe(
+            () => { this.ngOnInit();
+                },
+            (error) => { this.dialogMessage("Le manager n'a pas pu être rendu actif."); }
           );
         }
       }

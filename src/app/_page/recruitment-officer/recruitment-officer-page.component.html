@@ -45,10 +45,15 @@
                    (change)="onReleaseRecruitmentOfficer()">
             
         </mat-form-field>
+        <button mat-raised-button color="primary" 
+                                  (click)="onActivateRecruitmentOfficer(recruitmentOfficer.id)"
+                                  *ngIf="recruitmentOfficer.releaseDate!=null">
+            <span>Rendre actif à nouveau</span>
+        </button>
     </mat-card-content>
     </form>
 
-    <button  mat-raised-button color="warn" (click)="onDeleteRecruitmentOfficer(recruitmentOfficer.id)">
+    <button class="buttonDelete" mat-raised-button color="warn" (click)="onDeleteRecruitmentOfficer(recruitmentOfficer.id)">
         <span>Supprimer</span>
     </button>
 

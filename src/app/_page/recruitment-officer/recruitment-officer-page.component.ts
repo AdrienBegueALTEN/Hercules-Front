@@ -55,6 +55,7 @@ export class RecruitmentOfficerPageComponent implements OnInit {
         this.recruitmentOfficerForm.get('firstname').setValue(this.recruitmentOfficer.firstname);
         this.recruitmentOfficerForm.get('lastname').setValue(this.recruitmentOfficer.lastname);
         this.recruitmentOfficerForm.get('email').setValue(this.recruitmentOfficer.email);
+        this.recruitmentOfficerForm.get('releaseDate').setValue(this.recruitmentOfficer.releaseDate.substr(0,10));
       },
       (err) => {
         this.dialogMessage("Impossible de charger ce chargé de recrutement");
@@ -105,6 +106,10 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     this.dialogDelete();
   }
 
+  onActivateRecruitmentOfficer(id : String) : void {
+    this.dialogActive();
+  }
+
   dialogError(firstname : String, lastname : String) : void {
     const dialog = this._dialog.open(OkDialogComponent, {
       data: {
@@ -138,6 +143,29 @@ export class RecruitmentOfficerPageComponent implements OnInit {
             () => { this._router.navigate(['/recruitment-officers']);
                 },
             (error) => { this.dialogMessage("Le CDR n'a pas pu être supprimé."); }
+          );
+        }
+      }
+    );
+  }
+
+  dialogActive() : void {
+    const dialog = this._dialog.open(YesNoDialogComponent,{
+      data:{ 
+        title: "Voulez- vous rendre actif le CDR "+this.recruitmentOfficer.firstname+" "+this.recruitmentOfficer.lastname+" ?",
+        message: "",
+        yes: "Oui",
+        no: "Non"
+      }
+    });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        if(result){
+          this._recruitmentOfficerService.reviveRecruitmentOfficer(this.recruitmentOfficer.id).subscribe(
+            () => { this.ngOnInit();
+                },
+            (error) => { this.dialogMessage("Le CDR n'a pas pu être rendu actif."); }
           );
         }
       }
