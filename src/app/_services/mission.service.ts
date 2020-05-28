@@ -134,4 +134,13 @@ export class MissionService {
       labels,
       AppSettings.HTTP_JSON_CONTENT);
   }
+
+  public removeSkillFromProject(project : number, skill : any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: skill
+    };
+    return this._httpClient.delete(
+      AppSettings.MISSION_API + 'projects/' + project + '/skills',
+      httpOptions);
+  }
 }

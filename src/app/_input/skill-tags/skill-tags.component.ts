@@ -42,11 +42,14 @@ export class SkillTagsComponent implements OnInit {
     }
   }
 
-  remove(fruit: any): void {
-    const index = this.project.skills.indexOf(fruit);
-
-    if (index >= 0) {
-      this.project.skills.splice(index, 1);
-    }
+  remove(skill: any): void {
+    this._missionService.removeSkillFromProject(this.project.id,skill).subscribe(
+      ()=>{
+        const index = this.project.skills.indexOf(skill);
+        if (index >= 0) 
+          this.project.skills.splice(index, 1);
+      },
+      (err)=>console.log(err)
+    )
   }
 }
