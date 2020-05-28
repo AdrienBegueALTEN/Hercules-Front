@@ -9,6 +9,7 @@ import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.co
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { saveAs } from "file-saver";
 import { isUndefined } from 'util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recruitment-officers',
@@ -24,8 +25,8 @@ export class RecruitmentOfficersComponent implements OnInit {
   constructor(
     private _authService : AuthService,
     private _recruitmentOfficerService : RecruitmentOfficerService, 
-    private _dialog: MatDialog
-  ) {}
+    private _dialog: MatDialog,
+    private _router: Router) { }
 
   public ngOnInit() : void {
     this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
@@ -65,7 +66,7 @@ export class RecruitmentOfficersComponent implements OnInit {
   }
 
   public goToRecruitmentOfficerPage(event : number) : void {
-    window.location.replace('recruitment-officers/' + event);
+    this._router.navigateByUrl('recruitment-officers/' + event);
   }
 
   public onDeactivate(event : any) : void {

@@ -8,6 +8,7 @@ import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.co
 import { isUndefined } from 'util';
 import { NewUserDialogComponent } from 'src/app/dialog/new-user/new-user-dialog.component';
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-consultants',
@@ -34,7 +35,8 @@ export class ConsultantsComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _consultantService: ConsultantService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _router: Router
   ) {}
 
   public ngOnInit() : void {
@@ -118,7 +120,7 @@ export class ConsultantsComponent implements OnInit {
   }
 
   public goToConsultantPage(consultant : number) {
-    window.location.replace('consultants/' + consultant);
+    this._router.navigateByUrl('consultants/' + consultant);
   }
 
   private _handleAddResponse(response : Response) {
