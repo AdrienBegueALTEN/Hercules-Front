@@ -128,4 +128,10 @@ export class MissionService {
 
     return this._notInteceptedHttpClient.request(req);
   }
+
+  public addSkillToProject(project : number, labels : string[]): Observable<any> {
+    return this._httpClient.post(AppSettings.MISSION_API + 'projects/' + project + '/skills',
+      labels,
+      AppSettings.HTTP_JSON_CONTENT);
+  }
 }

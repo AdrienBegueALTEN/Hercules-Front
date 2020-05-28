@@ -1,11 +1,11 @@
-<mat-form-field class="example-chip-list">
+<mat-form-field>
     <mat-chip-list #chipList aria-label="Fruit selection">
       <mat-chip *ngFor="let skill of project.skills" [selectable]="selectable"
                [removable]="removable" (removed)="remove(skill)">
         {{skill.label}}
         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
       </mat-chip>
-      <input placeholder="New fruit..."
+      <input placeholder="Ecrivez ici les compétences nécessaires de ce projet"
              [matChipInputFor]="chipList"
              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
              [matChipInputAddOnBlur]="addOnBlur"
