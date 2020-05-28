@@ -1,9 +1,10 @@
+import { CreatePasswordPageComponent } from './_page/create-password/create-password-page.component';
 import { MissionsComponent } from './_page/missions/missions.component';
 import { ManagerGuard } from './_services/guard/manager-guard.service';
 import { AuthGuard } from './_services/guard/auth-guard.service';
 import { NewMissionPageComponent } from './_page/new-mission/new-mission-page.component';
 import { PageNotFoundComponent } from './_page/not-found/not-found.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './_page/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ConsultantsComponent } from './_page/consultants/consultants.component';
@@ -39,6 +40,7 @@ const routes: Routes = [
     component: HomeComponent
   }, 
   { path: 'login', canActivate: [NoAuthGuard], component: LoginComponent },
+  { path: 'login/:token', canActivate: [NoAuthGuard], component: CreatePasswordPageComponent },
   { path: 'mission-sheet/:token', component: MissionSheetPageComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
