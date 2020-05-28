@@ -1,6 +1,6 @@
 import { AuthService } from 'src/app/_services/auth.service';
 import { DeactivateComponent } from 'src/app/dialog/deactivate/deactivate.component';
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, AfterContentInit, AfterViewInit } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,7 +11,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.scss']
 })
-export class DatatableComponent implements OnInit {
+export class DatatableComponent implements AfterViewInit {
   @Input() columnsToDisplay : string [];
   @Input() dataSource: MatTableDataSource<any>;
   @Input() label : string;
@@ -23,7 +23,7 @@ export class DatatableComponent implements OnInit {
   @Output() rowClicked : EventEmitter<number> = new EventEmitter<number>();
   @Output() setAdmin : EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
@@ -31,7 +31,7 @@ export class DatatableComponent implements OnInit {
     private _dialog: MatDialog
   ) {}
 
-  public ngOnInit(): void {
+  public ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
