@@ -42,7 +42,7 @@
       <td mat-cell *matCellDef="let user" (click)="onRow(user.id)" [class.element-disabled]="user.releaseDate">
         <div *ngIf="user.releaseDate; then released else active"></div>
         <ng-template #released>
-          Sorti des effectifs le {{ user.releaseDate | date:'dd/MM/yyyy'}}
+          Sortie des effectifs le {{ user.releaseDate | date:'dd/MM/yyyy'}}
         </ng-template>
         <ng-template #active>
           Actif
