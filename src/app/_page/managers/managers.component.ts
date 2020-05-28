@@ -8,6 +8,7 @@ import { NewUserDialogComponent } from 'src/app/dialog/new-user/new-user-dialog.
 import { AuthService } from 'src/app/_services/auth.service';
 import { isUndefined } from 'util';
 import { saveAs } from "file-saver";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-managers',
@@ -21,7 +22,8 @@ export class ManagersComponent implements OnInit {
   constructor(
     private _authService : AuthService,
     private _managerService : ManagerService, 
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _router: Router
   ) {}
 
   public ngOnInit() : void {
@@ -61,7 +63,7 @@ export class ManagersComponent implements OnInit {
   }
 
   public goToManagerPage(manager : number) : void {
-    window.location.replace('managers/' + manager);
+    this._router.navigateByUrl('managers/' + manager);
   }
 
   private _handleAddError(error : Response) {

@@ -1,5 +1,6 @@
+import { DatatableComponent } from './../../_view/datatable/datatable.component';
 import { AuthService } from 'src/app/_services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterContentInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig, } from '@angular/material/dialog';
 import { RecruitmentOfficerService } from 'src/app/_services/recruitment-officer.service';
@@ -8,25 +9,30 @@ import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.co
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { saveAs } from "file-saver";
 import { isUndefined } from 'util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recruitment-officers',
   templateUrl: './recruitment-officers.component.html'
 })
 export class RecruitmentOfficersComponent implements OnInit {
-
   public dataSource: MatTableDataSource<any>;
 
   readonly LABEL : string = 'chargé de recrutement';
 
+  @ViewChild(DatatableComponent, { static: true }) datatable : DatatableComponent;
+
   constructor(
     private _authService : AuthService,
     private _recruitmentOfficerService : RecruitmentOfficerService, 
-    private _dialog: MatDialog) { }
+    private _dialog: MatDialog,
+    private _router: Router) { }
 
   public ngOnInit() : void {
     this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
-      (data) => this.dataSource = new MatTableDataSource(data),
+      (data) => {
+        this.dataSource = new MatTableDataSource(data);
+      },
       () => window.location.replace("")
     );
   }
@@ -60,7 +66,7 @@ export class RecruitmentOfficersComponent implements OnInit {
   }
 
   public goToRecruitmentOfficerPage(event : number) : void {
-    window.location.replace('recruitment-officers/' + event);
+    this._router.navigateByUrl('recruitment-officers/' + event);
   }
 
   public onDeactivate(event : any) : void {
