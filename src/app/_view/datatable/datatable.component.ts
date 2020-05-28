@@ -24,7 +24,7 @@ export class DatatableComponent implements AfterViewInit {
   @Output() setAdmin : EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('paginator') paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort; //TODO Correction bug sort
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private _authService: AuthService,
