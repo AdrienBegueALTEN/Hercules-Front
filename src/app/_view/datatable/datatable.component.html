@@ -24,7 +24,7 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="admin">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Droits administateur</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Droits d'administateur</th>
       <td mat-cell *matCellDef="let user" (click)="onRow(user.id)" [ngClass]="{'element-disabled': !!user.releaseDate}">
         <mat-icon *ngIf="user.admin" color="accent">check</mat-icon>
       </td>
@@ -67,7 +67,7 @@
             </button>
             <button *ngIf="user.admin != null" mat-menu-item (click)="setAdmin.emit({index: index, manager: user.id, admin: !user.admin})">
               <mat-icon>{{user.admin ? 'undo' : 'redo'}}</mat-icon>
-              <span>{{user.admin ? 'Retirer' : 'Octroyer'}} les droits administrateur</span>
+              <span>{{user.admin ? 'Retirer' : 'Octroyer'}} les droits d'administrateur</span>
             </button>
           </div>
         </mat-menu>
