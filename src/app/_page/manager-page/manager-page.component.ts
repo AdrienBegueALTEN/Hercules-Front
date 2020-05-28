@@ -43,7 +43,7 @@ export class ManagerPageComponent implements OnInit {
         firstname: ['',[Validators.required]],
         lastname: ['',[Validators.required]],
         email: ['',[Validators.required,Validators.email,this.domainValidator]],
-        admin : [''],
+        admin : ['',Validators.required],
         releaseDate : ['']
     });
     this._managerService.getManagerById(this._route.snapshot.paramMap.get('id')).subscribe(
@@ -53,8 +53,19 @@ export class ManagerPageComponent implements OnInit {
         this.managerForm.get('lastname').setValue(this.manager.lastname);
         this.managerForm.get('email').setValue(this.manager.email);
         this.managerForm.get('admin').setValue(this.manager.admin);
-
         this.managerForm.get('releaseDate').setValue(this.manager.releaseDate.substr(0,10));
+        if(this.manager.releaseDate!=null){
+          this.managerForm.controls['firstname'].disable();
+          this.managerForm.controls['lastname'].disable();
+          this.managerForm.controls['email'].disable();
+          //this.managerForm.controls['admin'].disable();
+        }
+        else{
+          this.managerForm.controls['firstname'].enable();
+          this.managerForm.controls['lastname'].enable();
+          this.managerForm.controls['email'].enable();
+          //this.managerForm.controls['admin'].enable();
+        }
       },
       (err) => {
         this.dialogMessage("Impossible de charger ce manager");
@@ -99,7 +110,12 @@ export class ManagerPageComponent implements OnInit {
     const releaseDate = this.managerForm.get('releaseDate').value;
     this.manager.releaseDate = releaseDate;
     this._managerService.releaseManager(releaseDate, this.manager.id).subscribe(
-      (response) => { this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
+      (response) => { this.ngOnInit();
+                      this._managerService.updateManager(this.manager.firstname, this.manager.lastname, this.manager.email, "false", this.manager.id).subscribe(
+                        (response) => { this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
+                        () => { this.dialogError(this.manager.firstname,this.manager.lastname); }
+                      );
+                      this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
       () => { this.dialogError(this.manager.firstname,this.manager.lastname); }
     );
   }
@@ -163,7 +179,8 @@ export class ManagerPageComponent implements OnInit {
       (result) => {
         if(result){
           this._managerService.reviveManager(this.manager.id).subscribe(
-            () => { this.ngOnInit();
+            () => { this.manager.releaseDate = null;
+                    this.ngOnInit();
                 },
             (error) => { this.dialogMessage("Le manager n'a pas pu être rendu actif."); }
           );

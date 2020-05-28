@@ -38,7 +38,8 @@
         </mat-form-field>
 
         <mat-slide-toggle (change)="onUpdateManager()" 
-                          formControlName="admin">
+                          formControlName="admin"
+                          [disabled]="manager.releaseDate!=null" >
             Octroyer les droits d'administrateur
         </mat-slide-toggle>
 
@@ -59,7 +60,7 @@
     </mat-card-content>
     </form>
 
-    <button class="buttonDelete" mat-raised-button color="warn" (click)="onDeleteManager(manager.id)">
+    <button mat-raised-button class="buttonDelete" color="warn" (click)="onDeleteManager(manager.id)">
         <span>Supprimer</span>
     </button>
 

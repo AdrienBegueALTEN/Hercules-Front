@@ -56,6 +56,11 @@ export class RecruitmentOfficerPageComponent implements OnInit {
         this.recruitmentOfficerForm.get('lastname').setValue(this.recruitmentOfficer.lastname);
         this.recruitmentOfficerForm.get('email').setValue(this.recruitmentOfficer.email);
         this.recruitmentOfficerForm.get('releaseDate').setValue(this.recruitmentOfficer.releaseDate.substr(0,10));
+        if(this.recruitmentOfficer.releaseDate!=null){
+          this.recruitmentOfficerForm.controls['firstname'].disable();
+          this.recruitmentOfficerForm.controls['lastname'].disable();
+          this.recruitmentOfficerForm.controls['email'].disable();
+        }
       },
       (err) => {
         this.dialogMessage("Impossible de charger ce chargé de recrutement");
@@ -97,7 +102,8 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     const releaseDate = this.recruitmentOfficerForm.get('releaseDate').value;
     this.recruitmentOfficer.releaseDate = releaseDate;
     this._recruitmentOfficerService.releaseRecruitmentOfficer(releaseDate, this.recruitmentOfficer.id).subscribe(
-      (response) => { this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
+      (response) => { this.ngOnInit();
+                      this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
       () => { this.dialogError(this.recruitmentOfficer.firstname,this.recruitmentOfficer.lastname); }
     );
   }
@@ -163,7 +169,8 @@ export class RecruitmentOfficerPageComponent implements OnInit {
       (result) => {
         if(result){
           this._recruitmentOfficerService.reviveRecruitmentOfficer(this.recruitmentOfficer.id).subscribe(
-            () => { this.ngOnInit();
+            () => { this.recruitmentOfficer.releaseDate=null;
+                    this.ngOnInit();
                 },
             (error) => { this.dialogMessage("Le CDR n'a pas pu être rendu actif."); }
           );
@@ -182,33 +189,7 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     return null;
   }
 
-  public onRemove(recruitmentOfficer : any): void {
-    const dialog = this._dialog.open(YesNoDialogComponent, {
-      data: { 
-        title: 'Suppression du compte',
-        message: 'Le compte Chargé De Recrutement .Cette action est irréversible.',
-        yes: 'Supprimer le compte',
-        no: 'Annuler'
-      }
-    });
-
-    dialog.afterClosed().subscribe(
-      (remove) => {
-        if (remove) {
-          this._recruitmentOfficerService.deleteRecruitmentOfficer(recruitmentOfficer.id).subscribe(
-            () => console.log(),
-            () => this._showErrorDialog("Le Chargé De Recrutement n'a pas pu être retirer.")
-          );
-        }
-      }
-    );
-  }
-
-  private _showErrorDialog(message : string) : void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = message;
-    this._dialog.open(MessageDialogComponent, dialogConfig);
-  }
+  
 
 }
  
