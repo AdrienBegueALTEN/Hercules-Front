@@ -100,7 +100,7 @@ export class ConsultantsComponent implements OnInit {
   public onDeactivate(event : any) : void {
     this._consultantService.updateConsultant(event.user, 'releaseDate', event.releaseDate).subscribe(
       () => this.dataSource.data[event.index].releaseDate = event.releaseDate,
-      () => this._showErrorDialog("Impossible de notifier la sortie des effectifs.")
+      () => this._showMessageDialog("Impossible de notifier la sortie des effectifs.")
     );
   }
 
@@ -128,11 +128,11 @@ export class ConsultantsComponent implements OnInit {
       let message : string = "Impossible d'ajouter ce " + this.LABEL + ".";
       if (response.status === HttpStatus.ACCEPTED)
         message = message.concat(" L'adresse email renseignée est indisponible.");
-      this._showErrorDialog(message);
+      this._showMessageDialog(message);
     } else this.ngOnInit();
   }
   
-  private _showErrorDialog(message : string) : void {
+  private _showMessageDialog(message : string) : void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = message;
     this._dialog.open(MessageDialogComponent, dialogConfig);

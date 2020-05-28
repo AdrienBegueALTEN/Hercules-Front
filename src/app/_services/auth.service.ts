@@ -1,16 +1,22 @@
 import { AppSettings } from './../app-settings';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpBackend, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Role } from '../_enums/role.enum';
 
 const TOKEN_KEY = 'auth-token';
+const TOKEN_PREFIX : string = 'Bearer ';
 const USER_KEY = 'auth-user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private _notInteceptedHttpClient : HttpClient;
 
-  constructor(private _httpClient : HttpClient) { }
+  constructor(
+    private _httpBackend: HttpBackend,
+    private _httpClient : HttpClient) {
+      this._notInteceptedHttpClient = new HttpClient(this._httpBackend);
+    }
 
   public login(credentials) : Observable<any> {
     return this._httpClient.post(AppSettings.AUTH_API + 'signin', {
@@ -24,6 +30,16 @@ export class AuthService {
       currentPassword: currentPassword,
       newPassword: newPassword
     }, AppSettings.HTTP_JSON_CONTENT);
+  }
+
+  public checkPasswordTokenValidity(token : string) : Observable<any> {
+    return this._notInteceptedHttpClient.get(AppSettings.AUTH_API + 'change-password-anonymous',
+    { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
+  }
+
+  public changePasswordAnonymous(token : string, newPassword : string) : Observable<any> {
+    return this._notInteceptedHttpClient.put(AppSettings.AUTH_API + 'change-password-anonymous', newPassword,
+    { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
   public missionSheetAccess(mission : number) : Observable<any> {

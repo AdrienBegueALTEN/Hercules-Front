@@ -39,6 +39,7 @@ const routes: Routes = [
     component: HomeComponent
   }, 
   { path: 'login', canActivate: [NoAuthGuard], component: LoginComponent },
+  { path: 'login/:token', canActivate: [NoAuthGuard], component: LoginComponent },
   { path: 'mission-sheet/:token', component: MissionSheetPageComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
