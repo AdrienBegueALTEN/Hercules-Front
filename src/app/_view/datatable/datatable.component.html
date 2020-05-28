@@ -58,7 +58,7 @@
         <mat-menu #userMenu="matMenu" xPosition="before">
           <button mat-menu-item (click)="onRow(user.id)">
             <mat-icon>tag</mat-icon>
-            <span>Accèder à {{user.id !== loggedUser ? 'sa' : 'votre'}} page personnelle</span>
+            <span>Accéder à {{user.id !== loggedUser ? 'sa' : 'votre'}} page personnelle</span>
           </button>
           <div *ngIf="(user.id !== loggedUser || user.admin == null) && !user.releaseDate">
             <button mat-menu-item (click)="onDeactivate(index, user)">

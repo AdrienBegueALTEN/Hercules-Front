@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
 import { ManagerService } from 'src/app/_services/manager.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
+import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
 
 @Component({
   selector: 'app-manager-page',
@@ -25,7 +26,8 @@ export class ManagerPageComponent implements OnInit {
               private _route: ActivatedRoute,
               private _formBuilder: FormBuilder,
               private _dialog: MatDialog,
-              private _snackBar: MatSnackBar) { }
+              private _snackBar: MatSnackBar,
+              private _router: Router) { }
 
   ngOnInit(): void {
     this.initialize();
@@ -53,7 +55,7 @@ export class ManagerPageComponent implements OnInit {
         this.managerForm.get('admin').setValue(this.manager.admin);
       },
       (err) => {
-        this.dialogBadStart();
+        this.dialogMessage("Impossible de charger ce manager");
       }
     );
     
@@ -86,6 +88,11 @@ export class ManagerPageComponent implements OnInit {
     }
   }
 
+  onDeleteManager(id : String) : void {
+    this.dialogDelete();
+    
+  }
+
   onReleaseManager() : void {
     const releaseDate = this.managerForm.get('releaseDate').value;
     this.manager.releaseDate = releaseDate;
@@ -105,16 +112,35 @@ export class ManagerPageComponent implements OnInit {
     });
   }
   
-  dialogBadStart() : void {
+  dialogMessage(message : String) : void {
     const  dialog = this._dialog.open(MessageDialogComponent, {
-      data: "Impossible de charger ce manager"
+      data: message
     });
   }
 
-  dialogUpdated() : void {
-      const  dialog = this._dialog.open(MessageDialogComponent, {
-        data: "Mise à jour effectuée"
-      });
+ 
+
+  dialogDelete() : void {
+    const dialog = this._dialog.open(YesNoDialogComponent,{
+      data:{ 
+        title: "Êtes-vous sûr de vouloir supprimer le manager "+this.manager.firstname+" "+this.manager.lastname,
+        message: "La suppression sera définitive.",
+        yes: "Supprimer",
+        no: "Annuler"
+      }
+    });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        if(result){
+          this._managerService.deleteManager(this.manager.id).subscribe(
+            () => { this._router.navigate(['/managers']);
+                },
+            (error) => { this.dialogMessage("Le manager n'a pas pu être supprimé."); }
+          );
+        }
+      }
+    );
   }
 
   domainValidator(control: AbstractControl): { [key: string]: boolean } | null {

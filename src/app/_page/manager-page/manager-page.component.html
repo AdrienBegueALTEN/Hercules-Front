@@ -37,9 +37,9 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-slide-toggle (change)="onUpdateManager()" formControlName="admin">Admin</mat-slide-toggle>
+        <mat-slide-toggle (change)="onUpdateManager()" formControlName="admin">Octroyer les droits d'administrateurs</mat-slide-toggle>
 
-        <mat-form-field appearance="legacy">
+        <mat-form-field class="releaseDate" appearance="legacy">
             <mat-label>Date de fin d'activité</mat-label>
             <input matInput 
                    type = "date"
@@ -50,4 +50,11 @@
 
     </mat-card-content>
     </form>
+
+    <button  mat-raised-button color="warn" (click)="onDeleteManager(manager.id)">
+        <span>Supprimer</span>
+    </button>
+
+    <br>
+    <br>
 </mat-card>
