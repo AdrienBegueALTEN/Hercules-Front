@@ -1,66 +1,9 @@
-
-<mat-form-field style="width: 100%;">
-  <mat-label>Chercher un consultant</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Chercher un consultant">
-</mat-form-field>
-
-<mat-slide-toggle (click)="showOnlyMyConsultant()" [checked]="true">Afficher uniquement mes consultants.</mat-slide-toggle>
-<br>
-<br>
-
-<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
-    <ng-container matColumnDef="firstname">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
-      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
-        {{element.firstname}}
-      </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="lastname">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
-      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
-        {{element.lastname}}
-      </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </th>
-      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
-        {{element.email}}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="manager">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Manager </th>
-      <td mat-cell *matCellDef="let element" [class.element-disabled]="element.releaseDate!=null">
-        <span *ngIf="element.manager.releaseDate!=null" class="icon material-icons">error_outline</span> &nbsp;
-        {{element.manager.firstname}} {{element.manager.lastname}} 
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
-        <button matTooltip="Voir plus de {{element.firstname}} {{element.lastname}}" mat-icon-button [routerLink]="[element.id]">
-          <mat-icon>more_horiz</mat-icon>
-        </button>&nbsp;
-
-        <button mat-icon-button color="warn" 
-          *ngIf="userIsManager && element.releaseDate==null && element.missions.length==0 && element.manager.id==user.id" 
-          (click)="openDeleteDialog(element)">
-          <mat-icon>delete</mat-icon>
-        </button>&nbsp;
-        
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-        class="example-element-row"
-        [class.manager-gone-color]="element.manager.releaseDate!=null">
-    </tr>
-  </table>
-  <mat-paginator style="background-color: transparent;" [pageSizeOptions]="[ 5, 10, 25]"></mat-paginator>
-
-
-  
+<mat-slide-toggle (click)="onOnlyMine()" [checked]="true">Afficher uniquement mes consultants.</mat-slide-toggle>
+<app-datatable *ngIf="!!dataSource"
+  [columnsToDisplay]="columnsToDisplay"
+  [dataSource]="dataSource"
+  [label]="LABEL"
+  (deactivate)="onDeactivate($event)"
+  (newElement)="newConsultant()"
+  (rowClicked)="goToConsultantPage($event)">
+</app-datatable>

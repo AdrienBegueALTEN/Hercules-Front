@@ -59,8 +59,8 @@ export class ManagersComponent implements OnInit {
     )
   }
 
-  public goToManagerPage(event : number) : void {
-    window.location.replace('managers/' + event);
+  public goToManagerPage(manager : number) : void {
+    window.location.replace('managers/' + manager);
   }
 
   private _handleAddError(error : Response) {

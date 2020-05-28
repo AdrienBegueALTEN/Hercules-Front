@@ -14,7 +14,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 export class DatatableComponent implements OnInit {
   @Input() columnsToDisplay : string [];
   @Input() dataSource: MatTableDataSource<any>;
-  @Input() label : String;
+  @Input() label : string;
 
   readonly loggedUser : number = this._authService.getUser().id;
 

@@ -1,12 +1,13 @@
 import { AuthService } from 'src/app/_services/auth.service';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { ConsultantService } from '../../_services/consultant.service';
-import { MatDialog } from '@angular/material/dialog';
-import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
+import { isUndefined } from 'util';
+import { NewUserDialogComponent } from 'src/app/dialog/new-user/new-user-dialog.component';
+import { HttpStatus } from 'src/app/_enums/http-status.enum';
 
 @Component({
   selector: 'app-consultants',
@@ -20,61 +21,36 @@ import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.compon
     ]),
   ],
 })
-export class ConsultantsComponent implements OnInit, OnDestroy {
-  user;
-  isAuthenticated = false;
-  userIsAdmin = false;
-  userIsManager = false;
-  navigationSubscription;
-  onlyMyConsultantChecked = true;
-  consultants: any[];
-  dataSource: MatTableDataSource<any>;
-  columnsToDisplay = ['firstname', 'lastname', 'email', 'manager', 'actions'];
+export class ConsultantsComponent implements OnInit {
+  public onlyMine : boolean = true;
+  private consultants: any[];
+  private _loggedUserId = this._authService.getUser().id;
+  public dataSource: MatTableDataSource<any>;
+  public columnsToDisplay : string[] = ['firstname', 'lastname', 'email', 'releaseDate', 'userActions'];
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  readonly LABEL : string = "consultant";
+  readonly MANAGER_COLUMN_INDEX : number = 3;
 
   constructor(
-    private consultantService: ConsultantService, 
-    private _dialog: MatDialog,
-    private _authService: AuthService) {}
+    private _authService: AuthService,
+    private _consultantService: ConsultantService,
+    private _dialog: MatDialog
+  ) {}
 
-  ngOnInit() {
-    this.initialize();
-  }
-
-  ngOnDestroy(){
-    if (this.navigationSubscription) {
-      this.navigationSubscription.unsubscribe();
-    }
-  }
-
-  initialize(){
-    this.isAuthenticated = !!this._authService.getToken();
-
-    if (this.isAuthenticated) {
-      this.user = this._authService.getUser();
-      this.userIsAdmin = this.user.role == 'ADMIN';
-      this.userIsManager = this.userIsAdmin || this.user.role == 'MANAGER';
-    }
-
-    this.consultantService.getConsultants(false).subscribe(
-      (data) => {
-        this.consultants = data;
-        this.createDatasource(data);
+  public ngOnInit() : void {
+    this._consultantService.getConsultants(false).subscribe(
+      (consultants) => {
+        this.consultants = consultants;
+        this.refreshDatasource();
       },
-      (err) => {
-        console.log(err);
-      }
+      () => window.location.replace('')
     )
   }
 
-  createDatasource(data) {
-    this.dataSource = this.onlyMyConsultantChecked ?
-      this.dataSource = new MatTableDataSource(data.filter((cons) => cons.manager.id == this.user.id)) :
-      this.dataSource = new MatTableDataSource(data);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  public refreshDatasource() : void {
+    this.dataSource = this.onlyMine ?
+      this.dataSource = new MatTableDataSource(this.consultants.filter((cons) => cons.manager.id == this._loggedUserId)) :
+      this.dataSource = new MatTableDataSource(this.consultants);
     this.dataSource.filterPredicate = (data, filter: string) => {
       const accumulator = (currentTerm, key) => {
         return this.nestedFilterCheck(currentTerm, data, key);
@@ -110,39 +86,54 @@ export class ConsultantsComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  showOnlyMyConsultant() {
-    this.onlyMyConsultantChecked = !this.onlyMyConsultantChecked;
-    this.createDatasource(this.consultants);
+  public onOnlyMine() : void {
+    this.onlyMine = !this.onlyMine;
+    if (this.onlyMine) {
+      const managerColumnIndex = this.columnsToDisplay.findIndex(column => column === 'manager')
+      this.columnsToDisplay.splice(managerColumnIndex, 1);
+    } else this.columnsToDisplay.splice(this.MANAGER_COLUMN_INDEX, 0, 'manager')
+    this.refreshDatasource();
   }
 
-  private delete(consultant:any){
-    this.consultantService.deleteConsultant(consultant.id).subscribe(
-      ()=>{
-        this.ngOnInit();
-      },
-      (err) => {
-        console.log(err);
+  public onDeactivate(event : any) : void {
+    this._consultantService.updateConsultant(event.user, 'releaseDate', event.releaseDate).subscribe(
+      () => this.dataSource.data[event.index].releaseDate = event.releaseDate,
+      () => this._showErrorDialog("Impossible de notifier la sortie des effectifs.")
+    );
+  }
+
+  public newConsultant() : void {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig.data = { label: this.LABEL }
+    const dialogRef = this._dialog.open(NewUserDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      (user : any) => {
+        if (isUndefined(user)) return;
+        this._consultantService.newConsultant(user.email, user.firstname, user.lastname, this._loggedUserId).subscribe(
+          (response) => this._handleAddResponse(response),
+          (error) => this._handleAddResponse(error)
+        )
       }
     )
   }
 
-  openDeleteDialog(element: any): void {
-    const dialog = this._dialog.open(YesNoDialogComponent, {
-      data: { 
-        title: 'Supprimer le consultant '+element.firstname+' '+element.lastname+'.' ,
-        message: 'Voulez-vous continuer ?',
-        yes:'Supprimer '+element.firstname+' '+element.lastname,
-        no:'Annuler'
-      },
-    });
+  public goToConsultantPage(consultant : number) {
+    window.location.replace('consultants/' + consultant);
+  }
 
-    dialog.afterClosed().subscribe(
-      (result) => {
-        if(result){
-          this.delete(element);
-        }
-      }
-    );
+  private _handleAddResponse(response : Response) {
+    if (response.status !== HttpStatus.CREATED) {
+      let message : string = "Impossible d'ajouter ce " + this.LABEL + ".";
+      if (response.status === HttpStatus.ACCEPTED)
+        message = message.concat(" L'adresse email renseignée est indisponible.");
+      this._showErrorDialog(message);
+    } else this.ngOnInit();
+  }
+  
+  private _showErrorDialog(message : string) : void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = message;
+    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 }
 
