@@ -1,4 +1,3 @@
-import { CreatePasswordPageComponent } from './_page/create-password/create-password-page.component';
 import { MissionsComponent } from './_page/missions/missions.component';
 import { ManagerGuard } from './_services/guard/manager-guard.service';
 import { AuthGuard } from './_services/guard/auth-guard.service';
@@ -40,7 +39,7 @@ const routes: Routes = [
     component: HomeComponent
   }, 
   { path: 'login', canActivate: [NoAuthGuard], component: LoginComponent },
-  { path: 'login/:token', canActivate: [NoAuthGuard], component: CreatePasswordPageComponent },
+  { path: 'login/:token', canActivate: [NoAuthGuard], component: LoginComponent },
   { path: 'mission-sheet/:token', component: MissionSheetPageComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

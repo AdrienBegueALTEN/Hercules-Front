@@ -9,7 +9,6 @@ const TOKEN_PREFIX : string = 'Bearer ';
   providedIn: 'root'
 })
 export class MissionService {
-
   private _notInteceptedHttpClient : HttpClient;
 
   constructor(

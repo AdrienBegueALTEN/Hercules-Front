@@ -2,11 +2,11 @@
   <table class="inputable">
     <tr>
       <td><app-firstname-input #firstname
-        (valueChange)="autoCompleteEmail()"
+        (keyup)="autoCompleteEmail()"
         [required]="true">
       </app-firstname-input></td>
       <td><app-lastname-input #lastname
-        (valueChange)="autoCompleteEmail()"
+        (keyup)="autoCompleteEmail()"
         [required]="true">
       </app-lastname-input></td>
     </tr>

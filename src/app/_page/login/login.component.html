@@ -4,19 +4,19 @@
             <img src="/assets/img/logo/alten.png" alt="Logo ALTEN">Connexion</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <div [formGroup]="loginForm">
+        <div [formGroup]="grp">
             <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
                 <input matInput type="email" formControlName="email" placeholder="prenom.nom@alten.com" >
               </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Mot de passe</mat-label>
-                <input matInput [type]="hidden ? 'password' : 'text'" formControlName="password" (keyup.enter)="onSubmit()">
-                <button mat-icon-button matSuffix (click)="onVisibility()">
-                  <mat-icon>{{hidden ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" (keyup.enter)="onSubmit()">
+                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                  <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
-            <p *ngIf="isLoginFailed">Identifiants incorrects</p>
+            <p *ngIf="isLoginFailed">Les identifiants saisis ne correspondent à aucun compte.</p>
             <mat-card-actions>
                 <a>Mot de passe oublié ?</a>
                 <button mat-raised-button class="blue-shape" type="submit" (click)="onSubmit()">Se connecter</button>
