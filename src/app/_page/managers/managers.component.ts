@@ -7,6 +7,7 @@ import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.co
 import { NewUserDialogComponent } from 'src/app/dialog/new-user/new-user-dialog.component';
 import { AuthService } from 'src/app/_services/auth.service';
 import { isUndefined } from 'util';
+import { saveAs } from "file-saver";
 
 @Component({
   selector: 'app-managers',
