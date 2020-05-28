@@ -5,11 +5,18 @@
         {{skill.label}}
         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
       </mat-chip>
-      <input placeholder="Ecrivez ici les compétences nécessaires de ce projet"
+      <input #fruitInput placeholder="Ecrivez ici les compétences nécessaires de ce projet"
+             [formControl]="skillCtrl"
+             [matAutocomplete]="auto"
              [matChipInputFor]="chipList"
              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
              [matChipInputAddOnBlur]="addOnBlur"
              (matChipInputTokenEnd)="add($event)">
     </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let skill of filteredSkills | async" [value]="skill.label">
+          {{skill.label}}
+        </mat-option>
+      </mat-autocomplete>
   </mat-form-field>
   

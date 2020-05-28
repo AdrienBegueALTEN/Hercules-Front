@@ -1,7 +1,11 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MissionService } from 'src/app/_services/mission.service';
+import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-skill-tags',
@@ -14,20 +18,31 @@ export class SkillTagsComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
+  allSkills;
+  filteredSkills: Observable<any[]>;
+  skillCtrl = new FormControl();
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor(
     private _missionService : MissionService) {
+      
     }
 
   ngOnInit(){
+    this._missionService.getAllSkills().subscribe(
+      (data) => {
+        this.allSkills = data.sort((a, b) => (a.label > b.label) ? 1 : -1)
+        this.filteredSkills = this.skillCtrl.valueChanges.pipe(
+          startWith(''),
+          map((skill: string | null) => skill ? this._filter(skill) : this.allSkills.slice()));
+      },
+      (err)=>console.log(err)
+    );
   }
 
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-
-    // Add our fruit
+  addSkill(value){
     if ((value || '').trim()) {
       this.project.skills.push({label:value.trim()});
       this._missionService.addSkillToProject(this.project.id,this.project.skills.map(skill => skill.label)).subscribe(
@@ -35,11 +50,25 @@ export class SkillTagsComponent implements OnInit {
         (err) => {}
       );
     }
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    this.addSkill(value);
 
     // Reset the input value
     if (input) {
       input.value = '';
     }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this. addSkill(event.option.viewValue)
+    this.fruitInput.nativeElement.value = '';
+    this.skillCtrl.setValue(null);
   }
 
   remove(skill: any): void {
@@ -51,5 +80,12 @@ export class SkillTagsComponent implements OnInit {
       },
       (err)=>console.log(err)
     )
+  }
+
+  private _filter(value: string): string[] {
+    
+    const filterValue = value.toLowerCase();
+    console.log(filterValue);
+    return this.allSkills.filter(skill => skill.label.toLowerCase().includes(filterValue));
   }
 }

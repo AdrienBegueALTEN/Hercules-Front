@@ -143,4 +143,8 @@ export class MissionService {
       AppSettings.MISSION_API + 'projects/' + project + '/skills',
       httpOptions);
   }
+
+  public getAllSkills(): Observable<any> {
+    return this._httpClient.get(AppSettings.MISSION_API + 'projects/skills');
+  }
 }
