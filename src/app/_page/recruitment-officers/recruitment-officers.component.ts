@@ -63,6 +63,13 @@ export class RecruitmentOfficersComponent implements OnInit {
     window.location.replace('recruitment-officers/' + event);
   }
 
+  public onDeactivate(event : any) : void {
+    this._recruitmentOfficerService.releaseRecruitmentOfficer(event.releaseDate, event.user).subscribe(
+      () => this.dataSource.data[event.index].releaseDate = event.releaseDate,
+      () => this._showErrorDialog("Impossible de notifier la sortie des effectifs.")
+    );
+  }
+
   private _handleError(error : Response) {
     let message : string = "Impossible d'ajouter ce " + this.LABEL + "."
     if (error.status === HttpStatus.CONFLICT)
@@ -75,67 +82,5 @@ export class RecruitmentOfficersComponent implements OnInit {
     dialogConfig.data = message;
     this._dialog.open(MessageDialogComponent, dialogConfig);
   }
-
-  /*dialogMessage(message : String) : void {
-    const  dialog = this._dialog.open(MessageDialogComponent, {
-      data: message
-    });
-  }
-
-  openDialogInactive(manager : any) : void {
-    const dialog = this._dialog.open(ReleaseDateDialogComponent, {
-      data: { 
-        title: 'Rendre inactif le manager '+manager.firstname+" "+manager.lastname ,
-        message: 'Voulez-vous continuer ?',
-        yes:'Rendre inactif ',
-        no:'Annuler'
-      }
-    });
-
-    dialog.afterClosed().subscribe(
-      (result) => {
-        if(result){
-          this._recruitmentOfficerService.releaseRecruitmentOfficer(result,manager.id).subscribe(
-            () => { this.recruitmentOfficerSubscription = this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
-                      (data) => { this.recruitmentOfficers = data;
-                                  this.createDataSource(data); },
-                      (error) => { this.dialogMessage("Impossible de charger ces chargés de recrutement"); }
-                  );
-                    this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
-                },
-            (error) => { this.dialogMessage("Le manager n'a pas pu être rendu actif."); }
-          );
-        }
-      }
-    );
-  }
-  
-  openDialogActive(manager : any) : void {
-    const dialog = this._dialog.open(YesNoDialogComponent, {
-      data: { 
-        title: 'Rendre actif le manager '+manager.firstname+" "+manager.lastname ,
-        message: 'Voulez-vous continuer ?',
-        yes:'Rendre actif ',
-        no:'Annuler'
-      }
-    });
-
-    dialog.afterClosed().subscribe(
-      (result) => {
-        if(result){
-          this._recruitmentOfficerService.reviveRecruitmentOfficer(manager.id).subscribe(
-            () => { this.recruitmentOfficerSubscription = this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
-                      (data) => { this.recruitmentOfficers = data;
-                                  this.createDataSource(data); },
-                      (error) => { this.dialogMessage("Impossible de charger ces chargés de recrutement"); }
-                  );
-                    this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
-                },
-            (error) => { this.dialogMessage("Le manager n'a pas pu être rendu actif."); }
-          );
-        }
-      }
-    );
-  }*/
 
 }

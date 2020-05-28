@@ -1,7 +1,9 @@
 <app-datatable *ngIf="!!dataSource"
-    [columnsToDisplay]="['firstname', 'lastname', 'email', 'releaseDate']"
+    [columnsToDisplay]="['firstname', 'lastname', 'email', 'admin', 'releaseDate', 'userActions']"
     [dataSource]="dataSource"
     [label]="LABEL"
+    (deactivate)="onDeactivate($event)"
     (newElement)="newManager()"
-    (rowClicked)="goToManagerPage($event)">
+    (rowClicked)="goToManagerPage($event)"
+    (setAdmin)="setAdmin($event)">
 </app-datatable>

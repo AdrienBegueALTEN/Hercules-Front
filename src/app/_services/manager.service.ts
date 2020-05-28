@@ -30,7 +30,7 @@ export class ManagerService {
       {observe : 'response' });
   }
 
-  updateManager(firstname : String, lastname : String, email : String, admin : String, id : String) : Observable<any> {
+  updateManager(firstname : String, lastname : String, email : String, admin : String, id : number) : Observable<any> {
     return this._httpClient.put(AppSettings.MANAGER_API,
       { 
         "id" : id,

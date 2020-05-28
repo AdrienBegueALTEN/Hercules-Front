@@ -9,3 +9,13 @@ table:first-child {
 mat-paginator {
   background: none;
 }
+
+::ng-deep.mat-menu-panel {
+  max-width: none !important;
+}
+
+.element-row:hover {
+  background-color: #cfcece;
+  cursor: pointer;
+}
+
