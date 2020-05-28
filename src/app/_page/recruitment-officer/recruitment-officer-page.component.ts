@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
 import { RecruitmentOfficerService } from 'src/app/_services/recruitment-officer.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
@@ -27,7 +27,8 @@ export class RecruitmentOfficerPageComponent implements OnInit {
               private _route: ActivatedRoute,
               private _formBuilder: FormBuilder,
               private _dialog: MatDialog,
-              private _snackBar: MatSnackBar) { 
+              private _snackBar: MatSnackBar,
+              private _router: Router) { 
   }
 
   
@@ -56,7 +57,7 @@ export class RecruitmentOfficerPageComponent implements OnInit {
         this.recruitmentOfficerForm.get('email').setValue(this.recruitmentOfficer.email);
       },
       (err) => {
-        this.dialogBadStart();
+        this.dialogMessage("Impossible de charger ce chargé de recrutement");
       }
     );
     
@@ -100,6 +101,10 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     );
   }
 
+  onDeleteRecruitmentOfficer(id : String) : void {
+    this.dialogDelete();
+  }
+
   dialogError(firstname : String, lastname : String) : void {
     const dialog = this._dialog.open(OkDialogComponent, {
       data: {
@@ -110,16 +115,33 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     });
   }
   
-  dialogBadStart() : void {
+  dialogMessage(message : String) : void {
     const  dialog = this._dialog.open(MessageDialogComponent, {
-      data: "Impossible de charger ce chargé de recrutement"
+      data: message
     });
   }
 
-  dialogUpdated() : void {
-      const  dialog = this._dialog.open(MessageDialogComponent, {
-        data: "Mise à jour effectuée"
-      });
+  dialogDelete() : void {
+    const dialog = this._dialog.open(YesNoDialogComponent,{
+      data:{ 
+        title: "Êtes-vous sûr de vouloir supprimer le CDR "+this.recruitmentOfficer.firstname+" "+this.recruitmentOfficer.lastname,
+        message: "La suppression sera définitive.",
+        yes: "Supprimer",
+        no: "Annuler"
+      }
+    });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        if(result){
+          this._recruitmentOfficerService.deleteRecruitmentOfficer(this.recruitmentOfficer.id).subscribe(
+            () => { this._router.navigate(['/recruitment-officers']);
+                },
+            (error) => { this.dialogMessage("Le CDR n'a pas pu être supprimé."); }
+          );
+        }
+      }
+    );
   }
 
   domainValidator(control: AbstractControl): { [key: string]: boolean } | null {

@@ -86,7 +86,7 @@ export class ManagersComponent implements OnInit {
   public setAdmin(event : any) : void {
     this._managerService.updateManager(null, null, null, event.admin, event.manager).subscribe(
       () => this.dataSource.data[event.index].admin = event.admin,
-      () => this._showErrorDialog("Impossible de mettre à jour les droits administrateur.")
+      () => this._showErrorDialog("Impossible de mettre à jour les droits d'administrateur.")
     );
   }
 
