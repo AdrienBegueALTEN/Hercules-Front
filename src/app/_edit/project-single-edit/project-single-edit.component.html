@@ -51,5 +51,11 @@
             </tr>
         </table>
     </form>
+    <table class="inputable">
+        <tr>
+            <td><app-skill-tags [project]="project"></app-skill-tags></td>
+        </tr>
+    </table>
+    
     <button *ngIf="canBeDeteled" color="warn"  mat-button (click)="onDelete()">Retirer ce projet</button>
 </div>

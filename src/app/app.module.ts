@@ -99,6 +99,7 @@ import { ManagerPageComponent } from './_page/manager-page/manager-page.componen
 import { ChangePasswordDialogComponent } from './dialog/change-password/change-password-dialog.component';
 import { NewUserDialogComponent } from './dialog/new-user/new-user-dialog.component';
 import { ReleaseDateDialogComponent } from './dialog/release-date/release-date-dialog.component';
+import { SkillTagsComponent } from './_input/skill-tags/skill-tags.component';
 
 @NgModule({
 
@@ -159,7 +160,8 @@ import { ReleaseDateDialogComponent } from './dialog/release-date/release-date-d
       ChangePasswordDialogComponent,
       DatatableComponent,
       NewUserDialogComponent,
-      ReleaseDateDialogComponent
+      ReleaseDateDialogComponent,
+      SkillTagsComponent
    ],
    imports: [
       AppRoutingModule,
