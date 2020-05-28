@@ -4,7 +4,7 @@
     <input matInput (keyup)="applyFilter($event)" />
   </mat-form-field>
 
-  <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort #sort>
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
     <ng-container matColumnDef="firstname">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Prénom</th>
       <td mat-cell *matCellDef="let user" (click)="onRow(user.id)" [ngClass]="{'element-disabled': !!user.releaseDate}">

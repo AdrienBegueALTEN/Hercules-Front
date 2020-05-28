@@ -34,6 +34,7 @@ export class DatatableComponent implements AfterViewInit {
   public ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    console.log(this.dataSource.sort)
   }
 
   public applyFilter(event: Event) : void {

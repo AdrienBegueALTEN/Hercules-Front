@@ -54,7 +54,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { LoginComponent } from 'src/app/login//login.component';
+import { LoginComponent } from 'src/app/_page/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { authInterceptorProviders } from 'src/app/_helper/auth.interceptor';
 import { NewMissionPageComponent } from 'src/app/_page/new-mission/new-mission-page.component';
