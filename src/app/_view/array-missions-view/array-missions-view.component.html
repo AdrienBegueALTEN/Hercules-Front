@@ -102,8 +102,15 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row" [cdkDetailRow]="row"
         [cdkDetailRowTpl]="tpl">
     </mat-row>
+
+    
 </mat-table>
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" #paginator> 
+    
+</mat-paginator>
+
 
 
 <ng-template #tpl let-element>
@@ -125,3 +132,10 @@
 <br />
 
 <p *ngIf="this.selection.selected.length>0">Éléments sélectionnés : {{this.selection.selected.length}}</p>
+
+<button mat-raised-button *ngIf="this.selection.selected.length>0"
+                          class="pdfButton" 
+                          color="primary"
+                          (click)="onGeneratePDF(this.selection.selected)" >
+    Générer fiche PDF
+</button>

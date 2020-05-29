@@ -45,11 +45,11 @@ export class ArrayMissionsViewComponent implements OnInit {
   dataSourceProjects: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
   NumberOfCheckboxesExceed = false;
-  NumberOfMaximumCheckboxes = 2;
+  NumberOfMaximumCheckboxes = 100;
 
   innerDisplayedColumns: string[] = ['select','project-name','project-description'];
 
-
+  
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -264,6 +264,32 @@ SnackBarMessage()
 onClickProjects(event)
 {
   event.preventDefault();
+}
+
+onGeneratePDF(selectedElements : any[]) : void {
+  //console.log(selectedElements);
+  let elements : any[] = [];
+  selectedElements.forEach( function (value){
+    if(!!value.customer){
+      elements.push({
+        id : value.id,
+        customer : value.customer.id,
+        consultant : value.consultant.id,
+        type : "m"
+      });
+    }
+    else{
+      elements.push({
+        id : value.id,
+        type : "p"
+      });
+    }
+  });
+  //console.log(elements);
+  this._missionService.generatePDF(elements).subscribe(
+    () => {},
+    (error) => {console.log(error);}
+  );
 }
 
 }
