@@ -46,6 +46,8 @@ export class ArrayMissionsViewComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   NumberOfCheckboxesExceed = false;
   NumberOfMaximumCheckboxes = 2;
+  searchValue:string = null;
+  advancedSearchEnabled = false;
 
   innerDisplayedColumns: string[] = ['select','project-name','project-description'];
 
@@ -264,6 +266,17 @@ SnackBarMessage()
 onClickProjects(event)
 {
   event.preventDefault();
+}
+
+clearSearch() { 
+  if (this.advancedSearchEnabled==false){
+  this.searchValue = '';
+  console.log(this.searchValue.length, this.searchValue, typeof(this.searchValue));
+  this.advancedSearchEnabled=true;
+  }
+  else {
+  this.advancedSearchEnabled=false;
+  }
 }
 
 }
