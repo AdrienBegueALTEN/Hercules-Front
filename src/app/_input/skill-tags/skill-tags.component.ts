@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MissionService } from 'src/app/_services/mission.service';
@@ -15,8 +15,6 @@ import { startWith, map } from 'rxjs/operators';
 export class SkillTagsComponent implements OnInit {
   @Input() project: any;
   visible = true;
-  selectable = true;
-  removable = true;
   addOnBlur = true;
   allSkills;
   filteredSkills: Observable<any[]>;
@@ -25,10 +23,9 @@ export class SkillTagsComponent implements OnInit {
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
-  constructor(
-    private _missionService : MissionService) {
-      
-    }
+  @Output() addSkillEvent = new EventEmitter<any>();
+
+  constructor(private _missionService : MissionService) {}
 
   ngOnInit(){
     this._missionService.getAllSkills().subscribe(
@@ -43,13 +40,21 @@ export class SkillTagsComponent implements OnInit {
   }
 
   addSkill(value){
-    if ((value || '').trim()) {
+    /*if ((value || '').trim()) {
       this.project.skills.push({label:value.trim()});
       this._missionService.addSkillToProject(this.project.id,this.project.skills.map(skill => skill.label)).subscribe(
         () => {},
         (err) => {}
       );
+    }*/
+    if(value!=''){
+      this.project.skills.push({label:value});
+      this.addSkillEvent.emit({
+        project: this.project.id,
+        skill: value
+      });
     }
+    
   }
 
   add(event: MatChipInputEvent): void {
@@ -66,9 +71,9 @@ export class SkillTagsComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this. addSkill(event.option.viewValue)
-    this.fruitInput.nativeElement.value = '';
-    this.skillCtrl.setValue(null);
+    //this.addSkill(event.option.viewValue)
+    this.fruitInput.nativeElement.value = event.option.viewValue;
+    //this.skillCtrl.setValue(null);
   }
 
   remove(skill: any): void {
@@ -85,7 +90,6 @@ export class SkillTagsComponent implements OnInit {
   private _filter(value: string): string[] {
     
     const filterValue = value.toLowerCase();
-    console.log(filterValue);
     return this.allSkills.filter(skill => skill.label.toLowerCase().includes(filterValue));
   }
 }
