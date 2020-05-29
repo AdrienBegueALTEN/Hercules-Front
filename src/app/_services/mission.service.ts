@@ -139,13 +139,37 @@ export class MissionService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: skill
     };
-    return this._httpClient.delete(
+    return this._notInteceptedHttpClient.delete(
       AppSettings.MISSION_API + 'projects/' + project + '/skills',
       httpOptions);
   }
 
+  public addSkillToProjectFromToken(project : number, labels : string[], token : string): Observable<any> {
+    return this._notInteceptedHttpClient.post(AppSettings.MISSION_API + 'projects/anonymous/' + project + '/skills',
+      labels,
+      {
+        headers: new HttpHeaders({ 
+          'Content-Type': 'application/json',
+          'Authorization': TOKEN_PREFIX + token
+        })
+      });
+  }
+
+  public removeSkillFromProjectFromToken(project : number, skill : any, token : string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'Authorization': TOKEN_PREFIX + token
+      }), body: skill
+    };
+    { headers: new HttpHeaders({ }) }
+    return this._httpClient.delete(
+      AppSettings.MISSION_API + 'projects/anonymous/' + project + '/skills',
+      httpOptions);
+  }
+
   public getAllSkills(): Observable<any> {
-    return this._httpClient.get(AppSettings.MISSION_API + 'projects/skills');
+    return this._httpClient.get(AppSettings.MISSION_API + 'projects/skills-all');
   }
 
   public generatePDF(elements : any[]): Observable<any> {

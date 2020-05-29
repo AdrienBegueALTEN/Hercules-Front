@@ -1,11 +1,54 @@
+<div *ngIf="advancedSearchEnabled">
+    <h2>Recherche avancée :</h2>
+
+    <strong>Titre de la mission :</strong>  
+    <app-missions-title-autocomplete
+         [missions]="missions"
+          >
+          </app-missions-title-autocomplete>
+    
+
+    <strong>Client :</strong>   
+
+    <app-missions-customer-autocomplete
+    [missions]="missions"
+    >
+    </app-missions-customer-autocomplete>
+
+    <app-missions-activitysector-autocomplete
+    [missions]="missions"
+    >
+    </app-missions-activitysector-autocomplete>
+
+
+    <strong>Localité de la mission :</strong>   
+
+
+    <app-missions-city-autocomplete
+    [missions]="missions"
+    >
+    </app-missions-city-autocomplete>
+
+    <app-missions-country-autocomplete
+    [missions]="missions"
+    >
+    </app-missions-country-autocomplete>
+
+</div>    
+
 <div class="example-header">
     <mat-form-field>
         <mat-label>Chercher une mission</mat-label>
-        <input matInput (keyup)="applyFilter($event)"
+        <input matInput (keyup)="applyFilter($event)" [(ngModel)]="searchValue"
             placeholder="Chercher une mission, une ville, un secteur d'activité...">
     </mat-form-field>
 
 </div>
+
+
+<mat-slide-toggle (click)="clearSearch()"  [checked]="false">Recherche avancée </mat-slide-toggle>
+&nbsp;&nbsp;
+&nbsp;&nbsp;
 
 <mat-slide-toggle (click)="showOnlyMyMissions()" *ngIf="userIsManagerInclude" [checked]="true">Afficher uniquement mes
     missions. </mat-slide-toggle>&nbsp;&nbsp;
@@ -131,8 +174,11 @@
 </ng-template>
 <br />
 
-<p *ngIf="this.selection.selected.length>0">Éléments sélectionnés : {{this.selection.selected.length}}</p>
-
+<div *ngIf="this.selection.selected.length>0">
+    <p [ngSwitch]="this.selection.selected.length"><span>Éléments sélectionnés : {{this.selection.selected.length}}</span></p>
+    <p *ngIf="this.selection.selected.length>=this.NumberOfMaximumCheckboxes" style="color: red"> Nombre d'éléments sélectionnés maximum : {{this.NumberOfMaximumCheckboxes}}</p>
+    
+    </div>
 <button mat-raised-button *ngIf="this.selection.selected.length>0"
                           class="pdfButton" 
                           color="primary"

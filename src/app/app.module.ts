@@ -100,6 +100,11 @@ import { ChangePasswordDialogComponent } from './dialog/change-password/change-p
 import { NewUserDialogComponent } from './dialog/new-user/new-user-dialog.component';
 import { ReleaseDateDialogComponent } from './dialog/release-date/release-date-dialog.component';
 import { SkillTagsComponent } from './_input/skill-tags/skill-tags.component';
+import { MissionsActivitysectorAutocompleteComponent } from './_input/autocomplete/missions/activitysector/missions-activitysector-autocomplete/missions-activitysector-autocomplete.component';
+import { MissionsCountryAutocompleteComponent } from './_input/autocomplete/missions/country/missions-country-autocomplete/missions-country-autocomplete.component';
+import { MissionsCustomerAutocompleteComponent } from './_input/autocomplete/missions/customer/missions-customer-autocomplete/missions-customer-autocomplete.component';
+import { MissionsTitleAutocompleteComponent } from './_input/autocomplete/missions/title/missions-title-autocomplete/missions-title-autocomplete.component';
+import { MissionsCityAutocompleteComponent } from './_input/autocomplete/missions/city/missions-city-autocomplete/missions-city-autocomplete.component';
 
 @NgModule({
 
@@ -161,7 +166,12 @@ import { SkillTagsComponent } from './_input/skill-tags/skill-tags.component';
       DatatableComponent,
       NewUserDialogComponent,
       ReleaseDateDialogComponent,
-      SkillTagsComponent
+      SkillTagsComponent,
+      MissionsActivitysectorAutocompleteComponent,
+      MissionsCountryAutocompleteComponent,
+      MissionsCustomerAutocompleteComponent,
+      MissionsTitleAutocompleteComponent,
+      MissionsCityAutocompleteComponent
    ],
    imports: [
       AppRoutingModule,

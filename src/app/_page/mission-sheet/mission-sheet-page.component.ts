@@ -89,4 +89,18 @@ export class MissionSheetPageComponent implements OnInit {
         this._showErrorDialog("Impossible de charger cette image.");
       });
   }
+
+  public addSkillToProject(skill: any){
+    this._missionService.addSkillToProjectFromToken(skill.project,[skill.skill], this._token).subscribe(
+      () => {},
+      (err) => console.log(err) 
+    );
+  }
+
+  public removeSkillFromProject(skill: any){
+    this._missionService.removeSkillFromProjectFromToken(skill.project,skill.skill, this._token).subscribe(
+      () => {},
+      (err) => console.log(err)
+    )
+  }
 }

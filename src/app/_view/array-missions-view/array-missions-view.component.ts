@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
@@ -24,7 +24,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     ]),
   ],
 })
-export class ArrayMissionsViewComponent implements OnInit {
+export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   @Input() missions: any[];
   @Input() displayedColumns: string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
 
@@ -46,6 +46,8 @@ export class ArrayMissionsViewComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   NumberOfCheckboxesExceed = false;
   NumberOfMaximumCheckboxes = 100;
+  searchValue:string = null;
+  advancedSearchEnabled = false;
 
   innerDisplayedColumns: string[] = ['select','project-name','project-description'];
 
@@ -80,22 +82,12 @@ export class ArrayMissionsViewComponent implements OnInit {
       this.userIsManager = this.userIsAdmin || this.user.role == 'MANAGER';
     }
 
+    
+
+  }
+
+  ngAfterViewInit(){
     this.createDatasource(this.missions);
-
-
-/*
-    this._missionService.getMissions(this.userId).subscribe(
-      (data) => {
-        this.missions = data;
-        this.createDatasource(data);
-        
-      },
-      (err) => {
-        console.log(err);
-      }
-    )*/
-   
-
   }
 
 
@@ -243,53 +235,65 @@ openDeleteDialog(element: any): void {
 
 
 
-onClick(event,row) {
-  if(this.selection.selected.length>=this.NumberOfMaximumCheckboxes&&!(this.selection.isSelected(row))) {
-    event.preventDefault();
-    this._snackBar.open(
-      'Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : '+this.NumberOfMaximumCheckboxes, 
-      'X', 
-      {duration: 2000});
+  onClick(event,row) {
+    if(this.selection.selected.length>=this.NumberOfMaximumCheckboxes&&!(this.selection.isSelected(row))) {
+      event.preventDefault();
+      this._snackBar.open(
+        'Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : '+this.NumberOfMaximumCheckboxes, 
+        'X', 
+        {duration: 2000});
+    }
   }
-}
 
-SnackBarMessage()
-{
-  if(this.selection.selected.length>=this.NumberOfMaximumCheckboxes)
+  SnackBarMessage()
   {
-  this._snackBar.open('Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : '+this.NumberOfMaximumCheckboxes, 'X', {duration: 2000});
+    if(this.selection.selected.length>=this.NumberOfMaximumCheckboxes)
+    {
+    this._snackBar.open('Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : '+this.NumberOfMaximumCheckboxes, 'X', {duration: 2000});
+    }
   }
-}
 
-onClickProjects(event)
-{
-  event.preventDefault();
-}
+  onClickProjects(event)
+  {
+    event.preventDefault();
+  }
 
-onGeneratePDF(selectedElements : any[]) : void {
-  //console.log(selectedElements);
-  let elements : any[] = [];
-  selectedElements.forEach( function (value){
-    if(!!value.customer){
-      elements.push({
-        id : value.id,
-        customer : value.customer.id,
-        consultant : value.consultant.id,
-        type : "m"
-      });
+  onGeneratePDF(selectedElements : any[]) : void {
+    //console.log(selectedElements);
+    let elements : any[] = [];
+    selectedElements.forEach( function (value){
+      if(!!value.customer){
+        elements.push({
+          id : value.id,
+          customer : value.customer.id,
+          consultant : value.consultant.id,
+          type : "m"
+        });
+      }
+      else{
+        elements.push({
+          id : value.id,
+          type : "p"
+        });
+      }
+    });
+    //console.log(elements);
+    this._missionService.generatePDF(elements).subscribe(
+      () => {},
+      (error) => {console.log(error);}
+    );
+
+
+  }
+  clearSearch() { 
+    if (this.advancedSearchEnabled==false){
+    this.searchValue = '';
+    console.log(this.searchValue.length, this.searchValue, typeof(this.searchValue));
+    this.advancedSearchEnabled=true;
     }
-    else{
-      elements.push({
-        id : value.id,
-        type : "p"
-      });
+    else {
+    this.advancedSearchEnabled=false;
     }
-  });
-  //console.log(elements);
-  this._missionService.generatePDF(elements).subscribe(
-    () => {},
-    (error) => {console.log(error);}
-  );
-}
+  }
 
 }

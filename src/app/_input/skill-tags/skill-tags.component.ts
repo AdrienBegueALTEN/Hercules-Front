@@ -24,6 +24,7 @@ export class SkillTagsComponent implements OnInit {
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   @Output() addSkillEvent = new EventEmitter<any>();
+  @Output() removeSkillEvent = new EventEmitter<any>();
 
   constructor(private _missionService : MissionService) {}
 
@@ -40,18 +41,12 @@ export class SkillTagsComponent implements OnInit {
   }
 
   addSkill(value){
-    /*if ((value || '').trim()) {
-      this.project.skills.push({label:value.trim()});
-      this._missionService.addSkillToProject(this.project.id,this.project.skills.map(skill => skill.label)).subscribe(
-        () => {},
-        (err) => {}
-      );
-    }*/
-    if(value!=''){
-      this.project.skills.push({label:value});
+    let capVal = value.toUpperCase();
+    if(capVal!='' && !this.project.skills.map(p => p.label.toUpperCase()).includes(capVal)){
+      this.project.skills.push({label:capVal});
       this.addSkillEvent.emit({
         project: this.project.id,
-        skill: value
+        skill: capVal
       });
     }
     
@@ -77,14 +72,13 @@ export class SkillTagsComponent implements OnInit {
   }
 
   remove(skill: any): void {
-    this._missionService.removeSkillFromProject(this.project.id,skill).subscribe(
-      ()=>{
-        const index = this.project.skills.indexOf(skill);
-        if (index >= 0) 
-          this.project.skills.splice(index, 1);
-      },
-      (err)=>console.log(err)
-    )
+    const index = this.project.skills.indexOf(skill);
+    if (index >= 0) 
+      this.project.skills.splice(index, 1);
+    this.removeSkillEvent.emit({
+      project: this.project.id,
+      skill: skill
+    })
   }
 
   private _filter(value: string): string[] {
