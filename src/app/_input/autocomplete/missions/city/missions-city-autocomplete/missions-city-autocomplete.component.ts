@@ -4,7 +4,9 @@ import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 const _filter = (name : string, value : string) : boolean => {
+  if(name){
   return name.toLowerCase().indexOf(value) >= 0;
+  }
 };
 @Component({
   selector: 'app-missions-city-autocomplete',
@@ -28,7 +30,7 @@ export class MissionsCityAutocompleteComponent implements OnInit {
     this.filteredCities = this.cityCtrl.valueChanges
     .pipe(
       startWith(''),
-      map(value => typeof value === 'string' ? value : value.lastVersion.city),
+      map(value => (typeof value === 'string') ? value : value.lastVersion.city),
       map(city => city ? this._filter(city) : this._filter("")),
 
     );
@@ -42,7 +44,9 @@ export class MissionsCityAutocompleteComponent implements OnInit {
     if(name && name.length >= this.minLength){
     const filteredValue = name.toLowerCase();
     const filteredCities = this.missions.filter(mission => _filter(mission.lastVersion.city, filteredValue));
+    //console.log(this.uniques(filteredCities, "city"));
     return this.uniques(filteredCities, "city");
+    
   }
   else 
   {

@@ -4,11 +4,11 @@ import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 const _filter = (name : string, value : string) : boolean => {
-  if(value.length>0)
-  {
+  if(name){
   return name.toLowerCase().indexOf(value) >= 0;
   }
 };
+
 @Component({
   selector: 'app-missions-title-autocomplete',
   templateUrl: './missions-title-autocomplete.component.html',
@@ -45,7 +45,7 @@ export class MissionsTitleAutocompleteComponent implements OnInit {
    const filteredValue = name.toLowerCase();
 
    const filteredTitles = this.missions.filter(mission => _filter(mission.lastVersion.title, filteredValue));
-   console.log(name);
+   //console.log(name);
    return filteredTitles;
  }
 

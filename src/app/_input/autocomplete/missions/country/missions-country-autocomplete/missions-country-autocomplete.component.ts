@@ -4,7 +4,9 @@ import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 const _filter = (name : string, value : string) : boolean => {
+  if(name){
   return name.toLowerCase().indexOf(value) >= 0;
+  }
 };
 
 @Component({
