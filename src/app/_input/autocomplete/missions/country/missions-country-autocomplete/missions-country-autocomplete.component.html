@@ -1,0 +1,11 @@
+<form>
+    <mat-form-field>
+      <mat-label>Pays</mat-label>
+      <input matInput [formControl]="countryCtrl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let mission of filteredCountries | async" [value]="mission">
+          {{mission.lastVersion.country}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
