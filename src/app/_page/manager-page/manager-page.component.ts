@@ -53,11 +53,14 @@ export class ManagerPageComponent implements OnInit {
         this.managerForm.get('lastname').setValue(this.manager.lastname);
         this.managerForm.get('email').setValue(this.manager.email);
         this.managerForm.get('admin').setValue(this.manager.admin);
-        this.managerForm.get('releaseDate').setValue(this.manager.releaseDate.substr(0,10));
+        this.managerForm.controls['admin'].enable();
+        
         if(this.manager.releaseDate!=null){
+          this.managerForm.get('releaseDate').setValue(this.manager.releaseDate.substr(0,10));
           this.managerForm.controls['firstname'].disable();
           this.managerForm.controls['lastname'].disable();
           this.managerForm.controls['email'].disable();
+          this.managerForm.controls['admin'].disable();
         }
       },
       (err) => {
@@ -86,11 +89,12 @@ export class ManagerPageComponent implements OnInit {
           this.manager.admin = admin;
           this._managerService.updateManager(firstname, lastname, email, admin, this.manager.id).subscribe(
             (response) => { this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
-            () => { this.dialogError(firstname,lastname); }
+            (error) => { if(error.status==409) this.dialogError(firstname,lastname,"L'adresse mail est déjà utilisée.");
+                         else this.dialogError(firstname,lastname,"Les changements n'ont pas été pris en compte."); }
           );
     }
     else{
-      this.dialogError(this.manager.firstname,this.manager.lastname);
+      this.dialogError(this.manager.firstname,this.manager.lastname,"Les champs n'ont pas pu être enregistrés, ils sont incomplets ou invalides.");
     }
   }
 
@@ -106,10 +110,10 @@ export class ManagerPageComponent implements OnInit {
       (response) => { this.ngOnInit();
                       this._managerService.updateManager(this.manager.firstname, this.manager.lastname, this.manager.email, "false", this.manager.id).subscribe(
                         (response) => { this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
-                        () => { this.dialogError(this.manager.firstname,this.manager.lastname); }
+                        () => { this.dialogError(this.manager.firstname,this.manager.lastname,"Les droits d'administrateurs n'ont pas pu être enlevés."); }
                       );
                       this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
-      () => { this.dialogError(this.manager.firstname,this.manager.lastname); }
+      () => { this.dialogError(this.manager.firstname,this.manager.lastname,"La date de fin d'activité n'a pas été prise en compte."); }
     );
   }
 
@@ -117,11 +121,11 @@ export class ManagerPageComponent implements OnInit {
     this.dialogActive();
   }
 
-  dialogError(firstname : String, lastname : String) : void {
+  dialogError(firstname : String, lastname : String, message : String) : void {
     const dialog = this._dialog.open(OkDialogComponent, {
       data: {
         title: "Echec de changement du manager : "+firstname+" "+lastname,
-        message: "Les changements n'ont pas été pris en compte",
+        message: message,
         ok: 'Continuer'
       }
     });

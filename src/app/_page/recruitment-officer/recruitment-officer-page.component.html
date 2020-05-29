@@ -47,7 +47,7 @@
         </mat-form-field>
         <button mat-raised-button color="primary" 
                                   (click)="onActivateRecruitmentOfficer(recruitmentOfficer.id)"
-                                  *ngIf="recruitmentOfficer.releaseDate!=null">
+                                  *ngIf="!!recruitmentOfficer ? recruitmentOfficer.releaseDate!=null : null">
             <span>Rendre actif à nouveau</span>
         </button>
     </mat-card-content>
