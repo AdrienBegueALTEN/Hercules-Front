@@ -202,4 +202,11 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
         }
       }); 
   }
+
+  public addSkillToProject(skill: any){
+    this._missionService.addSkillToProject(skill.project,[skill.skill]).subscribe(
+      ()=>{},
+      (err) => console.log(err) 
+    );
+  }
 }

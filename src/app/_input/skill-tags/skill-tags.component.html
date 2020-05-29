@@ -1,11 +1,14 @@
 <mat-form-field>
-    <mat-chip-list #chipList aria-label="Fruit selection">
-      <mat-chip *ngFor="let skill of project.skills" [selectable]="selectable"
-               [removable]="removable" (removed)="remove(skill)">
+    <mat-chip-list #chipList aria-label="Skills selection">
+      <mat-chip *ngFor="let skill of project.skills"
+               [removable]="true" (removed)="remove(skill)">
         {{skill.label}}
-        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
-      <input #fruitInput placeholder="Ecrivez ici les compétences nécessaires de ce projet"
+      <mat-chip *ngIf="project.skills.length==0">
+        Vos compétences ici
+      </mat-chip>
+      <input #fruitInput placeholder="Compétences nécessaires à ce projet"
              [formControl]="skillCtrl"
              [matAutocomplete]="auto"
              [matChipInputFor]="chipList"
