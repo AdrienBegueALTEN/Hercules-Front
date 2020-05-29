@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
@@ -24,7 +24,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     ]),
   ],
 })
-export class ArrayMissionsViewComponent implements OnInit {
+export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   @Input() missions: any[];
   @Input() displayedColumns: string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
 
@@ -82,22 +82,12 @@ export class ArrayMissionsViewComponent implements OnInit {
       this.userIsManager = this.userIsAdmin || this.user.role == 'MANAGER';
     }
 
+    
+
+  }
+
+  ngAfterViewInit(){
     this.createDatasource(this.missions);
-
-
-/*
-    this._missionService.getMissions(this.userId).subscribe(
-      (data) => {
-        this.missions = data;
-        this.createDatasource(data);
-        
-      },
-      (err) => {
-        console.log(err);
-      }
-    )*/
-   
-
   }
 
 
