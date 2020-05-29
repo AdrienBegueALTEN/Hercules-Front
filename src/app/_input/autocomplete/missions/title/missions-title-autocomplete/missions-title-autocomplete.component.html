@@ -1,0 +1,11 @@
+<form>
+    <mat-form-field>
+      <mat-label>Titre de la mission</mat-label>
+      <input matInput [formControl]="titleCtrl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let mission of filteredTitles | async" [value]="mission">
+          {{mission.lastVersion.title}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>

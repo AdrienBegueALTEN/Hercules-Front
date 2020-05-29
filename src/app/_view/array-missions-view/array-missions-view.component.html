@@ -1,5 +1,11 @@
 <div *ngIf="advancedSearchEnabled">
     <h2>Recherche avancée :</h2>
+
+    <strong>Titre de la mission :</strong>  
+    <app-missions-title-autocomplete
+         [missions]="missions"
+          >
+          </app-missions-title-autocomplete>
     
 
     <strong>Client :</strong>   
