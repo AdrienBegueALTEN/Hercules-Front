@@ -39,7 +39,7 @@
 
         <mat-slide-toggle (change)="onUpdateManager()" 
                           formControlName="admin"
-                          [disabled]="manager.releaseDate!=null" >
+                           >
             Octroyer les droits d'administrateur
         </mat-slide-toggle>
 
@@ -53,7 +53,7 @@
         </mat-form-field>
         <button mat-raised-button color="primary" 
                                   (click)="onActivateManager(manager.id)"
-                                  *ngIf="manager.releaseDate!=null">
+                                  *ngIf="!!manager ? manager.releaseDate!=null : null">
             <span>Rendre actif à nouveau</span>
         </button>
         

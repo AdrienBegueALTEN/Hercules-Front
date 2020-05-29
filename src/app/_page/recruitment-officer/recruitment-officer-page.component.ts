@@ -55,11 +55,14 @@ export class RecruitmentOfficerPageComponent implements OnInit {
         this.recruitmentOfficerForm.get('firstname').setValue(this.recruitmentOfficer.firstname);
         this.recruitmentOfficerForm.get('lastname').setValue(this.recruitmentOfficer.lastname);
         this.recruitmentOfficerForm.get('email').setValue(this.recruitmentOfficer.email);
-        this.recruitmentOfficerForm.get('releaseDate').setValue(this.recruitmentOfficer.releaseDate.substr(0,10));
+        
+        
         if(this.recruitmentOfficer.releaseDate!=null){
+          this.recruitmentOfficerForm.get('releaseDate').setValue(this.recruitmentOfficer.releaseDate.substr(0,10));
           this.recruitmentOfficerForm.controls['firstname'].disable();
           this.recruitmentOfficerForm.controls['lastname'].disable();
           this.recruitmentOfficerForm.controls['email'].disable();
+          
         }
       },
       (err) => {
@@ -90,11 +93,12 @@ export class RecruitmentOfficerPageComponent implements OnInit {
           this.recruitmentOfficer.lastname = lastname;
           this._recruitmentOfficerService.updateRecruitmentOfficer(firstname, lastname, email,this.recruitmentOfficer.id).subscribe(
             (response) => { this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
-            () => { this.dialogError(firstname,lastname); }
+            (error) => { if(error.status==409) this.dialogError(firstname,lastname,"L'adresse mail est déjà utilisée.");
+                    else this.dialogError(firstname,lastname,"Les changements n'ont pas été pris en compte."); }
           );
     }
     else{
-      this.dialogError(this.recruitmentOfficer.firstname,this.recruitmentOfficer.lastname);
+      this.dialogError(this.recruitmentOfficer.firstname,this.recruitmentOfficer.lastname,"Les champs n'ont pas pu être enregistrés, ils sont incomplets ou invalides.");
     }
   }
 
@@ -104,7 +108,7 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     this._recruitmentOfficerService.releaseRecruitmentOfficer(releaseDate, this.recruitmentOfficer.id).subscribe(
       (response) => { this.ngOnInit();
                       this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}); },
-      () => { this.dialogError(this.recruitmentOfficer.firstname,this.recruitmentOfficer.lastname); }
+      () => { this.dialogError(this.recruitmentOfficer.firstname,this.recruitmentOfficer.lastname,"La date de fin d'activité n'a pas été prise en compte."); }
     );
   }
 
@@ -116,11 +120,11 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     this.dialogActive();
   }
 
-  dialogError(firstname : String, lastname : String) : void {
+  dialogError(firstname : String, lastname : String, message : String) : void {
     const dialog = this._dialog.open(OkDialogComponent, {
       data: {
         title: "Echec de changement du chargé de recrutement : "+firstname+" "+lastname,
-        message: "Les changements n'ont pas été pris en compte",
+        message: message,
         ok: 'Continuer'
       }
     });
