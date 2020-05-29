@@ -13,6 +13,7 @@ export class ProjectsEditComponent {
   @Output() update : EventEmitter<any> = new EventEmitter<any>();
   @Output() deletion : EventEmitter<number> = new EventEmitter<number>();
   @Output() addSkillEvent = new EventEmitter<any>();
+  @Output() removeSkillEvent = new EventEmitter<any>()
 
   @ViewChild('tabGrp') tabGrp : MatTabGroup;
   @Output() image : EventEmitter<any> = new EventEmitter<any>();

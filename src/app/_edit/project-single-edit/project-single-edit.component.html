@@ -53,7 +53,9 @@
     </form>
     <table class="inputable">
         <tr>
-            <td><app-skill-tags [project]="project" (addSkillEvent)="addSkillEvent.emit($event)"></app-skill-tags></td>
+            <td><app-skill-tags [project]="project" 
+                    (addSkillEvent)="addSkillEvent.emit($event)"
+                    (removeSkillEvent)="removeSkillEvent.emit($event)"></app-skill-tags></td>
         </tr>
     </table>
     

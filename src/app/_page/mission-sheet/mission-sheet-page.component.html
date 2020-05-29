@@ -26,7 +26,9 @@
                 (new)="createNewProject()"
                 (update)="updateProject($event)"
                 (deletion)="deleteProject($event)"
-                (image)="addImage($event)"></app-projects-edit>
+                (image)="addImage($event)"
+                (addSkillEvent)="addSkillToProject($event)"
+                (removeSkillEvent)="removeSkillFromProject($event)"></app-projects-edit>
               <button mat-fab matStepperNext class="white-shape next step-nav">
                 <mat-icon>done</mat-icon>
               </button>
