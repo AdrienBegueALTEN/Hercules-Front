@@ -104,6 +104,7 @@ import { MissionsActivitysectorAutocompleteComponent } from './_input/autocomple
 import { MissionsCountryAutocompleteComponent } from './_input/autocomplete/missions/country/missions-country-autocomplete/missions-country-autocomplete.component';
 import { MissionsCustomerAutocompleteComponent } from './_input/autocomplete/missions/customer/missions-customer-autocomplete/missions-customer-autocomplete.component';
 import { MissionsTitleAutocompleteComponent } from './_input/autocomplete/missions/title/missions-title-autocomplete/missions-title-autocomplete.component';
+import { MissionsCityAutocompleteComponent } from './_input/autocomplete/missions/city/missions-city-autocomplete/missions-city-autocomplete.component';
 
 @NgModule({
 
@@ -169,7 +170,8 @@ import { MissionsTitleAutocompleteComponent } from './_input/autocomplete/missio
       MissionsActivitysectorAutocompleteComponent,
       MissionsCountryAutocompleteComponent,
       MissionsCustomerAutocompleteComponent,
-      MissionsTitleAutocompleteComponent
+      MissionsTitleAutocompleteComponent,
+      MissionsCityAutocompleteComponent
    ],
    imports: [
       AppRoutingModule,
