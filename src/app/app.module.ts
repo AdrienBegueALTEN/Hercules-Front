@@ -102,6 +102,7 @@ import { ReleaseDateDialogComponent } from './dialog/release-date/release-date-d
 import { SkillTagsComponent } from './_input/skill-tags/skill-tags.component';
 import { MissionsActivitysectorAutocompleteComponent } from './_input/autocomplete/missions/activitysector/missions-activitysector-autocomplete/missions-activitysector-autocomplete.component';
 import { MissionsCountryAutocompleteComponent } from './_input/autocomplete/missions/country/missions-country-autocomplete/missions-country-autocomplete.component';
+import { MissionsCustomerAutocompleteComponent } from './_input/autocomplete/missions/customer/missions-customer-autocomplete/missions-customer-autocomplete.component';
 
 @NgModule({
 
@@ -165,7 +166,8 @@ import { MissionsCountryAutocompleteComponent } from './_input/autocomplete/miss
       ReleaseDateDialogComponent,
       SkillTagsComponent,
       MissionsActivitysectorAutocompleteComponent,
-      MissionsCountryAutocompleteComponent
+      MissionsCountryAutocompleteComponent,
+      MissionsCustomerAutocompleteComponent
    ],
    imports: [
       AppRoutingModule,
