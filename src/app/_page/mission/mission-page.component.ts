@@ -205,8 +205,15 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
   public addSkillToProject(skill: any){
     this._missionService.addSkillToProject(skill.project,[skill.skill]).subscribe(
-      ()=>{},
+      () => this._snackBar.open('La compétence '+skill.skill+' est enregistrée.', 'X', {duration: 2000}),
       (err) => console.log(err) 
     );
+  }
+
+  public removeSkillFromProject(skill: any){
+    this._missionService.removeSkillFromProject(skill.project,skill.skill).subscribe(
+      () => this._snackBar.open('La compétence '+skill.skill.label+' est retirée.', 'X', {duration: 2000}),
+      (err) => console.log(err)
+    )
   }
 }

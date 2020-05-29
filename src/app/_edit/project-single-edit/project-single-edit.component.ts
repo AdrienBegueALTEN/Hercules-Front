@@ -33,6 +33,7 @@ export class ProjectSingleEditComponent implements OnInit {
   @Output() deletion : EventEmitter<void> = new EventEmitter<void>();
   @Output() image : EventEmitter<any> = new EventEmitter<any>();
   @Output() addSkillEvent = new EventEmitter<any>();
+  @Output() removeSkillEvent = new EventEmitter<any>()
 
   constructor(private _missionService: MissionService) {}
 
