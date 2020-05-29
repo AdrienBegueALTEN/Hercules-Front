@@ -33,6 +33,19 @@ export class DatatableComponent implements AfterViewInit {
 
   public ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sortingDataAccessor = (item, header) => {
+      switch (header) {
+        case 'releaseDate': { if(item.releaseDate==null)
+                                return "A"+item.firstname;
+                              else
+                                return "I"+item.firstname;}
+        case 'firstname' : return item.firstname;
+        case 'lastname' : return item.lastname;
+        case 'email' : return item.email;
+        case 'admin' : return item.admin;
+        default: return item.header;
+      }
+    };
     this.dataSource.sort = this.sort;
   }
 
