@@ -13,7 +13,7 @@
       <ng-template mat-tab-label>
         Les missions du client
       </ng-template>
-      <app-array-missions-view *ngIf="missions" [missions]="missions" [displayedColumns]="cols"></app-array-missions-view>
+      <app-array-missions-view *ngIf="missions" [missions]="missions" [displayedColumns]="cols" (deleteEvent)="openDeleteDialog($event)"></app-array-missions-view>
     </mat-tab>
   </mat-tab-group>
 </mat-card>

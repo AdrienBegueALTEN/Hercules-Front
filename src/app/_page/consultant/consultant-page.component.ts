@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/_services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Role } from 'src/app/_enums/role.enum';
 import { DeactivateComponent } from 'src/app/dialog/deactivate/deactivate.component';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { MissionService } from 'src/app/_services/mission.service';
+import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
+import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
 
 @Component({
   selector: 'app-consultant-page',
@@ -12,6 +15,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
   styleUrls: ['./consultant-page.component.scss']
 })
 export class ConsultantPageComponent implements OnInit {
+  @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
   consultant : any;
   writingRights : boolean = false;
   missions : any[];
@@ -22,6 +26,7 @@ export class ConsultantPageComponent implements OnInit {
     private _consultantService : ConsultantService,
     private _route : ActivatedRoute,
     private _dialog: MatDialog,
+    private _missionService: MissionService
   ) {
   }
   ngOnInit() {
@@ -68,6 +73,35 @@ export class ConsultantPageComponent implements OnInit {
         console.log(this.missions);
       },
       (err) => {}
+    )
+  }
+
+  openDeleteDialog(mission: any): void {
+    const dialog = this._dialog.open(YesNoDialogComponent, {
+      data: {
+        title: 'Supprimer la mission ' + mission.lastVersion.title + ' chez ' + mission.customer.name + '.',
+        message: 'Voulez-vous continuer ?',
+        yes: 'Supprimer la mission',
+        no: 'Annuler'
+      },
+    });
+
+    dialog.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          this.delete(mission);
+        }
+      }
+    );
+  }
+
+  delete(mission: any) {
+    this._missionService.deleteMission(mission.id).subscribe(
+      () => {
+        this.missions = this.missions.filter((m) => m.id !== mission.id);
+        this.arrayView.createDatasource(this.missions);
+      },
+      (err) => { }
     )
   }
 }
