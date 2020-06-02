@@ -139,7 +139,7 @@ export class MissionService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: skill
     };
-    return this._notInteceptedHttpClient.delete(
+    return this._httpClient.delete(
       AppSettings.MISSION_API + 'projects/' + project + '/skills',
       httpOptions);
   }
@@ -163,7 +163,7 @@ export class MissionService {
       }), body: skill
     };
     { headers: new HttpHeaders({ }) }
-    return this._httpClient.delete(
+    return this._notInteceptedHttpClient.delete(
       AppSettings.MISSION_API + 'projects/anonymous/' + project + '/skills',
       httpOptions);
   }
