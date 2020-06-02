@@ -123,7 +123,7 @@
                 matTooltip="Fiche validée">check_circle</span>
             &nbsp;
 
-            <button mat-icon-button *ngIf="element.consultant.manager.id==this.user.id"
+            <button mat-icon-button
                 [routerLink]="['/missions', element.id]">
                 <span class="material-icons" matTooltip="Modifier la mission">more_horiz</span>
             </button>&nbsp;
@@ -132,7 +132,7 @@
             <button mat-icon-button color="warn"
                 *ngIf="(element.versions?.length==null&&element.lastVersion.versionDate==null&&element.consultant.manager.id==this.user.id&&element.sheetStatus=='ON_WAITING')">
                 <span class="material-icons" matTooltip="Supprimer la mission en attente"
-                    (click)="openDeleteDialog(element)">delete</span>
+                    (click)="deleteEvent.emit(element)">delete</span>
             </button>
 
 
