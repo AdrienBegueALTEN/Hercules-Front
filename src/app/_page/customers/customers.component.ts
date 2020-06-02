@@ -51,7 +51,10 @@ export class CustomersComponent implements OnInit {
 
   delete(customer:any){
     this._customerService.deleteCustomer(customer.id).subscribe(
-      () => {},
+      () => {
+        this.customers = this.customers.filter(cust => cust.id !== customer.id);
+        this.createDatasource(this.customers);
+      },
       (err) => {
         console.log(err);
       }
