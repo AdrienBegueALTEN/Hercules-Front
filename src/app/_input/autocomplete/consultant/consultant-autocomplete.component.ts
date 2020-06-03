@@ -1,9 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Role } from 'src/app/_enums/role.enum';
 import { startWith, map } from 'rxjs/operators';
-import { ConsultantService } from 'src/app/_services/consultant.service';
 import { AuthService } from 'src/app/_services/auth.service';
 
 const _filterConsultant = (consultant : any, value : string) : boolean => {
@@ -20,19 +18,18 @@ const _filterGrpConsultants = (consultants : any[], value : string) : any[] => {
   templateUrl: './consultant-autocomplete.component.html'
 })
 export class ConsultantAutocompleteComponent implements OnInit {
+  @Input() canCreateNew : boolean = false;
+  @Input() consultants : any[];
+
   ctrl = new FormControl('', [Validators.required, this._checkSelection]);
-  consultants : any[];
   filteredConsultants: Observable<any[]>;
   showNewOpt : boolean = false;
   displayInGrps: boolean = false;
-
-  @Input() canCreateNew : boolean = false;
 
   @Output() sendFormCtrl = new EventEmitter<FormControl>();
   @Output() newConsultant= new EventEmitter();
 
   constructor(
-    private _consultantService : ConsultantService,
     private _authService : AuthService
   ) {}
 
@@ -43,43 +40,36 @@ export class ConsultantAutocompleteComponent implements OnInit {
 
   private _initOptions() {
     const user = this._authService.getUser();
-
-    this._consultantService.getConsultants(true).subscribe(
-      consultants => {
-        if (user.roles.includes(Role.MANAGER)) {
-          this.displayInGrps = true;
-          let managerConsultants : any[] = new Array();
-          let otherConsultants : any[] = new Array();
-          consultants.forEach(consultant => {
-            if (consultant.manager == user.id) 
-              managerConsultants.push(consultant);
-            else otherConsultants.push(consultant);
-          });
-          this.consultants = [{ 
-            name : 'Mes consultants',
-            consultants : managerConsultants
-          }, {
-            name : 'Autres consultants',
-            consultants : otherConsultants
-          }]
-          this.filteredConsultants = this.ctrl.valueChanges
-          .pipe(
-            startWith(''),
-            map(value => typeof value === 'string' ? value : value.firstname + ' ' + value.lastname),
-            map(name => name ? this._filterGrps(name) : this._filterGrps(null))
-          );
-        } else {
-          this.consultants = consultants;
-          this.filteredConsultants = this.ctrl.valueChanges
-          .pipe(
-            startWith(''),
-            map(value => typeof value === 'string' ? value : value.firstname + ' ' + value.lastname),
-            map(name => name ? this._filter(name) : null)
-          );
-        }
-      },
-      err => { console.log(err); }
-    );
+    if (this._authService.userIsManager()) {
+      this.displayInGrps = true;
+      let managerConsultants : any[] = new Array();
+      let otherConsultants : any[] = new Array();
+      this.consultants.forEach(consultant => {
+        if (consultant.manager == user.id) 
+          managerConsultants.push(consultant);
+        else otherConsultants.push(consultant);
+      });
+      this.consultants = [{ 
+        name : 'Mes consultants',
+        consultants : managerConsultants
+      }, {
+        name : 'Autres consultants',
+        consultants : otherConsultants
+      }]
+      this.filteredConsultants = this.ctrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value.firstname + ' ' + value.lastname),
+        map(name => name ? this._filterGrps(name) : this._filterGrps(null))
+      );
+    } else {
+      this.filteredConsultants = this.ctrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value.firstname + ' ' + value.lastname),
+        map(name => name ? this._filter(name) : null)
+      );
+    }
   }
 
   displayFn(consultant : any) : string {

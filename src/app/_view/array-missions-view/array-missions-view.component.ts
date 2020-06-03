@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, AfterViewInit, Output, EventEmitter, AfterContentInit, AfterContentChecked } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -28,17 +29,14 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   @Input() missions: any[];
   @Input() displayedColumns: string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
   @Output() deleteEvent = new EventEmitter<any>();
-  user;
-  isAuthenticated = false;
-  userIsAdmin = false;
-  userIsManager = false;
-  userIsManagerInclude = false;
+
   checkBoxDisabled = true;
   onlyMyValidatedMissions = false;
   checked = false;
+  consultants : any [];
 
   userIsConsultantManager: boolean = false;
-  userId: number = null;
+  userId: number =  this._authService.getUser().id;
 
   onlyMyMissionsChecked = true;
   dataSource: MatTableDataSource<any>;
@@ -48,9 +46,10 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   NumberOfMaximumCheckboxes = 2;
   searchValue: string = null;
   advancedSearchEnabled = false;
+  public manager : boolean = this._authService.userIsManager();
 
   innerDisplayedColumns: string[] = ['select', 'project-name', 'project-description'];
-
+  public consultantForm : FormControl;
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -58,9 +57,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatInput) matInputs: QueryList<MatInput>;
 
   isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
-
-
-
 
   constructor(
     private _authService: AuthService,
@@ -70,34 +66,17 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-
-
-    const user = this._authService.getUser();
-    this.userIsManagerInclude = user.roles.includes(Role.MANAGER);
-
-    this.userId = this._authService.getUser().id;
-    this.isAuthenticated = !!this._authService.getToken();
-
-    if (this.isAuthenticated) {
-      this.user = this._authService.getUser();
-      this.userIsAdmin = this.user.role == 'ADMIN';
-      this.userIsManager = this.userIsAdmin || this.user.role == 'MANAGER';
-    }
-
     this.createDatasource(this.missions);
-
   }
 
   ngAfterViewInit() {
     this.createDatasource(this.missions);
   }
 
-
-
   public createDatasource(data) {
-    if (this.onlyMyMissionsChecked && this.userIsManagerInclude) {
-      this.dataSource = new MatTableDataSource(data.filter((miss) => miss.consultant.manager.id == this.user.id));
-      if (this.onlyMyValidatedMissions && this.userIsManagerInclude) {
+    if (this.onlyMyMissionsChecked && this._authService.userIsManager()) {
+      this.dataSource = new MatTableDataSource(data.filter((miss) => miss.consultant.manager.id === this.userId));
+      if (this.onlyMyValidatedMissions && this._authService.userIsManager()) {
         this.dataSource = new MatTableDataSource(data.filter((miss) => miss.sheetStatus == "ON_GOING" || miss.sheetStatus == "ON_WAITING"));
       }
     }
