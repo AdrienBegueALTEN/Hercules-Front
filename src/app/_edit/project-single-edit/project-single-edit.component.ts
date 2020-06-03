@@ -25,10 +25,10 @@ export class ProjectSingleEditComponent implements OnInit {
   readonly TOOLTIP_ICON = 'help_outline';
   readonly TOOLTIP_POS = 'before';
 
-  grp : FormGroup;
-  selectedFiles: FileList;
-  currentFileRealName = 'Parcourir...';
-  srcPic;
+  public grp : FormGroup;
+  public selectedFiles : FileList;
+  public currentFileRealName : string;
+  public srcPic;
 
   @Output() update : EventEmitter<any> = new EventEmitter<any>();
   @Output() deletion : EventEmitter<void> = new EventEmitter<void>();
@@ -40,7 +40,8 @@ export class ProjectSingleEditComponent implements OnInit {
   constructor() {}
 
   public ngOnInit() : void {
-    this.srcPic = 'http://localhost:8080/hercules/missions/projects/picture/'+this.project.picture;
+    this.srcPic = 'http://localhost:8080/hercules/missions/projects/picture/' + this.project.picture;
+    this.currentFileRealName = !!this.project.picture ? 'Remplacer l\'image liée au projet' : 'Lier une image au projet...';
     this.grp = new FormBuilder().group({
       title: [this.project[this.ENTITLED_KEY], Validators.required],
       description: [this.project[this.DESCRIPTION_KEY], Validators.required],
@@ -83,12 +84,9 @@ export class ProjectSingleEditComponent implements OnInit {
       return this.grp.controls[key].valid && this.grp.controls[key].dirty;
   }
 
-  selectFile(event) {
+  public upload(event) {
     this.selectedFiles = event.target.files;
     this.currentFileRealName = this.selectedFiles.item(0).name;
-  }
-
-  upload() {
     let name = sha1(this.project.title+this.project.id+"logo");
     let extension = this.selectedFiles.item(0).name.split('.').pop(); 
     let renamedFile = new File([this.selectedFiles.item(0)],name+'.'+extension);

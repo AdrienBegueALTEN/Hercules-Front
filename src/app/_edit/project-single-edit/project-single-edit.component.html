@@ -61,11 +61,10 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <label class="file-upload" (change)="selectFile($event)">
+                    <label class="file-upload" (change)="upload($event)">
                         <input type="file" accept="image/*" style="display: none;">
                         {{currentFileRealName}}
                     </label>
-                    <button mat-button [disabled]="!selectedFiles" (click)="upload()">Lier une image à ce projet</button>
                 </td>
             </tr>
         </table>
