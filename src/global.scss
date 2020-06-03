@@ -107,3 +107,35 @@ footer {
  mat-dialog-actions {
      float: right;
  }
+
+ .img-container{
+        position: relative;
+        text-align: center;
+        color: white;
+ }
+
+ .centered {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100px;
+  }
+
+  .img:hover{
+    opacity: 0.5;
+  }
+  .img:hover + .centered, .centered:hover{
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .centered:hover + .img{
+    opacity: 0.5;
+  }
+
+  

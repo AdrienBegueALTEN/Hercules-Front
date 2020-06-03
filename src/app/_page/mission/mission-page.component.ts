@@ -216,4 +216,8 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       (err) => console.log(err)
     )
   }
+
+  public removePic(project: any){
+    console.log(project);
+  }
 }

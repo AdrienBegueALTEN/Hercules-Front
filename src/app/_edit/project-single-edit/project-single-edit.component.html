@@ -10,7 +10,14 @@
                         [matTooltip]="ENTITLED_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
                     </mat-form-field>
                 </td>
-                <td rowspan="3" *ngIf="project.picture" style="padding: 0; margin: 0; width: 300px;"><img height="300px" [src]="srcPic" alt="Image"></td>
+                <td rowspan="3" *ngIf="project.picture" style="padding: 0; margin: 0; width: 300px;">
+                    <div class="img-container">
+                        <img class="img" height="300px" [src]="srcPic" alt="Image">
+                        <div class="centered">
+                            <button mat-icon-button (click)="deleteImage.emit(project)"><mat-icon>close</mat-icon></button>
+                        </div>
+                    </div>
+                </td>
             </tr>
             <tr>
                 <td colspan="2">
