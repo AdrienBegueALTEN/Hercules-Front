@@ -234,7 +234,6 @@ openDeleteDialog(element: any): void {
 }  
 
 onGeneratePDF(selectedElements : any[]) : void {
-    //console.log(selectedElements);
     let elements : any[] = [];
     selectedElements.forEach( function (value){
       if(!!value.customer){
@@ -252,7 +251,6 @@ onGeneratePDF(selectedElements : any[]) : void {
         });
       }
     });
-    //console.log(elements);
     this._missionService.generatePDF(elements).subscribe(
       () => {},
       (error) => {console.log(error);}
