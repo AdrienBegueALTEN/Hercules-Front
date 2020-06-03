@@ -129,6 +129,17 @@ export class MissionService {
     return this._notInteceptedHttpClient.request(req);
   }
 
+  public removePictureFromProject(project : number): Observable<any> {
+    return this._httpClient.delete(
+      AppSettings.MISSION_API + 'projects/' + project + '/delete-picture');
+  }
+
+  public removePictureFromProjectFromToken(project : number, token: string): Observable<any> {
+    return this._notInteceptedHttpClient.delete(
+      AppSettings.MISSION_API + 'projects/anonymous/' + project + '/delete-picture',
+      { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
+  }
+
   public addSkillToProject(project : number, labels : string[]): Observable<any> {
     return this._httpClient.post(AppSettings.MISSION_API + 'projects/' + project + '/skills',
       labels,

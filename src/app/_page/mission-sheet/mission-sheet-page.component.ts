@@ -105,6 +105,15 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     this._showMessageDialog("Impossible de charger cette image.");
   }
 
+  public removePic(project: any){
+    this._missionService.removePictureFromProjectFromToken(project.id, this._token).subscribe(
+      () => {
+        project.picture = null;
+      },
+      (err) => console.log(err)
+    )
+  }
+
   public addSkillToProject(skill: any){
     this._missionService.addSkillToProjectFromToken(skill.project,[skill.skill], this._token).subscribe(
       () => {},
