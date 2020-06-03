@@ -10,6 +10,7 @@ import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { saveAs } from "file-saver";
 import { isUndefined } from 'util';
 import { Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-recruitment-officers',
@@ -32,6 +33,7 @@ export class RecruitmentOfficersComponent implements OnInit {
     this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
       (data) => {
         this.dataSource = new MatTableDataSource(data);
+        
       },
       () => window.location.replace("")
     );
@@ -57,10 +59,10 @@ export class RecruitmentOfficersComponent implements OnInit {
               },
               () => this._showErrorDialog("Impossible de télécharger le fichier.")
             )
-            this.ngOnInit()
+            this.ngOnInit();
           },
           (error) => this._handleError(error)
-        )
+        );
       }
     )
   }

@@ -1,6 +1,6 @@
 import { AuthService } from 'src/app/_services/auth.service';
 import { DeactivateComponent } from 'src/app/dialog/deactivate/deactivate.component';
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter, AfterContentInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, AfterContentInit, AfterViewInit, OnChanges } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,7 +11,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.scss']
 })
-export class DatatableComponent implements AfterViewInit {
+export class DatatableComponent implements AfterViewInit,OnChanges {
   @Input() columnsToDisplay : string [];
   @Input() dataSource: MatTableDataSource<any>;
   @Input() label : string;
@@ -31,8 +31,10 @@ export class DatatableComponent implements AfterViewInit {
     private _dialog: MatDialog
   ) {}
 
+
+  
   public ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+    
     this.dataSource.sortingDataAccessor = (item, header) => {
       switch (header) {
         case 'releaseDate': { if(item.releaseDate==null)
@@ -47,6 +49,26 @@ export class DatatableComponent implements AfterViewInit {
       }
     };
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    
+  }
+
+  public ngOnChanges() : void {
+    this.dataSource.sortingDataAccessor = (item, header) => {
+      switch (header) {
+        case 'releaseDate': { if(item.releaseDate==null)
+                                return "A"+item.firstname;
+                              else
+                                return "I"+item.firstname;}
+        case 'firstname' : return item.firstname;
+        case 'lastname' : return item.lastname;
+        case 'email' : return item.email;
+        case 'admin' : return item.admin;
+        default: return item.header;
+      }
+    };
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   public applyFilter(event: Event) : void {
