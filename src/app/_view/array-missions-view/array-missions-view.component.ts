@@ -27,7 +27,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   ],
 })
 export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
-  //@Input() consultants: any[];
+  @Input() consultants: any[];
   @Input() missions: any[];
   @Input() displayedColumns: string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
   @Output() deleteEvent = new EventEmitter<any>();
@@ -35,7 +35,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   checkBoxDisabled = true;
   onlyMyValidatedMissions = false;
   checked = false;
-  consultants : any [];
 
   userIsConsultantManager: boolean = false;
   userId: number =  this._authService.getUser().id;
@@ -70,12 +69,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.createDatasource(this.missions);
-    this._consultantService.getConsultants(false).subscribe(
-      (consultants) => {
-        this.consultants = consultants;
-      },
-      () => window.location.replace('')
-    )
   }
 
   ngAfterViewInit() {
