@@ -1,3 +1,4 @@
+import { ConsultantService } from 'src/app/_services/consultant.service';
 import { FormControl } from '@angular/forms';
 import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, AfterViewInit, Output, EventEmitter, AfterContentInit, AfterContentChecked } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
@@ -26,6 +27,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   ],
 })
 export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
+  @Input() consultants: any[];
   @Input() missions: any[];
   @Input() displayedColumns: string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
   @Output() deleteEvent = new EventEmitter<any>();
@@ -33,7 +35,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   checkBoxDisabled = true;
   onlyMyValidatedMissions = false;
   checked = false;
-  consultants : any [];
 
   userIsConsultantManager: boolean = false;
   userId: number =  this._authService.getUser().id;
@@ -62,7 +63,8 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     private _authService: AuthService,
     private _missionService: MissionService,
     private _dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _consultantService : ConsultantService
   ) { }
 
   ngOnInit(): void {

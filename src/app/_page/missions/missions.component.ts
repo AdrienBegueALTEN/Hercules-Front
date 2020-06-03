@@ -1,3 +1,4 @@
+import { ConsultantService } from 'src/app/_services/consultant.service';
 import { MissionService } from 'src/app/_services/mission.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -17,6 +18,7 @@ export class MissionsComponent implements OnInit {
 
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
   missions: any[];
+  consultants: any[];
 
 
 
@@ -24,6 +26,7 @@ export class MissionsComponent implements OnInit {
     private _missionService: MissionService,
     private _authService: AuthService,
     private _dialog: MatDialog,
+    private _consultantService : ConsultantService
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +40,13 @@ export class MissionsComponent implements OnInit {
       (err) => {
         console.log(err);
       }
+    )
+
+    this._consultantService.getConsultants(false).subscribe(
+      (consultants) => {
+        this.consultants = consultants;
+      },
+      () => window.location.replace('')
     )
 
 
