@@ -36,6 +36,7 @@ export class ProjectSingleEditComponent implements OnInit {
   @Output() deleteImage : EventEmitter<any> = new EventEmitter<any>();
   @Output() addSkillEvent = new EventEmitter<any>();
   @Output() removeSkillEvent = new EventEmitter<any>()
+  @Output() sendFormGrp = new EventEmitter<FormGroup>()
 
   constructor() {}
 
@@ -52,6 +53,7 @@ export class ProjectSingleEditComponent implements OnInit {
         new Date(this.project[this.END_KEY]).toISOString().substr(0, 10) :
         null, Validators.required],
     });
+    this.sendFormGrp.emit(this.grp);
   }
 
   public onChange(key : string) : void {
@@ -64,8 +66,10 @@ export class ProjectSingleEditComponent implements OnInit {
         this.grp.controls[this.END_KEY].setErrors({SEMANTICS_ERR : true});
         return;
       } else {
-        delete this.grp.controls[this.BEGIN_KEY].errors[SEMANTICS_ERR];
-        delete this.grp.controls[this.END_KEY].errors[SEMANTICS_ERR];
+        if (this.grp.controls[this.BEGIN_KEY].hasError(SEMANTICS_ERR))
+          delete this.grp.controls[this.BEGIN_KEY].errors[SEMANTICS_ERR];
+        if (this.grp.controls[this.END_KEY].hasError(SEMANTICS_ERR))
+          delete this.grp.controls[this.END_KEY].errors[SEMANTICS_ERR];
       }
     }
 

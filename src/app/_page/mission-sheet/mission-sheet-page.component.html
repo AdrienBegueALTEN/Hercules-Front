@@ -3,8 +3,8 @@
   <div class="app-container">
     <mat-card>
       <mat-card-content>
-        <mat-horizontal-stepper linear="true" #stepper>
-          <mat-step label="Informations générales" [stepControl]="missionEdit?.grp">
+        <mat-horizontal-stepper (selectionChange)="onStepChange($event)" #stepper>
+          <mat-step label="Informations générales">
             <div class="flex-row-container">
               <div class="step-content">
                 <p class="tooltip">Ce panneau vous permet de renseigner les informations générales 
@@ -15,14 +15,14 @@
                   (update)="updateMission($event)">
                 </app-mission-edit>
               </div>
-              <button mat-fab matStepperNext class="white-shape next step-nav">
+              <button mat-fab matStepperNext color="primary" class="next step-nav">
                 <mat-icon>navigate_next</mat-icon>
               </button>
             </div>
           </mat-step>
           <mat-step label="Projets">
             <div class="flex-row-container">
-              <button mat-fab matStepperPrevious class="white-shape previous step-nav">
+              <button mat-fab matStepperPrevious color="primary" class="previous step-nav">
                 <mat-icon>navigate_before</mat-icon>
               </button>
               <div class="step-content">
@@ -37,15 +37,15 @@
                   (image)="addImage($event)"
                   (addSkillEvent)="addSkillToProject($event)"
                   (removeSkillEvent)="removeSkillFromProject($event)"
-                  (deleteImage)="removePic($event)"></app-projects-edit>
+                  (deleteImage)="removePic($event)">
+                </app-projects-edit>
                 </div>
-                <button mat-fab matStepperNext class="white-shape next step-nav"
-                  (click)="onValidate()">
+                <button mat-fab matStepperNext [disabled]="!allFormsValid()"  color="accent" class="next step-nav">
                   <mat-icon>done</mat-icon>
                 </button>
             </div>
           </mat-step>
-            <mat-step label="Valider la fiche">
+            <mat-step label="Valider la fiche" *ngIf="allFormsValid()">
             </mat-step>
         </mat-horizontal-stepper>
       </mat-card-content>

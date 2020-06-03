@@ -1,5 +1,4 @@
 import { FormGroup } from '@angular/forms';
-import { SheetStatus } from './../../_enums/sheet-status.enum';
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { Component, OnInit, ViewChild, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
 import { MissionService } from 'src/app/_services/mission.service';
@@ -11,6 +10,7 @@ import { ProjectsEditComponent } from 'src/app/_edit/projects-edit/projects-edit
 import { MatStepper } from '@angular/material/stepper';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MissionEditComponent } from 'src/app/_edit/mission-edit/mission-edit.component';
+import { SheetStatus } from 'src/app/_enums/sheet-status.enum';
 
 const VALIDATION_STEP : number = 2;
 
@@ -23,8 +23,6 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
   private _token : string;
 
   public mission : any;
-  public missionForm : FormGroup;
-  public projectsForm : FormGroup[];
 
   @ViewChild('missionEditComponent') missionEdit : MissionEditComponent;
   @ViewChild('projectsEditComponent') projectsEdit : ProjectsEditComponent;
@@ -70,7 +68,7 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     const projectId = this.mission.lastVersion.projects[event.index].id;
       this._missionService.updateProjectFromToken(this._token, projectId, event.key, event.value).subscribe(
         () => this.mission.lastVersion.projects[event.index][event.key] = event.value,
-        err => this._showMessageDialog("Impossible de mettre à jour le projet.")
+        () => this._showMessageDialog("Impossible de mettre à jour le projet.")
       );
   }
 
@@ -80,6 +78,7 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
       () => {
         this.mission.lastVersion.projects.splice(index, 1);
         this.projectsEdit.tabGrp.selectedIndex = 0;
+        this.projectsEdit.projectsForms[index] = null;
       },
       () => this._showMessageDialog("Impossible de supprimer le projet.")
     )
@@ -129,11 +128,10 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
   }
 
   public onValidate() : void {
-    if (!this.missionForm.valid) return;
     this._missionService.updateMissionFromToken(this._token, 'sheetStatus', SheetStatus.VALIDATED).subscribe(
       () => {
         const dialogRef = this._showMessageDialog("La fiche a bien été validée et transmise.");
-        dialogRef.afterClosed().subscribe(() => window.location.replace(''));
+        dialogRef.beforeClosed().subscribe(() => window.location.replace(''));
       }
         ,
       () => this._showMessageDialog("Impossible de valider la fiche mission.")
@@ -141,7 +139,13 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
   }
 
   public onStepChange(event : StepperSelectionEvent) : void {
-    if (event.selectedIndex === VALIDATION_STEP)
+    if (event.selectedIndex === VALIDATION_STEP && this.allFormsValid())
       this.onValidate();
+    else this.stepper.selectedIndex = event.previouslySelectedIndex;
+  }
+
+  public allFormsValid() : boolean {
+    return (!this.missionEdit?.grp) ? false :
+    this.missionEdit.grp.valid && this.projectsEdit.allFormsValid();
   }
 }

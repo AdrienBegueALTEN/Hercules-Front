@@ -12,6 +12,7 @@ import { saveAs } from "file-saver";
 import { HttpResponse } from '@angular/common/http';
 import { DeactivateComponent } from 'src/app/dialog/deactivate/deactivate.component';
 import { ConsultantService } from 'src/app/_services/consultant.service';
+import { MissionEditComponent } from 'src/app/_edit/mission-edit/mission-edit.component';
 
 @Component({
   selector: 'app-mission-page',
@@ -28,6 +29,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   userIsConsultantManager : boolean = false;
 
   @ViewChild('tabGrp') tabGrp : MatTabGroup;
+  @ViewChild('missionEditComponent') missionEdit : MissionEditComponent;
   @ViewChild('projectsEditComponent') projectsEdit : ProjectsEditComponent;
 
   constructor(
@@ -108,6 +110,16 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     return this.mission.versions.length > 1;
   }
 
+  public showNewVersion() : boolean {
+    const todayDate : Date = new Date();
+    const lastVersionDate : Date = new Date(this.mission.versions[0].versionDate);
+    const lastVersionDateIsNotToday : boolean = 
+      todayDate.getFullYear() !== lastVersionDate.getFullYear() ||
+      todayDate.getMonth() !== lastVersionDate.getMonth() ||
+      todayDate.getDate() !== lastVersionDate.getDate();
+    return lastVersionDateIsNotToday && this.mission.sheetStatus === SheetStatus.VALIDATED;
+  }
+
   public getStatusText() : string {
     let str : string;
     switch (this.mission.sheetStatus) {
@@ -121,10 +133,6 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
         str = 'validée';
     }
     return 'Fiche '.concat(str);
-  }
-
-  public missionIsValidated() : boolean {
-    return this.mission.sheetStatus === SheetStatus.VALIDATED;
   }
 
   private _showErrorDialog(message : string) : void {
@@ -225,5 +233,30 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       },
       (err) => console.log(err)
     )
+  }
+
+  public onValidate() : void {
+    this._missionService.updateMission(this.mission.id, 'sheetStatus', SheetStatus.VALIDATED).subscribe(
+      () => this.mission.sheetStatus = SheetStatus.VALIDATED,
+      () => this._showMessageDialog("Impossible de valider la dernière fiche mission.")
+    )
+  }
+
+  private _showMessageDialog(message : string) : void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = message;
+    this._dialog.open(MessageDialogComponent, dialogConfig);
+  }
+
+  public allFormsValid() : boolean {
+    return (!this.missionEdit?.grp) ? false :
+    this.missionEdit.grp.valid && this.projectsEdit.allFormsValid();
+  }
+
+  public showValidate() : boolean {
+    return this.mission.sheetStatus !== SheetStatus.VALIDATED &&
+      this.selectedIndex !== this.CONSULTANT_TAB_INDEX && 
+      this.selectedIndex !== this.CUSTOMER_TAB_INDEX &&
+      this.allFormsValid();
   }
 }
