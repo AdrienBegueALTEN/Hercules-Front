@@ -216,4 +216,14 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       (err) => console.log(err)
     )
   }
+
+  public removePic(project: any){
+    this._missionService.removePictureFromProject(project.id).subscribe(
+      () => {
+        project.picture = null;
+        this._snackBar.open('L\'image est supprimée.', 'X', {duration: 2000})
+      },
+      (err) => console.log(err)
+    )
+  }
 }

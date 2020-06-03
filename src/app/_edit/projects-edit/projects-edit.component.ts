@@ -17,5 +17,6 @@ export class ProjectsEditComponent {
 
   @ViewChild('tabGrp') tabGrp : MatTabGroup;
   @Output() image : EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleteImage : EventEmitter<any> = new EventEmitter<any>();
 
 }

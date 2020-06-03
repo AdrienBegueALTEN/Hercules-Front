@@ -28,6 +28,7 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
   newCustomer : boolean = false;
   customerForm : FormControl | FormGroup;
   customers : any[];
+  consultants : any[];
 
   @ViewChild('stepper') stepper : MatStepper;
   @ViewChild('consultantAutocomplete') consultantAutocomplete : ConsultantAutocompleteComponent;
@@ -42,10 +43,14 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
     private _authService : AuthService
   ){}
 
-  ngOnInit() : void {
+  public ngOnInit() : void {
     this._customerService.getAll().subscribe(
       customers => this.customers = customers,
-      () => window.location.replace('') 
+      error => console.log(error) 
+    );
+    this._consultantService.getConsultants(true).subscribe(
+      consultants => this.consultants = consultants,
+      error => console.log(error)
     );
   }
 

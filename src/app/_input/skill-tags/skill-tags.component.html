@@ -21,5 +21,8 @@
           {{skill.label}}
         </mat-option>
       </mat-autocomplete>
+      <mat-icon matSuffix *ngIf="externalVersion" color="primary"
+        matTooltip="Compétences (technologies, méthodologies, etc...) liées à ce projet."
+        matTooltipPosition="before">help_outline</mat-icon>
   </mat-form-field>
   

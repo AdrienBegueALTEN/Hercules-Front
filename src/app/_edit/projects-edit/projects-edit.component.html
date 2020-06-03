@@ -6,7 +6,7 @@
       </ng-template>
       <app-project-single-edit [canBeDeteled]="projects.length > 1" [externalVersion]="externalVersion"
         [project]="project" (update)="update.emit({index: i, key: $event.key, value: $event.value})"
-        (deletion)="deletion.emit(i)" (image)="image.emit($event)" (addSkillEvent)="addSkillEvent.emit($event)"
+        (deletion)="deletion.emit(i)" (image)="image.emit($event)" (deleteImage)="deleteImage.emit($event)" (addSkillEvent)="addSkillEvent.emit($event)"
         (removeSkillEvent)="removeSkillEvent.emit($event)">
       </app-project-single-edit>
     </mat-tab>

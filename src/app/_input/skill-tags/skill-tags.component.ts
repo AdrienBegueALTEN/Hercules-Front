@@ -14,6 +14,8 @@ import { startWith, map } from 'rxjs/operators';
 })
 export class SkillTagsComponent implements OnInit {
   @Input() project: any;
+  @Input() externalVersion : boolean = false;
+  
   visible = true;
   addOnBlur = true;
   allSkills;

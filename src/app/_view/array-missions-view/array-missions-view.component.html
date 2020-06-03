@@ -20,6 +20,11 @@
     >
     </app-missions-activitysector-autocomplete>
 
+    <strong>Consultant :</strong>  
+        <app-consultant-autocomplete *ngIf="!!consultants"
+            [consultants]="consultants"
+            (sendFormCtrl)="this.consultantForm = $event">
+    </app-consultant-autocomplete>
 
     <strong>Localité de la mission :</strong>   
 
@@ -50,9 +55,9 @@
 &nbsp;&nbsp;
 &nbsp;&nbsp;
 
-<mat-slide-toggle (click)="showOnlyMyMissions()" *ngIf="userIsManagerInclude" [checked]="true">Afficher uniquement mes
+<mat-slide-toggle (click)="showOnlyMyMissions()" *ngIf="manager" [checked]="true">Afficher uniquement mes
     missions. </mat-slide-toggle>&nbsp;&nbsp;
-<mat-slide-toggle (click)="showOnlyMyValidatedMissions()" *ngIf="userIsManagerInclude&&onlyMyMissionsChecked"
+<mat-slide-toggle (click)="showOnlyMyValidatedMissions()" *ngIf="manager && onlyMyMissionsChecked"
     [checked]="false">Cacher mes missions validées </mat-slide-toggle>
 <br>
 <br>
@@ -130,7 +135,7 @@
 
 
             <button mat-icon-button color="warn"
-                *ngIf="(element.versions?.length==null&&element.lastVersion.versionDate==null&&element.consultant.manager.id==this.user.id&&element.sheetStatus=='ON_WAITING')">
+                *ngIf="!!element.versions?.length === null && element.lastVersion.versionDate === null && element.consultant.manager.id === userId && element.sheetStatus=='ON_WAITING'">
                 <span class="material-icons" matTooltip="Supprimer la mission en attente"
                     (click)="deleteEvent.emit(element)">delete</span>
             </button>

@@ -18,7 +18,8 @@
 </ng-template>
 
 <ng-template #consultantsList>
-  <app-consultant-autocomplete
+  <app-consultant-autocomplete *ngIf="!!consultants"
+  [consultants]="consultants"
   [canCreateNew]="true"
   (sendFormCtrl)="getConsultantForm($event)"
   (newConsultant)="newConsultant = true"
@@ -31,7 +32,7 @@
 </ng-template>
 
 <ng-template #customersList>
-  <app-customer-autocomplete
+  <app-customer-autocomplete *ngIf="!!customers"
   [customers]="customers"
   [canCreateNew]="true"
   (sendFormCtrl)="getCustomerForm($event)"

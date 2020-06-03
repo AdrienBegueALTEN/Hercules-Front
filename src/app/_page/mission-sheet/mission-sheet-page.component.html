@@ -3,14 +3,18 @@
   <div class="app-container">
     <mat-card>
       <mat-card-content>
-        <mat-horizontal-stepper linear="true">
-          <mat-step label="Informations générales">
+        <mat-horizontal-stepper linear="true" #stepper>
+          <mat-step label="Informations générales" [stepControl]="missionEdit?.grp">
             <div class="flex-row-container">
-              <app-mission-edit class="step-content"
-                [externalVersion]=true
-                [version]=mission.lastVersion
-                (update)="updateMission($event)">
-              </app-mission-edit>
+              <div class="step-content">
+                <p class="tooltip">Ce panneau vous permet de renseigner les informations générales 
+                  relatives à la mission que vous avez réalisé chez {{mission.customer.name}}.</p>
+                <app-mission-edit #missionEditComponent
+                  [externalVersion]=true
+                  [version]=mission.lastVersion
+                  (update)="updateMission($event)">
+                </app-mission-edit>
+              </div>
               <button mat-fab matStepperNext class="white-shape next step-nav">
                 <mat-icon>navigate_next</mat-icon>
               </button>
@@ -21,17 +25,24 @@
               <button mat-fab matStepperPrevious class="white-shape previous step-nav">
                 <mat-icon>navigate_before</mat-icon>
               </button>
-              <app-projects-edit #projectsEditComponent class="step-content"
-                [projects]="mission.lastVersion.projects"
-                (new)="createNewProject()"
-                (update)="updateProject($event)"
-                (deletion)="deleteProject($event)"
-                (image)="addImage($event)"
-                (addSkillEvent)="addSkillToProject($event)"
-                (removeSkillEvent)="removeSkillFromProject($event)"></app-projects-edit>
-              <button mat-fab matStepperNext class="white-shape next step-nav">
-                <mat-icon>done</mat-icon>
-              </button>
+              <div class="step-content">
+                <p class="tooltip">Ce panneau vous permet de renseigner les informations relatives aux différents
+                  projets liés à la mission que vous avez réalisé chez {{mission.customer.name}}.</p>
+                <app-projects-edit #projectsEditComponent 
+                  [projects]="mission.lastVersion.projects"
+                  [externalVersion]="true"
+                  (new)="createNewProject()"
+                  (update)="updateProject($event)"
+                  (deletion)="deleteProject($event)"
+                  (image)="addImage($event)"
+                  (addSkillEvent)="addSkillToProject($event)"
+                  (removeSkillEvent)="removeSkillFromProject($event)"
+                  (deleteImage)="removePic($event)"></app-projects-edit>
+                </div>
+                <button mat-fab matStepperNext class="white-shape next step-nav"
+                  (click)="onValidate()">
+                  <mat-icon>done</mat-icon>
+                </button>
             </div>
           </mat-step>
             <mat-step label="Valider la fiche">
