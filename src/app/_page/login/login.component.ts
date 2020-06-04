@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from 'src/app/_dialog/change-password/change-password-dialog.component';
 import { ActivatedRoute } from '@angular/router';
+import { Md5 } from 'ts-md5';
 
 const EMAIL_KEY : string = 'email';
 const PASSWORD_KEY : string = 'password';
@@ -35,10 +36,9 @@ export class LoginComponent implements OnInit {
       () => {
         const dialogConfig : MatDialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = true;
-        dialogConfig.data = true;
         this._dialog.open(ChangePasswordDialogComponent, dialogConfig).afterClosed().subscribe(
-          dialogData => {
-            this._authService.changePasswordAnonymous(token, dialogData.newPassword).subscribe(
+          newPassword => {
+            this._authService.changePasswordAnonymous(token, newPassword).subscribe(
               (apiData) => {
                 this._authService.saveToken(apiData.accessToken);
                 this._authService.saveUser(apiData.user);
@@ -52,13 +52,12 @@ export class LoginComponent implements OnInit {
       },
       () => window.location.replace('')
     )
-
   }
 
   public onSubmit() : void {
     let credentials = {
       email: this.grp.get(EMAIL_KEY).value,
-      password: this.grp.get(PASSWORD_KEY).value
+      password: (String)(Md5.hashStr(this.grp.get(PASSWORD_KEY).value))
     }
 
     this._authService.login(credentials).subscribe(

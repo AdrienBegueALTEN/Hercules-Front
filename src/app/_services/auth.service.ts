@@ -29,7 +29,7 @@ export class AuthService {
     return this._httpClient.put(AppSettings.AUTH_API + 'change-password', {
       currentPassword: currentPassword,
       newPassword: newPassword
-    }, AppSettings.HTTP_JSON_CONTENT);
+    }, {observe: 'response'});
   }
 
   public checkPasswordTokenValidity(token : string) : Observable<any> {
