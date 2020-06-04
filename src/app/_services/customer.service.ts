@@ -39,12 +39,17 @@ export class CustomerService {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
-    const req = new HttpRequest('POST', AppSettings.CUSTOMER_API + id + '/upload-logo', formData, {
+    const req = new HttpRequest('POST', AppSettings.CUSTOMER_API + id + '/logo', formData, {
       reportProgress: true,
       responseType: 'json'
     });
 
     return this._httpClient.request(req);
+  }
+
+  public removeLogo(customer : number): Observable<any> {
+    return this._httpClient.delete(
+      AppSettings.CUSTOMER_API + customer + '/logo');
   }
 
   public getMissionByCustomer(customer: number) : Observable<any> {
