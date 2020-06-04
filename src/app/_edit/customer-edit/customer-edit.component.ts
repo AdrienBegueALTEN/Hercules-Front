@@ -35,5 +35,18 @@ export class CustomerEditComponent implements OnInit {
     this.ngOnInit();
   }
 
+  deleteLogo(){
+    console.log(this.customer.id);
+    this._customerService.removeLogo(this.customer.id).subscribe(
+      ()=>{
+        this._snackBar.open('Logo supprimé.', 'X', {duration: 2000});
+        this.customer.logo = null;
+      },
+      (err)=>{
+        console.log(err);
+      }
+    )
+  }
+
 
 }
