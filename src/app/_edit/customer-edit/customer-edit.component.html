@@ -13,7 +13,7 @@
                     (customerChange)="updateCustomer($event)" 
                     [customer]="customer"></app-description-cust-input>
                 <app-logo-cust-input
-                    (reload)="setSrc($event)" 
+                    (image)="addImage($event)" 
                     [customer]="customer"></app-logo-cust-input>
             </td>
             <td style="padding: 0; margin: 0; width: 300px;" *ngIf="customer.logo">

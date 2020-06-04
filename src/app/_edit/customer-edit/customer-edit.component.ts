@@ -2,6 +2,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { CustomerService } from 'src/app/_services/customer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpResponse } from '@angular/common/http';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 
 @Component({
   selector: 'app-customer-edit',
@@ -13,7 +16,8 @@ export class CustomerEditComponent implements OnInit {
   @Output() reload = new EventEmitter<any>();
   srcLogo;
   constructor(private _customerService: CustomerService,
-    private _snackBar: MatSnackBar) { }
+    private _snackBar: MatSnackBar,
+    private _dialog: MatDialog) { }
 
   ngOnInit() {
     this.srcLogo = 'http://localhost:8080/hercules/customers/logo/'+this.customer.logo;
@@ -30,9 +34,29 @@ export class CustomerEditComponent implements OnInit {
     );
   }
 
-  setSrc(name){
-    this.customer.logo = name;
-    this.ngOnInit();
+  private _showErrorDialog(message : string) : void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = message;
+    this._dialog.open(MessageDialogComponent, dialogConfig);
+  }
+
+  addImage(imageFile){
+    console.log(imageFile.file)
+    this._customerService.upload(imageFile.file, imageFile.project).subscribe(
+      event => {
+        if (event instanceof HttpResponse) {
+          if(event.status==200){
+            this._snackBar.open('Logo changé', 'X', {duration: 2000});
+            this.customer.logo = imageFile.file.name;
+            this.srcLogo = 'http://localhost:8080/hercules/customers/logo/'+this.customer.logo;
+          }
+          else
+            this._showErrorDialog("Impossible de charger cette image.");
+        }
+      },
+      err => {
+        this._showErrorDialog("Impossible de charger cette image.");
+      });
   }
 
   deleteLogo(){
