@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, AfterViewInit, Output, EventEmitter, AfterContentInit, AfterContentChecked } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
+import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
 import { AuthService } from 'src/app/_services/auth.service';
 import { MissionService } from 'src/app/_services/mission.service';
 import { MatDialog } from '@angular/material/dialog';

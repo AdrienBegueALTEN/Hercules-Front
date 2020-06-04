@@ -28,7 +28,18 @@
   <mat-card-actions [ngSwitch]="tabGrp.selectedIndex">
     <div *ngSwitchDefault>
       <div *ngIf="userIsConsultantManager">
-        <div *ngIf="missionIsValidated(); then newVersion else downloadEmail"></div>
+        <button *ngIf="showNewVersion()" mat-button color="accent" (click)="onNewVersion()">
+          Nouvelle version
+        </button>
+        <button *ngIf="!mission.consultant.releaseDate && mission.sheetStatus !== 'VALIDATED'"
+          mat-button color="primary" (click)="onDownloadEmail()">
+          Télécharger un email contenant un lien d'accès pour 
+          {{mission.consultant.firstname}} {{mission.consultant.lastname}}
+        </button>
+        <button *ngIf="showValidate()"
+          mat-button color="accent" (click)="onValidate()">
+          Valider la dernière version
+        </button>
       </div>
     </div>
     <div *ngSwitchCase="CONSULTANT_TAB_INDEX">
@@ -48,7 +59,7 @@
 </mat-card>
 
 <ng-template #missionEdit>
-  <app-mission-edit
+  <app-mission-edit #missionEditComponent
     [version]="mission.versions[selectedIndex]"
     (update)="updateMission($event)">
   </app-mission-edit>
@@ -95,18 +106,4 @@
 
 <ng-template #projectsView>
   <app-projects-view [projects]="mission.versions[selectedIndex].projects"></app-projects-view>
-</ng-template>
-
-<ng-template #newVersion>
-  <button mat-button color="primary" (click)="onNewVersion()">
-    Nouvelle version
-  </button>
-</ng-template>
-
-<ng-template #downloadEmail>
-  <button *ngIf="!mission.consultant.releaseDate"
-    mat-button color="primary" (click)="onDownloadEmail()">
-    Télécharger un email contenant un lien d'accès pour 
-    {{mission.consultant.firstname}} {{mission.consultant.lastname}}
-  </button>
 </ng-template>

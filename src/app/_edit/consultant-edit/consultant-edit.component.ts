@@ -3,7 +3,7 @@ import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
+import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

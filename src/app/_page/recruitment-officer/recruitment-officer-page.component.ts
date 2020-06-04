@@ -3,11 +3,11 @@ import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from
 import { AuthService } from 'src/app/_services/auth.service';
 import { RecruitmentOfficerService } from 'src/app/_services/recruitment-officer.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
+import { OkDialogComponent } from 'src/app/_dialog/ok/ok-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
+import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
+import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
 
 @Component({
   selector: 'app-recruitment-officer-page',

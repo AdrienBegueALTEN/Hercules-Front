@@ -5,7 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
 import { MatDialog } from '@angular/material/dialog';
-import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
+import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
 
 
 

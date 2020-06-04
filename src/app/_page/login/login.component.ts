@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ChangePasswordDialogComponent } from 'src/app/dialog/change-password/change-password-dialog.component';
+import { ChangePasswordDialogComponent } from 'src/app/_dialog/change-password/change-password-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 
 const EMAIL_KEY : string = 'email';

@@ -5,9 +5,9 @@ import { ManagerService } from 'src/app/_services/manager.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
-import { OkDialogComponent } from 'src/app/dialog/ok/ok-dialog.component';
-import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
+import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
+import { OkDialogComponent } from 'src/app/_dialog/ok/ok-dialog.component';
+import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
 
 @Component({
   selector: 'app-manager-page',

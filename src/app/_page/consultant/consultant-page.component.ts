@@ -3,10 +3,10 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Role } from 'src/app/_enums/role.enum';
-import { DeactivateComponent } from 'src/app/dialog/deactivate/deactivate.component';
+import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MissionService } from 'src/app/_services/mission.service';
-import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
+import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
 
 @Component({

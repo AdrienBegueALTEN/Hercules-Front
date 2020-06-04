@@ -1,5 +1,5 @@
 import { AuthService } from 'src/app/_services/auth.service';
-import { DeactivateComponent } from 'src/app/dialog/deactivate/deactivate.component';
+import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, AfterContentInit, AfterViewInit, OnChanges } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';

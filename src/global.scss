@@ -115,8 +115,8 @@ footer {
  }
 
  .centered {
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
     padding: 10px;
     display: none;
     position: absolute;
@@ -127,15 +127,10 @@ footer {
   }
 
   .img:hover{
-    opacity: 0.5;
+    opacity: 0.2;
   }
+
   .img:hover + .centered, .centered:hover{
     cursor: pointer;
     display: inline-block;
   }
-
-  .centered:hover + .img{
-    opacity: 0.5;
-  }
-
-  

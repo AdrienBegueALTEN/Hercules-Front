@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { NewUserComponent } from './../../_input/new-user/new-user.component';
+import { NewUserComponent } from '../../_input/new-user/new-user.component';
 import { Component, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 

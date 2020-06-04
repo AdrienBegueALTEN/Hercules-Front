@@ -1,39 +1,17 @@
-<table style="width: 100%;table-layout: fixed;">
-    <tr>
-        <td>
-            <div>
-                <p class="title">Intitulé du projet</p>
-                <p mat-line>{{project.title || 'Non renseigné'}}</p>
-                <p class="title">Description du projet</p>
-                <p mat-line>{{project.description || 'Non renseigné'}}</p>
-                <p class="title">Dates du projet</p>
-                <p matLine>{{project.beginDate  || 'Début non renseigné'}} - {{project.beginDate || 'Fin non renseignée'}}</p>
-                <p class="title" *ngIf="project.skills.length>0">Compétences</p>
-                <mat-chip-list>
-                    <mat-chip *ngFor="let skill of project.skills">{{skill.label}}</mat-chip>
-                </mat-chip-list>
-            </div>
-        </td>
-        <td *ngIf="project.picture">
-            <img style="float: right;" style="height: 300px; float: right;" [src]="src" alt="Image">
-        </td>
-    </tr>
-    
-</table>
-
-<!--<mat-grid-list cols="2" rowHeight="2:1">
-    <mat-grid-tile style="text-align: left;">
-        <div>
-            <p class="title">Intitulé du projet</p>
-            <p mat-line>{{project.title || 'Non renseigné'}}</p>
-            <p class="title">Description du projet</p>
-            <p mat-line>{{project.description || 'Non renseigné'}}</p>
-            <p class="title">Dates du projet</p>
-            <p matLine>{{project.beginDate  || 'Début non renseigné'}} - {{project.beginDate || 'Fin non renseignée'}}</p>
-        </div>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <img style="float: right;" style="width: 100%; height: auto;" [src]="src" alt="Image">
-    </mat-grid-tile>
-</mat-grid-list>-->
-   
+<mat-list *ngIf="project">
+    <mat-list-item>
+      <h1 matLine>Intitulé de projet</h1>
+      <p matLine>{{project.title || 'Non renseigné'}}</p>
+    </mat-list-item>
+    <mat-list-item>
+      <h1 matLine>Description du projet</h1>
+      <p matLine>{{project.description || 'Pas de description'}}</p>
+    </mat-list-item>
+    <mat-list-item>
+      <h1 matLine>Durée du projet</h1>
+      <p matLine>Du {{project.beginDate  || '?'}} au {{project.beginDate || '?'}}</p>
+    </mat-list-item>
+  </mat-list>
+  <mat-chip-list>
+    <mat-chip *ngFor="let skill of project.skills">{{skill.label}}</mat-chip>
+</mat-chip-list>

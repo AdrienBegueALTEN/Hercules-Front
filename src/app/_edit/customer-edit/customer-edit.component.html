@@ -9,18 +9,22 @@
                 <app-activity-sector-cust-input
                     (customerChange)="updateCustomer($event)" 
                     [customer]="customer"></app-activity-sector-cust-input>
+                <app-description-cust-input
+                    (customerChange)="updateCustomer($event)" 
+                    [customer]="customer"></app-description-cust-input>
+                <app-logo-cust-input
+                    (reload)="setSrc($event)" 
+                    [customer]="customer"></app-logo-cust-input>
             </td>
-            <td class="img"><img width="100px" [src]="srcLogo" alt="Logo"></td>
-        </tr>
-        <tr>
-            <td colspan="2"><app-description-cust-input
-                (customerChange)="updateCustomer($event)" 
-                [customer]="customer"></app-description-cust-input></td>
-        </tr>
-        <tr>
-            <td colspan="2"><app-logo-cust-input
-                (reload)="setSrc($event)" 
-                [customer]="customer"></app-logo-cust-input></td>
+            <td style="padding: 0; margin: 0; width: 300px;" *ngIf="customer.logo">
+                <div class="img-container">
+                    <img class="img" width="100px" [src]="srcLogo" alt="Logo">
+                    <div class="centered">
+                        <button mat-icon-button (click)="deleteLogo()"><mat-icon>close</mat-icon></button>
+                    </div>
+                </div>
+                
+            </td>
         </tr>
     </table>
 </div>

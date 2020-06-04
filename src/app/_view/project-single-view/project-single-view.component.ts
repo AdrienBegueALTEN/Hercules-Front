@@ -2,8 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-project-single-view',
-  templateUrl: './project-single-view.component.html',
-  styleUrls: ['./project-single-view.component.scss']
+  templateUrl: './project-single-view.component.html'
 })
 export class ProjectSingleViewComponent implements OnInit {
   @Input() project;
