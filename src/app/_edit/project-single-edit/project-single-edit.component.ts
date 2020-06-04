@@ -88,14 +88,14 @@ export class ProjectSingleEditComponent implements OnInit {
       return this.grp.controls[key].valid && this.grp.controls[key].dirty;
   }
 
-  public upload(event) {
-    this.selectedFiles = event.target.files;
+  public upload(image) {
+    /*this.selectedFiles = event.target.files;
     this.currentFileRealName = this.selectedFiles.item(0).name;
     let name = sha1(this.project.title+this.project.id+"logo");
     let extension = this.selectedFiles.item(0).name.split('.').pop(); 
-    let renamedFile = new File([this.selectedFiles.item(0)],name+'.'+extension);
+    let renamedFile = new File([this.selectedFiles.item(0)],name+'.'+extension);*/
     this.image.emit({
-        file:renamedFile,
+        file:image,
         project:this.project.id
     });
   }

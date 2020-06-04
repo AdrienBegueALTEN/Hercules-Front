@@ -40,14 +40,14 @@ export class CustomerEditComponent implements OnInit {
     this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 
-  addImage(imageFile){
-    console.log(imageFile.file)
-    this._customerService.upload(imageFile.file, imageFile.project).subscribe(
+  addImage(image){
+    console.log(image)
+    this._customerService.upload(image, this.customer.id).subscribe(
       event => {
         if (event instanceof HttpResponse) {
           if(event.status==200){
             this._snackBar.open('Logo changé', 'X', {duration: 2000});
-            this.customer.logo = imageFile.file.name;
+            this.customer.logo = image.name;
             this.srcLogo = 'http://localhost:8080/hercules/customers/logo/'+this.customer.logo;
           }
           else

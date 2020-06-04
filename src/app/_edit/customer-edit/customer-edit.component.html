@@ -12,9 +12,13 @@
                 <app-description-cust-input
                     (customerChange)="updateCustomer($event)" 
                     [customer]="customer"></app-description-cust-input>
-                <app-logo-cust-input
+                <!--<app-logo-cust-input
                     (image)="addImage($event)" 
-                    [customer]="customer"></app-logo-cust-input>
+                    [customer]="customer"></app-logo-cust-input>-->
+                <app-upload-image 
+                    (image)="addImage($event)"
+                    [id]="customer.id"
+                    [btn]="'Selectionner un logo'"></app-upload-image>
             </td>
             <td style="padding: 0; margin: 0; width: 300px;" *ngIf="customer.logo">
                 <div class="img-container">

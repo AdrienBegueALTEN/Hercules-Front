@@ -59,14 +59,6 @@
                     </mat-form-field>
                 </td>
             </tr>
-            <tr>
-                <td colspan="2">
-                    <label class="file-upload" (change)="upload($event)">
-                        <input type="file" accept="image/*" style="display: none;">
-                        {{currentFileRealName}}
-                    </label>
-                </td>
-            </tr>
         </table>
     </form>
     <table class="inputable">
@@ -78,6 +70,13 @@
                     (addSkillEvent)="addSkillEvent.emit($event)"
                     (removeSkillEvent)="removeSkillEvent.emit($event)">
                 </app-skill-tags>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <app-upload-image (image)="upload($event)"
+                    [id]="project.id"
+                    [btn]="'Selectionner une photo du projet'"></app-upload-image>
             </td>
         </tr>
     </table>
