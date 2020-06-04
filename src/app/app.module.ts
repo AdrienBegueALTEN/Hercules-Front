@@ -106,6 +106,7 @@ import { MissionsCountryAutocompleteComponent } from './_input/autocomplete/miss
 import { MissionsCustomerAutocompleteComponent } from './_input/autocomplete/missions/customer/missions-customer-autocomplete/missions-customer-autocomplete.component';
 import { MissionsTitleAutocompleteComponent } from './_input/autocomplete/missions/title/missions-title-autocomplete/missions-title-autocomplete.component';
 import { MissionsCityAutocompleteComponent } from './_input/autocomplete/missions/city/missions-city-autocomplete/missions-city-autocomplete.component';
+import { NewCustomerDialogComponent } from './_dialog/new-customer/new-customer-dialog.component';
 
 @NgModule({
 
@@ -173,7 +174,8 @@ import { MissionsCityAutocompleteComponent } from './_input/autocomplete/mission
       MissionsCustomerAutocompleteComponent,
       MissionsTitleAutocompleteComponent,
       MissionsCityAutocompleteComponent,
-      AdminPanelComponent
+      AdminPanelComponent,
+      NewCustomerDialogComponent
    ],
    imports: [
       AppRoutingModule,

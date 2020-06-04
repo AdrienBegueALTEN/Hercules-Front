@@ -1,0 +1,7 @@
+<h1 mat-dialog-title>Nouveau client</h1>
+<mat-dialog-content>
+  <app-new-customer [customers]="customers" #newCustomer></app-new-customer>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!newCustomer.grp?.valid">Ajouter</button>
+</mat-dialog-actions>

@@ -49,6 +49,24 @@
         </ng-template>
       </td>
     </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+      <td mat-cell *matCellDef="let customer" (click)="onRow(customer.id)">
+        {{customer.name}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="activitySector">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Secteur d'activité</th>
+      <td mat-cell *matCellDef="let customer" (click)="onRow(customer.id)">
+        {{customer.activitySector}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="missionNb">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de mission liées</th>
+      <td mat-cell *matCellDef="let customer" (click)="onRow(customer.id)">
+        {{(!!customer.missions) ? customer.missions.length : 0}}
+      </td>
+    </ng-container>
     <ng-container matColumnDef="userActions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let user; let index = dataIndex">
@@ -60,14 +78,16 @@
             <mat-icon>tag</mat-icon>
             <span>Accéder à {{user.id !== loggedUser ? 'sa' : 'votre'}} page personnelle</span>
           </button>
-          <div *ngIf="(user.id !== loggedUser || user.admin == null) && !user.releaseDate">
+          <div *ngIf="!user.releaseDate && loggedUserIsManager && 
+            (user.admin == null || user.id !== loggedUser) &&
+            (user.manager == null || user.manager.id === loggedUser)">
             <button mat-menu-item (click)="onDeactivate(index, user)">
               <mat-icon>flag</mat-icon>
               <span>Indiquer la sortie des effectifs</span>
             </button>
             <button *ngIf="user.admin != null" mat-menu-item (click)="setAdmin.emit({index: index, manager: user.id, admin: !user.admin})">
               <mat-icon>{{user.admin ? 'undo' : 'redo'}}</mat-icon>
-              <span>{{user.admin ? 'Retirer' : 'Octroyer'}} les droits d'administrateur</span>
+              {{user.admin ? 'Retirer' : 'Octroyer'}} les droits d'administrateur
             </button>
           </div>
         </mat-menu>
@@ -79,6 +99,6 @@
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" #paginator></mat-paginator>
   <div>
     <button mat-raised-button color="primary" (click)="newElement.emit()">
-      <mat-icon class="label-icon">person_add</mat-icon>Ajouter un {{label}}</button>
+      <mat-icon class="label-icon">{{columnsToDisplay.includes('activitySector') ? 'add_business' : 'person_add'}}</mat-icon>Ajouter un {{label}}</button>
   </div>
 </div>

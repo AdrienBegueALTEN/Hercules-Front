@@ -1,6 +1,6 @@
 import { AuthService } from 'src/app/_services/auth.service';
 import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter, AfterContentInit, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter, AfterViewInit, OnChanges } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,6 +17,8 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
   @Input() label : string;
 
   readonly loggedUser : number = this._authService.getUser().id;
+  readonly loggedUserIsManager : boolean = this._authService.userIsManager();
+  readonly loggedUserIsAdmin : boolean = this._authService.userIsAdmin();
 
   @Output() deactivate : EventEmitter<any> = new EventEmitter<any>();
   @Output() newElement : EventEmitter<void> = new EventEmitter<void>();
@@ -31,41 +33,19 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
     private _dialog: MatDialog
   ) {}
 
-
-  
   public ngAfterViewInit(): void {
-    
-    this.dataSource.sortingDataAccessor = (item, header) => {
-      switch (header) {
-        case 'releaseDate': { if(item.releaseDate==null)
-                                return "A"+item.firstname;
-                              else
-                                return "I"+item.firstname;}
-        case 'firstname' : return item.firstname;
-        case 'lastname' : return item.lastname;
-        case 'email' : return item.email;
-        case 'admin' : return item.admin;
-        default: return item.header;
-      }
-    };
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    
+    this._sortAndPagination();
   }
 
   public ngOnChanges() : void {
+    this._sortAndPagination();
+  }
+
+  private _sortAndPagination() : void {
     this.dataSource.sortingDataAccessor = (item, header) => {
-      switch (header) {
-        case 'releaseDate': { if(item.releaseDate==null)
-                                return "A"+item.firstname;
-                              else
-                                return "I"+item.firstname;}
-        case 'firstname' : return item.firstname;
-        case 'lastname' : return item.lastname;
-        case 'email' : return item.email;
-        case 'admin' : return item.admin;
-        default: return item.header;
-      }
+      if (header === 'releaseDate')
+        return ((!!item.releaseDate) ? "2" : "1").concat(item.lastname, item.firstname);
+      else return item[header];
     };
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

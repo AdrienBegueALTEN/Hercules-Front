@@ -1,48 +1,7 @@
-<br>
-<mat-form-field style="width: 100%;">
-    <mat-label>Chercher un client</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Nom, secteur d'activité">
-</mat-form-field>
-<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort matSortActive="name" matSortDisableClear matSortDirection="asc">
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
-      <td mat-cell *matCellDef="let element">
-          {{element.name}}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="activitySector">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Secteur d'activité </th>
-        <td mat-cell *matCellDef="let element">
-            {{element.activitySector}}
-        </td>
-    </ng-container>
-
-    <ng-container matColumnDef="nbMissions">
-        <th mat-header-cell *matHeaderCellDef> Nombre de missions </th>
-        <td mat-cell *matCellDef="let element">
-            {{element.missions ? element.missions.length : "0"}}
-        </td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Actions </th>
-        <td mat-cell *matCellDef="let element">
-            <button mat-icon-button matTooltip="Voir plus de {{element.name}}" [routerLink]="[element.id]">
-                <mat-icon>more_horiz</mat-icon>
-            </button>
-            <button mat-icon-button color="warn"
-                [disabled]="element.missions"
-                (click)="openDialog(element)">
-                <mat-icon>delete</mat-icon>
-            </button>
-        </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-        class="example-element-row">
-    </tr>
-</table>
-
-<mat-paginator style="background-color: transparent;" [pageSizeOptions]="[ 5, 10, 25]"></mat-paginator>
+<app-datatable *ngIf="!!dataSource"
+  [columnsToDisplay]="['name', 'activitySector', 'missionNb']"
+  [dataSource]="dataSource"
+  label="client"
+  (newElement)="newCustomer()"
+  (rowClicked)="goToCustomerPage($event)">
+</app-datatable>

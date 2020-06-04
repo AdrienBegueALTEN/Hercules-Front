@@ -27,11 +27,10 @@ export class NewUserDialogComponent {
     let user : any = {
       firstname: this.newUser.grp.controls['firstname'].value,
       lastname: this.newUser.grp.controls['lastname'].value,
-      email: this.newUser.grp.controls['email'].value,
+      email: this.newUser.grp.controls['email'].value
     };
     if (!!this.adminCtrl)
       user.isAdmin = this.adminCtrl.value;
     this._dialogRef.close(user);
   }
-
 }

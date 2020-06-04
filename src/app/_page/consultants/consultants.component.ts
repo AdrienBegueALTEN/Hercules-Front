@@ -33,10 +33,10 @@ export class ConsultantsComponent implements OnInit {
   readonly MANAGER_COLUMN_INDEX : number = 3;
 
   constructor(
-    private _authService: AuthService,
-    private _consultantService: ConsultantService,
-    private _dialog: MatDialog,
-    private _router: Router
+    private _authService : AuthService,
+    private _consultantService : ConsultantService,
+    private _dialog : MatDialog,
+    private _router : Router
   ) {}
 
   public ngOnInit() : void {

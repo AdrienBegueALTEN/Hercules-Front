@@ -8,7 +8,7 @@
       </mat-option>
       <mat-option disabled *ngIf="showNewOpt">
         <button mat-flat-button (click)="onNew()" title="Créer un nouveau client">
-          <mat-icon>add</mat-icon>
+          <mat-icon>add_business</mat-icon>
           Nouveau client
         </button>
       </mat-option>
@@ -16,5 +16,5 @@
   </mat-form-field>
 </form>
 <button *ngIf="canCreateNew" class="blue-shape" mat-mini-fab (click)="onNew()" title="Créer un nouveau client">
-  <mat-icon>add</mat-icon>
+  <mat-icon>add_business</mat-icon>
 </button>

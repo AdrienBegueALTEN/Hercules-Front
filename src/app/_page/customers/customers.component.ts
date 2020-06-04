@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CustomerService } from 'src/app/_services/customer.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatDialog } from '@angular/material/dialog';
-import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { isUndefined } from 'util';
+import { Router } from '@angular/router';
+import { HttpStatus } from 'src/app/_enums/http-status.enum';
+import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
+import { NewCustomerDialogComponent } from 'src/app/_dialog/new-customer/new-customer-dialog.component';
 
 @Component({
   selector: 'app-customers',
@@ -12,36 +14,23 @@ import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.compo
   styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent implements OnInit {
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
   customers: any[];
   dataSource: MatTableDataSource<any>;
-  columnsToDisplay = ['name', 'activitySector', 'nbMissions', 'actions'];
 
-  constructor(private _customerService: CustomerService,
-    private _bottomSheet: MatDialog) { }
+  constructor(
+    private _customerService : CustomerService,
+    private _dialog : MatDialog,
+    private _router : Router
+  ) {}
 
-
-  ngOnInit(): void {
-    this.initialize();
-  }
-
-  initialize(){
+  public ngOnInit() : void {
     this._customerService.getAll().subscribe(
       (data) => {
         this.customers = data;
-        this.createDatasource(data);
+        this.dataSource = new MatTableDataSource(data);
       },
-      (err) => {
-        console.log(err);
-      }
+      () => window.location.replace("")
     )
-  }
-
-  createDatasource(data) {
-    this.dataSource = new MatTableDataSource(data);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
@@ -49,34 +38,37 @@ export class CustomersComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  delete(customer:any){
-    this._customerService.deleteCustomer(customer.id).subscribe(
-      () => {
-        this.customers = this.customers.filter(cust => cust.id !== customer.id);
-        this.createDatasource(this.customers);
-      },
-      (err) => {
-        console.log(err);
+  public newCustomer() : void {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig.data = this.customers;
+    const dialogRef = this._dialog.open(NewCustomerDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      (customer : any) => {
+        if (isUndefined(customer)) return;
+        this._customerService.newCustomer(customer.name, customer.activitySector).subscribe(
+          (response) => {this._handleAddResponse(response); this.ngOnInit();},
+          (error) => this._handleAddResponse(error)
+        )
       }
     )
   }
 
-  openDialog(element: any): void {
-    const dialog = this._bottomSheet.open(YesNoDialogComponent, {
-      data: { 
-        title: 'Supprimez le client '+element.name ,
-        message: 'Voulez-vous continuer ?',
-        yes:'Supprimer '+element.name,
-        no:'Annuler'
-      },
-    });
+  public goToCustomerPage(customer : number) {
+    this._router.navigateByUrl('customers/' + customer);
+  }
 
-    dialog.afterClosed().subscribe(
-      (result) => {
-        if(result){
-          this.delete(element);
-        }
-      }
-    );
+  private _handleAddResponse(response : Response) {
+    if (response.status !== HttpStatus.CREATED) {
+      let message : string = "Impossible d'ajouter ce client.";
+      if (response.status === HttpStatus.ACCEPTED)
+        message = message.concat(" Ce client existe déjà.");
+      this._showMessageDialog(message);
+    } else this.ngOnInit();
+  }
+  
+  private _showMessageDialog(message : string) : void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = message;
+    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 }
