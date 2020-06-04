@@ -36,20 +36,16 @@ export class NavHeaderComponent implements OnInit {
   }
 
   public onChangePassword() : void {
-    this._dialog.open(ChangePasswordDialogComponent).afterClosed().subscribe(
-      response => {
-        if (response) {
-          this._authService.changePassword(
-            response.currentPassword,
-            response.newPassword
-          ).subscribe(
-            () => this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}),
-            () => this._showMessageDialog('Impossible de modifier le mot de passe.')
-          )
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig.data = this.user.id;
+    this._dialog.open(ChangePasswordDialogComponent, dialogConfig).afterClosed().subscribe(
+      ok => {
+        if (!!ok) {
+          if (ok) this._snackBar.open('Votre mot de passe a bien été modifié.', 'X', {duration: 2000});
+          else this._showMessageDialog('Impossible de modifier le mot de passe.');
         }
       }
     )
-
   }
 
   public onLogout() : void { this._authService.logout(); }
