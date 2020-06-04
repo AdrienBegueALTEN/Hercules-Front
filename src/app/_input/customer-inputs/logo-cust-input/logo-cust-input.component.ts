@@ -6,12 +6,11 @@ import * as sha1 from 'js-sha1';
 @Component({
   selector: 'app-logo-cust-input',
   templateUrl: './logo-cust-input.component.html',
-  styleUrls: ['./logo-cust-input.component.scss']
 })
 export class LogoCustInputComponent implements OnInit {
 
   @Input() customer: any;
-  @Output() reload = new EventEmitter<any>();
+  @Output() image = new EventEmitter<any>();
   selectedFiles: FileList;
   currentFile: File;
   currentFileRealName = 'Choisir un fichier en cliquant ici.';
@@ -26,37 +25,17 @@ export class LogoCustInputComponent implements OnInit {
   selectFile(event) {
     this.selectedFiles = event.target.files;
     this.currentFileRealName = this.selectedFiles.item(0).name;
-  }
-
-  upload() {
-    this.progress = 0;
     let name = sha1(this.customer.name+this.customer.id+"logo");
     let extension = this.selectedFiles.item(0).name.split('.').pop(); 
     let renamedFile = new File([this.selectedFiles.item(0)],name+'.'+extension);
-    this.currentFile = renamedFile;
-    this._customerService.upload(this.currentFile, this.customer.id).subscribe(
-      event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          this.progress = Math.round(100 * event.loaded / event.total);
-        } else if (event instanceof HttpResponse) {
-          if(event.status==200){
-            this.message = "Le fichier est chargé.";
-            this.reload.emit(name+'.'+extension);
-          }
-          else
-            this.message  ="Une erreur est survenu ("+event.status+").";
-          this.progress = 0;
-        }
-      },
-      err => {
-        this.progress = 0;
-        this.message = 'Could not upload the file!';
-        this.currentFile = undefined;
-      });
-  
-    this.selectedFiles = undefined;
+    this.image.emit({
+      file:renamedFile,
+      project:this.customer.id
+  });
   }
 
-  
+  openInput(){ 
+    document.getElementById("logoInput").click();
+  }
 
 }
