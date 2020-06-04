@@ -76,8 +76,7 @@ export class ManagersComponent implements OnInit {
   public onDeactivate(event : any) : void {
     this._managerService.releaseManager(event.releaseDate, event.user).subscribe(
       () => {
-        this.dataSource.data[event.index].releaseDate = event.releaseDate;
-        this.dataSource.data[event.index].admin = false;
+        this.ngOnInit(); 
       },
       () => this._showErrorDialog("Impossible de notifier la sortie des effectifs.")
     );
@@ -85,7 +84,7 @@ export class ManagersComponent implements OnInit {
 
   public setAdmin(event : any) : void {
     this._managerService.updateManager(null, null, null, event.admin, event.manager).subscribe(
-      () => this.dataSource.data[event.index].admin = event.admin,
+      () => this.ngOnInit(),
       () => this._showErrorDialog("Impossible de mettre à jour les droits d'administrateur.")
     );
   }
