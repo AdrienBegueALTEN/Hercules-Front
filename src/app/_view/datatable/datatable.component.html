@@ -78,6 +78,7 @@
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" #paginator></mat-paginator>
   <div>
-    <button mat-raised-button color="primary" (click)="newElement.emit()">Ajouter un {{label}}</button>
+    <button mat-raised-button color="primary" (click)="newElement.emit()">
+      <mat-icon class="label-icon">person_add</mat-icon>Ajouter un {{label}}</button>
   </div>
 </div>

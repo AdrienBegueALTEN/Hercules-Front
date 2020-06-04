@@ -10,6 +10,7 @@
                 <div *ngIf="userIsAdmin">
                   <li class="firstOfSection"><a routerLink="/recruitment-officers" title="Liste des chargés de recrutement">CDR</a></li>
                   <li><a routerLink="/managers" title="Liste des managers">Managers</a></li>
+                  <li><a routerLink="/admin-panel" title="Panneau de gestion">Gestion</a></li>
                 </div>
               </div>
           </ul>
@@ -19,10 +20,6 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #appMenu="matMenu">
-          <button *ngIf="userIsAdmin" mat-menu-item (click)="onGRDP()">
-            <mat-icon>lock</mat-icon>
-            <span>Appliquer le RGPD</span>
-          </button>
           <button mat-menu-item (click)="onChangePassword()">
             <mat-icon>vpn_key</mat-icon>
             <span>Modifier mon mot de passe</span>

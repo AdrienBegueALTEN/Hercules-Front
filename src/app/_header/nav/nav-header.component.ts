@@ -1,4 +1,3 @@
-import { GRDPService } from './../../_services/GRDPService.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../_services/auth.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -19,20 +18,13 @@ export class NavHeaderComponent implements OnInit {
   constructor(
     private _authService : AuthService,
     private _dialog : MatDialog,
-    private _grdpService : GRDPService,
-    private _snackBar: MatSnackBar,
+    private _snackBar: MatSnackBar
   ) {}
 
   public ngOnInit() {
     this.user = this._authService.getUser();
     this.userIsAdmin = this._authService.userIsAdmin();
     this.userIsManager = this.userIsAdmin || this._authService.userIsManager();
-  }
-
-  public onGRDP() : void {
-    this._grdpService.applyGRDP().subscribe(
-      () => window.location.reload()
-    );
   }
 
   public onChangePassword() : void {

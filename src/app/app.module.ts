@@ -1,3 +1,4 @@
+import { AdminPanelComponent } from './_page/admin-panel/admin-panel.component';
 import { DatatableComponent } from './_view/datatable/datatable.component';
 import { CdkDetailRowDirective } from './_directive/cdk-detail-row.directive';
 
@@ -45,6 +46,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -69,7 +71,6 @@ import { ConsultantManagerComponent } from './_input/autocomplete/consultant-man
 import { ConsultantDiplomaComponent } from './_edit/consultant-edit/diploma/diploma-edit.component';
 import { ArrayMissionItemComponent } from './array-mission/array-mission-item/array-mission-item.component';
 import { ArrayProjectItemComponent } from './array-mission/array-project-item/array-project-item.component';
-import { MatExpansionModule } from '@angular/material/expansion';
 
 
 import { MissionService } from './_services/mission.service';
@@ -171,7 +172,8 @@ import { MissionsCityAutocompleteComponent } from './_input/autocomplete/mission
       MissionsCountryAutocompleteComponent,
       MissionsCustomerAutocompleteComponent,
       MissionsTitleAutocompleteComponent,
-      MissionsCityAutocompleteComponent
+      MissionsCityAutocompleteComponent,
+      AdminPanelComponent
    ],
    imports: [
       AppRoutingModule,

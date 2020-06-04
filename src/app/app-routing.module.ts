@@ -1,3 +1,4 @@
+import { AdminPanelComponent } from './_page/admin-panel/admin-panel.component';
 import { MissionsComponent } from './_page/missions/missions.component';
 import { ManagerGuard } from './_services/guard/manager-guard.service';
 import { AuthGuard } from './_services/guard/auth-guard.service';
@@ -31,10 +32,11 @@ const routes: Routes = [
       { path: 'consultants/:id', component: ConsultantPageComponent },
       { path: 'customers', component: CustomersComponent },
       { path: 'customers/:id', component: CustomerPageComponent},
-      { path: 'recruitment-officers', component: RecruitmentOfficersComponent},
-      { path: 'recruitment-officers/:id', component: RecruitmentOfficerPageComponent},
+      { path: 'recruitment-officers', canActivate: [AdminGuard], component: RecruitmentOfficersComponent},
+      { path: 'recruitment-officers/:id', canActivate: [AdminGuard], component: RecruitmentOfficerPageComponent},
       { path: 'managers', canActivate: [AdminGuard], component: ManagersComponent},
-      { path: 'managers/:id', component: ManagerPageComponent}
+      { path: 'managers/:id', canActivate: [AdminGuard], component: ManagerPageComponent},
+      { path: 'admin-panel', canActivate: [AdminGuard], component: AdminPanelComponent}
      ],
     component: HomeComponent
   }, 
