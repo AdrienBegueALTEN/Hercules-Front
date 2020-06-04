@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
         dialogConfig.disableClose = true;
         this._dialog.open(ChangePasswordDialogComponent, dialogConfig).afterClosed().subscribe(
           newPassword => {
-            newPassword = (String)(Md5.hashStr(newPassword));
             this._authService.changePasswordAnonymous(token, newPassword).subscribe(
               (apiData) => {
                 this._authService.saveToken(apiData.accessToken);

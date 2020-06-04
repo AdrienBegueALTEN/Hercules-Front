@@ -64,8 +64,8 @@ export class ChangePasswordDialogComponent {
   }
 
   public canSubmit() : boolean {
-    return this.grp.controls[this.CURRENT_KEY].valid &&
-      this.grp.controls[this.NEW_KEY].valid &&
+    return this.grp.controls[this.NEW_KEY].valid &&
+      (this.user === null || this.grp.controls[this.CURRENT_KEY].valid) &&
       (!this.hiddenNew || this.grp.controls[this.CONFIRMATION_KEY].valid);
   }
 
