@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild, AfterContentChecked, ChangeDetectorRef } 
 import { MissionService } from 'src/app/_services/mission.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
+import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { HttpResponse } from '@angular/common/http';
 import { ProjectsEditComponent } from 'src/app/_edit/projects-edit/projects-edit.component';
 import { MatStepper } from '@angular/material/stepper';

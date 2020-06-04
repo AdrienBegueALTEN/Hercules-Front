@@ -1,6 +1,6 @@
 import { NewUserComponent } from './../../_input/new-user/new-user.component';
 import { AuthService } from 'src/app/_services/auth.service';
-import { YesNoDialogComponent } from '../../dialog/yes-no/yes-no-dialog.component';
+import { YesNoDialogComponent } from '../../_dialog/yes-no/yes-no-dialog.component';
 import { MissionService } from '../../_services/mission.service';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -10,7 +10,7 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { HttpStatus } from '../../_enums/http-status.enum';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
-import { MessageDialogComponent } from '../../dialog/message/message-dialog.component';
+import { MessageDialogComponent } from '../../_dialog/message/message-dialog.component';
 import { ConsultantAutocompleteComponent } from '../../_input/autocomplete/consultant/consultant-autocomplete.component';
 
 const CONSULTANT_STEP : number = 0;

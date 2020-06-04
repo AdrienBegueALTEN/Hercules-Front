@@ -6,11 +6,11 @@ import { MissionService } from '../../_services/mission.service';
 import { Component, OnInit, AfterContentChecked, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
+import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { MatTabGroup } from '@angular/material/tabs';
 import { saveAs } from "file-saver";
 import { HttpResponse } from '@angular/common/http';
-import { DeactivateComponent } from 'src/app/dialog/deactivate/deactivate.component';
+import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { MissionEditComponent } from 'src/app/_edit/mission-edit/mission-edit.component';
 

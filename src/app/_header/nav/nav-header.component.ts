@@ -2,8 +2,8 @@ import { GRDPService } from './../../_services/GRDPService.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../_services/auth.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ChangePasswordDialogComponent } from 'src/app/dialog/change-password/change-password-dialog.component';
-import { MessageDialogComponent } from 'src/app/dialog/message/message-dialog.component';
+import { ChangePasswordDialogComponent } from 'src/app/_dialog/change-password/change-password-dialog.component';
+import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

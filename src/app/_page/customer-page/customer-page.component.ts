@@ -4,7 +4,7 @@ import { CustomerService } from 'src/app/_services/customer.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Role } from 'src/app/_enums/role.enum';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
-import { YesNoDialogComponent } from 'src/app/dialog/yes-no/yes-no-dialog.component';
+import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
 import { MissionService } from 'src/app/_services/mission.service';
 import { MatDialog } from '@angular/material/dialog';
 
