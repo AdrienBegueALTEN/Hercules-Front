@@ -182,4 +182,10 @@ export class MissionService {
   public getAllSkills(): Observable<any> {
     return this._httpClient.get(AppSettings.MISSION_API + 'projects/skills-all');
   }
+
+  public generatePDF(elements : any[]): Observable<any> {
+    return this._httpClient.post(AppSettings.MISSION_API+"pdf",
+      elements,
+      AppSettings.HTTP_JSON_CONTENT);
+  }
 }

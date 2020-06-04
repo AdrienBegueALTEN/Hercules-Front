@@ -99,7 +99,7 @@ export class ConsultantsComponent implements OnInit {
 
   public onDeactivate(event : any) : void {
     this._consultantService.updateConsultant(event.user, 'releaseDate', event.releaseDate).subscribe(
-      () => this.dataSource.data[event.index].releaseDate = event.releaseDate,
+      () => this.ngOnInit(),
       () => this._showMessageDialog("Impossible de notifier la sortie des effectifs.")
     );
   }
@@ -112,7 +112,7 @@ export class ConsultantsComponent implements OnInit {
       (user : any) => {
         if (isUndefined(user)) return;
         this._consultantService.newConsultant(user.email, user.firstname, user.lastname, this._loggedUserId).subscribe(
-          (response) => this._handleAddResponse(response),
+          (response) => {this._handleAddResponse(response); this.ngOnInit();},
           (error) => this._handleAddResponse(error)
         )
       }

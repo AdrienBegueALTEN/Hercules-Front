@@ -44,8 +44,8 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   dataSourceProjects: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
   NumberOfCheckboxesExceed = false;
-  NumberOfMaximumCheckboxes = 2;
-  searchValue: string = null;
+  NumberOfMaximumCheckboxes = 100;
+  searchValue:string = null;
   advancedSearchEnabled = false;
   public manager : boolean = this._authService.userIsManager();
 
@@ -194,28 +194,51 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     )
   }
 
-  openDeleteDialog(element: any): void {
-    const dialog = this._dialog.open(YesNoDialogComponent, {
-      data: {
-        title: 'Supprimer la mission ' + element.lastVersion.title + ' chez ' + element.customer.name + '.',
-        message: 'Voulez-vous continuer ?',
-        yes: 'Supprimer la mission',
-        no: 'Annuler'
-      },
-    });
+openDeleteDialog(element: any): void {
+  const dialog = this._dialog.open(YesNoDialogComponent, {
+    data: {
+      title: 'Supprimer la mission ' + element.lastVersion.title + ' chez ' + element.customer.name + '.',
+      message: 'Voulez-vous continuer ?',
+      yes: 'Supprimer la mission',
+      no: 'Annuler'
+    },
+  });
 
-    dialog.afterClosed().subscribe(
-      (result) => {
-        if (result) {
-          this.delete(element);
-          this._snackBar.open('Mission ' + element.lastVersion.title + ' chez ' + element.customer.name + ' supprimée ', 'X', { duration: 2000 });
-        }
+  dialog.afterClosed().subscribe(
+    (result) => {
+      if (result) {
+        this.delete(element);
+        this._snackBar.open('Mission ' + element.lastVersion.title + ' chez ' + element.customer.name + ' supprimée ', 'X', { duration: 2000 });
       }
+    }
+  );
+}  
+
+onGeneratePDF(selectedElements : any[]) : void {
+    let elements : any[] = [];
+    selectedElements.forEach( function (value){
+      if(!!value.customer){
+        elements.push({
+          id : value.id,
+          customer : value.customer.id,
+          consultant : value.consultant.id,
+          type : "m"
+        });
+      }
+      else{
+        elements.push({
+          id : value.id,
+          type : "p"
+        });
+      }
+    });
+    this._missionService.generatePDF(elements).subscribe(
+      () => {},
+      (error) => {console.log(error);}
     );
+
+
   }
-
-
-
   onClick(event, row) {
     if (this.selection.selected.length >= this.NumberOfMaximumCheckboxes && !(this.selection.isSelected(row))) {
       event.preventDefault();

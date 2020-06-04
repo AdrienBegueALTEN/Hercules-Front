@@ -10,6 +10,7 @@ import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { saveAs } from "file-saver";
 import { isUndefined } from 'util';
 import { Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-recruitment-officers',
@@ -29,9 +30,11 @@ export class RecruitmentOfficersComponent implements OnInit {
     private _router: Router) { }
 
   public ngOnInit() : void {
+    this.dataSource = new MatTableDataSource();
     this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
       (data) => {
         this.dataSource = new MatTableDataSource(data);
+        
       },
       () => window.location.replace("")
     );
@@ -57,10 +60,10 @@ export class RecruitmentOfficersComponent implements OnInit {
               },
               () => this._showErrorDialog("Impossible de télécharger le fichier.")
             )
-            this.ngOnInit()
+            this.ngOnInit();
           },
           (error) => this._handleError(error)
-        )
+        );
       }
     )
   }
@@ -70,10 +73,14 @@ export class RecruitmentOfficersComponent implements OnInit {
   }
 
   public onDeactivate(event : any) : void {
+    
     this._recruitmentOfficerService.releaseRecruitmentOfficer(event.releaseDate, event.user).subscribe(
-      () => this.dataSource.data[event.index].releaseDate = event.releaseDate,
-      () => this._showErrorDialog("Impossible de notifier la sortie des effectifs.")
+      () => {this.ngOnInit();},
+      () => {this._showErrorDialog("Impossible de notifier la sortie des effectifs.");
+    }
     );
+    
+
   }
 
   private _handleError(error : Response) {
