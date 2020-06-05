@@ -1,5 +1,5 @@
 <div *ngIf="consultant">
-  <div class="contours" id="infos">
+  <div class="contours" id="infos" *ngIf="consultant.manager.releaseDate==null">
     <mat-card-title>Informations personnelles</mat-card-title>
       <mat-card-content>
         <table class="inputable">
@@ -33,7 +33,7 @@
       </table>
       </mat-card-content>
     </div>
-    <div class="contours">
+    <div class="contours" *ngIf="consultant.manager.releaseDate==null">
       <mat-card-title>Formation</mat-card-title>
       <mat-card-content>
         <mat-accordion>

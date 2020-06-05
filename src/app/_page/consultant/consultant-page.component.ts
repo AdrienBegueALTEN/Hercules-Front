@@ -37,8 +37,9 @@ export class ConsultantPageComponent implements OnInit {
         this.getMissions();
         const user = this._authService.getUser();
         this.writingRights = 
-          user.roles.includes(Role.MANAGER) && consultant.manager.id == user.id
-          && consultant.releaseDate==null;
+          user.roles.includes(Role.MANAGER) 
+          && (consultant.manager.id == user.id || consultant.manager.releaseDate != null)
+          && consultant.releaseDate == null;
       },
       () => window.location.replace('not-found')
     )
