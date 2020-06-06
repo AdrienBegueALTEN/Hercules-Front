@@ -1,59 +1,13 @@
-<div *ngIf="advancedSearchEnabled">
-    <h2>Recherche avancée :</h2>
+  
 
-    <strong>Titre de la mission :</strong>  
-    <app-missions-title-autocomplete
-         [missions]="missions"
-          >
-          </app-missions-title-autocomplete>
-    
-
-    <strong>Client :</strong>   
-
-    <app-missions-customer-autocomplete
-    [missions]="missions"
-    >
-    </app-missions-customer-autocomplete>
-
-    <app-missions-activitysector-autocomplete
-    [missions]="missions"
-    >
-    </app-missions-activitysector-autocomplete>
-
-    <strong>Consultant :</strong>  
-        <app-consultant-autocomplete *ngIf="!!consultants"
-            [consultants]="consultants"
-            (sendFormCtrl)="this.consultantForm = $event">
-    </app-consultant-autocomplete>
-
-    <strong>Localité de la mission :</strong>   
-
-
-    <app-missions-city-autocomplete
-    [missions]="missions"
-    >
-    </app-missions-city-autocomplete>
-
-    <app-missions-country-autocomplete
-    [missions]="missions"
-    >
-    </app-missions-country-autocomplete>
-
-</div>    
-
-<div class="example-header">
+<!--<div class="example-header">
     <mat-form-field>
         <mat-label>Chercher une mission</mat-label>
         <input matInput (keyup)="applyFilter($event)" [(ngModel)]="searchValue"
             placeholder="Chercher une mission, une ville, un secteur d'activité...">
     </mat-form-field>
+</div>-->
 
-</div>
-
-
-<mat-slide-toggle (click)="clearSearch()"  [checked]="false">Recherche avancée </mat-slide-toggle>
-&nbsp;&nbsp;
-&nbsp;&nbsp;
 
 <mat-slide-toggle (click)="showOnlyMyMissions()" *ngIf="manager" [checked]="true">Afficher uniquement mes
     missions. </mat-slide-toggle>&nbsp;&nbsp;

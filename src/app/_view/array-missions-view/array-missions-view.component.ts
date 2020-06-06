@@ -46,11 +46,10 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   NumberOfCheckboxesExceed = false;
   NumberOfMaximumCheckboxes = 100;
   searchValue:string = null;
-  advancedSearchEnabled = false;
   public manager : boolean = this._authService.userIsManager();
 
   innerDisplayedColumns: string[] = ['select', 'project-name', 'project-description'];
-  public consultantForm : FormControl;
+  
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -257,17 +256,6 @@ onGeneratePDF(selectedElements : any[]) : void {
 
   onClickProjects(event) {
     event.preventDefault();
-  }
-
-  clearSearch() {
-    if (this.advancedSearchEnabled == false) {
-      this.searchValue = '';
-      console.log(this.searchValue.length, this.searchValue, typeof (this.searchValue));
-      this.advancedSearchEnabled = true;
-    }
-    else {
-      this.advancedSearchEnabled = false;
-    }
   }
 
 }

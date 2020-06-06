@@ -11,6 +11,11 @@
         <ng-template mat-tab-label>
           Ses missions
         </ng-template>
+        <mat-form-field>
+          <mat-label>Chercher une mission</mat-label>
+          <input matInput (keyup)="arrayView.applyFilter($event)"
+              placeholder="Chercher une mission, une ville, un secteur d'activité...">
+        </mat-form-field>
         <app-array-missions-view *ngIf="missions" [missions]="missions" [displayedColumns]="cols" (deleteEvent)="openDeleteDialog($event)"></app-array-missions-view>
       </mat-tab>
     </mat-tab-group>

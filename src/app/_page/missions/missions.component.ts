@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
 import { MatDialog } from '@angular/material/dialog';
 import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
+import { FormControl } from '@angular/forms';
 
 
 
@@ -17,9 +18,11 @@ import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.compo
 export class MissionsComponent implements OnInit {
 
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
+
   missions: any[];
   consultants: any[];
-
+  public consultantForm : FormControl;
+  advancedSearchEnabled = false;
 
 
   constructor(
@@ -78,5 +81,9 @@ export class MissionsComponent implements OnInit {
       },
       (err) => { }
     )
+  }
+
+  advancedSearch(){
+    this.advancedSearchEnabled = !this.advancedSearchEnabled;
   }
 }

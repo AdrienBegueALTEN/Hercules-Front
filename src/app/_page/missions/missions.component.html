@@ -1,1 +1,46 @@
+<div class="srch">
+    <div *ngIf="advancedSearchEnabled; then complex else simple"></div>
+</div> 
+<div class="arrow-down cplxSrch"></div>
 <app-array-missions-view *ngIf="missions" [missions]="missions" [consultants]="consultants" (deleteEvent)="openDeleteDialog($event)"></app-array-missions-view>
+
+
+<ng-template #simple>
+    <mat-form-field>
+        <mat-label>Chercher une mission</mat-label>
+        <input matInput (keyup)="arrayView.applyFilter($event)"
+            placeholder="Chercher une mission, une ville, un secteur d'activité...">
+    </mat-form-field>
+    <button class="cplxSrch cplxSrch-btn" (click)="advancedSearch()">
+        <mat-icon>add</mat-icon>
+    </button>
+</ng-template>
+
+<ng-template #complex>
+    <table class="inputable">
+        <tr>
+            <td colspan="2"><app-missions-title-autocomplete [missions]="missions"></app-missions-title-autocomplete></td>
+        </tr>
+        <tr>
+            <td><app-missions-city-autocomplete [missions]="missions"></app-missions-city-autocomplete></td>
+            <td><app-missions-country-autocomplete [missions]="missions"></app-missions-country-autocomplete></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <app-consultant-autocomplete 
+                    *ngIf="!!consultants" 
+                    [consultants]="consultants" 
+                    (sendFormCtrl)="this.consultantForm = $event"></app-consultant-autocomplete>
+            </td>
+        </tr>
+        <tr>
+            <td><app-missions-customer-autocomplete [missions]="missions"></app-missions-customer-autocomplete></td>
+            <td><app-missions-activitysector-autocomplete [missions]="missions"></app-missions-activitysector-autocomplete></td>
+        </tr>
+        <tr></tr>
+    </table>  
+    
+    <button class="cplxSrch cplxSrch-btn" (click)="advancedSearch()">
+        <mat-icon>remove</mat-icon>
+    </button>
+</ng-template>
