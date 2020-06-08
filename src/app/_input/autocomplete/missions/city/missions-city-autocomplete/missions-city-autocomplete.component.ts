@@ -73,4 +73,11 @@ uniques(array, key) {
   }, []);
 }
 
+public getValue(){
+  const val = this.cityCtrl.value;
+  if(val == null) return null;
+  else if(val instanceof String || typeof val ==='string') return val;
+  else return val.lastVersion.city;
+}
+
 }

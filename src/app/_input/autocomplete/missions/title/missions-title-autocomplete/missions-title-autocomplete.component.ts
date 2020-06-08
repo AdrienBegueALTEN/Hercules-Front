@@ -78,4 +78,13 @@ displayFn(mission : any) : string {
  return mission ? mission.lastVersion.title : '';
 }
 
+  
+
+  public getValue(){
+    const val = this.titleCtrl.value;
+    if(val == null) return null;
+    else if(val instanceof String || typeof val ==='string') return val;
+    else return val.lastVersion.title;
+  }
+
 }

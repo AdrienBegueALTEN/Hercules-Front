@@ -7,6 +7,13 @@ import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/ar
 import { MatDialog } from '@angular/material/dialog';
 import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
 import { FormControl } from '@angular/forms';
+import { MissionsActivitysectorAutocompleteComponent } from 'src/app/_input/autocomplete/missions/activitysector/missions-activitysector-autocomplete/missions-activitysector-autocomplete.component';
+import { MissionsTitleAutocompleteComponent } from 'src/app/_input/autocomplete/missions/title/missions-title-autocomplete/missions-title-autocomplete.component';
+import { MissionsCityAutocompleteComponent } from 'src/app/_input/autocomplete/missions/city/missions-city-autocomplete/missions-city-autocomplete.component';
+import { MissionsCountryAutocompleteComponent } from 'src/app/_input/autocomplete/missions/country/missions-country-autocomplete/missions-country-autocomplete.component';
+import { ConsultantAutocompleteComponent } from 'src/app/_input/autocomplete/consultant/consultant-autocomplete.component';
+import { CustomerAutocompleteComponent } from 'src/app/_input/autocomplete/customer/customer-autocomplete.component';
+import { MissionsCustomerAutocompleteComponent } from 'src/app/_input/autocomplete/missions/customer/missions-customer-autocomplete/missions-customer-autocomplete.component';
 
 
 
@@ -18,6 +25,13 @@ import { FormControl } from '@angular/forms';
 export class MissionsComponent implements OnInit {
 
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
+
+  @ViewChild(MissionsTitleAutocompleteComponent) title: MissionsTitleAutocompleteComponent;
+  @ViewChild(MissionsCityAutocompleteComponent) city: MissionsCityAutocompleteComponent;
+  @ViewChild(MissionsCountryAutocompleteComponent) country: MissionsCountryAutocompleteComponent;
+  @ViewChild(ConsultantAutocompleteComponent) consultant: ConsultantAutocompleteComponent;
+  @ViewChild(MissionsCustomerAutocompleteComponent) client: MissionsCustomerAutocompleteComponent;
+  @ViewChild(MissionsActivitysectorAutocompleteComponent) activtySector: MissionsActivitysectorAutocompleteComponent;
 
   missions: any[];
   consultants: any[];
@@ -85,5 +99,17 @@ export class MissionsComponent implements OnInit {
 
   advancedSearch(){
     this.advancedSearchEnabled = !this.advancedSearchEnabled;
+  }
+
+  sendAdvSearch(){
+    const values = {
+      title: this.title.getValue(),
+      city: this.city.getValue(),
+      country: this.country.getValue(),
+      consultant: this.consultant.getValue(),
+      client: this.client.getValue(),
+      activtySector: this.activtySector.getValue()
+    };
+    console.log(values);
   }
 }

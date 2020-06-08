@@ -81,4 +81,14 @@ uniques(array, key) {
 }
 
 
+
+public getValue(){
+  const val = this.activitySectorCtrl.value
+  if(val == null) return null;
+  if(val instanceof String || typeof val ==='string')
+    return val;
+  else
+    return val.customer.activitySector;
+}
+
 }

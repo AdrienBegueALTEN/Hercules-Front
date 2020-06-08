@@ -75,4 +75,13 @@ uniques(array, key) {
   }, []);
 }
 
+
+
+public getValue(){
+  const val = this.countryCtrl.value;
+  if(val == null) return null;
+  else if(val instanceof String || typeof val ==='string') return val;
+  else return val.lastVersion.country;
+}
+
 }

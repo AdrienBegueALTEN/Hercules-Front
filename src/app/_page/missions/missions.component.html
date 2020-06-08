@@ -19,25 +19,27 @@
 <ng-template #complex>
     <table class="inputable">
         <tr>
-            <td colspan="2"><app-missions-title-autocomplete [missions]="missions"></app-missions-title-autocomplete></td>
-        </tr>
-        <tr>
+            <td><app-missions-title-autocomplete [missions]="missions"></app-missions-title-autocomplete></td>
             <td><app-missions-city-autocomplete [missions]="missions"></app-missions-city-autocomplete></td>
             <td><app-missions-country-autocomplete [missions]="missions"></app-missions-country-autocomplete></td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td>
                 <app-consultant-autocomplete 
                     *ngIf="!!consultants" 
                     [consultants]="consultants" 
                     (sendFormCtrl)="this.consultantForm = $event"></app-consultant-autocomplete>
             </td>
-        </tr>
-        <tr>
             <td><app-missions-customer-autocomplete [missions]="missions"></app-missions-customer-autocomplete></td>
             <td><app-missions-activitysector-autocomplete [missions]="missions"></app-missions-activitysector-autocomplete></td>
         </tr>
-        <tr></tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td style="text-align: right;">
+                <button mat-stroked-button (click)="sendAdvSearch()" color="primary">Rechercher</button>
+            </td>
+        </tr>
     </table>  
     
     <button class="cplxSrch cplxSrch-btn" (click)="advancedSearch()">

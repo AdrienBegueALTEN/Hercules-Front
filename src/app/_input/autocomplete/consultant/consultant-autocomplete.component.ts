@@ -100,4 +100,12 @@ export class ConsultantAutocompleteComponent implements OnInit {
   private _checkSelection(control) {
     return (typeof control.value == 'string') ? { 'requirements': true } : null;
   }
+
+  
+
+  public getValue(){
+    return this.ctrl.value;
+  }
+
+  
 }
