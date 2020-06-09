@@ -112,6 +112,7 @@ export class MissionsComponent implements OnInit {
 
   sendAdvSearch(){
     const values = this.getValues();
+    //test this.arrayView.modifyArray([this.missions[0]]);
   }
 
   openColsChoice(){

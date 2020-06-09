@@ -62,6 +62,11 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     this.refreshDatasource();
   }
 
+  public modifyArray(missions: any[]){
+    this.missions = missions;
+    this.refreshDatasource();
+  }
+
   public refreshDatasource(revert : boolean = false) {
     this.selection.clear()
     let data = this.missions;
