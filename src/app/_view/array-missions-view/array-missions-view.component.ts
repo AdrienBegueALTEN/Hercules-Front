@@ -1,5 +1,5 @@
 import { SheetStatus } from 'src/app/_enums/sheet-status.enum';
-import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, Output, EventEmitter, AfterViewInit} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -22,7 +22,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     ]),
   ],
 })
-export class ArrayMissionsViewComponent implements OnInit {
+export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   @Input() missions : any[];
   @Input() showOnlyMineToogle : boolean = false;
   @Input() displayedColumns : string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
@@ -55,6 +55,15 @@ export class ArrayMissionsViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.refreshDatasource();
+  }
+
+  ngAfterViewInit(){
+    this.refreshDatasource();
+  }
+
+  public modifyArray(missions: any[]){
+    this.missions = missions;
     this.refreshDatasource();
   }
 

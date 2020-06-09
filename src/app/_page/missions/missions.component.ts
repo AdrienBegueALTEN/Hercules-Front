@@ -55,6 +55,7 @@ export class MissionsComponent implements OnInit {
     {name:'numberOfProjects',french:'Nombre de projets', selected:false},
     {name:'sheetStatus',french:'Statut de la fiche', selected:false},
   ];
+  colsToDisp = ['select','title','consultant','customer'];
 
 
   constructor(
@@ -111,6 +112,7 @@ export class MissionsComponent implements OnInit {
 
   sendAdvSearch(){
     const values = this.getValues();
+    //test this.arrayView.modifyArray([this.missions[0]]);
   }
 
   openColsChoice(){
@@ -118,7 +120,11 @@ export class MissionsComponent implements OnInit {
       data: {
         cols:this.cols
       }
-      
     });
+    dialogRef.afterClosed().subscribe(
+      (data)=>{
+        this.colsToDisp = data.filter(x=>x.selected).map(x=>x.name)
+      }
+    )
   }
 }
