@@ -15,8 +15,7 @@ import { ConsultantAutocompleteComponent } from 'src/app/_input/autocomplete/con
 import { CustomerAutocompleteComponent } from 'src/app/_input/autocomplete/customer/customer-autocomplete.component';
 import { MissionsCustomerAutocompleteComponent } from 'src/app/_input/autocomplete/missions/customer/missions-customer-autocomplete/missions-customer-autocomplete.component';
 import { MissionsSkillsAutocompleteComponent } from 'src/app/_input/autocomplete/missions/missions-skills-autocomplete/missions-skills-autocomplete.component';
-
-
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-missions',
@@ -35,11 +34,14 @@ export class MissionsComponent implements OnInit {
   @ViewChild(MissionsActivitysectorAutocompleteComponent) activtySector: MissionsActivitysectorAutocompleteComponent;
   @ViewChild(MissionsSkillsAutocompleteComponent) skills: MissionsSkillsAutocompleteComponent;
 
+  consultants : any[];
   missions: any[];
-  consultants: any[];
   public consultantForm : FormControl;
   advancedSearchEnabled = false;
-
+  public userIsManager : boolean = this._authService.userIsManager();
+  public onlyMine : boolean = true;
+  public dataSource: MatTableDataSource<any>;
+  public userId = this._authService.getUser().id;
 
   constructor(
     private _missionService: MissionService,
@@ -50,9 +52,7 @@ export class MissionsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const user = this._authService.getUser();
-
-    this._missionService.getMissions(user.id).subscribe(
+    this._missionService.getMissions(this.userId).subscribe(
       (data) => {
         this.missions = data;
       },
@@ -69,34 +69,6 @@ export class MissionsComponent implements OnInit {
     )
 
 
-  }
-  openDeleteDialog(mission: any): void {
-    const dialog = this._dialog.open(YesNoDialogComponent, {
-      data: {
-        title: 'Supprimer la mission ' + mission.lastVersion.title + ' chez ' + mission.customer.name + '.',
-        message: 'Voulez-vous continuer ?',
-        yes: 'Supprimer la mission',
-        no: 'Annuler'
-      },
-    });
-
-    dialog.afterClosed().subscribe(
-      (result) => {
-        if (result) {
-          this.delete(mission);
-        }
-      }
-    );
-  }
-
-  delete(mission: any) {
-    this._missionService.deleteMission(mission.id).subscribe(
-      () => {
-        this.missions = this.missions.filter((m) => m.id !== mission.id);
-        this.arrayView.createDatasource(this.missions);
-      },
-      (err) => { }
-    )
   }
 
   advancedSearch(){
@@ -125,6 +97,5 @@ export class MissionsComponent implements OnInit {
 
   sendAdvSearch(){
     const values = this.getValues();
-    console.log(values);
   }
 }

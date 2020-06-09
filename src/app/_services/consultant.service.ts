@@ -74,8 +74,8 @@ export class ConsultantService {
     , AppSettings.HTTP_JSON_CONTENT);
   }
 
-  public getMissionByConsultant(id: number) : Observable<any> {
-    return this._httpClient.get(AppSettings.CONSULTANT_API + id + '/missions');
+  public getMissions(consultant : number) : Observable<any> {
+    return this._httpClient.get(AppSettings.CONSULTANT_API + consultant + '/missions');
   }
 }
 

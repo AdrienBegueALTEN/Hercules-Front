@@ -2,8 +2,11 @@
     <div *ngIf="advancedSearchEnabled; then complex else simple"></div>
 </div> 
 <div class="arrow-down cplxSrch"></div>
-<app-array-missions-view *ngIf="missions" [missions]="missions" [consultants]="consultants" (deleteEvent)="openDeleteDialog($event)"></app-array-missions-view>
 
+<app-array-missions-view *ngIf="!!missions"
+    [missions]="missions"
+    [showOnlyMineToogle]="true">
+</app-array-missions-view>
 
 <ng-template #simple>
     <mat-form-field>

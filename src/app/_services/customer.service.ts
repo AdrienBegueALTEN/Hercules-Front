@@ -52,7 +52,7 @@ export class CustomerService {
       AppSettings.CUSTOMER_API + customer + '/logo');
   }
 
-  public getMissionByCustomer(customer: number) : Observable<any> {
+  public getMissions(customer: number) : Observable<any> {
     return this._httpClient.get(AppSettings.CUSTOMER_API + customer + '/missions');
   }
 }

@@ -1,4 +1,4 @@
-.example-container {
+  .example-container {
     display: flex;
     flex-direction: column;
     max-height: 500px;
@@ -19,11 +19,12 @@
     overflow: auto;
     max-height: 500px;
     width:100%;
+    margin-top: 20px;
   }
   
   table {
-      width: 100%;
-    }
+    width: 100%;
+  }
   
   .element-row {
     position: relative;
@@ -40,32 +41,34 @@
   .element-row.expanded {
     border-bottom-color: transparent;
   }
-    .mat-column-select {
+
+  .mat-column-select {
+    flex: 0 0 3% !important;
+    width: 0% !important;
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   
-        flex: 0 0 3% !important;
-        width: 0% !important;
-        word-wrap: break-word !important;
-        white-space: unset !important;
-        
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-      
-        word-break: break-word;
-      
-        -ms-hyphens: auto;
-        -moz-hyphens: auto;
-        -webkit-hyphens: auto;
-        hyphens: auto;
-        
-      }
+    word-break: break-word;
   
-  
-      .example-element-row:not(.example-expanded-row):hover {
-        background: #777;
-    }
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    
+  }
+
+  .example-element-row:not(.example-expanded-row):hover {
+      background: #777;
+  }
   
   .pdfButton{
     float: left;
     margin-top: 10px;
-    
+  }
+
+  mat-paginator {
+    background: none;
   }
