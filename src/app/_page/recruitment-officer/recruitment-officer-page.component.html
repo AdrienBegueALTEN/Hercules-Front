@@ -1,63 +1,26 @@
-<mat-card class="example-card">
-    <form [formGroup]="recruitmentOfficerForm" >
-    <mat-card-header>
-        <mat-card-title *ngIf="recruitmentOfficer">{{recruitmentOfficer.firstname}} {{recruitmentOfficer.lastname}}</mat-card-title>
-    </mat-card-header>
+<mat-card *ngIf="!!recruitmentOfficer">
     <mat-card-content>
-        <mat-form-field appearance="legacy">
-            <mat-label>Prénom *</mat-label>
-            <input matInput placeholder="Prénom"
-                   formControlName="firstname"
-                   (change)="onUpdateRecruitmentOfficer()">
-            <mat-error *ngIf="recruitmentOfficerForm.controls['firstname'].hasError('required')">
-                    Un prénom est requis.
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="legacy">
-            <mat-label>Nom *</mat-label>
-            <input matInput placeholder="Nom"
-                   formControlName="lastname"
-                   (change)="onUpdateRecruitmentOfficer()">
-            <mat-error *ngIf="recruitmentOfficerForm.controls['lastname'].hasError('required')">
-                    Un nom est requis.
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="legacy">
-            <mat-label>Email *</mat-label>
-            <input matInput placeholder="Email"
-                   formControlName="email"
-                   (change)="onUpdateRecruitmentOfficer()">
-            <mat-error *ngIf="!recruitmentOfficerForm.controls['email'].hasError('required') && 
-                              (recruitmentOfficerForm.controls['email'].hasError('email') || 
-                              recruitmentOfficerForm.controls['email'].hasError('badDomain') )">
-                    La forme de l'adresse mail est erronée.
-            </mat-error>
-            <mat-error *ngIf="recruitmentOfficerForm.controls['email'].hasError('required')">
-                    Une adresse mail est requise.
-            </mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="releaseDate" appearance="legacy">
-            <mat-label>Date de fin d'activité</mat-label>
-            <input matInput 
-                   type = "date"
-                   formControlName="releaseDate"
-                   (change)="onReleaseRecruitmentOfficer()">
-            
-        </mat-form-field>
-        <button mat-raised-button color="primary" 
-                                  (click)="onActivateRecruitmentOfficer(recruitmentOfficer.id)"
-                                  *ngIf="!!recruitmentOfficer ? recruitmentOfficer.releaseDate!=null : null">
-            <span>Rendre actif à nouveau</span>
-        </button>
+        <mat-tab-group animationDuration="0ms" mat-align-tabs="center">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                {{recruitmentOfficer.firstname}} {{recruitmentOfficer.lastname}}
+              </ng-template>
+              <div *ngIf="!recruitmentOfficer.releaseDate; then edit else view"></div>
+            </mat-tab>
+          </mat-tab-group>
     </mat-card-content>
-    </form>
-
-    <button mat-raised-button class="buttonDelete" color="warn" (click)="onDeleteRecruitmentOfficer(recruitmentOfficer.id)">
-        <span>Supprimer</span>
-    </button>
-
-    <br>
-    <br>
-
+    <mat-card-actions>
+          <button mat-button color="warn" *ngIf="!recruitmentOfficer.releaseDate"
+            (click)="onSetReleaseDate()">Indiquer la sortie des effectifs</button>
+          <button mat-button color="warn"
+            (click)="onDelete()">Supprimer ce CDR en base</button>
+      </mat-card-actions>
 </mat-card> 
+
+<ng-template #edit>
+  <app-recruitment-officer-edit [recruitmentOfficer]="recruitmentOfficer"></app-recruitment-officer-edit>
+</ng-template>
+
+<ng-template #view>
+  <app-recruitment-officer-view [recruitmentOfficer]="recruitmentOfficer"></app-recruitment-officer-view>
+</ng-template>

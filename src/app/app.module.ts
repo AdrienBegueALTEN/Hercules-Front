@@ -1,3 +1,5 @@
+import { RecruitmentOfficerViewComponent } from './_view/recruitment-officer-view/recruitment-officer-view.component';
+import { RecruitmentOfficerEditComponent } from './_edit/recruitment-officer-edit/recruitment-officer-edit.component';
 import { AdminPanelComponent } from './_page/admin-panel/admin-panel.component';
 import { DatatableComponent } from './_view/datatable/datatable.component';
 import { CdkDetailRowDirective } from './_directive/cdk-detail-row.directive';
@@ -181,7 +183,9 @@ import { MissionColumnChoiceComponent } from './_dialog/mission-column-choice/mi
       NewCustomerDialogComponent,
       UploadImageComponent,
       MissionsSkillsAutocompleteComponent,
-      MissionColumnChoiceComponent
+      MissionColumnChoiceComponent,
+      RecruitmentOfficerEditComponent,
+      RecruitmentOfficerViewComponent
    ],
    imports: [
       AppRoutingModule,

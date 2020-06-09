@@ -74,10 +74,9 @@ export class RecruitmentOfficersComponent implements OnInit {
 
   public onDeactivate(event : any) : void {
     
-    this._recruitmentOfficerService.releaseRecruitmentOfficer(event.releaseDate, event.user).subscribe(
-      () => {this.ngOnInit();},
-      () => {this._showErrorDialog("Impossible de notifier la sortie des effectifs.");
-    }
+    this._recruitmentOfficerService.updateRecruitmentOfficer(event.user, 'releaseDate', event.releaseDate).subscribe(
+      () => this.ngOnInit(),
+      () => this._showErrorDialog("Impossible de notifier la sortie des effectifs.")
     );
     
 

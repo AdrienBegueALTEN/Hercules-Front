@@ -23,8 +23,8 @@ export class ConsultantPageComponent implements OnInit {
     private _router : Router,
     private _route : ActivatedRoute,
     private _dialog : MatDialog
-  ) {
-  }
+  ) {}
+
   ngOnInit() {
     const id : number = this._route.snapshot.params['id'];
     this._consultantService.getConsultant(id).subscribe(
@@ -52,13 +52,10 @@ export class ConsultantPageComponent implements OnInit {
         };
     const dialogRef = this._dialog.open(DeactivateComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
-      data => {
-        if (data) {
-          this._consultantService.updateConsultant(this.consultant.id,'releaseDate',data).subscribe(
-            () => {
-              this.consultant.releaseDate = data;
-              this.ngOnInit();
-            }, 
+      releaseDate => {
+        if (releaseDate) {
+          this._consultantService.updateConsultant(this.consultant.id, 'releaseDate', releaseDate).subscribe(
+            () => this.consultant.releaseDate = releaseDate, 
             err => {console.log(err)}
           )
         }

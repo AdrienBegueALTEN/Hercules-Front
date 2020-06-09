@@ -27,7 +27,6 @@ export class RecruitmentOfficerService {
           "email" : email,
           "firstname" : firstname,
           "lastname" : lastname
-          
         },
         {observe : 'response' });
   }
@@ -36,38 +35,15 @@ export class RecruitmentOfficerService {
       return this._httpClient.delete(AppSettings.RECRUITMENTOFFICER_API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 
-  updateRecruitmentOfficer(firstname : String, lastname : String, email : String, id : String) : Observable<any>{
+  updateRecruitmentOfficer(id : number, fieldName : String, value : any) : Observable<any>{
     
     return this._httpClient.put(AppSettings.RECRUITMENTOFFICER_API,
       { 
         "id" : id,
-        "email" : email,
-        "firstname" : firstname,
-        "lastname" : lastname
+        "fieldName" : fieldName,
+        "value" : value
         
       },
       {observe : 'response' });
   }
-
-  releaseRecruitmentOfficer(releaseDate : String, id : String) : Observable<any> {
-    return this._httpClient.put(AppSettings.RECRUITMENTOFFICER_API,
-      { 
-        "id" : id,
-        "releaseDate" : releaseDate
-        
-      },
-      {observe : 'response' });
-  }
-
-  reviveRecruitmentOfficer(id : String) : Observable<any> {
-    return this._httpClient.put(AppSettings.RECRUITMENTOFFICER_API,
-      { 
-        "id" : id,
-        "revive" : true
-        
-      },
-      {observe : 'response' });
-  }
-  
-
 }

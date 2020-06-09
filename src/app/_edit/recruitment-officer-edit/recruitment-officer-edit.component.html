@@ -1,0 +1,24 @@
+<table *ngIf="!!recruitmentOfficer" class="inputable">
+  <tr>
+    <td><app-firstname-input
+      (sendCtrl)="grp.addControl(FIRSTNAME_KEY, $event)"
+      (valueChange)="valueChange(FIRSTNAME_KEY)"
+      [initialValue]="recruitmentOfficer[FIRSTNAME_KEY]"
+      [required]="true">
+    </app-firstname-input></td>
+    <td><app-lastname-input
+      (sendCtrl)="grp.addControl(LASTNAME_KEY, $event)"
+      (valueChange)="valueChange(LASTNAME_KEY)"
+      [initialValue]="recruitmentOfficer[LASTNAME_KEY]"
+      [required]="true">
+    </app-lastname-input></td>
+  </tr>
+  <tr>
+    <td colspan="2"><app-email-input 
+      (sendCtrl)="grp.addControl(EMAIL_KEY, $event)"
+      (valueChange)="valueChange(EMAIL_KEY)"
+      [initialValue]="recruitmentOfficer[EMAIL_KEY]"
+      [required]="true">
+    </app-email-input></td>
+  </tr>
+</table>
