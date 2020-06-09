@@ -28,7 +28,7 @@ export class RecruitmentOfficerService {
           "firstname" : firstname,
           "lastname" : lastname
         },
-        {observe : 'response' });
+        {observe : 'response'});
   }
 
   deleteRecruitmentOfficer(id : String) {
@@ -36,14 +36,13 @@ export class RecruitmentOfficerService {
   }
 
   updateRecruitmentOfficer(id : number, fieldName : String, value : any) : Observable<any>{
-    
+  
     return this._httpClient.put(AppSettings.RECRUITMENTOFFICER_API,
       { 
         "id" : id,
         "fieldName" : fieldName,
         "value" : value
-        
       },
-      {observe : 'response' });
+      {observe : 'response'});
   }
 }

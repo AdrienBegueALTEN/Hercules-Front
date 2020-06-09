@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-recruitment-officer-view',
-  templateUrl: './recruitment-officer-view.component.html'
+  selector: 'app-manager-view',
+  templateUrl: './manager-view.component.html'
 })
-export class RecruitmentOfficerViewComponent {
-  @Input() recruitmentOfficer : any;
+export class ManagerViewComponent {
+  @Input() manager : any;
 
   readonly EMAIL_KEY = 'email';
   readonly FIRSTNAME_KEY = 'firstname';

@@ -1,0 +1,27 @@
+<table *ngIf="!!manager" class="inputable">
+  <tr>
+    <td><app-firstname-input
+      (sendCtrl)="grp.addControl(FIRSTNAME_KEY, $event)"
+      (valueChange)="valueChange(FIRSTNAME_KEY)"
+      [initialValue]="manager[FIRSTNAME_KEY]"
+      [required]="true">
+    </app-firstname-input></td>
+    <td><app-lastname-input
+      (sendCtrl)="grp.addControl(LASTNAME_KEY, $event)"
+      (valueChange)="valueChange(LASTNAME_KEY)"
+      [initialValue]="manager[LASTNAME_KEY]"
+      [required]="true">
+    </app-lastname-input></td>
+  </tr>
+  <tr>
+    <td colspan="2"><app-email-input 
+      (sendCtrl)="grp.addControl(EMAIL_KEY, $event)"
+      (valueChange)="valueChange(EMAIL_KEY)"
+      [initialValue]="manager[EMAIL_KEY]"
+      [required]="true">
+    </app-email-input></td>
+  </tr>
+  <mat-slide-toggle *ngIf="userId != manager.id" (click)="adminToogle()" [(ngModel)]="manager.admin">
+    {{manager.admin ? 'Est administrateur' : 'N\'est pas administrateur'}}
+</mat-slide-toggle>
+</table>

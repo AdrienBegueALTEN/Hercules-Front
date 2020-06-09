@@ -1,0 +1,20 @@
+<div *ngIf="!!manager" class="contours">
+  <mat-list>
+    <mat-list-item>
+      <h1 matLine>Prénom</h1>
+      <p matLine>{{manager[FIRSTNAME_KEY]}}</p>
+    </mat-list-item>
+    <mat-list-item>
+      <h1 matLine>Nom</h1>
+      <p matLine>{{manager[LASTNAME_KEY]}}</p>
+    </mat-list-item>
+    <mat-list-item>
+      <h1 matLine>Adresse email</h1>
+      <p matLine>{{manager[EMAIL_KEY]}}</p>
+    </mat-list-item>
+    <mat-list-item>
+      <h1 matLine>Date de sortie des effectifs</h1>
+      <p matLine>{{manager[RELEASE_DATE_KEY] | date:'dd/MM/yyyy'}}</p>
+    </mat-list-item>
+  </mat-list>
+</div>

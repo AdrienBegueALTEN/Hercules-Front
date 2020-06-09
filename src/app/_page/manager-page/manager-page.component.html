@@ -1,69 +1,37 @@
-<mat-card class="example-card">
-    <form [formGroup]="managerForm" >
-    <mat-card-header>
-        <mat-card-title *ngIf="manager">{{manager.firstname}} {{manager.lastname}}</mat-card-title>
-    </mat-card-header>
+<mat-card *ngIf="!!manager">
     <mat-card-content>
-        <mat-form-field appearance="legacy">
-            <mat-label>Prénom *</mat-label>
-            <input matInput placeholder="Prénom"
-                   formControlName="firstname"
-                   (change)="onUpdateManager()">
-            <mat-error *ngIf="managerForm.controls['firstname'].hasError('required')">
-                    Un prénom est requis.
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="legacy">
-            <mat-label>Nom *</mat-label>
-            <input matInput placeholder="Nom"
-                   formControlName="lastname"
-                   (change)="onUpdateManager()">
-            <mat-error *ngIf="managerForm.controls['lastname'].hasError('required')">
-                    Un nom est requis.
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="legacy">
-            <mat-label>Email *</mat-label>
-            <input matInput placeholder="Email"
-                   formControlName="email"
-                   (change)="onUpdateManager()">
-            <mat-error *ngIf="!managerForm.controls['email'].hasError('required') && 
-                              (managerForm.controls['email'].hasError('email') || 
-                              managerForm.controls['email'].hasError('badDomain') )">
-                    La forme de l'adresse mail est erronée.
-            </mat-error>
-            <mat-error *ngIf="managerForm.controls['email'].hasError('required')">
-                    Une adresse mail est requise.
-            </mat-error>
-        </mat-form-field>
-
-        <mat-slide-toggle (change)="onUpdateManager()" 
-                          formControlName="admin"
-                           >
-            Octroyer les droits d'administrateur
-        </mat-slide-toggle>
-
-        <mat-form-field class="releaseDate" 
-                        appearance="legacy">
-            <mat-label>Date de fin d'activité</mat-label>
-            <input matInput 
-                   type = "date"
-                   formControlName="releaseDate"
-                   (change)="onReleaseManager()">
-        </mat-form-field>
-        <button mat-raised-button color="primary" 
-                                  (click)="onActivateManager(manager.id)"
-                                  *ngIf="!!manager ? manager.releaseDate!=null : null">
-            <span>Rendre actif à nouveau</span>
-        </button>
-        
+        <mat-tab-group animationDuration="0ms" mat-align-tabs="center">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                {{manager.firstname}} {{manager.lastname}}
+              </ng-template>
+              <div *ngIf="!manager.releaseDate; then edit else view"></div>
+            </mat-tab>
+            <mat-tab *ngIf="manager.consultants.length > 0">
+              <ng-template mat-tab-label>
+                {{userId == manager.id ? 'Vos' : 'Ses'}} consultants
+              </ng-template>
+              <!--<mat-form-field>
+                <mat-label>Rechercher</mat-label>
+                <input matInput (keyup)="arrayView.applyFilter($event)">
+              </mat-form-field>-->
+            </mat-tab>
+          </mat-tab-group>
     </mat-card-content>
-    </form>
+    <mat-card-actions>
+      <div *ngIf="userId != manager.id">
+        <button mat-button color="warn"
+          (click)="onSetReleaseDate()">Indiquer la sortie des effectifs</button>
+        <button mat-button color="warn" *ngIf="manager.consultants.length === 0"
+          (click)="onDelete()">Supprimer ce manager en base</button>
+      </div>
+    </mat-card-actions>
+</mat-card> 
 
-    <button mat-raised-button class="buttonDelete" color="warn" (click)="onDeleteManager(manager.id)">
-        <span>Supprimer</span>
-    </button>
+<ng-template #edit>
+  <app-manager-edit [manager]="manager"></app-manager-edit>
+</ng-template>
 
-    <br>
-    <br>
-</mat-card>
+<ng-template #view>
+  <app-manager-view [manager]="manager"></app-manager-view>
+</ng-template>

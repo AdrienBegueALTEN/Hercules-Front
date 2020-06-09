@@ -58,11 +58,17 @@ export class RecruitmentOfficersComponent implements OnInit {
                 fileName = fileName.toLowerCase();
                 saveAs(blob, fileName);
               },
-              () => this._showErrorDialog("Impossible de télécharger le fichier.")
+              error => console.log(error)
             )
             this.ngOnInit();
           },
-          (error) => this._handleError(error)
+          error => {
+            if (error.status == HttpStatus.CONFLICT) {
+              const dialogConfig = new MatDialogConfig();
+              dialogConfig.data = 'Cette adresse mail est indisponible.';
+              this._dialog.open(MessageDialogComponent, dialogConfig);
+            } else console.log(error);
+          }
         );
       }
     )
@@ -73,26 +79,7 @@ export class RecruitmentOfficersComponent implements OnInit {
   }
 
   public onDeactivate(event : any) : void {
-    
-    this._recruitmentOfficerService.updateRecruitmentOfficer(event.user, 'releaseDate', event.releaseDate).subscribe(
-      () => this.ngOnInit(),
-      () => this._showErrorDialog("Impossible de notifier la sortie des effectifs.")
-    );
-    
-
+    this._recruitmentOfficerService.updateRecruitmentOfficer(event.user, 'releaseDate', event.releaseDate)
+      .subscribe(() => this.ngOnInit(), error => console.log(error));
   }
-
-  private _handleError(error : Response) {
-    let message : string = "Impossible d'ajouter ce " + this.LABEL + "."
-    if (error.status === HttpStatus.CONFLICT)
-      message = message.concat(" L'adresse email renseignée est indisponible.");
-    this._showErrorDialog(message);
-  }
-
-  private _showErrorDialog(message : string) : void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = message;
-    this._dialog.open(MessageDialogComponent, dialogConfig);
-  }
-
 }

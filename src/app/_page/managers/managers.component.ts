@@ -52,11 +52,17 @@ export class ManagersComponent implements OnInit {
                 fileName = fileName.toLowerCase();
                 saveAs(blob, fileName);
               },
-              () => this._showErrorDialog("Impossible de télécharger le fichier.")
+              error => console.log(error)
             )
             this.ngOnInit()
           },
-          (error) => this._handleAddError(error)
+          error => {
+            if (error.status == HttpStatus.CONFLICT) {
+              const dialogConfig = new MatDialogConfig();
+              dialogConfig.data = 'Cette adresse mail est indisponible.';
+              this._dialog.open(MessageDialogComponent, dialogConfig);
+            } else console.log(error);
+          }
         )
       }
     )
@@ -66,33 +72,13 @@ export class ManagersComponent implements OnInit {
     this._router.navigateByUrl('managers/' + manager);
   }
 
-  private _handleAddError(error : Response) {
-    let message : string = "Impossible d'ajouter ce " + this.LABEL + "."
-    if (error.status === HttpStatus.CONFLICT)
-      message = message.concat(" L'adresse email renseignée est indisponible.");
-    this._showErrorDialog(message);
-  }
-
   public onDeactivate(event : any) : void {
-    this._managerService.releaseManager(event.releaseDate, event.user).subscribe(
-      () => {
-        this.ngOnInit(); 
-      },
-      () => this._showErrorDialog("Impossible de notifier la sortie des effectifs.")
-    );
+    this._managerService.updateManager(event.user, 'releaseDate', event.releaseDate)
+      .subscribe(() => this.ngOnInit(), error => console.log(error));
   }
 
   public setAdmin(event : any) : void {
-    this._managerService.updateManager(null, null, null, event.admin, event.manager).subscribe(
-      () => this.ngOnInit(),
-      () => this._showErrorDialog("Impossible de mettre à jour les droits d'administrateur.")
-    );
+    this._managerService.updateManager(event.user, 'isAdmin', event.admin)
+      .subscribe(() => this.ngOnInit(), error => console.log(error));
   }
-
-  private _showErrorDialog(message : string) : void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = message;
-    this._dialog.open(MessageDialogComponent, dialogConfig);
-  }
-
 }

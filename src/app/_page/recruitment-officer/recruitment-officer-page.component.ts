@@ -1,15 +1,8 @@
 import { Component, OnInit} from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
-import { AuthService } from 'src/app/_services/auth.service';
 import { RecruitmentOfficerService } from 'src/app/_services/recruitment-officer.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OkDialogComponent } from 'src/app/_dialog/ok/ok-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
 import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
-import { HttpStatus } from 'src/app/_enums/http-status.enum';
 
 @Component({
   selector: 'app-recruitment-officer-page',
@@ -59,6 +52,5 @@ export class RecruitmentOfficerPageComponent implements OnInit {
       error => console.log(error)
     )
   }
-
 }
  

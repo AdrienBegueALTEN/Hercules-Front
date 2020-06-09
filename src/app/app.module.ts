@@ -1,3 +1,5 @@
+import { ManagerViewComponent } from './_view/manager-view/manager-view.component';
+import { ManagerEditComponent } from './_edit/manager-edit/manager-edit.component';
 import { RecruitmentOfficerViewComponent } from './_view/recruitment-officer-view/recruitment-officer-view.component';
 import { RecruitmentOfficerEditComponent } from './_edit/recruitment-officer-edit/recruitment-officer-edit.component';
 import { AdminPanelComponent } from './_page/admin-panel/admin-panel.component';
@@ -185,7 +187,9 @@ import { MissionColumnChoiceComponent } from './_dialog/mission-column-choice/mi
       MissionsSkillsAutocompleteComponent,
       MissionColumnChoiceComponent,
       RecruitmentOfficerEditComponent,
-      RecruitmentOfficerViewComponent
+      RecruitmentOfficerViewComponent,
+      ManagerEditComponent,
+      ManagerViewComponent
    ],
    imports: [
       AppRoutingModule,
