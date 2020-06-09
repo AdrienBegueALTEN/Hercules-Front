@@ -2,6 +2,7 @@
     [columnsToDisplay]="['firstname', 'lastname', 'email', 'admin', 'releaseDate', 'userActions']"
     [dataSource]="dataSource"
     [label]="LABEL"
+    [showAdd]="true"
     (deactivate)="onDeactivate($event)"
     (newElement)="newManager()"
     (rowClicked)="goToManagerPage($event)"

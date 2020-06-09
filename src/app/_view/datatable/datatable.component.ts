@@ -15,6 +15,7 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
   @Input() columnsToDisplay : string [];
   @Input() dataSource: MatTableDataSource<any>;
   @Input() label : string;
+  @Input() showAdd : boolean = false;
 
   readonly loggedUser : number = this._authService.getUser().id;
   readonly loggedUserIsManager : boolean = this._authService.userIsManager();

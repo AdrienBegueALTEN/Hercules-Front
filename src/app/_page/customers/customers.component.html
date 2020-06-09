@@ -2,6 +2,7 @@
   [columnsToDisplay]="['name', 'activitySector', 'missionNb']"
   [dataSource]="dataSource"
   label="client"
+  [showAdd]="true"
   (newElement)="newCustomer()"
   (rowClicked)="goToCustomerPage($event)">
 </app-datatable>

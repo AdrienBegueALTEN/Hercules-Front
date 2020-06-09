@@ -11,10 +11,12 @@
               <ng-template mat-tab-label>
                 {{userId == manager.id ? 'Vos' : 'Ses'}} consultants
               </ng-template>
-              <!--<mat-form-field>
-                <mat-label>Rechercher</mat-label>
-                <input matInput (keyup)="arrayView.applyFilter($event)">
-              </mat-form-field>-->
+              <app-datatable *ngIf="!!dataSource"
+              [columnsToDisplay]="['firstname', 'lastname', 'email', 'releaseDate']"
+              [dataSource]="dataSource"
+              label="consultant"
+              (rowClicked)="goToConsultantPage($event)">
+            </app-datatable>
             </mat-tab>
           </mat-tab-group>
     </mat-card-content>

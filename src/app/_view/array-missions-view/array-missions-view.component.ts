@@ -70,7 +70,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   public refreshDatasource(revert : boolean = false) {
     this.selection.clear()
     let data = this.missions;
-    if (this.userIsManager && revert ? !this.onlyMine : this.onlyMine) {
+    if (this.userIsManager && this.showOnlyMineToogle && (revert ? !this.onlyMine : this.onlyMine)) {
       data = data.filter((mission) => mission.consultant.manager.id === this.user.id);
     }
     this.dataSource = new MatTableDataSource(data);

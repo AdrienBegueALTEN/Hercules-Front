@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
 import { AuthService } from 'src/app/_services/auth.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-manager-page',
@@ -12,7 +13,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 })
 export class ManagerPageComponent implements OnInit {
   public manager : any;
-
+  public dataSource : MatTableDataSource<any>;
   readonly userId : number = this._authService.getUser().id;
 
   constructor(
@@ -26,7 +27,10 @@ export class ManagerPageComponent implements OnInit {
   public ngOnInit(): void {
     const manager = this._route.snapshot.paramMap.get('id');
     this._managerService.getManagerById(manager).subscribe(
-      manager => {this.manager = manager; console.log(manager.consultants)},
+      manager => {
+        this.manager = manager;
+        this.dataSource = new MatTableDataSource(manager.consultants);
+      },
       () => this._router.navigate(['not-found'])
     );
   }
@@ -55,5 +59,9 @@ export class ManagerPageComponent implements OnInit {
       () => this._router.navigate(['/recruitment-officers']),
       error => console.log(error)
     )
+  }
+
+  public goToConsultantPage(consultant : number) {
+    this._router.navigateByUrl('consultants/' + consultant);
   }
 }
