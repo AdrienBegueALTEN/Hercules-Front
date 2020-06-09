@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from 'src/app/_services/customer.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
@@ -10,25 +10,37 @@ import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/ar
   styleUrls: ['./customer-page.component.scss']
 })
 export class CustomerPageComponent implements OnInit {
+  public customer: any;
+  public manager : boolean = this._authService.userIsManager();
+  public customersMissions : any[];
+
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
-  customer: any;
-  writingRights : boolean = this._authService.userIsManager();
-  customersMissions : any[];
 
-  constructor(private _route: ActivatedRoute,
+  constructor(
+    private _route : ActivatedRoute,
+    private _router : Router,
     private _customerService: CustomerService,
-    private _authService: AuthService) { }
+    private _authService: AuthService
+  ){}
 
-  ngOnInit(): void {
-    const id : number = this._route.snapshot.params['id'];
-    this._customerService.getById(id).subscribe(
-      (data) => {
-        this.customer = data;
+  public ngOnInit() : void {
+    const customer : number = this._route.snapshot.params['id'];
+    this._customerService.getCustomer(customer).subscribe(
+      (customer) => {
+        this.customer = customer;
         this._customerService.getMissions(this.customer.id).subscribe(
-          (customersMissions) => this.customersMissions = customersMissions
+          customersMissions => this.customersMissions = customersMissions,
+          error => console.log(error)
         )
       },
-      () => window.location.replace('not-found')
+      () => this._router.navigate(['/not-found'])
+    )
+  }
+
+  public onDelete() : void {
+    this._customerService.deleteCustomer(this.customer.id).subscribe(
+      () => this._router.navigate(['/customers']),
+      error => console.log(error)
     )
   }
 }

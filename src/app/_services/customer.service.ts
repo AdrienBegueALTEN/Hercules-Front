@@ -14,7 +14,7 @@ export class CustomerService {
     return this._httpClient.get<any[]>(AppSettings.CUSTOMER_API, AppSettings.HTTP_JSON_CONTENT);
   }
 
-  getById(id: number) : Observable<any[]> {
+  getCustomer(id: number) : Observable<any[]> {
     return this._httpClient.get<any>(AppSettings.CUSTOMER_API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 
