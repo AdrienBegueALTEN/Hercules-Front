@@ -140,8 +140,8 @@
 <button mat-raised-button 
     *ngIf="this.selection.selected.length > 0"
     class="pdfButton" color="primary"
-     [matBadge]="selection.selected.length"
-     [matBadgeColor]="selection.selected.length >= NB_MAX_CHECK ? 'warn' : 'accent'"
+    [matBadge]="selection.selected.length"
+    [matBadgeColor]="selection.selected.length >= NB_MAX_CHECK ? 'warn' : 'accent'"
     (click)="onGeneratePDF(this.selection.selected)" >
     Générer fiche PDF
 </button>

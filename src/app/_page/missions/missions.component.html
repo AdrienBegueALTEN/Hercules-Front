@@ -34,10 +34,11 @@
             <td><app-missions-activitysector-autocomplete [missions]="missions"></app-missions-activitysector-autocomplete></td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
+            <td colspan="2">
+                <app-missions-skills-autocomplete></app-missions-skills-autocomplete>
+            </td>
             <td style="text-align: right;">
-                <button mat-stroked-button (click)="sendAdvSearch()" color="primary">Rechercher</button>
+                <button mat-stroked-button (click)="sendAdvSearch()" color="primary"><mat-icon>search</mat-icon> Rechercher</button>
             </td>
         </tr>
     </table>  

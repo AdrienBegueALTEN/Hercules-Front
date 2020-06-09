@@ -14,6 +14,7 @@ import { MissionsCountryAutocompleteComponent } from 'src/app/_input/autocomplet
 import { ConsultantAutocompleteComponent } from 'src/app/_input/autocomplete/consultant/consultant-autocomplete.component';
 import { CustomerAutocompleteComponent } from 'src/app/_input/autocomplete/customer/customer-autocomplete.component';
 import { MissionsCustomerAutocompleteComponent } from 'src/app/_input/autocomplete/missions/customer/missions-customer-autocomplete/missions-customer-autocomplete.component';
+import { MissionsSkillsAutocompleteComponent } from 'src/app/_input/autocomplete/missions/missions-skills-autocomplete/missions-skills-autocomplete.component';
 
 
 
@@ -32,6 +33,7 @@ export class MissionsComponent implements OnInit {
   @ViewChild(ConsultantAutocompleteComponent) consultant: ConsultantAutocompleteComponent;
   @ViewChild(MissionsCustomerAutocompleteComponent) client: MissionsCustomerAutocompleteComponent;
   @ViewChild(MissionsActivitysectorAutocompleteComponent) activtySector: MissionsActivitysectorAutocompleteComponent;
+  @ViewChild(MissionsSkillsAutocompleteComponent) skills: MissionsSkillsAutocompleteComponent;
 
   missions: any[];
   consultants: any[];
@@ -101,15 +103,28 @@ export class MissionsComponent implements OnInit {
     this.advancedSearchEnabled = !this.advancedSearchEnabled;
   }
 
-  sendAdvSearch(){
-    const values = {
-      title: this.title.getValue(),
-      city: this.city.getValue(),
-      country: this.country.getValue(),
-      consultant: this.consultant.getValue(),
-      client: this.client.getValue(),
-      activtySector: this.activtySector.getValue()
+  getValues(){
+    let cons = this.consultant.getValue();
+    let lname = null;
+    let fname = null;
+    if(!(cons instanceof String && typeof cons ==='string')){
+      lname = cons.lastname;
+      fname = cons.firstname;
+    }
+    return {
+      missionTitle: this.title.getValue(),
+      missionCity: this.city.getValue(),
+      missionCountry: this.country.getValue(),
+      consultantLastName: lname,
+      consultantFirstName: fname,
+      customerName: this.client.getValue(),
+      activitySector: this.activtySector.getValue(),
+      skills: this.skills.getSkills()
     };
+  }
+
+  sendAdvSearch(){
+    const values = this.getValues();
     console.log(values);
   }
 }
