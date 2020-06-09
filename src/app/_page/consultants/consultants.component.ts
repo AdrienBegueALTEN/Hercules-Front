@@ -23,7 +23,8 @@ import { Router } from '@angular/router';
   ],
 })
 export class ConsultantsComponent implements OnInit {
-  public onlyMine : boolean = true;
+  readonly userIsManager : boolean = this._authService.userIsManager();
+  public onlyMine : boolean = this.userIsManager;
   private consultants: any[];
   private _loggedUserId = this._authService.getUser().id;
   public dataSource: MatTableDataSource<any>;

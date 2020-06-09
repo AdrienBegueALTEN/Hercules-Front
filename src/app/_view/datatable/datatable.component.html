@@ -98,7 +98,7 @@
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" #paginator></mat-paginator>
   <div>
-    <button mat-raised-button color="primary" (click)="newElement.emit()">
+    <button *ngIf="loggedUserIsManager" mat-raised-button color="primary" (click)="newElement.emit()">
       <mat-icon class="label-icon">{{columnsToDisplay.includes('activitySector') ? 'add_business' : 'person_add'}}</mat-icon>Ajouter un {{label}}</button>
   </div>
 </div>

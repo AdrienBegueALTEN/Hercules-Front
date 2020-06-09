@@ -1,4 +1,4 @@
-<mat-slide-toggle (click)="onOnlyMine()" [checked]="true">Afficher uniquement mes consultants.</mat-slide-toggle>
+<mat-slide-toggle *ngIf="userIsManager" (click)="onOnlyMine()" [checked]="true">Afficher uniquement mes consultants.</mat-slide-toggle>
 <app-datatable *ngIf="!!dataSource"
   [columnsToDisplay]="columnsToDisplay"
   [dataSource]="dataSource"
