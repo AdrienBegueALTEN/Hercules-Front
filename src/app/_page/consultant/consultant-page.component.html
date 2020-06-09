@@ -16,7 +16,10 @@
           <input matInput (keyup)="arrayView.applyFilter($event)"
               placeholder="Chercher une mission, une ville, un secteur d'activité...">
         </mat-form-field>
-        <app-array-missions-view *ngIf="missions" [missions]="missions" [displayedColumns]="cols" (deleteEvent)="openDeleteDialog($event)"></app-array-missions-view>
+        <app-array-missions-view *ngIf="missions"
+          [missions]="missions"
+          [displayedColumns]="['title', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus']">
+        </app-array-missions-view>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>

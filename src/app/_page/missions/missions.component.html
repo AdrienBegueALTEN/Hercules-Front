@@ -1,12 +1,16 @@
 <div class="srch">
-    <button mat-icon-button (click)="openColsChoice()">
-        <mat-icon>settings</mat-icon> 
-    </button>
     <div *ngIf="advancedSearchEnabled; then complex else simple"></div>
 </div> 
 <div class="arrow-down cplxSrch"></div>
-<app-array-missions-view *ngIf="missions" [displayedColumns]="colsToDisp" [missions]="missions" [consultants]="consultants" (deleteEvent)="openDeleteDialog($event)"></app-array-missions-view>
 
+<button mat-icon-button (click)="openColsChoice()" style="float: right;">
+    <mat-icon>settings</mat-icon>
+</button>
+<app-array-missions-view *ngIf="!!missions"
+    [displayedColumns]="colsToDisp"
+    [missions]="missions"
+    [showOnlyMineToogle]="true">
+</app-array-missions-view>
 
 <ng-template #simple>
     <mat-form-field>

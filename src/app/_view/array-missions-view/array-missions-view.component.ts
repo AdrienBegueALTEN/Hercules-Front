@@ -1,11 +1,9 @@
-import { ConsultantService } from 'src/app/_services/consultant.service';
-import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, AfterViewInit, Output, EventEmitter} from '@angular/core';
+import { SheetStatus } from 'src/app/_enums/sheet-status.enum';
+import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, Output, EventEmitter} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
 import { AuthService } from 'src/app/_services/auth.service';
 import { MissionService } from 'src/app/_services/mission.service';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatInput } from '@angular/material/input';
@@ -24,33 +22,25 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     ]),
   ],
 })
-export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
-  @Input() consultants: any[];
-  @Input() missions: any[];
-  @Input() displayedColumns: string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
+export class ArrayMissionsViewComponent implements OnInit {
+  @Input() missions : any[];
+  @Input() showOnlyMineToogle : boolean = false;
+  @Input() displayedColumns : string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
 
-  readonly NB_MAX_CHECK : number = 100;
+  readonly NB_MAX_CHECK : number = 1;
 
   @Output() deleteEvent = new EventEmitter<any>();
 
-  checkBoxDisabled = true;
-  onlyMyValidatedMissions = false;
-  checked = false;
-
-  userIsConsultantManager: boolean = false;
-  userId: number =  this._authService.getUser().id;
-
-  onlyMyMissionsChecked = true;
+  onlyMine = true;
   dataSource: MatTableDataSource<any>;
   dataSourceProjects: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
-  NumberOfCheckboxesExceed = false;
   searchValue:string = null;
-  public manager : boolean = this._authService.userIsManager();
+
+  public user : any = this._authService.getUser();
+  public userIsManager : boolean = this._authService.userIsManager();
 
   innerDisplayedColumns: string[] = ['select', 'project-name', 'project-description'];
-  
-
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -61,30 +51,20 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   constructor(
     private _authService: AuthService,
     private _missionService: MissionService,
-    private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private _consultantService : ConsultantService
   ) { }
 
   ngOnInit(): void {
-    this.createDatasource(this.missions);
+    this.refreshDatasource();
   }
 
-  ngAfterViewInit() {
-    this.createDatasource(this.missions);
-  }
-
-  public createDatasource(data) {
-    if (this.onlyMyMissionsChecked && this._authService.userIsManager()) {
-      this.dataSource = new MatTableDataSource(data.filter((miss) => miss.consultant.manager.id === this.userId));
-      if (this.onlyMyValidatedMissions && this._authService.userIsManager()) {
-        this.dataSource = new MatTableDataSource(data.filter((miss) => miss.sheetStatus == "ON_GOING" || miss.sheetStatus == "ON_WAITING"));
-      }
+  public refreshDatasource(revert : boolean = false) {
+    this.selection.clear()
+    let data = this.missions;
+    if (this.userIsManager && revert ? !this.onlyMine : this.onlyMine) {
+      data = data.filter((mission) => mission.consultant.manager.id === this.user.id);
     }
-    else {
-      this.dataSource = new MatTableDataSource(data);
-
-    }
+    this.dataSource = new MatTableDataSource(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
@@ -112,7 +92,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
       return dataStr.indexOf(transformedFilter) !== -1;
     };
 
-
   }
 
 
@@ -131,87 +110,28 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   }
 
   applyFilter(event: Event) {
-
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-
-  showOnlyMyMissions() {
-
-    this.onlyMyMissionsChecked = !this.onlyMyMissionsChecked;
-    this.createDatasource(this.missions);
-
-    if (this.onlyMyMissionsChecked && this.onlyMyValidatedMissions) {
-
-      this.onlyMyValidatedMissions = !this.onlyMyValidatedMissions;
-      this.createDatasource(this.missions);
-
-    }
-
-  }
-
-
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-
-    // const numRows = this.dataSource.data.length;
-    const numRowsMinusExcluded = this.dataSource.data
-      .filter(row => !(row.sheetStatus == 'ON_WAITING' && row.versions?.length == null && row.lastVersion.versionDate == null))
+  public getNbCheckableRow() : number {
+    return this.dataSource.data
+      .filter(row => row.sheetStatus === SheetStatus.VALIDATED)
       .length;
-
-    return numSelected === numRowsMinusExcluded;
   }
 
-
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      // this.dataSource.data.forEach(row => this.selection.select(row));
-
-      this.dataSource.data.forEach(row => {
-        if (!(row.sheetStatus == 'ON_WAITING' && row.versions?.length == null && row.lastVersion.versionDate == null)) {
-          this.selection.select(row);
-        }
-      });
-
-  }
-
-  showOnlyMyValidatedMissions() {
-    this.onlyMyValidatedMissions = !this.onlyMyValidatedMissions;
-    this.createDatasource(this.missions);
-  }
-
-  private delete(mission: any) {
-    this._missionService.deleteMission(mission.id).subscribe(
-      () => {
-        this.ngOnInit();
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
-  }
-
-openDeleteDialog(element: any): void {
-  const dialog = this._dialog.open(YesNoDialogComponent, {
-    data: {
-      title: 'Supprimer la mission ' + element.lastVersion.title + ' chez ' + element.customer.name + '.',
-      message: 'Voulez-vous continuer ?',
-      yes: 'Supprimer la mission',
-      no: 'Annuler'
-    },
-  });
-
-  dialog.afterClosed().subscribe(
-    (result) => {
-      if (result) {
-        this.delete(element);
-        this._snackBar.open('Mission ' + element.lastVersion.title + ' chez ' + element.customer.name + ' supprimée ', 'X', { duration: 2000 });
-      }
+  public masterToggle() : void {
+    if (this.selection.selected.length === this.NB_MAX_CHECK)
+      this.selection.clear();
+    else {
+      let row = 0;
+      while (row < this.dataSource.data.length && this.selection.selected.length < this.NB_MAX_CHECK) {
+        if (this.dataSource.data[row].sheetStatus === SheetStatus.VALIDATED)
+          this.selection.select(this.dataSource.data[row]);
+        row++;
+      };
     }
-  );
-}  
+  }
 
 onGeneratePDF(selectedElements : any[]) : void {
     let elements : any[] = [];

@@ -1,41 +1,26 @@
-  
-
-<!--<div class="example-header">
-    <mat-form-field>
-        <mat-label>Chercher une mission</mat-label>
-        <input matInput (keyup)="applyFilter($event)" [(ngModel)]="searchValue"
-            placeholder="Chercher une mission, une ville, un secteur d'activité...">
-    </mat-form-field>
-</div>-->
-
-
-<mat-slide-toggle (click)="showOnlyMyMissions()" *ngIf="manager" [checked]="true">Afficher uniquement mes
-    missions. </mat-slide-toggle>&nbsp;&nbsp;
-<mat-slide-toggle (click)="showOnlyMyValidatedMissions()" *ngIf="manager && onlyMyMissionsChecked"
-    [checked]="false">Cacher mes missions validées </mat-slide-toggle>
-<br>
-<br>
-
+<mat-slide-toggle *ngIf="showOnlyMineToogle && userIsManager"
+    (click)="refreshDatasource(true)" [(ngModel)]="onlyMine">
+    Afficher uniquement les missions de mes consultants
+</mat-slide-toggle>
 <mat-table #table [dataSource]="dataSource" matSort>
-
-
     <ng-container matColumnDef="select">
         <mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-                [indeterminate]="selection.hasValue() && !isAllSelected()" [disabled]="onlyMyMissionsChecked==false">
+            <mat-checkbox
+            *ngIf="getNbCheckableRow() <= NB_MAX_CHECK"
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.selected.length === NB_MAX_CHECK"
+                [indeterminate]="selection.selected.length !== 0 && selection.selected.length < NB_MAX_CHECK">
             </mat-checkbox>
         </mat-header-cell>
 
         <mat-header-cell *matCellDef="let row">
-            <mat-checkbox (click)="$event.stopPropagation() || onClick($event,row)"
-                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
-                [disabled]="row.sheetStatus=='ON_WAITING'&&row.versions?.length==null&&row.lastVersion.versionDate==null">
+            <mat-checkbox *ngIf="row.sheetStatus === 'VALIDATED' && (selection.selected.length < NB_MAX_CHECK || selection.isSelected(row))"
+                (click)="$event.stopPropagation() || onClick($event,row)"
+                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
             </mat-checkbox>
         </mat-header-cell>
     </ng-container>
 
-
-    <!-- Position Column -->
     <ng-container matColumnDef="title">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Titre de la mission </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.lastVersion.title}} </mat-cell>
@@ -59,42 +44,33 @@
 
     <ng-container matColumnDef="manager">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Manager </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.consultant.manager.firstname}}
-            {{element.consultant.manager.lastname}}</mat-cell>
+        <mat-cell *matCellDef="let mission">
+            {{(mission.consultant.manager.id === user.id) ? 'Vous' : 
+            mission.consultant.manager.firstname + ' ' + mission.consultant.manager.lastname}}
+        </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="numberOfProjects">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre de projets </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            <i *ngIf="element.lastVersion.projects?.length>0">{{element.lastVersion.projects?.length}}</i>
-            <i *ngIf="element.lastVersion.projects?.length==null">Aucun</i>
+            <i *ngIf="element.lastVersion.projects?.length > 0">{{element.lastVersion.projects?.length}}</i>
         </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="sheetStatus">
         <mat-header-cell *matHeaderCellDef>Statut de la fiche</mat-header-cell>
         <mat-header-cell *matCellDef="let element" [ngSwitch]="element.sheetStatus">
-            <span *ngSwitchCase="'ON_WAITING'" style="color: red" class="material-icons"
-                matTooltip="Fiche en attente">cancel</span>
-            <span *ngSwitchCase="'ON_GOING'" style="color: orange" class="material-icons"
-                matTooltip="Fiche en cours de validation">watch_later</span>
-            <span *ngSwitchCase="'VALIDATED'" style="color: green" class="material-icons"
-                matTooltip="Fiche validée">check_circle</span>
-            &nbsp;
+            <mat-icon *ngSwitchCase="'ON_WAITING'" style="color: red"
+                matTooltip="Fiche en attente">cancel</mat-icon>
+            <mat-icon *ngSwitchCase="'ON_GOING'" style="color: orange"
+                matTooltip="Fiche en cours de validation">watch_later</mat-icon>
+            <mat-icon *ngSwitchCase="'VALIDATED'" style="color: green"
+                matTooltip="Fiche validée">check_circle</mat-icon>
 
             <button mat-icon-button
                 [routerLink]="['/missions', element.id]">
-                <span class="material-icons" matTooltip="Modifier la mission">more_horiz</span>
-            </button>&nbsp;
-
-
-            <button mat-icon-button color="warn"
-                *ngIf="!!element.versions?.length === null && element.lastVersion.versionDate === null && element.consultant.manager.id === userId && element.sheetStatus=='ON_WAITING'">
-                <span class="material-icons" matTooltip="Supprimer la mission en attente"
-                    (click)="deleteEvent.emit(element)">delete</span>
+                <span class="material-icons" matTooltip="Voir les détails">more_horiz</span>
             </button>
-
-
 
         </mat-header-cell>
     </ng-container>
@@ -105,24 +81,18 @@
         [cdkDetailRowTpl]="tpl">
     </mat-row>
 
-    
 </mat-table>
 
-
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" #paginator> 
-    
-</mat-paginator>
-
-
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" #paginator> </mat-paginator>
 
 <ng-template #tpl let-element>
     <div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
         <div class="contours-margin" *ngIf="element?.lastVersion?.projects">
-            <div *ngFor="let project of element.lastVersion.projects">
-                <mat-checkbox (click)="$event.stopPropagation()|| onClick($event,project)"
+            <div *ngFor="let project of element.lastVersion.projects; let i = index">
+                <mat-checkbox (click)="$event.stopPropagation() || onClick($event,project)"
                     (change)="$event ? selection.toggle(project) : null" [checked]="selection.isSelected(project)"
-                    [disabled]='!(project?.title.length>0)'>
-                        {{project.title || 'Sans titre'}}
+                    [disabled]='!(project?.title.length > 0)'>
+                        {{project.title || 'Projet n°' + (i + 1)}}
                 </mat-checkbox>
             </div>
         </div>
@@ -131,12 +101,7 @@
         </div>
     </div>
 </ng-template>
-<br />
-
-<div *ngIf="this.selection.selected.length > 0">
-    <p *ngIf="this.selection.selected.length >= NB_MAX_CHECK" style="color: red">Vous ne pouvez pas sélectionner plus de {{NB_MAX_CHECK}} éléments.</p>
-    
-    </div>
+<p *ngIf="this.selection.selected.length >= NB_MAX_CHECK" style="color: red">Vous ne pouvez pas sélectionner plus de {{NB_MAX_CHECK}} mission et/ou projets.</p>
 <button mat-raised-button 
     *ngIf="this.selection.selected.length > 0"
     class="pdfButton" color="primary"
