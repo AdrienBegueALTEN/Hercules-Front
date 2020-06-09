@@ -15,6 +15,7 @@ import { ConsultantAutocompleteComponent } from 'src/app/_input/autocomplete/con
 import { CustomerAutocompleteComponent } from 'src/app/_input/autocomplete/customer/customer-autocomplete.component';
 import { MissionsCustomerAutocompleteComponent } from 'src/app/_input/autocomplete/missions/customer/missions-customer-autocomplete/missions-customer-autocomplete.component';
 import { MissionsSkillsAutocompleteComponent } from 'src/app/_input/autocomplete/missions/missions-skills-autocomplete/missions-skills-autocomplete.component';
+import { MissionColumnChoiceComponent } from 'src/app/_dialog/mission-column-choice/mission-column-choice.component';
 
 
 
@@ -39,6 +40,16 @@ export class MissionsComponent implements OnInit {
   consultants: any[];
   public consultantForm : FormControl;
   advancedSearchEnabled = false;
+  cols: any[] = [
+    {name:'select',french:'Séléctionner', selected:true},
+    {name:'title',french:'Titre', selected:true},
+    {name:'consultant',french:'Consultant', selected:true},
+    {name:'customer',french:'Client', selected:true},
+    {name:'city',french:'Ville', selected:false},
+    {name:'manager',french:'Manager', selected:false},
+    {name:'numberOfProjects',french:'Nombre de projets', selected:false},
+    {name:'sheetStatus',french:'Statut de la fiche', selected:false},
+  ];
 
 
   constructor(
@@ -126,5 +137,14 @@ export class MissionsComponent implements OnInit {
   sendAdvSearch(){
     const values = this.getValues();
     console.log(values);
+  }
+
+  openColsChoice(){
+    const dialogRef = this._dialog.open(MissionColumnChoiceComponent, {
+      data: {
+        cols:this.cols
+      }
+      
+    });
   }
 }
