@@ -1,6 +1,5 @@
 import { ConsultantService } from 'src/app/_services/consultant.service';
-import { FormControl } from '@angular/forms';
-import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, AfterViewInit, Output, EventEmitter, AfterContentInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, AfterViewInit, Output, EventEmitter} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
@@ -10,7 +9,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatInput } from '@angular/material/input';
-import { Role } from 'src/app/_enums/role.enum';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
@@ -30,6 +28,9 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   @Input() consultants: any[];
   @Input() missions: any[];
   @Input() displayedColumns: string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
+
+  readonly NB_MAX_CHECK : number = 100;
+
   @Output() deleteEvent = new EventEmitter<any>();
 
   checkBoxDisabled = true;
@@ -44,7 +45,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   dataSourceProjects: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
   NumberOfCheckboxesExceed = false;
-  NumberOfMaximumCheckboxes = 100;
   searchValue:string = null;
   public manager : boolean = this._authService.userIsManager();
 
@@ -239,18 +239,18 @@ onGeneratePDF(selectedElements : any[]) : void {
 
   }
   onClick(event, row) {
-    if (this.selection.selected.length >= this.NumberOfMaximumCheckboxes && !(this.selection.isSelected(row))) {
+    if (this.selection.selected.length >= this.NB_MAX_CHECK && !(this.selection.isSelected(row))) {
       event.preventDefault();
       this._snackBar.open(
-        'Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : ' + this.NumberOfMaximumCheckboxes,
+        'Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : ' + this.NB_MAX_CHECK,
         'X',
         { duration: 2000 });
     }
   }
 
   SnackBarMessage() {
-    if (this.selection.selected.length >= this.NumberOfMaximumCheckboxes) {
-      this._snackBar.open('Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : ' + this.NumberOfMaximumCheckboxes, 'X', { duration: 2000 });
+    if (this.selection.selected.length >= this.NB_MAX_CHECK) {
+      this._snackBar.open('Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : ' + this.NB_MAX_CHECK, 'X', { duration: 2000 });
     }
   }
 
