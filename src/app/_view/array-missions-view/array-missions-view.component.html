@@ -133,14 +133,15 @@
 </ng-template>
 <br />
 
-<div *ngIf="this.selection.selected.length>0">
-    <p [ngSwitch]="this.selection.selected.length"><span>Éléments sélectionnés : {{this.selection.selected.length}}</span></p>
-    <p *ngIf="this.selection.selected.length>=this.NumberOfMaximumCheckboxes" style="color: red"> Nombre d'éléments sélectionnés maximum : {{this.NumberOfMaximumCheckboxes}}</p>
+<div *ngIf="this.selection.selected.length > 0">
+    <p *ngIf="this.selection.selected.length >= NB_MAX_CHECK" style="color: red">Vous ne pouvez pas sélectionner plus de {{NB_MAX_CHECK}} éléments.</p>
     
     </div>
-<button mat-raised-button *ngIf="this.selection.selected.length>0"
-                          class="pdfButton" 
-                          color="primary"
-                          (click)="onGeneratePDF(this.selection.selected)" >
-    <mat-icon>style</mat-icon> Générer fiches PDF
+<button mat-raised-button 
+    *ngIf="this.selection.selected.length > 0"
+    class="pdfButton" color="primary"
+    [matBadge]="selection.selected.length"
+    [matBadgeColor]="selection.selected.length >= NB_MAX_CHECK ? 'warn' : 'accent'"
+    (click)="onGeneratePDF(this.selection.selected)" >
+    Générer fiche PDF
 </button>
