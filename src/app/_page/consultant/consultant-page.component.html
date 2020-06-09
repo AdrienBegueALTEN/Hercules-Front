@@ -5,37 +5,39 @@
         <ng-template mat-tab-label>
           {{consultant.firstname}} {{consultant.lastname}}
         </ng-template>
-        <div *ngIf="writingRights; then consultantEdit else consultantView"></div>
+        <div *ngIf="writingRights; then edit else view"></div>
       </mat-tab>
-      <mat-tab>
+      <mat-tab *ngIf="consultantsMissions?.length !== 0">
         <ng-template mat-tab-label>
           Ses missions
         </ng-template>
         <mat-form-field>
-          <mat-label>Chercher une mission</mat-label>
-          <input matInput (keyup)="arrayView.applyFilter($event)"
-              placeholder="Chercher une mission, une ville, un secteur d'activité...">
+          <mat-label>Rechercher</mat-label>
+          <input matInput (keyup)="arrayView.applyFilter($event)">
         </mat-form-field>
-        <app-array-missions-view *ngIf="missions"
-          [missions]="missions"
-          [displayedColumns]="['title', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus']">
+        <app-array-missions-view *ngIf="consultantsMissions"
+          [missions]="consultantsMissions"
+          [displayedColumns]="['title', 'customer', 'city', 'numberOfProjects', 'sheetStatus']">
         </app-array-missions-view>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button color="warn" 
-    *ngIf="writingRights && !consultant.releaseDate"
-    (click)="onSetReleaseDate()">Indiquer la sortie des effectifs</button>
+    <div *ngIf="writingRights">
+      <button mat-button color="warn" 
+        (click)="onSetReleaseDate()">Indiquer la sortie des effectifs</button>
+      <button mat-button color="warn" *ngIf="consultantsMissions?.length === 0"
+        (click)="onDelete()">Supprimer ce consultant en base</button>
+      </div>
   </mat-card-actions>
 </mat-card>
 
-<ng-template #consultantView>
+<ng-template #view>
   <app-consultant-view 
     [consultant]="consultant">
   </app-consultant-view>
 </ng-template>
-<ng-template #consultantEdit>
+<ng-template #edit>
   <app-consultant-edit 
     [consultant]="consultant"
     (reload)="ngOnInit()">

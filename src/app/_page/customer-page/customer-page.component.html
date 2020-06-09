@@ -4,24 +4,32 @@
       <ng-template mat-tab-label>
         {{customer.name}}
       </ng-template>
-      <app-customer-view *ngIf="!writingRights" [customer]="customer">
-      </app-customer-view>
-      <app-customer-edit *ngIf="writingRights" [customer]="customer">
-      </app-customer-edit>
+      <div *ngIf="manager; then edit else view"></div>
     </mat-tab>
-    <mat-tab>
+    <mat-tab *ngIf="customersMissions?.length !== 0">
       <ng-template mat-tab-label>
-        Les missions du client
+        Missions liées
       </ng-template>
       <mat-form-field>
-        <mat-label>Chercher une mission</mat-label>
-        <input matInput (keyup)="arrayView.applyFilter($event)"
-            placeholder="Chercher une mission, une ville, un secteur d'activité...">
+        <mat-label>Rechercher</mat-label>
+        <input matInput (keyup)="arrayView.applyFilter($event)">
       </mat-form-field>
       <app-array-missions-view *ngIf="customersMissions" 
-        [missions]="customersMissions" [displayedColumns]="['title', 'consultant', 'city', 'manager', 'numberOfProjects', 'sheetStatus']"
-        [showOnlyMineToogle]="true">
+        [missions]="customersMissions" [showOnlyMineToogle]="manager"
+        [displayedColumns]="['title', 'consultant', 'city', 'manager', 'numberOfProjects', 'sheetStatus']">
       </app-array-missions-view>
     </mat-tab>
   </mat-tab-group>
+  <mat-card-actions>
+      <button mat-button color="warn" *ngIf="manager && customersMissions?.length === 0"
+        (click)="onDelete()">Supprimer ce client en base</button>
+  </mat-card-actions>
 </mat-card>
+
+<ng-template #edit>
+  <app-customer-edit [customer]="customer"></app-customer-edit>
+</ng-template>
+
+<ng-template #view>
+  <app-customer-view [customer]="customer"></app-customer-view>
+</ng-template>

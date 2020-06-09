@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/_services/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
@@ -15,13 +15,14 @@ export class ConsultantPageComponent implements OnInit {
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
   consultant : any;
   writingRights : boolean = false;
-  missions : any[];
+  consultantsMissions : any[];
 
   constructor(
     private _authService : AuthService,
     private _consultantService : ConsultantService,
+    private _router : Router,
     private _route : ActivatedRoute,
-    private _dialog: MatDialog
+    private _dialog : MatDialog
   ) {
   }
   ngOnInit() {
@@ -30,18 +31,19 @@ export class ConsultantPageComponent implements OnInit {
       consultant => {
         this.consultant = consultant;
         this._consultantService.getMissions(consultant.id).subscribe(
-          (consultantMissions) => this.missions = consultantMissions);
+          consultantMissions => this.consultantsMissions = consultantMissions),
+          error => console.log(error)
         const user = this._authService.getUser();
         this.writingRights = 
           this._authService.userIsManager()
           && (consultant.manager.id == user.id || consultant.manager.releaseDate != null)
           && consultant.releaseDate == null;
       },
-      () => window.location.replace('not-found')
+      () => this._router.navigate(['/not-found'])
     )
   }
 
-  onSetReleaseDate() : void {
+  public onSetReleaseDate() : void {
     const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
@@ -61,5 +63,12 @@ export class ConsultantPageComponent implements OnInit {
           )
         }
       }); 
+  }
+
+  public onDelete() : void {
+    this._consultantService.deleteConsultant(this.consultant.id).subscribe(
+      () => this._router.navigate(['/consultants']),
+      error => console.log(error)
+    )
   }
 }
