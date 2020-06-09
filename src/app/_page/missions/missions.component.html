@@ -2,7 +2,7 @@
     <div *ngIf="advancedSearchEnabled; then complex else simple"></div>
 </div> 
 <div class="arrow-down cplxSrch"></div>
-
+<button mat-icon-button (click)="openColsChoice()" style="float: right;"></button>
 <app-array-missions-view *ngIf="!!missions"
     [missions]="missions"
     [showOnlyMineToogle]="true">

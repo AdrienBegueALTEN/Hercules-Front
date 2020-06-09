@@ -1,0 +1,4 @@
+<h1 mat-dialog-title>Colonnes</h1>
+<div>
+    <mat-checkbox *ngFor="let col of data.cols" (change)="onColAdded($event,col)" [checked]="col.selected">{{col.french}}</mat-checkbox>
+</div>

@@ -16,6 +16,9 @@ import { CustomerAutocompleteComponent } from 'src/app/_input/autocomplete/custo
 import { MissionsCustomerAutocompleteComponent } from 'src/app/_input/autocomplete/missions/customer/missions-customer-autocomplete/missions-customer-autocomplete.component';
 import { MissionsSkillsAutocompleteComponent } from 'src/app/_input/autocomplete/missions/missions-skills-autocomplete/missions-skills-autocomplete.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MissionColumnChoiceComponent } from 'src/app/_dialog/mission-column-choice/mission-column-choice.component';
+
+
 
 @Component({
   selector: 'app-missions',
@@ -42,6 +45,17 @@ export class MissionsComponent implements OnInit {
   public onlyMine : boolean = true;
   public dataSource: MatTableDataSource<any>;
   public userId = this._authService.getUser().id;
+  cols: any[] = [
+    {name:'select',french:'Séléctionner', selected:true},
+    {name:'title',french:'Titre', selected:true},
+    {name:'consultant',french:'Consultant', selected:true},
+    {name:'customer',french:'Client', selected:true},
+    {name:'city',french:'Ville', selected:false},
+    {name:'manager',french:'Manager', selected:false},
+    {name:'numberOfProjects',french:'Nombre de projets', selected:false},
+    {name:'sheetStatus',french:'Statut de la fiche', selected:false},
+  ];
+
 
   constructor(
     private _missionService: MissionService,
@@ -97,5 +111,14 @@ export class MissionsComponent implements OnInit {
 
   sendAdvSearch(){
     const values = this.getValues();
+  }
+
+  openColsChoice(){
+    const dialogRef = this._dialog.open(MissionColumnChoiceComponent, {
+      data: {
+        cols:this.cols
+      }
+      
+    });
   }
 }

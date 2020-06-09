@@ -109,6 +109,7 @@ import { MissionsCityAutocompleteComponent } from './_input/autocomplete/mission
 import { NewCustomerDialogComponent } from './_dialog/new-customer/new-customer-dialog.component';
 import { UploadImageComponent } from './_input/upload-image/upload-image.component';
 import { MissionsSkillsAutocompleteComponent } from './_input/autocomplete/missions/missions-skills-autocomplete/missions-skills-autocomplete.component';
+import { MissionColumnChoiceComponent } from './_dialog/mission-column-choice/mission-column-choice.component';
 
 @NgModule({
 
@@ -179,7 +180,8 @@ import { MissionsSkillsAutocompleteComponent } from './_input/autocomplete/missi
       AdminPanelComponent,
       NewCustomerDialogComponent,
       UploadImageComponent,
-      MissionsSkillsAutocompleteComponent
+      MissionsSkillsAutocompleteComponent,
+      MissionColumnChoiceComponent
    ],
    imports: [
       AppRoutingModule,
