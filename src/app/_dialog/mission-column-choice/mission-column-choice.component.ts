@@ -12,7 +12,7 @@ export class MissionColumnChoiceComponent implements OnInit {
   selectedCols = [];
 
   translation: any[] = [
-    {name:'select',french:'Séléctionner'},
+    {name:'select',french:'Livret PDF'},
     {name:'title',french:'Titre'},
     {name:'consultant',french:'Consultant'},
     {name:'customer',french:'Client'},
@@ -28,18 +28,23 @@ export class MissionColumnChoiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.orderTranslation();
   }
 
   onColChanged(event, col: any){
     if(event.checked)
       this.data.cols.push(col)
     else
-        this.data.cols = this.data.cols.filter(c => c!==col);
-    this.colsEvent.emit(this.data.cols);
+      this.data.cols = this.data.cols.filter(c => c!==col);
+    this.emitColumns();
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  onDrop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.translation, event.previousIndex, event.currentIndex);
+    this.emitColumns();
+  }
+
+  private emitColumns(){
     let res = [];
     for(let col of this.translation){
       if(this.data.cols.includes(col.name)){
@@ -48,6 +53,22 @@ export class MissionColumnChoiceComponent implements OnInit {
     }
     this.colsEvent.emit(res);
   }
+
+  private orderTranslation(){
+    let res = [];
+    let newIdx = 0;
+    for(let col of this.data.cols){
+      const c = this.translation.filter(c => c.name==col)[0]
+      const currentIdx: number = this.translation.indexOf(c);
+      this.move(currentIdx,newIdx,this.translation);
+      newIdx++;
+    }
+  }
+
+  private move(from, to, array) {
+    array.splice(to, 0, array.splice(from, 1)[0]);
+  };
+
 
 }
 

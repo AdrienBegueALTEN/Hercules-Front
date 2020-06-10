@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Colonnes</h1>
-<div cdkDropList (cdkDropListDropped)="drop($event)">
+<div cdkDropList (cdkDropListDropped)="onDrop($event)">
     <div *ngFor="let col of translation" cdkDrag cdkDragLockAxis="y">
         <div class="placeholder" *cdkDragPlaceholder>{{col.french}}</div>
         <mat-checkbox 
