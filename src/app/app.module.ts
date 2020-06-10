@@ -51,6 +51,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -226,7 +227,8 @@ import { MissionColumnChoiceComponent } from './_dialog/mission-column-choice/mi
       CdkTableModule,
       CdkTreeModule,
       MatMenuModule,
-      MatBadgeModule
+      MatBadgeModule,
+      DragDropModule
    ],
    providers: [
       authInterceptorProviders,

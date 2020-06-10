@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-mission-column-choice',
@@ -35,6 +36,17 @@ export class MissionColumnChoiceComponent implements OnInit {
     else
         this.data.cols = this.data.cols.filter(c => c!==col);
     this.colsEvent.emit(this.data.cols);
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.translation, event.previousIndex, event.currentIndex);
+    let res = [];
+    for(let col of this.translation){
+      if(this.data.cols.includes(col.name)){
+        res.push(col.name);
+      }
+    }
+    this.colsEvent.emit(res);
   }
 
 }
