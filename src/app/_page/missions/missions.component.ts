@@ -121,7 +121,7 @@ export class MissionsComponent implements OnInit {
         cols:this.cols
       }
     });
-    dialogRef.afterClosed().subscribe(
+    dialogRef.componentInstance.colsEvent.subscribe(
       (data)=>{
         this.colsToDisp = data.filter(x=>x.selected).map(x=>x.name)
       }
