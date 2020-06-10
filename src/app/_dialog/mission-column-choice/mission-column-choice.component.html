@@ -1,12 +1,10 @@
-<h1 mat-dialog-title>Colonnes</h1>
-<div cdkDropList (cdkDropListDropped)="onDrop($event)">
-    <div *ngFor="let col of translation" cdkDrag cdkDragLockAxis="y">
-        <div class="placeholder" *cdkDragPlaceholder>{{col.french}}</div>
-        <mat-checkbox 
+<table  cdkDropList (cdkDropListDropped)="onDrop($event)">
+    <tr *ngFor="let col of translation" cdkDrag cdkDragLockAxis="y">
+        <td colspan="2" *cdkDragPlaceholder>{{col.french}}</td>
+        <td><mat-checkbox 
             (change)="onColChanged($event,col.name)" 
             [checked]="data.cols.includes(col.name)">
-            {{col.french}}
-        </mat-checkbox>
-    </div>
-    
-</div>
+            {{col.french}}</mat-checkbox></td>
+        <td><mat-icon>drag_indicator</mat-icon></td>
+    </tr>
+</table>
