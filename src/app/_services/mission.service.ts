@@ -43,6 +43,10 @@ export class MissionService {
     return this._httpClient.get(AppSettings.MISSION_API + (manager ? '?manager=' + manager : ''));
   }
 
+  public getMissionsAdvanced() : Observable<any> {
+    return this._httpClient.get(AppSettings.MISSION_API + "advancedSearch");
+  }
+
   deleteMission(id : number) : Observable<any> {
     return this._httpClient.delete(AppSettings.MISSION_API + id);
   }

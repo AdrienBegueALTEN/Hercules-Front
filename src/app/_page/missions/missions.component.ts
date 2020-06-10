@@ -39,6 +39,7 @@ export class MissionsComponent implements OnInit {
 
   consultants : any[];
   missions: any[];
+  missionsSearch: any[];
   public consultantForm : FormControl;
   advancedSearchEnabled = false;
   public userIsManager : boolean = this._authService.userIsManager();
@@ -112,7 +113,21 @@ export class MissionsComponent implements OnInit {
 
   sendAdvSearch(){
     const values = this.getValues();
-    //test this.arrayView.modifyArray([this.missions[0]]);
+    //console.log(values);
+    //console.log(values.activitySector);
+    //console.log(typeof values.activitySector);
+
+    this._missionService.getMissionsAdvanced().subscribe(
+      (data) => {
+        this.missions = data;
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+    
+
+    this.arrayView.modifyArray(this.missions);
   }
 
   openColsChoice(){
