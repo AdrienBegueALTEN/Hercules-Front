@@ -7,13 +7,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./mission-column-choice.component.scss']
 })
 export class MissionColumnChoiceComponent implements OnInit {
-  @Output() colAdded = new EventEmitter<any>();
+  @Output() colsEvent = new EventEmitter<any>();
   selectedCols = [];
 
 
   constructor(private _dialogRef: MatDialogRef<MissionColumnChoiceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      this._dialogRef.disableClose = true;
   }
 
   ngOnInit(): void {
@@ -23,10 +22,7 @@ export class MissionColumnChoiceComponent implements OnInit {
     const index: number = this.data.cols.indexOf(col);
     if (index !== -1)
       this.data.cols[index].selected = !this.data.cols[index].selected;
-  }
-
-  close(){
-    this._dialogRef.close(this.data.cols);
+    this.colsEvent.emit(this.data.cols);
   }
 
 }
