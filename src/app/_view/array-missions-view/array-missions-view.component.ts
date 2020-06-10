@@ -9,6 +9,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatInput } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-array-missions-view',
@@ -52,6 +54,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     private _authService: AuthService,
     private _missionService: MissionService,
     private _snackBar: MatSnackBar,
+    private _dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -161,8 +164,19 @@ onGeneratePDF(selectedElements : any[]) : void {
       }
     });
     this._missionService.generatePDF(elements).subscribe(
-      () => {},
-      (error) => {console.log(error);}
+      () => {this._snackBar.open("Le PDF a bien été enregistré",'X', { duration: 2000 })},
+      (error) => {  if(error.error==="the file could not be saved"){
+                      const dialogConfig = new MatDialogConfig();
+                      dialogConfig.data = "Le fichier PDF n'a pas pu être sauvegardé ou bien fermé."
+                      this._dialog.open(MessageDialogComponent,dialogConfig); 
+                    }
+                    else{
+                      const dialogConfig = new MatDialogConfig();
+                      dialogConfig.data = "Le fichier PDF n'a pas pu être crée."
+                      this._dialog.open(MessageDialogComponent,dialogConfig);
+                    }
+
+      }
     );
 
 
