@@ -45,17 +45,7 @@ export class MissionsComponent implements OnInit {
   public onlyMine : boolean = true;
   public dataSource: MatTableDataSource<any>;
   public userId = this._authService.getUser().id;
-  cols: any[] = [
-    {name:'select',french:'Séléctionner', selected:true},
-    {name:'title',french:'Titre', selected:true},
-    {name:'consultant',french:'Consultant', selected:true},
-    {name:'customer',french:'Client', selected:true},
-    {name:'city',french:'Ville', selected:false},
-    {name:'manager',french:'Manager', selected:false},
-    {name:'numberOfProjects',french:'Nombre de projets', selected:false},
-    {name:'sheetStatus',french:'Statut de la fiche', selected:false},
-  ];
-  colsToDisp = ['select','title','consultant','customer'];
+  colsToDisp = ['select','title','consultant','customer','sheetStatus'];
 
 
   constructor(
@@ -118,12 +108,12 @@ export class MissionsComponent implements OnInit {
   openColsChoice(){
     const dialogRef = this._dialog.open(MissionColumnChoiceComponent, {
       data: {
-        cols:this.cols
+        cols:this.colsToDisp
       }
     });
     dialogRef.componentInstance.colsEvent.subscribe(
       (data)=>{
-        this.colsToDisp = data.filter(x=>x.selected).map(x=>x.name)
+        this.colsToDisp = data
       }
     )
   }
