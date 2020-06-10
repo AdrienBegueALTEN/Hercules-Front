@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MissionColumnChoiceComponent } from 'src/app/_dialog/mission-column-choice/mission-column-choice.component';
 
 @Component({
   selector: 'app-array-missions-view',
@@ -199,6 +200,19 @@ onGeneratePDF(selectedElements : any[]) : void {
 
   onClickProjects(event) {
     event.preventDefault();
+  }
+
+  openColsChoice(){
+    const dialogRef = this._dialog.open(MissionColumnChoiceComponent, {
+      data: {
+        cols:this.displayedColumns
+      }
+    });
+    dialogRef.componentInstance.colsEvent.subscribe(
+      (data)=>{
+        this.displayedColumns = data
+      }
+    )
   }
 
 }
