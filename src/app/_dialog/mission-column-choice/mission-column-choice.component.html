@@ -1,4 +1,9 @@
 <h1 mat-dialog-title>Colonnes</h1>
-<div>
-    <mat-checkbox *ngFor="let col of translation" (change)="onColChanged($event,col.name)" [checked]="data.cols.includes(col.name)">{{col.french}}</mat-checkbox>
+<div cdkDropList (cdkDropListDropped)="drop($event)">
+    <mat-checkbox cdkDrag cdkDragLockAxis="y" 
+        *ngFor="let col of translation" 
+        (change)="onColChanged($event,col.name)" 
+        [checked]="data.cols.includes(col.name)">
+        {{col.french}}
+    </mat-checkbox>
 </div>
