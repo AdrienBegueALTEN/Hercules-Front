@@ -110,6 +110,6 @@
     class="pdfButton" color="primary"
     [matBadge]="selection.selected.length"
     [matBadgeColor]="selection.selected.length >= NB_MAX_CHECK ? 'warn' : 'accent'"
-    (click)="onGeneratePDF(this.selection.selected)" >
+    (click)="onChooseFilenameDialog(this.selection.selected)" >
     Générer fiche PDF
 </button>

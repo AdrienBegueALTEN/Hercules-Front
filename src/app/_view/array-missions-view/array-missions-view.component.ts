@@ -13,6 +13,7 @@ import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.c
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MissionColumnChoiceComponent } from 'src/app/_dialog/mission-column-choice/mission-column-choice.component';
 import * as FileSaver from 'file-saver';
+import { ChooseFilenameDialogComponent } from 'src/app/_dialog/choose-filename-dialog/choose-filename-dialog.component';
 
 @Component({
   selector: 'app-array-missions-view',
@@ -147,7 +148,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     }
   }
 
-onGeneratePDF(selectedElements : any[]) : void {
+generatePDF(selectedElements : any[],filename : string) : void {
     let elements : any[] = [];
     selectedElements.forEach( function (value){
       if(!!value.customer){
@@ -170,26 +171,28 @@ onGeneratePDF(selectedElements : any[]) : void {
                       var newBlob = new Blob([content], { type: "application/pdf" });
                       
                       // fenêtre de demnande de nom
+
+
                       try{
                         if (window.navigator && window.navigator.msSaveOrOpenBlob) {
                           window.navigator.msSaveOrOpenBlob(newBlob, "fichesMissionsEtProjets.pdf");}
                         else{
                           FileSaver.saveAs(newBlob, "fichesMissionsEtProjets.pdf");
                         }
-                     } catch(error){
+                      } catch(error){
                         const dialogConfig = new MatDialogConfig();
-                        dialogConfig.data = "Le fichier PDF n'a pas pu être enregistré."
+                        dialogConfig.data = "Le fichier PDF n'a pas pu être enregistré.";
                         this._dialog.open(MessageDialogComponent,dialogConfig);
-                     }
+                      }
                   },
       (error) => {  if(error.error==="the file could not be saved"){
                       const dialogConfig = new MatDialogConfig();
-                      dialogConfig.data = "Le fichier PDF n'a pas pu être finalisé sur le serveur."
+                      dialogConfig.data = "Le fichier PDF n'a pas pu être finalisé sur le serveur.";
                       this._dialog.open(MessageDialogComponent,dialogConfig); 
                     }
                     else{
                       const dialogConfig = new MatDialogConfig();
-                      dialogConfig.data = "Le fichier PDF n'a pas pu être crée sur le serveur."
+                      dialogConfig.data = "Le fichier PDF n'a pas pu être crée sur le serveur.";
                       this._dialog.open(MessageDialogComponent,dialogConfig);
                     }
 
@@ -229,6 +232,16 @@ onGeneratePDF(selectedElements : any[]) : void {
         this.displayedColumns = data
       }
     )
+  }
+
+
+  onChooseFilenameDialog(selectedElements : any[]){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = { filename :"fichesMissionsEtProjets.pdf"};
+    const dialogRef = this._dialog.open(ChooseFilenameDialogComponent,dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      (result) => { if(!!result) this.generatePDF(selectedElements,result);} 
+    );
   }
 
 }
