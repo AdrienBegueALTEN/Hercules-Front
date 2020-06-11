@@ -91,6 +91,25 @@ export class MissionsComponent implements OnInit {
       skills: this.skills.getSkills()
     };
   }*/
+  public toggleAdvancedSearch(){
+    this.showAdvancedSearch = !this.showAdvancedSearch;
+    if(!this.showAdvancedSearch){
+      this.setAllMissions();
+    }
+  }
+  
+
+  public setAllMissions(){
+    this._missionService.getMissions(this.userId).subscribe(
+      (data) => {
+        this.missions = data;
+        this.arrayView.modifyArray(this.missions);
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+  }
 
   public onSearch() : void {
     var criteria : object = {};

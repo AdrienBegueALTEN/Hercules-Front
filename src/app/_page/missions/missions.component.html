@@ -1,6 +1,6 @@
 <div class="srch">
     <div *ngIf="showAdvancedSearch; then complex else simple"></div>
-    <button class="cplxSrch cplxSrch-btn" (click)="showAdvancedSearch = !showAdvancedSearch">
+    <button class="cplxSrch cplxSrch-btn" (click)="toggleAdvancedSearch()">
         <mat-icon>{{showAdvancedSearch ? 'remove' : 'add' }}</mat-icon>
     </button>
 </div> 
