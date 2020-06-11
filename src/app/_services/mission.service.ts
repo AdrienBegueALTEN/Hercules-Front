@@ -186,6 +186,6 @@ export class MissionService {
   public generatePDF(elements : any[]): Observable<any> {
     return this._httpClient.post(AppSettings.MISSION_API+"pdf",
       elements,
-      AppSettings.HTTP_JSON_CONTENT);
+      {responseType: 'blob'});
   }
 }
