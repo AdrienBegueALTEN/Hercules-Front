@@ -78,7 +78,7 @@ export class ManagersComponent implements OnInit {
   }
 
   public setAdmin(event : any) : void {
-    this._managerService.updateManager(event.user, 'isAdmin', event.admin)
+    this._managerService.updateManager(event.manager, 'isAdmin', event.admin)
       .subscribe(() => this.ngOnInit(), error => console.log(error));
   }
 }

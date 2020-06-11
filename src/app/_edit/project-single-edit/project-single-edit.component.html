@@ -13,9 +13,11 @@
                 </td>
                 <td rowspan="3" *ngIf="project.picture" style="padding: 0; margin: 0; width: 300px;">
                     <div class="img-container">
-                        <img class="img" height="300px" [src]="srcPic" alt="Image">
-                        <div class="centered">
-                            <button mat-icon-button (click)="deleteImage.emit(project)"><mat-icon>close</mat-icon></button>
+                        <img class="img" height="300px" [src]="srcPic" alt="Image"
+                            (mouseover)="isImgHover = true" (mouseout)="isImgHover = false"
+                            [style.opacity]="isImgHover?0.1:1">
+                        <div class="centered" (mouseover)="isImgHover = true" (mouseout)="isImgHover = false">
+                            <button mat-icon-button (click)="deleteImage.emit(project)"><mat-icon>delete</mat-icon></button>
                         </div>
                     </div>
                 </td>
