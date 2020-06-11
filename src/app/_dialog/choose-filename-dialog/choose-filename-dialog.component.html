@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Définissez un nom pour le fichier PDF :</h1>
+
+<div mat-dialog-content>
+    <mat-form-field [formGroup]="filenameForm">
+        <mat-label>Nom de fichier</mat-label>
+        <input matInput type="text" class="form-control" formControlName="filename">
+    </mat-form-field>
+</div>
+<div mat-dialog-action>
+    <button mat-raised-button (click)="onCancel()" color="warn">Annuler</button>
+    <button mat-raised-button (click)="onValidate()" color="primary" [disabled]="filenameForm.invalid" cdkFocusInitial>Valider</button>
+</div>
