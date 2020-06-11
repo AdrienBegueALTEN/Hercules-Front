@@ -1,16 +1,17 @@
 import { HttpStatus } from './../../_enums/http-status.enum';
 import { ConsultantService } from 'src/app/_services/consultant.service';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CtrlError } from 'src/app/_enums/ctrl-error.enum';
 
 @Component({
   selector: 'app-consultant-edit',
   templateUrl: './consultant-edit.component.html'
 })
-export class ConsultantEditComponent {
+export class ConsultantEditComponent implements OnInit {
   @Input() consultant : any;
 
   readonly EMAIL_KEY = 'email';
@@ -28,6 +29,10 @@ export class ConsultantEditComponent {
     private _dialog : MatDialog,
     private _snackBar: MatSnackBar
   ) { }
+
+  public ngOnInit(): void {
+    this.grp.addControl(this.XP_KEY, new FormControl(this.consultant[this.XP_KEY], [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern('^\\d*$')]))
+  }
 
   addCtrl(key : string, ctrl : FormControl) : void {
     this.grp.addControl(key, ctrl);
@@ -86,5 +91,17 @@ export class ConsultantEditComponent {
   sendReload() {
     this.ngOnInit();
     this.reload.emit();
+  }
+
+  public getErrorTxt(key : string) : string {
+    switch (key) {
+      case this.XP_KEY :
+        return this.grp.controls[this.XP_KEY].hasError(CtrlError.REQUIRED) ?
+          'Le niveau d\'expérience doit être renseigné.' :
+          this.grp.controls[this.XP_KEY].hasError(CtrlError.MIN) ? 
+            'Le niveau d\'expérience doit être strictement positif.' : '';
+      default :
+        return "";
+    }
   }
 }

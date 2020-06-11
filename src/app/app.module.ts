@@ -10,7 +10,6 @@ import { MissionSheetPageComponent } from './_page/mission-sheet/mission-sheet-p
 import { HomeComponent } from './home/home.component';
 import { MissionEditComponent } from './_edit/mission-edit/mission-edit.component';
 import { MissionViewComponent } from './_view/mission-view/mission-view.component';
-import { XpInputComponent } from './_input/xp-input/xp-input.component';
 import { ConsultantViewComponent } from './_view/consultant-view/consultant-view.component';
 import { EmailInputComponent } from './_input/email-input/email-input.component';
 import { LastnameInputComponent } from './_input/lastname-input/lastname-input.component';
@@ -137,7 +136,6 @@ import { MissionColumnChoiceComponent } from './_dialog/mission-column-choice/mi
       FirstnameInputComponent,
       LastnameInputComponent,
       EmailInputComponent,
-      XpInputComponent,
       ConsultantViewComponent,
       ConsultantEditComponent,
       CustomerViewComponent,
