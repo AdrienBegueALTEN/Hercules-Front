@@ -170,21 +170,26 @@ onGeneratePDF(selectedElements : any[]) : void {
                       var newBlob = new Blob([content], { type: "application/pdf" });
                       
                       // fenêtre de demnande de nom
-
-                      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                        window.navigator.msSaveOrOpenBlob(newBlob, "fichesMissionsEtProjets2.pdf");}
-                      else{
-                        FileSaver.saveAs(newBlob, "fichesMissionsEtProjets2.pdf");
-                      }
+                      try{
+                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                          window.navigator.msSaveOrOpenBlob(newBlob, "fichesMissionsEtProjets.pdf");}
+                        else{
+                          FileSaver.saveAs(newBlob, "fichesMissionsEtProjets.pdf");
+                        }
+                     } catch(error){
+                        const dialogConfig = new MatDialogConfig();
+                        dialogConfig.data = "Le fichier PDF n'a pas pu être enregistré."
+                        this._dialog.open(MessageDialogComponent,dialogConfig);
+                     }
                   },
       (error) => {  if(error.error==="the file could not be saved"){
                       const dialogConfig = new MatDialogConfig();
-                      dialogConfig.data = "Le fichier PDF n'a pas pu être sauvegardé ou bien fermé."
+                      dialogConfig.data = "Le fichier PDF n'a pas pu être finalisé sur le serveur."
                       this._dialog.open(MessageDialogComponent,dialogConfig); 
                     }
                     else{
                       const dialogConfig = new MatDialogConfig();
-                      dialogConfig.data = "Le fichier PDF n'a pas pu être crée."
+                      dialogConfig.data = "Le fichier PDF n'a pas pu être crée sur le serveur."
                       this._dialog.open(MessageDialogComponent,dialogConfig);
                     }
 
