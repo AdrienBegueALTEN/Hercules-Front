@@ -29,6 +29,7 @@ export class ProjectSingleEditComponent implements OnInit {
   public selectedFiles : FileList;
   public currentFileRealName : string;
   public srcPic;
+  public isImgHover = false;
 
   @Output() update : EventEmitter<any> = new EventEmitter<any>();
   @Output() deletion : EventEmitter<void> = new EventEmitter<void>();
