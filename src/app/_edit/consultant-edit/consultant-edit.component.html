@@ -2,35 +2,38 @@
   <div class="contours" id="infos" *ngIf="consultant.manager.releaseDate==null">
     <mat-card-title>Informations personnelles</mat-card-title>
       <mat-card-content>
-        <table class="inputable">
+        <form [formGroup]="grp">
+          <table class="inputable">
+            <tr>
+            <td><app-firstname-input
+              (sendCtrl)="addCtrl(FIRSTNAME_KEY, $event)"
+              (valueChange)="valueChange(FIRSTNAME_KEY)"
+              [initialValue]="consultant[FIRSTNAME_KEY]"
+              [required]="true">
+            </app-firstname-input></td>
+            <td><app-lastname-input
+              (sendCtrl)="addCtrl(LASTNAME_KEY, $event)"
+              (valueChange)="valueChange(LASTNAME_KEY)"
+              [initialValue]="consultant[LASTNAME_KEY]"
+              [required]="true">
+            </app-lastname-input></td>
+          </tr>
           <tr>
-          <td><app-firstname-input
-            (sendCtrl)="addCtrl(FIRSTNAME_KEY, $event)"
-            (valueChange)="valueChange(FIRSTNAME_KEY)"
-            [initialValue]="consultant[FIRSTNAME_KEY]"
-            [required]="true">
-          </app-firstname-input></td>
-          <td><app-lastname-input
-            (sendCtrl)="addCtrl(LASTNAME_KEY, $event)"
-            (valueChange)="valueChange(LASTNAME_KEY)"
-            [initialValue]="consultant[LASTNAME_KEY]"
-            [required]="true">
-          </app-lastname-input></td>
-        </tr>
-        <tr>
-          <td><app-email-input 
-            (sendCtrl)="addCtrl(EMAIL_KEY, $event)"
-            (valueChange)="valueChange(EMAIL_KEY)"
-            [initialValue]="consultant[EMAIL_KEY]"
-            [required]="true">
-          </app-email-input></td>
-          <td><app-xp-input
-            (sendCtrl)="addCtrl(XP_KEY, $event)"
-            (valueChange)="valueChange(XP_KEY)"
-            [initialValue]="consultant[XP_KEY]">
-        </app-xp-input></td>
-        </tr>
-      </table>
+            <td><app-email-input 
+              (sendCtrl)="addCtrl(EMAIL_KEY, $event)"
+              (valueChange)="valueChange(EMAIL_KEY)"
+              [initialValue]="consultant[EMAIL_KEY]"
+              [required]="true">
+            </app-email-input></td>
+            <td><mat-form-field>
+              <mat-label>Années d'expérience</mat-label>
+              <input matInput type="number"
+                [formControlName]="XP_KEY" (change)="valueChange(XP_KEY)">
+              <mat-error>{{getErrorTxt(XP_KEY)}}</mat-error>
+            </mat-form-field></td>
+          </tr>
+        </table>
+      </form>
       </mat-card-content>
     </div>
     <div class="contours" *ngIf="consultant.manager.releaseDate==null">

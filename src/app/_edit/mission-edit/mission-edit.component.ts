@@ -43,7 +43,7 @@ export class MissionEditComponent implements OnInit {
     this.grp = new FormBuilder().group({
       title : [this.version[this.TITLE_KEY], [Validators.required, Validators.maxLength(100)]],
       consultantRole : [this.version[this.ROLE_KEY], [Validators.required, Validators.maxLength(50)]],
-      consultantStartXp : [this.version[this.XP_KEY], [Validators.required, Validators.min(0), Validators.pattern(NUMBER_PATTERN)]],
+      consultantStartXp : [this.version[this.XP_KEY], [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern(NUMBER_PATTERN)]],
       description : [this.version[this.DESCRIPTION_KEY], [Validators.required, Validators.maxLength(this.DESCRIPTION_MAX_LENGTH)]],
       city : [this.version[this.CITY_KEY], [Validators.required, Validators.maxLength(100)]],
       country : [this.version[this.COUNTRY_KEY], [Validators.required, Validators.maxLength(100)]],
