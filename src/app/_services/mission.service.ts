@@ -191,9 +191,9 @@ export class MissionService {
 
   public advancedSearch(criteria : object) {
     var url : string = AppSettings.MISSION_API + 'advancedSearch/?'
-    for (var i in criteria) {
+    for (var i in criteria)
       url = url.concat(encodeURIComponent(i), '=', encodeURIComponent(criteria[i]), '&');
-    }
+    url = url.slice(0, url.length - 2);
     return this._httpClient.get(url);
   }
 }
