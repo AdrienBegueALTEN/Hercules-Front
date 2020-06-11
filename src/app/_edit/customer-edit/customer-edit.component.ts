@@ -14,7 +14,10 @@ import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.c
 export class CustomerEditComponent implements OnInit {
   @Input() customer : any;
   @Output() reload = new EventEmitter<any>();
-  srcLogo;
+
+  public srcLogo;
+  public isImgHover = false;
+  
   constructor(private _customerService: CustomerService,
     private _snackBar: MatSnackBar,
     private _dialog: MatDialog) { }

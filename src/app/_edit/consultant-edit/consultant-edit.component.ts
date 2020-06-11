@@ -1,6 +1,6 @@
 import { HttpStatus } from './../../_enums/http-status.enum';
 import { ConsultantService } from 'src/app/_services/consultant.service';
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-consultant-edit',
   templateUrl: './consultant-edit.component.html'
 })
-export class ConsultantEditComponent implements OnInit {
+export class ConsultantEditComponent {
   @Input() consultant : any;
 
   readonly EMAIL_KEY = 'email';
@@ -18,7 +18,7 @@ export class ConsultantEditComponent implements OnInit {
   readonly LASTNAME_KEY = 'lastname';
   readonly XP_KEY = 'experience';
 
-  showNewDiploma : boolean;
+  showNewDiploma : boolean = false;
   grp : FormGroup = new FormBuilder().group({});
 
   @Output() reload = new EventEmitter<any>();
@@ -28,10 +28,6 @@ export class ConsultantEditComponent implements OnInit {
     private _dialog : MatDialog,
     private _snackBar: MatSnackBar
   ) { }
-
-  ngOnInit(): void {
-    this.showNewDiploma = false;
-  }
 
   addCtrl(key : string, ctrl : FormControl) : void {
     this.grp.addControl(key, ctrl);
@@ -79,18 +75,13 @@ export class ConsultantEditComponent implements OnInit {
   updateManager(manager:any){
     this._consultantService.updateConsultant(this.consultant.id,'manager',manager.id).subscribe(
       () => {
-        this.consultant['manager']=manager;
+        this.consultant['manager'] = manager;
         this._snackBar.open('Mise à jour effectuée', 'x', {duration: 2000});
-        this.sendReload();
+        this.reload.emit()
       },
-      (err) => {
-        console.log(err);
-      }
+      error => console.log(error)
     )
   }
   
-  sendReload() {
-    this.ngOnInit();
-    this.reload.emit();
-  }
+ 
 }

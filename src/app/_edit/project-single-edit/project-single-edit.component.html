@@ -5,19 +5,19 @@
                 <td colspan="2">
                     <mat-form-field>
                         <mat-label>Intitulé du projet</mat-label>
-                        <input matInput type="text" [formControlName]="ENTITLED_KEY" (change)="onChange(ENTITLED_KEY)">
-                        <mat-icon matSuffix *ngIf="externalVersion" color="primary" required
+                        <input matInput type="text" maxlength="100" [formControlName]="ENTITLED_KEY" (change)="onChange(ENTITLED_KEY)" required>
+                        <mat-icon matSuffix *ngIf="externalVersion" color="primary"
                         [matTooltip]="ENTITLED_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
-                        <mat-error *ngIf="!grp.controls[ENTITLED_KEY].valid && grp.controls[ENTITLED_KEY].touched">
-                            {{getErrorTxt(ENTITLED_KEY)}}
-                        </mat-error>
+                        <mat-error>{{getErrorTxt(ENTITLED_KEY)}}</mat-error>
                     </mat-form-field>
                 </td>
                 <td rowspan="3" *ngIf="project.picture" style="padding: 0; margin: 0; width: 300px;">
                     <div class="img-container">
-                        <img class="img" height="300px" [src]="srcPic" alt="Image">
-                        <div class="centered">
-                            <button mat-icon-button (click)="deleteImage.emit(project)"><mat-icon>close</mat-icon></button>
+                        <img class="img" height="300px" [src]="srcPic" alt="Image"
+                            (mouseover)="isImgHover = true" (mouseout)="isImgHover = false"
+                            [style.opacity]="isImgHover?0.1:1">
+                        <div class="centered" (mouseover)="isImgHover = true" (mouseout)="isImgHover = false">
+                            <button mat-icon-button (click)="deleteImage.emit(project)"><mat-icon>delete</mat-icon></button>
                         </div>
                     </div>
                 </td>
@@ -26,12 +26,11 @@
                 <td colspan="2">
                     <mat-form-field>
                         <mat-label>Description</mat-label>
-                        <textarea matInput maxlength="1000" type="text" [formControlName]="DESCRIPTION_KEY" (change)="onChange(DESCRIPTION_KEY)"></textarea>
+                        <textarea matInput maxlength="1000" type="text" [formControlName]="DESCRIPTION_KEY" (change)="onChange(DESCRIPTION_KEY)" required></textarea>
                         <mat-icon matSuffix *ngIf="externalVersion" color="primary" required
                         [matTooltip]="DESCRIPTION_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
-                        <mat-error *ngIf="!grp.controls[DESCRIPTION_KEY].valid && grp.controls[DESCRIPTION_KEY].touched">
-                            {{getErrorTxt(DESCRIPTION_KEY)}}
-                        </mat-error>
+                        <mat-error>{{getErrorTxt(DESCRIPTION_KEY)}}</mat-error>
+                        <mat-hint>{{grp.controls[DESCRIPTION_KEY].value?.length || 0}} / {{DESCRIPTION_MAX_LENGTH}}</mat-hint>
                     </mat-form-field>
                 </td>
             </tr>
