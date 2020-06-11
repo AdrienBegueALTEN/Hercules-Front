@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
 import { MatDialog } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MissionsActivitysectorAutocompleteComponent } from 'src/app/_input/autocomplete/missions/activitysector/missions-activitysector-autocomplete/missions-activitysector-autocomplete.component';
 import { MissionsTitleAutocompleteComponent } from 'src/app/_input/autocomplete/missions/title/missions-title-autocomplete/missions-title-autocomplete.component';
 import { MissionsCityAutocompleteComponent } from 'src/app/_input/autocomplete/missions/city/missions-city-autocomplete/missions-city-autocomplete.component';
@@ -23,26 +23,31 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class MissionsComponent implements OnInit {
 
-  @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
+  public readonly TITLE_KEY : string = 'title';
+  public readonly LOCATION_KEY : string = 'location';
 
-  @ViewChild(MissionsTitleAutocompleteComponent) title: MissionsTitleAutocompleteComponent;
-  @ViewChild(MissionsCityAutocompleteComponent) city: MissionsCityAutocompleteComponent;
-  @ViewChild(MissionsCountryAutocompleteComponent) country: MissionsCountryAutocompleteComponent;
+  @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
   @ViewChild(ConsultantAutocompleteComponent) consultant: ConsultantAutocompleteComponent;
   @ViewChild(MissionsCustomerAutocompleteComponent) client: MissionsCustomerAutocompleteComponent;
   @ViewChild(MissionsActivitysectorAutocompleteComponent) activtySector: MissionsActivitysectorAutocompleteComponent;
   @ViewChild(MissionsSkillsAutocompleteComponent) skills: MissionsSkillsAutocompleteComponent;
 
+  public grp : FormGroup = new FormBuilder().group(
+    {
+      title : '',
+      location : ''
+    }
+  )
+
   consultants : any[];
   missions: any[];
   public consultantForm : FormControl;
-  advancedSearchEnabled = false;
+  public showAdvancedSearch : boolean = false;
   public userIsManager : boolean = this._authService.userIsManager();
   public onlyMine : boolean = true;
   public dataSource: MatTableDataSource<any>;
   public userId = this._authService.getUser().id;
   colsToDisp = ['select','title','consultant','customer','sheetStatus'];
-
 
   constructor(
     private _missionService: MissionService,
@@ -71,18 +76,10 @@ export class MissionsComponent implements OnInit {
 
   }
 
-  advancedSearch(){
-    this.advancedSearchEnabled = !this.advancedSearchEnabled;
-  }
+  /*private _getValues() : object {
 
-  getValues(){
-    let cons = this.consultant.getValue();
     let lname = null;
     let fname = null;
-    if(!(cons instanceof String && typeof cons ==='string')){
-      lname = cons.lastname;
-      fname = cons.firstname;
-    }
     return {
       missionTitle: this.title.getValue(),
       missionCity: this.city.getValue(),
@@ -93,11 +90,33 @@ export class MissionsComponent implements OnInit {
       activitySector: this.activtySector.getValue(),
       skills: this.skills.getSkills()
     };
-  }
+  }*/
 
-  sendAdvSearch(){
-    const values = this.getValues();
-    //test this.arrayView.modifyArray([this.missions[0]]);
+  public onSearch() : void {
+    var criteria : object = {};
+
+    if (this.grp.controls[this.TITLE_KEY].value !== '')
+      criteria[this.TITLE_KEY] = this.grp.controls[this.TITLE_KEY].value;
+
+    ///criteria['customer'] = ;
+
+    const consultant = this.consultant.getValue();
+    if(typeof consultant !== 'string')
+      criteria['consutlant'] = this.consultant.getValue().id;
+
+    if (this.grp.controls[this.LOCATION_KEY].value !== '')
+      criteria[this.LOCATION_KEY] = this.grp.controls[this.LOCATION_KEY].value;
+
+    /*if (this.activtySector.getValue() !== "")
+      criteria['activitySector'] = this.activtySector.getValue();*/
+console.log(criteria)
+    this._missionService.advancedSearch(criteria).subscribe(
+      result => {
+        this.missions = result;
+        this.arrayView.modifyArray(result); 
+      },
+      error => console.log(error)
+    );
   }
 
   
