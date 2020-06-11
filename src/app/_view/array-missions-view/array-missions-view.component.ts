@@ -168,11 +168,14 @@ onGeneratePDF(selectedElements : any[]) : void {
     this._missionService.generatePDF(elements).subscribe(
       (content) => {  this._snackBar.open("Le PDF a bien été enregistré",'X', { duration: 2000 });
                       var newBlob = new Blob([content], { type: "application/pdf" });
-                      try{
-                          window.navigator.msSaveOrOpenBlob(newBlob, "fichesMissionsEtProjets2.pdf");
-                        } catch(ex){
-                          FileSaver.saveAs(newBlob, "fichesMissionsEtProjets2.pdf");
-                        }
+                      
+                      // fenêtre de demnande de nom
+
+                      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                        window.navigator.msSaveOrOpenBlob(newBlob, "fichesMissionsEtProjets2.pdf");}
+                      else{
+                        FileSaver.saveAs(newBlob, "fichesMissionsEtProjets2.pdf");
+                      }
                   },
       (error) => {  if(error.error==="the file could not be saved"){
                       const dialogConfig = new MatDialogConfig();
