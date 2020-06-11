@@ -77,14 +77,11 @@ export class ConsultantEditComponent {
       () => {
         this.consultant['manager'] = manager;
         this._snackBar.open('Mise à jour effectuée', 'x', {duration: 2000});
-        this.sendReload();
+        this.reload.emit()
       },
       error => console.log(error)
     )
   }
   
-  sendReload() {
-    this.ngOnInit();
-    this.reload.emit();
-  }
+ 
 }

@@ -65,7 +65,7 @@
   <app-diploma-edit
   [new]="true" 
   [consultant]="consultant.id"
-  (reload)="sendReload()"></app-diploma-edit>
+  (reload)="reload.emit()"></app-diploma-edit>
 </ng-template>
 
 <ng-template #newDiplomaButton>
