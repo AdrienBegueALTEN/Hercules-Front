@@ -39,7 +39,7 @@ export class ManagerPageComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
-          firstname : this.manager.firsrname,
+          firstname : this.manager.firstname,
           lastname : this.manager.lastname
         };
     const dialogRef = this._dialog.open(DeactivateComponent, dialogConfig);
@@ -53,6 +53,7 @@ export class ManagerPageComponent implements OnInit {
         }
       }); 
   }
+
 
   public onDelete() : void {
     this._managerService.deleteManager(this.manager.id).subscribe(
