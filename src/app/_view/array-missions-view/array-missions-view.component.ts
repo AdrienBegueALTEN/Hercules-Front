@@ -9,6 +9,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatInput } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MissionColumnChoiceComponent } from 'src/app/_dialog/mission-column-choice/mission-column-choice.component';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-array-missions-view',
@@ -27,7 +31,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   @Input() showOnlyMineToogle : boolean = false;
   @Input() displayedColumns : string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
 
-  readonly NB_MAX_CHECK : number = 1;
+  readonly NB_MAX_CHECK : number = 30;
 
   @Output() deleteEvent = new EventEmitter<any>();
 
@@ -52,6 +56,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     private _authService: AuthService,
     private _missionService: MissionService,
     private _snackBar: MatSnackBar,
+    private _dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -161,8 +166,34 @@ onGeneratePDF(selectedElements : any[]) : void {
       }
     });
     this._missionService.generatePDF(elements).subscribe(
-      () => {},
-      (error) => {console.log(error);}
+      (content) => {  this._snackBar.open("Le PDF a bien été enregistré",'X', { duration: 2000 });
+                      var newBlob = new Blob([content], { type: "application/pdf" });
+                      
+                      // fenêtre de demnande de nom
+                      try{
+                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                          window.navigator.msSaveOrOpenBlob(newBlob, "fichesMissionsEtProjets.pdf");}
+                        else{
+                          FileSaver.saveAs(newBlob, "fichesMissionsEtProjets.pdf");
+                        }
+                     } catch(error){
+                        const dialogConfig = new MatDialogConfig();
+                        dialogConfig.data = "Le fichier PDF n'a pas pu être enregistré."
+                        this._dialog.open(MessageDialogComponent,dialogConfig);
+                     }
+                  },
+      (error) => {  if(error.error==="the file could not be saved"){
+                      const dialogConfig = new MatDialogConfig();
+                      dialogConfig.data = "Le fichier PDF n'a pas pu être finalisé sur le serveur."
+                      this._dialog.open(MessageDialogComponent,dialogConfig); 
+                    }
+                    else{
+                      const dialogConfig = new MatDialogConfig();
+                      dialogConfig.data = "Le fichier PDF n'a pas pu être crée sur le serveur."
+                      this._dialog.open(MessageDialogComponent,dialogConfig);
+                    }
+
+      }
     );
 
 
@@ -185,6 +216,19 @@ onGeneratePDF(selectedElements : any[]) : void {
 
   onClickProjects(event) {
     event.preventDefault();
+  }
+
+  openColsChoice(){
+    const dialogRef = this._dialog.open(MissionColumnChoiceComponent, {
+      data: {
+        cols:this.displayedColumns
+      }
+    });
+    dialogRef.componentInstance.colsEvent.subscribe(
+      (data)=>{
+        this.displayedColumns = data
+      }
+    )
   }
 
 }

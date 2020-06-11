@@ -1,10 +1,11 @@
 import { HttpStatus } from './../../_enums/http-status.enum';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CtrlError } from 'src/app/_enums/ctrl-error.enum';
 
 @Component({
   selector: 'app-consultant-edit',
@@ -18,7 +19,7 @@ export class ConsultantEditComponent implements OnInit {
   readonly LASTNAME_KEY = 'lastname';
   readonly XP_KEY = 'experience';
 
-  showNewDiploma : boolean;
+  showNewDiploma : boolean = false;
   grp : FormGroup = new FormBuilder().group({});
 
   @Output() reload = new EventEmitter<any>();
@@ -29,8 +30,8 @@ export class ConsultantEditComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) { }
 
-  ngOnInit(): void {
-    this.showNewDiploma = false;
+  public ngOnInit(): void {
+    this.grp.addControl(this.XP_KEY, new FormControl(this.consultant[this.XP_KEY], [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern('^\\d*$')]))
   }
 
   addCtrl(key : string, ctrl : FormControl) : void {
@@ -79,18 +80,28 @@ export class ConsultantEditComponent implements OnInit {
   updateManager(manager:any){
     this._consultantService.updateConsultant(this.consultant.id,'manager',manager.id).subscribe(
       () => {
-        this.consultant['manager']=manager;
+        this.consultant['manager'] = manager;
         this._snackBar.open('Mise à jour effectuée', 'x', {duration: 2000});
-        this.sendReload();
+        this.reload.emit()
       },
-      (err) => {
-        console.log(err);
-      }
+      error => console.log(error)
     )
   }
   
   sendReload() {
     this.ngOnInit();
     this.reload.emit();
+  }
+
+  public getErrorTxt(key : string) : string {
+    switch (key) {
+      case this.XP_KEY :
+        return this.grp.controls[this.XP_KEY].hasError(CtrlError.REQUIRED) ?
+          'Le niveau d\'expérience doit être renseigné.' :
+          this.grp.controls[this.XP_KEY].hasError(CtrlError.MIN) ? 
+            'Le niveau d\'expérience doit être strictement positif.' : '';
+      default :
+        return "";
+    }
   }
 }

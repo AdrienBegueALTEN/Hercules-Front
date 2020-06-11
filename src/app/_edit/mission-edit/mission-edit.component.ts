@@ -15,11 +15,13 @@ export class MissionEditComponent implements OnInit {
   readonly CITY_KEY = 'city';
   readonly CITY_TOOLTIP = 'Ville au sein de laquelle vous avez effectué la mission. En cas de télétravail, ville où se trouve le site du client.';
   readonly COMMENT_KEY = 'comment';
+  readonly COMMENT_MAX_LENGTH = 255;
   readonly CONTRACT_KEY = 'contractType';
   readonly COUNTRY_KEY = 'country';
   readonly COUNTRY_TOOLTIP = 'Ville au sein duquel vous avez effectué la mission. En cas de télétravail, pays où se trouve le site du client.';
   readonly DESCRIPTION_KEY = 'description';
   readonly DESCRIPTION_TOOLTIP = 'Descritpif complet présentant la mission dans sa globalité.';
+  readonly DESCRIPTION_MAX_LENGTH = 1000;
   readonly ROLE_KEY = 'consultantRole';
   readonly ROLE_TOOLTIP = 'Titre représentatif des différentes tâches que vous avez été amené à réaliser durant la mission.';
   readonly TEAM_KEY = 'teamSize';
@@ -40,16 +42,16 @@ export class MissionEditComponent implements OnInit {
   ngOnInit() {
     this.grp = new FormBuilder().group({
       title : [this.version[this.TITLE_KEY], [Validators.required, Validators.maxLength(100)]],
-      consultantRole : [this.version[this.ROLE_KEY], [Validators.required, Validators.maxLength(100)]],
-      consultantStartXp : [this.version[this.XP_KEY], [Validators.required, Validators.min(0), Validators.pattern(NUMBER_PATTERN)]],
-      description : [this.version[this.DESCRIPTION_KEY], [Validators.required, Validators.maxLength(1000)]],
+      consultantRole : [this.version[this.ROLE_KEY], [Validators.required, Validators.maxLength(50)]],
+      consultantStartXp : [this.version[this.XP_KEY], [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern(NUMBER_PATTERN)]],
+      description : [this.version[this.DESCRIPTION_KEY], [Validators.required, Validators.maxLength(this.DESCRIPTION_MAX_LENGTH)]],
       city : [this.version[this.CITY_KEY], [Validators.required, Validators.maxLength(100)]],
       country : [this.version[this.COUNTRY_KEY], [Validators.required, Validators.maxLength(100)]],
       teamSize : [this.version[this.TEAM_KEY], [Validators.required, Validators.min(1), Validators.pattern(NUMBER_PATTERN)]],
       contractType : [this.version[this.CONTRACT_KEY], [Validators.required]],
     });
     if (this.version[this.COMMENT_KEY])
-      this.grp.addControl(this.COMMENT_KEY, new FormControl(this.version[this.COMMENT_KEY], [Validators.maxLength(255)]));
+      this.grp.addControl(this.COMMENT_KEY, new FormControl(this.version[this.COMMENT_KEY], [Validators.maxLength(this.COMMENT_MAX_LENGTH)]));
   }
 
   public onChange(key : string) : void {
@@ -83,22 +85,26 @@ export class MissionEditComponent implements OnInit {
           'La ville doit être renseignée.' : '';
       case this.COUNTRY_KEY :
         return this.grp.controls[this.COUNTRY_KEY].hasError(CtrlError.REQUIRED) ?
-        'Le pays doit être renseigné.' : '';
+          'Le pays doit être renseigné.' : '';
       case this.DESCRIPTION_KEY :
         return this.grp.controls[this.DESCRIPTION_KEY].hasError(CtrlError.REQUIRED) ?
-        'La description de la mission est obligatoire.' : '';
+          'La description de la mission est obligatoire.' : '';
       case this.ROLE_KEY :
         return this.grp.controls[this.ROLE_KEY].hasError(CtrlError.REQUIRED) ?
-        'Le rôle doit être renseigné.' : '';
+          'Le rôle doit être renseigné.' : '';
       case this.TEAM_KEY :
         return this.grp.controls[this.TEAM_KEY].hasError(CtrlError.REQUIRED) ?
-        'La taille de l\'équipe doit être renseignée.' : '';
+          'La taille de l\'équipe doit être renseignée.' :
+          this.grp.controls[this.TEAM_KEY].hasError(CtrlError.MIN) ? 
+            'La taille de l\'équipe ne peut pas être strictement inférieure à 1.' : '';
       case this.TITLE_KEY :
         return this.grp.controls[this.TITLE_KEY].hasError(CtrlError.REQUIRED) ?
-        'Le titre de la mission doit être renseigné.' : '';
+          'Le titre de la mission doit être renseigné.' : '';
       case this.XP_KEY :
         return this.grp.controls[this.XP_KEY].hasError(CtrlError.REQUIRED) ?
-        'Le niveau d\'expérience doit être renseigné.' : '';
+          'Le niveau d\'expérience doit être renseigné.' :
+          this.grp.controls[this.XP_KEY].hasError(CtrlError.MIN) ? 
+            'Le niveau d\'expérience doit être strictement positif.' : '';
       default :
         return "";
     }

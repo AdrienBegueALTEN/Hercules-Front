@@ -53,13 +53,6 @@ html, body {
     box-shadow: 0px 0px 5px 1px gainsboro;
 }
 
-.file-upload {
-    border-bottom: 1px solid grey;
-    color: grey;
-    padding: 5px;
-    cursor: pointer;
-}
-
 mat-form-field {
     display: block !important;
 }
@@ -115,7 +108,7 @@ footer {
  }
 
  .centered {
-    background-color: black;
+    background-color: red;
     color: white;
     padding: 10px;
     display: none;
@@ -124,10 +117,6 @@ footer {
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 100px;
-  }
-
-  .img:hover{
-    opacity: 0.2;
   }
 
   .img:hover + .centered, .centered:hover{

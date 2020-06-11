@@ -1,3 +1,7 @@
-mat-checkbox{
-    display: block;
+.cdk-drag-preview {
+    display: none;
+}
+
+.handler{
+    cursor: all-scroll;
 }

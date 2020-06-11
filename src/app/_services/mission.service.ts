@@ -108,7 +108,7 @@ export class MissionService {
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
-  upload(file: File, projectId: number): Observable<HttpEvent<any>> {
+  public upload(file: File, projectId: number): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
@@ -120,7 +120,7 @@ export class MissionService {
     return this._httpClient.request(req);
   }
 
-  uploadFromToken(file: File, projectId: number, token: string): Observable<HttpEvent<any>> {
+  public uploadFromToken(file: File, projectId: number, token: string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
@@ -188,8 +188,16 @@ export class MissionService {
   }
 
   public generatePDF(elements : any[]): Observable<any> {
-    return this._httpClient.post(AppSettings.MISSION_API+"pdf",
+    return this._httpClient.post(AppSettings.MISSION_API + 'pdf',
       elements,
-      AppSettings.HTTP_JSON_CONTENT);
+      {responseType: 'blob'});
+  }
+
+  public advancedSearch(criteria : object) {
+    var url : string = AppSettings.MISSION_API + 'advancedSearch/?'
+    for (var i in criteria)
+      url = url.concat(encodeURIComponent(i), '=', encodeURIComponent(criteria[i]), '&');
+    url = url.slice(0, url.length - 2);
+    return this._httpClient.get(url);
   }
 }
