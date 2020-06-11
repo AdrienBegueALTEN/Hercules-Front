@@ -4,6 +4,8 @@ import { Validators } from '@angular/forms';
 import { CtrlError } from 'src/app/_enums/ctrl-error.enum';
 import { InputType } from 'src/app/_enums/input-type.enum';
 
+const NUMBER_PATTERN = '^\\d*$';
+
 @Component({
   selector: 'app-xp-input',
   templateUrl: '../input.html'

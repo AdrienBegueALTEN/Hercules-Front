@@ -30,7 +30,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   @Input() showOnlyMineToogle : boolean = false;
   @Input() displayedColumns : string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
 
-  readonly NB_MAX_CHECK : number = 1;
+  readonly NB_MAX_CHECK : number = 30;
 
   @Output() deleteEvent = new EventEmitter<any>();
 

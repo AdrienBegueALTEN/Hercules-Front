@@ -1,6 +1,5 @@
 import { CtrlError } from 'src/app/_enums/ctrl-error.enum';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import * as sha1 from 'js-sha1';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 const SEMANTICS_ERR : string = 'semantics';
@@ -18,12 +17,13 @@ export class ProjectSingleEditComponent implements OnInit {
   readonly ENTITLED_TOOLTIP : string = 'Bref descriptif contenant des mots-clefs représentatifs du projet.';
   readonly DESCRIPTION_KEY : string = 'description';
   readonly DESCRIPTION_TOOLTIP : string = 'Descritpif complet présentant le projet dans sa globalité.';
+  readonly DESCRIPTION_MAX_LENGTH : number = 1000;
   readonly BEGIN_KEY : string = 'beginDate';
   readonly BEGIN_TOOLTIP : string = 'Date à laquelle le projet a débuté.';
   readonly END_KEY : string = 'endDate';
   readonly END_TOOLTIP : string = 'Date à laquelle le projet s\'est achevé.';
-  readonly TOOLTIP_ICON = 'help_outline';
-  readonly TOOLTIP_POS = 'before';
+  readonly TOOLTIP_ICON : string = 'help_outline';
+  readonly TOOLTIP_POS : string = 'before';
 
   public grp : FormGroup;
   public selectedFiles : FileList;
@@ -44,8 +44,8 @@ export class ProjectSingleEditComponent implements OnInit {
     this.srcPic = 'http://localhost:8080/hercules/missions/projects/picture/' + this.project.picture;
     this.currentFileRealName = !!this.project.picture ? 'Remplacer l\'image liée au projet' : 'Lier une image au projet...';
     this.grp = new FormBuilder().group({
-      title: [this.project[this.ENTITLED_KEY], Validators.required],
-      description: [this.project[this.DESCRIPTION_KEY], Validators.required],
+      title: [this.project[this.ENTITLED_KEY], [Validators.required, Validators.maxLength(100)]],
+      description: [this.project[this.DESCRIPTION_KEY], [Validators.required, Validators.maxLength(this.DESCRIPTION_MAX_LENGTH)]],
       beginDate: [this.project[this.BEGIN_KEY] ? 
         new Date(this.project[this.BEGIN_KEY]).toISOString().substr(0, 10) :
         null, Validators.required],
@@ -103,9 +103,11 @@ export class ProjectSingleEditComponent implements OnInit {
   public getErrorTxt(key : string) : string {
     switch (key) {
       case this.ENTITLED_KEY :
-        return 'L\'intitulé du projet est obligatoire.'
+        return this.grp.controls[this.ENTITLED_KEY].hasError(CtrlError.REQUIRED) ?
+        'Le titre du projet doit être renseigné.' : '';
       case this.DESCRIPTION_KEY :
-        return 'La description du projet est obligatoire.'
+        return this.grp.controls[this.DESCRIPTION_KEY].hasError(CtrlError.REQUIRED) ?
+        'La description du projet est obligatoire.' : '';
       case this.BEGIN_KEY :
         return this.grp.controls[this.BEGIN_KEY].hasError(CtrlError.REQUIRED) ?
           'La date de début du projet doit être renseignée.' :
