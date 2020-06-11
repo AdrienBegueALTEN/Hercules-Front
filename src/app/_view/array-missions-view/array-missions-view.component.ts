@@ -12,6 +12,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MissionColumnChoiceComponent } from 'src/app/_dialog/mission-column-choice/mission-column-choice.component';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-array-missions-view',
@@ -165,15 +166,30 @@ onGeneratePDF(selectedElements : any[]) : void {
       }
     });
     this._missionService.generatePDF(elements).subscribe(
-      () => {this._snackBar.open("Le PDF a bien été enregistré",'X', { duration: 2000 })},
+      (content) => {  this._snackBar.open("Le PDF a bien été enregistré",'X', { duration: 2000 });
+                      var newBlob = new Blob([content], { type: "application/pdf" });
+                      
+                      // fenêtre de demnande de nom
+                      try{
+                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                          window.navigator.msSaveOrOpenBlob(newBlob, "fichesMissionsEtProjets.pdf");}
+                        else{
+                          FileSaver.saveAs(newBlob, "fichesMissionsEtProjets.pdf");
+                        }
+                     } catch(error){
+                        const dialogConfig = new MatDialogConfig();
+                        dialogConfig.data = "Le fichier PDF n'a pas pu être enregistré."
+                        this._dialog.open(MessageDialogComponent,dialogConfig);
+                     }
+                  },
       (error) => {  if(error.error==="the file could not be saved"){
                       const dialogConfig = new MatDialogConfig();
-                      dialogConfig.data = "Le fichier PDF n'a pas pu être sauvegardé ou bien fermé."
+                      dialogConfig.data = "Le fichier PDF n'a pas pu être finalisé sur le serveur."
                       this._dialog.open(MessageDialogComponent,dialogConfig); 
                     }
                     else{
                       const dialogConfig = new MatDialogConfig();
-                      dialogConfig.data = "Le fichier PDF n'a pas pu être crée."
+                      dialogConfig.data = "Le fichier PDF n'a pas pu être crée sur le serveur."
                       this._dialog.open(MessageDialogComponent,dialogConfig);
                     }
 
