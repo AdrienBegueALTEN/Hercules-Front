@@ -101,11 +101,8 @@ export class ConsultantAutocompleteComponent implements OnInit {
     return (typeof control.value == 'string') ? { 'requirements': true } : null;
   }
 
-  
-
   public getValue(){
     return this.ctrl.value;
   }
-
   
 }

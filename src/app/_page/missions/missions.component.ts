@@ -1,10 +1,11 @@
+import { CustomerService } from './../../_services/customer.service';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { MissionService } from 'src/app/_services/mission.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
 import { MatDialog } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MissionsActivitysectorAutocompleteComponent } from 'src/app/_input/autocomplete/missions/activitysector/missions-activitysector-autocomplete/missions-activitysector-autocomplete.component';
 import { MissionsTitleAutocompleteComponent } from 'src/app/_input/autocomplete/missions/title/missions-title-autocomplete/missions-title-autocomplete.component';
 import { MissionsCityAutocompleteComponent } from 'src/app/_input/autocomplete/missions/city/missions-city-autocomplete/missions-city-autocomplete.component';
@@ -23,96 +24,101 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class MissionsComponent implements OnInit {
 
-  @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
+  public readonly TITLE_KEY : string = 'title';
+  public readonly LOCATION_KEY : string = 'location';
+  public readonly CONSULTANT_KEY : string = 'consultant';
+  public readonly CUSTOMER_KEY : string = 'customer';
 
-  @ViewChild(MissionsTitleAutocompleteComponent) title: MissionsTitleAutocompleteComponent;
-  @ViewChild(MissionsCityAutocompleteComponent) city: MissionsCityAutocompleteComponent;
-  @ViewChild(MissionsCountryAutocompleteComponent) country: MissionsCountryAutocompleteComponent;
+  @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
   @ViewChild(ConsultantAutocompleteComponent) consultant: ConsultantAutocompleteComponent;
   @ViewChild(MissionsCustomerAutocompleteComponent) client: MissionsCustomerAutocompleteComponent;
   @ViewChild(MissionsActivitysectorAutocompleteComponent) activtySector: MissionsActivitysectorAutocompleteComponent;
   @ViewChild(MissionsSkillsAutocompleteComponent) skills: MissionsSkillsAutocompleteComponent;
 
+  public grp : FormGroup = new FormBuilder().group(
+    {
+      title : '',
+      location : ''
+    }
+  )
+
   consultants : any[];
+  customers : any[];
   missions: any[];
-  missionsSearch: any[];
-  public consultantForm : FormControl;
-  advancedSearchEnabled = false;
+  public showAdvancedSearch : boolean = false;
   public userIsManager : boolean = this._authService.userIsManager();
   public onlyMine : boolean = true;
   public dataSource: MatTableDataSource<any>;
   public userId = this._authService.getUser().id;
   colsToDisp = ['select','title','consultant','customer','sheetStatus'];
 
-
   constructor(
     private _missionService: MissionService,
     private _authService: AuthService,
-    private _consultantService : ConsultantService
-  ) { }
+    private _consultantService : ConsultantService,
+    private _customerService : CustomerService
+  ) {}
 
-  ngOnInit(): void {
+  public ngOnInit() : void {
+    this._missionService.getMissions(this.userId).subscribe(
+      missions => this.missions = missions,
+      error => console.log(error)
+    )
+    this._consultantService.getConsultants(false).subscribe(
+      consultants => this.consultants = consultants,
+      error => console.log(error)
+    )
+    this._customerService.getAll().subscribe(
+      customers => this.customers = customers,
+      error => console.log(error)
+    )
+  }
 
+  public toggleAdvancedSearch(){
+    this.showAdvancedSearch = !this.showAdvancedSearch;
+    if(!this.showAdvancedSearch){
+      this.setAllMissions();
+    }
+  }
+  
+
+  public setAllMissions(){
     this._missionService.getMissions(this.userId).subscribe(
       (data) => {
         this.missions = data;
+        this.arrayView.modifyArray(this.missions);
       },
       (err) => {
         console.log(err);
       }
     )
+  }
 
-    this._consultantService.getConsultants(false).subscribe(
-      (consultants) => {
-        this.consultants = consultants;
+  public onSearch() : void {
+    var criteria : object = {};
+
+    if (this.grp.controls[this.TITLE_KEY].value !== '')
+      criteria[this.TITLE_KEY] = this.grp.controls[this.TITLE_KEY].value;
+
+    if (this.grp.controls[this.CUSTOMER_KEY]?.valid)
+      criteria[this.CUSTOMER_KEY] = this.grp.controls[this.CUSTOMER_KEY].value.id;
+
+    if (this.grp.controls[this.CONSULTANT_KEY]?.valid)
+      criteria[this.CONSULTANT_KEY] = this.grp.controls[this.CONSULTANT_KEY].value.id;
+
+    if (this.grp.controls[this.LOCATION_KEY].value !== '')
+      criteria[this.LOCATION_KEY] = this.grp.controls[this.LOCATION_KEY].value;
+
+    if (this.activtySector.getValue() !== "")
+      criteria['activitySector'] = this.activtySector.getValue();
+
+    this._missionService.advancedSearch(criteria).subscribe(
+      result => {
+        this.missions = result;
+        this.arrayView.modifyArray(result); 
       },
-      () => window.location.replace('')
-    )
-
-
-  }
-
-  advancedSearch(){
-    this.advancedSearchEnabled = !this.advancedSearchEnabled;
-  }
-
-  getValues(){
-    let cons = this.consultant.getValue();
-    let lname = null;
-    let fname = null;
-    if(!(cons instanceof String && typeof cons ==='string')){
-      lname = cons.lastname;
-      fname = cons.firstname;
-    }
-    return {
-      missionTitle: this.title.getValue(),
-      missionCity: this.city.getValue(),
-      missionCountry: this.country.getValue(),
-      consultantLastName: lname,
-      consultantFirstName: fname,
-      customerName: this.client.getValue(),
-      activitySector: this.activtySector.getValue(),
-      skills: this.skills.getSkills()
-    };
-  }
-
-  sendAdvSearch(){
-    const values = this.getValues();
-    //console.log(values);
-    //console.log(values.activitySector);
-    //console.log(typeof values.activitySector);
-
-    this._missionService.getMissionsAdvanced().subscribe(
-      (data) => {
-        this.missions = data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
-    
-
-    this.arrayView.modifyArray(this.missions);
+      error => console.log(error)
+    );
   }
 
   

@@ -64,11 +64,11 @@
         <mat-header-cell *matHeaderCellDef>Statut de la fiche</mat-header-cell>
         <mat-cell *matCellDef="let element" [ngSwitch]="element.sheetStatus">
             <mat-icon *ngSwitchCase="'ON_WAITING'" style="color: red"
-                matTooltip="Fiche en attente">cancel</mat-icon>
+                matTooltip="Fiche en attente">close</mat-icon>
             <mat-icon *ngSwitchCase="'ON_GOING'" style="color: orange"
-                matTooltip="Fiche en cours de validation">watch_later</mat-icon>
+                matTooltip="Fiche en cours de validation">done</mat-icon>
             <mat-icon *ngSwitchCase="'VALIDATED'" style="color: green"
-                matTooltip="Fiche validée">check_circle</mat-icon>
+                matTooltip="Fiche validée">done_all</mat-icon>
 
             <button mat-icon-button
                 [routerLink]="['/missions', element.id]">
@@ -110,6 +110,6 @@
     class="pdfButton" color="primary"
     [matBadge]="selection.selected.length"
     [matBadgeColor]="selection.selected.length >= NB_MAX_CHECK ? 'warn' : 'accent'"
-    (click)="onGeneratePDF(this.selection.selected)" >
+    (click)="onChooseFilenameDialog(this.selection.selected)" >
     Générer fiche PDF
 </button>

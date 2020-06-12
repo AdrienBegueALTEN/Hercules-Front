@@ -114,6 +114,7 @@ import { NewCustomerDialogComponent } from './_dialog/new-customer/new-customer-
 import { UploadImageComponent } from './_input/upload-image/upload-image.component';
 import { MissionsSkillsAutocompleteComponent } from './_input/autocomplete/missions/missions-skills-autocomplete/missions-skills-autocomplete.component';
 import { MissionColumnChoiceComponent } from './_dialog/mission-column-choice/mission-column-choice.component';
+import { ChooseFilenameDialogComponent } from './_dialog/choose-filename-dialog/choose-filename-dialog.component';
 
 @NgModule({
 
@@ -188,7 +189,8 @@ import { MissionColumnChoiceComponent } from './_dialog/mission-column-choice/mi
       RecruitmentOfficerEditComponent,
       RecruitmentOfficerViewComponent,
       ManagerEditComponent,
-      ManagerViewComponent
+      ManagerViewComponent,
+      ChooseFilenameDialogComponent
    ],
    imports: [
       AppRoutingModule,
