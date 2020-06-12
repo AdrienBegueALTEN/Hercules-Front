@@ -49,7 +49,7 @@ export class ManagerPageComponent implements OnInit {
         if (releaseDate) {
           this._managerService.updateManager(this.manager.id, 'releaseDate', releaseDate).subscribe(
             () => this.manager.releaseDate = releaseDate, 
-            error => this._handleError("Impossible d'indiquer la sortie des effectifs")
+            error => { this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error); }
           )
         }
       }); 
@@ -59,7 +59,7 @@ export class ManagerPageComponent implements OnInit {
   public onDelete() : void {
     this._managerService.deleteManager(this.manager.id).subscribe(
       () => this._router.navigate(['/managers']),
-      error => this._handleError("Impossible de supprimer ce manager")
+      error => { this._handleError("Impossible de supprimer ce manager"); console.log(error); }
     )
   }
 
@@ -70,7 +70,7 @@ export class ManagerPageComponent implements OnInit {
   public onCancelReleaseDate() : void {
     this._managerService.updateManager(this.manager.id,'releaseDate',null).subscribe(
       () => this.manager.releaseDate = null,
-      (error) => this._handleError("Impossible de rendre ce manager actif à nouveau")
+      (error) => { this._handleError("Impossible de rendre ce manager actif à nouveau"); console.log(error); }
     );
   }
 

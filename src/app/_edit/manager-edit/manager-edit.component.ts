@@ -35,13 +35,13 @@ export class ManagerEditComponent {
         this.manager[key] = this.grp.controls[key].value;
         this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
       },
-      error => this._handleError(error.status)
+      error => {this._handleError(error.status); console.log(error); }
     )
   }
 
   public adminToogle() : void {
     this._managerService.updateManager(this.manager.id, 'isAdmin', !this.manager.admin)
-      .subscribe(() => {}, error => this._handleError(error.status));
+      .subscribe(() => {}, error => {this._handleError(error.status); console.log(error); } );
   }
 
   private _handleError(status : number) : void {

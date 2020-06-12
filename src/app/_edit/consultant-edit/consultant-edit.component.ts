@@ -49,7 +49,7 @@ export class ConsultantEditComponent implements OnInit {
           this.consultant[key] = newValue;
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
         },
-        error => { this._handleError(error.status); }
+        error => { this._handleError(error.status); console.log(error); }
       )
   }
 
@@ -78,7 +78,7 @@ export class ConsultantEditComponent implements OnInit {
         this._snackBar.open('Mise à jour effectuée', 'x', {duration: 2000});
         this.reload.emit()
       },
-      error => this._handleError(error.status) 
+      error => { this._handleError(error.status); console.log(error); } 
     )
   }
   

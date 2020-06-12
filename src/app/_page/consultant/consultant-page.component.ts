@@ -62,7 +62,7 @@ export class ConsultantPageComponent implements OnInit {
         if (releaseDate) {
           this._consultantService.updateConsultant(this.consultant.id, 'releaseDate', releaseDate).subscribe(
             () => this.consultant.releaseDate = releaseDate, 
-            error => this._handleError("Impossible d'indiquer la sortie des effectifs")
+            error => { this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error); }
           )
         }
       }); 
@@ -71,14 +71,14 @@ export class ConsultantPageComponent implements OnInit {
   public onDelete() : void {
     this._consultantService.deleteConsultant(this.consultant.id).subscribe(
       () => this._router.navigate(['/consultants']),
-      error => this._handleError("Impossible de supprimer ce consultant")
+      error => { this._handleError("Impossible de supprimer ce consultant"); console.log(error); }
     )
   }
 
   public onCancelReleaseDate() : void {
     this._consultantService.updateConsultant(this.consultant.id,"releaseDate",null).subscribe(
       () => this.consultant.releaseDate = null,
-      (error) => this._handleError("Impossible de rendre ce consultant actif à nouveau")
+      (error) => { this._handleError("Impossible de rendre ce consultant actif à nouveau"); console.log(error); }
     );
   }
 

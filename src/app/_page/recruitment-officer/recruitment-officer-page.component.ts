@@ -41,7 +41,7 @@ export class RecruitmentOfficerPageComponent implements OnInit {
         if (releaseDate) {
           this._recruitmentOfficerService.updateRecruitmentOfficer(this.recruitmentOfficer.id, 'releaseDate', releaseDate).subscribe(
             () => this.recruitmentOfficer.releaseDate = releaseDate, 
-            error => this._handleError("Impossible d'indiquer la sortie des effectifs")
+            error => { this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error); }
           )
         }
       }); 
@@ -50,14 +50,14 @@ export class RecruitmentOfficerPageComponent implements OnInit {
   public onDelete() : void {
     this._recruitmentOfficerService.deleteRecruitmentOfficer(this.recruitmentOfficer.id).subscribe(
       () => this._router.navigate(['/recruitment-officers']),
-      error => this._handleError("Impossible de supprimer ce chargé de recrutement")
+      error => { this._handleError("Impossible de supprimer ce chargé de recrutement"); console.log(error); }
     );
   }
 
   public onCancelReleaseDate() : void {
     this._recruitmentOfficerService.updateRecruitmentOfficer(this.recruitmentOfficer.id,'releaseDate', null).subscribe(
       () => this.recruitmentOfficer.releaseDate = null,
-      error => this._handleError("Impossible de rendre ce chargé de recrutement actif à nouveau")
+      error => { this._handleError("Impossible de rendre ce chargé de recrutement actif à nouveau"); console.log(error); }
     );
   }
 

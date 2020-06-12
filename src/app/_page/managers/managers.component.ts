@@ -52,7 +52,7 @@ export class ManagersComponent implements OnInit {
                 fileName = fileName.toLowerCase();
                 saveAs(blob, fileName);
               },
-              error => console.log(error)
+              error => { this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error); }
             )
             this.ngOnInit()
           },
@@ -61,7 +61,7 @@ export class ManagersComponent implements OnInit {
               const dialogConfig = new MatDialogConfig();
               dialogConfig.data = 'Cette adresse mail est indisponible.';
               this._dialog.open(MessageDialogComponent, dialogConfig);
-            } else console.log(error);
+            } else { this._handleError("Erreur de création d'accès"); console.log(error); }
           }
         )
       }
@@ -74,12 +74,12 @@ export class ManagersComponent implements OnInit {
 
   public onDeactivate(event : any) : void {
     this._managerService.updateManager(event.user, 'releaseDate', event.releaseDate)
-      .subscribe(() => this.ngOnInit(), error => console.log(error));
+      .subscribe(() => this.ngOnInit(), error => { this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error); });
   }
 
   public setAdmin(event : any) : void {
     this._managerService.updateManager(event.manager, 'isAdmin', event.admin)
-      .subscribe(() => this.ngOnInit(), error => console.log(error));
+      .subscribe(() => this.ngOnInit(), error => { this._handleError("Impossible de modifier les droits d'administrateurs"); console.log(error); });
   }
 
   private _handleError(message : string) : void {

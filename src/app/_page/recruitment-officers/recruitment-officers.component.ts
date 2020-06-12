@@ -58,7 +58,7 @@ export class RecruitmentOfficersComponent implements OnInit {
                 fileName = fileName.toLowerCase();
                 saveAs(blob, fileName);
               },
-              error => this._handleError("Impossible d'indiquer la sortie des effectifs")
+              error => { this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error);}
             )
             this.ngOnInit();
           },
@@ -67,7 +67,8 @@ export class RecruitmentOfficersComponent implements OnInit {
               const dialogConfig = new MatDialogConfig();
               dialogConfig.data = 'Cette adresse mail est indisponible.';
               this._dialog.open(MessageDialogComponent, dialogConfig);
-            } else this._handleError("Erreur de création d'accès");
+            } else { this._handleError("Erreur de création d'accès"); 
+                     console.log(error); }
           }
         );
       }
@@ -80,7 +81,7 @@ export class RecruitmentOfficersComponent implements OnInit {
 
   public onDeactivate(event : any) : void {
     this._recruitmentOfficerService.updateRecruitmentOfficer(event.user, 'releaseDate', event.releaseDate)
-      .subscribe(() => this.ngOnInit(), error => this._handleError("Impossible d'indiquer la sortie des effectifs"));
+      .subscribe(() => this.ngOnInit(), error => {this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error); });
   }
 
   private _handleError(message : string) : void {
