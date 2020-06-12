@@ -23,7 +23,10 @@
     <mat-card-actions>
       <div *ngIf="userId != manager.id">
         <button mat-button color="warn"
-          (click)="onSetReleaseDate()">Indiquer la sortie des effectifs</button>
+          (click)="onSetReleaseDate()">
+          <div *ngIf="manager.releaseDate">Modifier la sortie des effectifs</div>
+          <div *ngIf="!manager.releaseDate">Indiquer la sortie des effectifs</div>
+        </button>
         <button mat-button color="warn" *ngIf="manager.consultants.length === 0"
           (click)="onDelete()">Supprimer ce manager en base</button>
       </div>

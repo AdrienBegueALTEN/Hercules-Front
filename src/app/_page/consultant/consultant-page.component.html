@@ -25,9 +25,14 @@
   <mat-card-actions>
     <div *ngIf="writingRights">
       <button mat-button color="warn" 
-        (click)="onSetReleaseDate()">Indiquer la sortie des effectifs</button>
+        (click)="onSetReleaseDate()">
+        <div *ngIf="consultant.releaseDate">Modifier la sortie des effectifs</div>
+        <div *ngIf="!consultant.releaseDate">Indiquer la sortie des effectifs</div>
+      </button>
       <button mat-button color="warn" *ngIf="consultantsMissions?.length === 0"
         (click)="onDelete()">Supprimer ce consultant en base</button>
+      <button mat-button color="warn" *ngIf="consultant.releaseDate" 
+        (click)="onCancelReleaseDate()">Annuler la sortie des effectifs</button>
       </div>
   </mat-card-actions>
 </mat-card>

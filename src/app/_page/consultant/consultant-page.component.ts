@@ -68,4 +68,11 @@ export class ConsultantPageComponent implements OnInit {
       error => console.log(error)
     )
   }
+
+  public onCancelReleaseDate() : void {
+    this._consultantService.updateConsultant(this.consultant.id,"releaseDate",null).subscribe(
+      () => this.consultant.releaseDate = null,
+      (error) => console.log(error)
+    );
+  }
 }

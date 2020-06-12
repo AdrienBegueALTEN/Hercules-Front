@@ -149,6 +149,11 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   }
 
 generatePDF(selectedElements : any[],filename : string) : void {
+
+    if(filename.search(".pdf")==-1){
+      filename = filename + ".pdf";
+    }
+
     let elements : any[] = [];
     selectedElements.forEach( function (value){
       if(!!value.customer){
@@ -170,14 +175,11 @@ generatePDF(selectedElements : any[],filename : string) : void {
       (content) => {  this._snackBar.open("Le PDF a bien été enregistré",'X', { duration: 2000 });
                       var newBlob = new Blob([content], { type: "application/pdf" });
                       
-                      // fenêtre de demnande de nom
-
-
                       try{
                         if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                          window.navigator.msSaveOrOpenBlob(newBlob, "fichesMissionsEtProjets.pdf");}
+                          window.navigator.msSaveOrOpenBlob(newBlob, filename);}
                         else{
-                          FileSaver.saveAs(newBlob, "fichesMissionsEtProjets.pdf");
+                          FileSaver.saveAs(newBlob, filename);
                         }
                       } catch(error){
                         const dialogConfig = new MatDialogConfig();

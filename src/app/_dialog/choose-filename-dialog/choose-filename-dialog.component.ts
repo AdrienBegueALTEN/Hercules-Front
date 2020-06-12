@@ -22,7 +22,7 @@ export class ChooseFilenameDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.filenameForm = this._formBuilder.group({
-        filename : [this.data.filename,Validators.required]
+        filename : [this.data.filename,[Validators.required,Validators.pattern("[\\_\\-\\!\\?\\.\\+\\(\\)a-zA-Z0-9]+(\.pdf)?")]]
     });
 
   }
@@ -34,5 +34,7 @@ export class ChooseFilenameDialogComponent implements OnInit {
   onValidate(){
     this._dialogRef.close(this.filenameForm.controls['filename'].value);
   }
+
+
 
 }

@@ -10,10 +10,15 @@
           </mat-tab-group>
     </mat-card-content>
     <mat-card-actions>
-          <button mat-button color="warn" *ngIf="!recruitmentOfficer.releaseDate"
-            (click)="onSetReleaseDate()">Indiquer la sortie des effectifs</button>
+          <button mat-button color="warn" 
+            (click)="onSetReleaseDate()">
+            <div *ngIf="recruitmentOfficer.releaseDate">Modifier la sortie des effectifs</div>
+            <div *ngIf="!recruitmentOfficer.releaseDate">Indiquer la sortie des effectifs</div>
+          </button>
           <button mat-button color="warn"
             (click)="onDelete()">Supprimer ce CDR en base</button>
+          <button mat-button color="warn" *ngIf="recruitmentOfficer.releaseDate"
+            (click)="onCancelReleaseDate()">Annuler la sortie des effectifs</button>
       </mat-card-actions>
 </mat-card> 
 

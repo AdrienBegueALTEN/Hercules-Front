@@ -52,5 +52,12 @@ export class RecruitmentOfficerPageComponent implements OnInit {
       error => console.log(error)
     )
   }
+
+  public onCancelReleaseDate() : void {
+    this._recruitmentOfficerService.updateRecruitmentOfficer(this.recruitmentOfficer.id,'releaseDate', null).subscribe(
+      () => this.recruitmentOfficer.releaseDate = null,
+      error => console.log(error)
+    );
+  }
 }
  

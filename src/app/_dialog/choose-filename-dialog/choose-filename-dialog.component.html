@@ -4,6 +4,9 @@
     <mat-form-field [formGroup]="filenameForm">
         <mat-label>Nom de fichier</mat-label>
         <input matInput type="text" class="form-control" formControlName="filename">
+        <mat-error *ngIf="filenameForm.controls['filename'].hasError('pattern')">
+            Nom de fichier invalide
+        </mat-error>
     </mat-form-field>
 </div>
 <div mat-dialog-action>
