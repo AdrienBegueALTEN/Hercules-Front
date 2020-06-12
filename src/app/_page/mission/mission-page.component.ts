@@ -114,6 +114,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     const todayDate : Date = new Date();
     const lastVersionDate : Date = new Date(this.mission.versions[0].versionDate);
     const lastVersionDateIsNotToday : boolean = 
+      lastVersionDate !== null &&
       todayDate.getFullYear() !== lastVersionDate.getFullYear() ||
       todayDate.getMonth() !== lastVersionDate.getMonth() ||
       todayDate.getDate() !== lastVersionDate.getDate();

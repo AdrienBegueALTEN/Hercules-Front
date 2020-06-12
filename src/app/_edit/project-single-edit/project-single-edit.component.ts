@@ -47,12 +47,8 @@ export class ProjectSingleEditComponent implements OnInit {
     this.grp = new FormBuilder().group({
       title: [this.project[this.ENTITLED_KEY], [Validators.required, Validators.maxLength(100)]],
       description: [this.project[this.DESCRIPTION_KEY], [Validators.required, Validators.maxLength(this.DESCRIPTION_MAX_LENGTH)]],
-      beginDate: [this.project[this.BEGIN_KEY] ? 
-        new Date(this.project[this.BEGIN_KEY]).toISOString().substr(0, 10) :
-        null, Validators.required],
-      endDate: [this.project[this.END_KEY] ? 
-        new Date(this.project[this.END_KEY]).toISOString().substr(0, 10) :
-        null, Validators.required],
+      beginDate: [this.project[this.BEGIN_KEY] , Validators.required],
+      endDate: [this.project[this.END_KEY], Validators.required],
     });
     this.sendFormGrp.emit(this.grp);
   }
@@ -67,8 +63,9 @@ export class ProjectSingleEditComponent implements OnInit {
         this.grp.controls[this.END_KEY].setErrors({SEMANTICS_ERR : true});
         return;
       } else {
-        if (this.grp.controls[this.BEGIN_KEY].hasError(SEMANTICS_ERR))
+        if (this.grp.controls[this.BEGIN_KEY].hasError(SEMANTICS_ERR)) {
           delete this.grp.controls[this.BEGIN_KEY].errors[SEMANTICS_ERR];
+        }
         if (this.grp.controls[this.END_KEY].hasError(SEMANTICS_ERR))
           delete this.grp.controls[this.END_KEY].errors[SEMANTICS_ERR];
       }

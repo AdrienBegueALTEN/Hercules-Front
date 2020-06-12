@@ -9,7 +9,7 @@
     </mat-list-item>
     <mat-list-item>
       <h1 matLine>Durée du projet</h1>
-      <p matLine>Du {{project.beginDate  || '?'}} au {{project.beginDate || '?'}}</p>
+      <p matLine>Du {{project.beginDate | date:'dd/MM/yyyy'  || '?'}} au {{project.beginDate | date:'dd/MM/yyyy' || '?'}}</p>
     </mat-list-item>
   </mat-list>
   <mat-chip-list>
