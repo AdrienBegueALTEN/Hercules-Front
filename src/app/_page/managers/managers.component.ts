@@ -81,4 +81,11 @@ export class ManagersComponent implements OnInit {
     this._managerService.updateManager(event.manager, 'isAdmin', event.admin)
       .subscribe(() => this.ngOnInit(), error => console.log(error));
   }
+
+  private _handleError(message : string) : void {
+    
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = message;
+    this._dialog.open(MessageDialogComponent, dialogConfig);
+  }
 }

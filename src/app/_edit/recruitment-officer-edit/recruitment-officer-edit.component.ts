@@ -33,13 +33,21 @@ export class RecruitmentOfficerEditComponent {
         this.recruitmentOfficer[key] = this.grp.controls[key].value;
         this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
       },
-      error => { 
-        if (error.status == HttpStatus.CONFLICT) {
-          const dialogConfig = new MatDialogConfig();
-          dialogConfig.data = 'Cette adresse mail est indisponible.';
-          this._dialog.open(MessageDialogComponent, dialogConfig);
-        } else console.log(error);
-      }
+      error => this._handleError(error.status)
     )
+  }
+
+  private _handleError(status : number) : void {
+    let message : string;
+    switch(status) {
+      case HttpStatus.CONFLICT :
+        message = 'Cette adresse mail est indisponible.';
+        break;
+      default :
+        message = 'Impossible de mettre à jour ce champ.';
+    }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = 'Echec de la modification : '+message;
+    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 }

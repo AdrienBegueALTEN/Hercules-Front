@@ -67,13 +67,7 @@ export class ConsultantEditComponent implements OnInit {
         message = 'Impossible de mettre à jour ce champ.';
     }
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      title : 'Echec de la modification',
-      message : message,
-      ok: 'OK'
-    };
+    dialogConfig.data = 'Echec de la modification : '+message;
     this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 
@@ -84,7 +78,7 @@ export class ConsultantEditComponent implements OnInit {
         this._snackBar.open('Mise à jour effectuée', 'x', {duration: 2000});
         this.reload.emit()
       },
-      error => console.log(error)
+      error => this._handleError(error.status) 
     )
   }
   

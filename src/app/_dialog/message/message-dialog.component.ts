@@ -9,7 +9,9 @@ export class MessageDialogComponent {
 
   constructor(
     private _dialogRef: MatDialogRef<MessageDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data : string) {}
+    @Inject(MAT_DIALOG_DATA) public data : string) {
+      this._dialogRef.disableClose = false;
+    }
 
-  onOk() : void { this._dialogRef.close(); }
+  
 }

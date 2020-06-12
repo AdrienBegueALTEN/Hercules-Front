@@ -5,6 +5,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
 import { AuthService } from 'src/app/_services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 
 @Component({
   selector: 'app-manager-page',
@@ -48,7 +49,7 @@ export class ManagerPageComponent implements OnInit {
         if (releaseDate) {
           this._managerService.updateManager(this.manager.id, 'releaseDate', releaseDate).subscribe(
             () => this.manager.releaseDate = releaseDate, 
-            error => console.log(error)
+            error => this._handleError("Impossible d'indiquer la sortie des effectifs")
           )
         }
       }); 
@@ -57,12 +58,26 @@ export class ManagerPageComponent implements OnInit {
 
   public onDelete() : void {
     this._managerService.deleteManager(this.manager.id).subscribe(
-      () => this._router.navigate(['/recruitment-officers']),
-      error => console.log(error)
+      () => this._router.navigate(['/managers']),
+      error => this._handleError("Impossible de supprimer ce manager")
     )
   }
 
   public goToConsultantPage(consultant : number) {
     this._router.navigateByUrl('consultants/' + consultant);
+  }
+
+  public onCancelReleaseDate() : void {
+    this._managerService.updateManager(this.manager.id,'releaseDate',null).subscribe(
+      () => this.manager.releaseDate = null,
+      (error) => this._handleError("Impossible de rendre ce manager actif à nouveau")
+    );
+  }
+
+  private _handleError(message : string) : void {
+    
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = message;
+    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 }

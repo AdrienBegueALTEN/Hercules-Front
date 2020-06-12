@@ -29,6 +29,8 @@
         </button>
         <button mat-button color="warn" *ngIf="manager.consultants.length === 0"
           (click)="onDelete()">Supprimer ce manager en base</button>
+        <button mat-button color="warn" *ngIf="manager.releaseDate" 
+          (click)="onCancelReleaseDate()">Annuler la sortie des effectifs</button>
       </div>
     </mat-card-actions>
 </mat-card> 

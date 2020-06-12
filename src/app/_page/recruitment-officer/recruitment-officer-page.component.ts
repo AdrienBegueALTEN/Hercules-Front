@@ -3,6 +3,7 @@ import { RecruitmentOfficerService } from 'src/app/_services/recruitment-officer
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
+import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 
 @Component({
   selector: 'app-recruitment-officer-page',
@@ -40,7 +41,7 @@ export class RecruitmentOfficerPageComponent implements OnInit {
         if (releaseDate) {
           this._recruitmentOfficerService.updateRecruitmentOfficer(this.recruitmentOfficer.id, 'releaseDate', releaseDate).subscribe(
             () => this.recruitmentOfficer.releaseDate = releaseDate, 
-            error => console.log(error)
+            error => this._handleError("Impossible d'indiquer la sortie des effectifs")
           )
         }
       }); 
@@ -49,15 +50,22 @@ export class RecruitmentOfficerPageComponent implements OnInit {
   public onDelete() : void {
     this._recruitmentOfficerService.deleteRecruitmentOfficer(this.recruitmentOfficer.id).subscribe(
       () => this._router.navigate(['/recruitment-officers']),
-      error => console.log(error)
-    )
+      error => this._handleError("Impossible de supprimer ce chargé de recrutement")
+    );
   }
 
   public onCancelReleaseDate() : void {
     this._recruitmentOfficerService.updateRecruitmentOfficer(this.recruitmentOfficer.id,'releaseDate', null).subscribe(
       () => this.recruitmentOfficer.releaseDate = null,
-      error => console.log(error)
+      error => this._handleError("Impossible de rendre ce chargé de recrutement actif à nouveau")
     );
+  }
+
+  private _handleError(message : string) : void {
+    
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = message;
+    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 }
  
