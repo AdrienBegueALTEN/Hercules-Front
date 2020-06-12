@@ -4,18 +4,10 @@ import { MissionService } from 'src/app/_services/mission.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
-import { MatDialog } from '@angular/material/dialog';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MissionsActivitysectorAutocompleteComponent } from 'src/app/_input/autocomplete/missions/activitysector/missions-activitysector-autocomplete/missions-activitysector-autocomplete.component';
-import { MissionsTitleAutocompleteComponent } from 'src/app/_input/autocomplete/missions/title/missions-title-autocomplete/missions-title-autocomplete.component';
-import { MissionsCityAutocompleteComponent } from 'src/app/_input/autocomplete/missions/city/missions-city-autocomplete/missions-city-autocomplete.component';
-import { MissionsCountryAutocompleteComponent } from 'src/app/_input/autocomplete/missions/country/missions-country-autocomplete/missions-country-autocomplete.component';
-import { ConsultantAutocompleteComponent } from 'src/app/_input/autocomplete/consultant/consultant-autocomplete.component';
-import { MissionsCustomerAutocompleteComponent } from 'src/app/_input/autocomplete/missions/customer/missions-customer-autocomplete/missions-customer-autocomplete.component';
 import { MissionsSkillsAutocompleteComponent } from 'src/app/_input/autocomplete/missions/missions-skills-autocomplete/missions-skills-autocomplete.component';
 import { MatTableDataSource } from '@angular/material/table';
-
-
 
 @Component({
   selector: 'app-missions',
@@ -30,8 +22,6 @@ export class MissionsComponent implements OnInit {
   public readonly CUSTOMER_KEY : string = 'customer';
 
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
-  @ViewChild(ConsultantAutocompleteComponent) consultant: ConsultantAutocompleteComponent;
-  @ViewChild(MissionsCustomerAutocompleteComponent) client: MissionsCustomerAutocompleteComponent;
   @ViewChild(MissionsActivitysectorAutocompleteComponent) activtySector: MissionsActivitysectorAutocompleteComponent;
   @ViewChild(MissionsSkillsAutocompleteComponent) skills: MissionsSkillsAutocompleteComponent;
 
@@ -81,7 +71,6 @@ export class MissionsComponent implements OnInit {
     }
   }
   
-
   public setAllMissions(){
     this._missionService.getMissions(this.userId).subscribe(
       (data) => {
@@ -100,11 +89,13 @@ export class MissionsComponent implements OnInit {
     if (this.grp.controls[this.TITLE_KEY].value !== '')
       criteria[this.TITLE_KEY] = this.grp.controls[this.TITLE_KEY].value;
 
-    if (this.grp.controls[this.CUSTOMER_KEY]?.valid)
-      criteria[this.CUSTOMER_KEY] = this.grp.controls[this.CUSTOMER_KEY].value.id;
+    const customer = this.grp.controls[this.CUSTOMER_KEY]?.value
+    if (customer !== null)
+      criteria[this.CUSTOMER_KEY] = (typeof customer === 'string') ? customer : customer.id;
 
-    if (this.grp.controls[this.CONSULTANT_KEY]?.valid)
-      criteria[this.CONSULTANT_KEY] = this.grp.controls[this.CONSULTANT_KEY].value.id;
+    const consultant = this.grp.controls[this.CONSULTANT_KEY]?.value
+    if (consultant !== null)
+      criteria[this.CONSULTANT_KEY] = (typeof consultant === 'string') ? consultant : consultant.id;
 
     if (this.grp.controls[this.LOCATION_KEY].value !== '')
       criteria[this.LOCATION_KEY] = this.grp.controls[this.LOCATION_KEY].value;
