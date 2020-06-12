@@ -17,6 +17,7 @@ export class MissionColumnChoiceComponent implements OnInit {
     {name:'consultant',french:'Consultant'},
     {name:'customer',french:'Client'},
     {name:'city',french:'Ville'},
+    {name:'country',french:'Pays'},
     {name:'manager',french:'Manager'},
     {name:'numberOfProjects',french:'Nombre de projets'},
     {name:'sheetStatus',french:'Statut de la fiche'},
@@ -55,7 +56,6 @@ export class MissionColumnChoiceComponent implements OnInit {
   }
 
   private orderTranslation(){
-    let res = [];
     let newIdx = 0;
     for(let col of this.data.cols){
       const c = this.translation.filter(c => c.name==col)[0]

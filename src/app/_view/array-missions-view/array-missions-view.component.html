@@ -45,6 +45,11 @@
         <mat-cell *matCellDef="let element"> {{element.lastVersion.city}} </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="country">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Ville </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.lastVersion.country}} </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="manager">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Manager </mat-header-cell>
         <mat-cell *matCellDef="let mission">
