@@ -1,3 +1,4 @@
+import { SkillsAutocompleteComponent } from './_input/autocomplete/skills/skills-autocomplete.component';
 import { ManagerViewComponent } from './_view/manager-view/manager-view.component';
 import { ManagerEditComponent } from './_edit/manager-edit/manager-edit.component';
 import { RecruitmentOfficerViewComponent } from './_view/recruitment-officer-view/recruitment-officer-view.component';
@@ -76,7 +77,6 @@ import { ConsultantDiplomaComponent } from './_edit/consultant-edit/diploma/dipl
 import { ArrayMissionItemComponent } from './array-mission/array-mission-item/array-mission-item.component';
 import { ArrayProjectItemComponent } from './array-mission/array-project-item/array-project-item.component';
 
-
 import { MissionService } from './_services/mission.service';
 import { getFrenchPaginatorIntl } from './_services/french-paginator-intl';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
@@ -105,14 +105,9 @@ import { ChangePasswordDialogComponent } from './_dialog/change-password/change-
 import { NewUserDialogComponent } from './_dialog/new-user/new-user-dialog.component';
 import { ReleaseDateDialogComponent } from './_dialog/release-date/release-date-dialog.component';
 import { SkillTagsComponent } from './_input/skill-tags/skill-tags.component';
-import { MissionsActivitysectorAutocompleteComponent } from './_input/autocomplete/activity-sector/activity-sector-autocomplete.component';
-import { MissionsCountryAutocompleteComponent } from './_input/autocomplete/missions/country/missions-country-autocomplete/missions-country-autocomplete.component';
-import { MissionsCustomerAutocompleteComponent } from './_input/autocomplete/missions/customer/missions-customer-autocomplete/missions-customer-autocomplete.component';
-import { MissionsTitleAutocompleteComponent } from './_input/autocomplete/missions/title/missions-title-autocomplete/missions-title-autocomplete.component';
-import { MissionsCityAutocompleteComponent } from './_input/autocomplete/missions/city/missions-city-autocomplete/missions-city-autocomplete.component';
+import { ActivitySectorAutocompleteComponent } from './_input/autocomplete/activity-sector/activity-sector-autocomplete.component';
 import { NewCustomerDialogComponent } from './_dialog/new-customer/new-customer-dialog.component';
 import { UploadImageComponent } from './_input/upload-image/upload-image.component';
-import { MissionsSkillsAutocompleteComponent } from './_input/autocomplete/missions/missions-skills-autocomplete/missions-skills-autocomplete.component';
 import { MissionColumnChoiceComponent } from './_dialog/mission-column-choice/mission-column-choice.component';
 import { ChooseFilenameDialogComponent } from './_dialog/choose-filename-dialog/choose-filename-dialog.component';
 
@@ -176,21 +171,17 @@ import { ChooseFilenameDialogComponent } from './_dialog/choose-filename-dialog/
       NewUserDialogComponent,
       ReleaseDateDialogComponent,
       SkillTagsComponent,
-      MissionsActivitysectorAutocompleteComponent,
-      MissionsCountryAutocompleteComponent,
-      MissionsCustomerAutocompleteComponent,
-      MissionsTitleAutocompleteComponent,
-      MissionsCityAutocompleteComponent,
+      ActivitySectorAutocompleteComponent,
       AdminPanelComponent,
       NewCustomerDialogComponent,
       UploadImageComponent,
-      MissionsSkillsAutocompleteComponent,
       MissionColumnChoiceComponent,
       RecruitmentOfficerEditComponent,
       RecruitmentOfficerViewComponent,
       ManagerEditComponent,
       ManagerViewComponent,
-      ChooseFilenameDialogComponent
+      ChooseFilenameDialogComponent,
+      SkillsAutocompleteComponent
    ],
    imports: [
       AppRoutingModule,

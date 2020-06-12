@@ -5,8 +5,8 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MissionsActivitysectorAutocompleteComponent } from 'src/app/_input/autocomplete/activity-sector/activity-sector-autocomplete.component';
-import { MissionsSkillsAutocompleteComponent } from 'src/app/_input/autocomplete/missions/missions-skills-autocomplete/missions-skills-autocomplete.component';
+import { ActivitySectorAutocompleteComponent } from 'src/app/_input/autocomplete/activity-sector/activity-sector-autocomplete.component';
+import { SkillsAutocompleteComponent } from 'src/app/_input/autocomplete/skills/skills-autocomplete.component';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -23,8 +23,8 @@ export class MissionsComponent implements OnInit {
   public readonly ACTIVITY_SECTOR_KEY : string = 'activitySector';
 
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
-  @ViewChild(MissionsActivitysectorAutocompleteComponent) activtySector: MissionsActivitysectorAutocompleteComponent;
-  @ViewChild(MissionsSkillsAutocompleteComponent) skills: MissionsSkillsAutocompleteComponent;
+  @ViewChild(ActivitySectorAutocompleteComponent) activtySector: ActivitySectorAutocompleteComponent;
+  @ViewChild(SkillsAutocompleteComponent) skills: SkillsAutocompleteComponent;
 
   public grp : FormGroup = new FormBuilder().group(
     {

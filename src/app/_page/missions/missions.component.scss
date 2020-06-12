@@ -1,16 +1,3 @@
-.cplxSrch{
-  display: block;
-  margin-left: auto;
-  margin-right: auto ;
-}
-
-.cplxSrch-btn{
-  cursor: pointer;
-  background-color: white;
-  border: 0;
-  color: #008BD2;
-}
-
 .srch{
   background-color: white;
   padding-top: 10px;
@@ -19,10 +6,14 @@
   border-radius: 15px;
 }
 
-.arrow-down {
-  width: 0; 
-  height: 0; 
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-top: 20px solid white;
+#search-arrow {
+ position: relative;
+ top: -20px;
+ display: block;
+ margin-left: auto;
+ margin-right: auto;
+}
+
+#search-button {
+  float: right;
 }

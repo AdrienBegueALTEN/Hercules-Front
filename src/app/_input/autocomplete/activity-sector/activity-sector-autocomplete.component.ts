@@ -8,7 +8,7 @@ import { CtrlError } from 'src/app/_enums/ctrl-error.enum';
   selector: 'app-activity-sector-autocomplete',
   templateUrl: './activity-sector-autocomplete.component.html',
 })
-export class MissionsActivitysectorAutocompleteComponent implements OnInit {
+export class ActivitySectorAutocompleteComponent implements OnInit {
   @Input() customers : any[];
   @Input() required : boolean = false;
 
