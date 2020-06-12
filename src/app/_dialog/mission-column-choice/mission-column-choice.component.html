@@ -1,6 +1,6 @@
 <table  cdkDropList (cdkDropListDropped)="onDrop($event)">
     <tr *ngFor="let col of translation" cdkDrag cdkDragLockAxis="y">
-        <td colspan="2" *cdkDragPlaceholder><mat-checkbox [checked]="data.cols.includes(col.name)">{{col.french}}</mat-checkbox></td>
+        <td class="placeholder" colspan="2" *cdkDragPlaceholder>{{col.french}}</td>
         <td><mat-checkbox 
             (change)="onColChanged($event,col.name)" 
             [checked]="data.cols.includes(col.name)">
