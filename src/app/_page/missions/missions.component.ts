@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MissionsActivitysectorAutocompleteComponent } from 'src/app/_input/autocomplete/missions/activitysector/missions-activitysector-autocomplete/missions-activitysector-autocomplete.component';
+import { MissionsActivitysectorAutocompleteComponent } from 'src/app/_input/autocomplete/activity-sector/activity-sector-autocomplete.component';
 import { MissionsSkillsAutocompleteComponent } from 'src/app/_input/autocomplete/missions/missions-skills-autocomplete/missions-skills-autocomplete.component';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -20,6 +20,7 @@ export class MissionsComponent implements OnInit {
   public readonly LOCATION_KEY : string = 'location';
   public readonly CONSULTANT_KEY : string = 'consultant';
   public readonly CUSTOMER_KEY : string = 'customer';
+  public readonly ACTIVITY_SECTOR_KEY : string = 'activitySector';
 
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
   @ViewChild(MissionsActivitysectorAutocompleteComponent) activtySector: MissionsActivitysectorAutocompleteComponent;
@@ -89,19 +90,17 @@ export class MissionsComponent implements OnInit {
     if (this.grp.controls[this.TITLE_KEY].value !== '')
       criteria[this.TITLE_KEY] = this.grp.controls[this.TITLE_KEY].value;
 
-    const customer = this.grp.controls[this.CUSTOMER_KEY]?.value
-    if (customer !== null)
-      criteria[this.CUSTOMER_KEY] = (typeof customer === 'string') ? customer : customer.id;
+    if (this.grp.controls[this.CUSTOMER_KEY]?.valid)
+      criteria[this.CUSTOMER_KEY] = this.grp.controls[this.CUSTOMER_KEY].value.id;
 
-    const consultant = this.grp.controls[this.CONSULTANT_KEY]?.value
-    if (consultant !== null)
-      criteria[this.CONSULTANT_KEY] = (typeof consultant === 'string') ? consultant : consultant.id;
+    if (this.grp.controls[this.CONSULTANT_KEY]?.valid)
+      criteria[this.CONSULTANT_KEY] = this.grp.controls[this.CONSULTANT_KEY].value.id;
 
     if (this.grp.controls[this.LOCATION_KEY].value !== '')
       criteria[this.LOCATION_KEY] = this.grp.controls[this.LOCATION_KEY].value;
 
-    if (this.activtySector.getValue() !== "")
-      criteria['activitySector'] = this.activtySector.getValue();
+    if (this.grp.controls[this.ACTIVITY_SECTOR_KEY]?.value !== '')
+      criteria[this.ACTIVITY_SECTOR_KEY] = this.grp.controls[this.ACTIVITY_SECTOR_KEY].value;
 
     this._missionService.advancedSearch(criteria).subscribe(
       result => {

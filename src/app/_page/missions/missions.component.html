@@ -46,7 +46,12 @@
                         (sendFormCtrl)="grp.addControl(CUSTOMER_KEY, $event)">
                     </app-customer-autocomplete>
                 </td>
-                <td><app-missions-activitysector-autocomplete [missions]="missions"></app-missions-activitysector-autocomplete></td>
+                <td>
+                    <app-activity-sector-autocomplete 
+                        [customers]="customers"
+                        (sendFormCtrl)="grp.addControl(ACTIVITY_SECTOR_KEY, $event)">
+                    </app-activity-sector-autocomplete>
+                </td>
             </tr>
             <tr>
                 <td>

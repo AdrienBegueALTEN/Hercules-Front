@@ -1,18 +1,18 @@
 <form>
   <mat-form-field>
     <mat-label>Rechercher un consultant</mat-label>
-    <input type="text" matInput [formControl]="ctrl" [matAutocomplete]="auto">
+    <input type="text" matInput [formControl]="ctrl" [matAutocomplete]="auto" [required]="required">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         <div *ngIf="displayInGrps">
           <mat-optgroup *ngFor="let grp of filteredConsultants | async" [label]="grp.name">
             <mat-option *ngFor="let consultant of grp.consultants" [value]="consultant">
-              <p><b>{{consultant.firstname}} {{consultant.lastname}}</b> - <i>{{consultant.email}}</i></p>
+              <p><b>{{consultant.firstname + ' ' + consultant.lastname}}</b> - <i>{{consultant.email}}</i></p>
             </mat-option>
           </mat-optgroup>
         </div>
         <div *ngIf="!displayInGrps">
           <mat-option *ngFor="let consultant of filteredConsultants | async" [value]="consultant">
-            <p><b>{{consultant.firstname}} {{consultant.lastname}}</b> - <i>{{consultant.email}}</i></p>
+            <p><b>{{consultant.firstname + ' ' + consultant.lastname}}</b> - <i>{{consultant.email}}</i></p>
           </mat-option>
         </div>
         <mat-option disabled *ngIf="showNewOpt">
