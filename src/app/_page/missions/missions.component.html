@@ -25,7 +25,7 @@
     <form [formGroup]="grp">
         <table class="inputable">
             <tr>
-                <td colspan="2">
+                <td>
                     <mat-form-field>
                         <mat-label>Titre de la mission</mat-label>
                         <input matInput [formControlName]="TITLE_KEY">
@@ -33,29 +33,33 @@
                 </td>
                 <td>
                     <mat-form-field>
-                        <mat-label>Localisation</mat-label>
-                        <input matInput [formControlName]="LOCATION_KEY">
+                        <mat-label>Localisation de la mission</mat-label>
+                        <input matInput [formControlName]="LOCATION_KEY" placeholder="Ville ou pays où s'est déroulée la mission">
                     </mat-form-field>
                 </td>
+            </tr>
+            <tr>
+                <td>
+                    <app-customer-autocomplete 
+                        *ngIf="!!customers"
+                        [customers]="customers"
+                        (sendFormCtrl)="grp.addControl(CUSTOMER_KEY, $event)">
+                    </app-customer-autocomplete>
+                </td>
+                <td><app-missions-activitysector-autocomplete [missions]="missions"></app-missions-activitysector-autocomplete></td>
             </tr>
             <tr>
                 <td>
                     <app-consultant-autocomplete 
                         *ngIf="!!consultants" 
                         [consultants]="consultants" 
-                        (sendFormCtrl)="this.consultantForm = $event">
+                        (sendFormCtrl)="grp.addControl(CONSULTANT_KEY, $event)">
                     </app-consultant-autocomplete>
                 </td>
-                <td><app-missions-customer-autocomplete [missions]="missions"></app-missions-customer-autocomplete></td>
-                <td><app-missions-activitysector-autocomplete [missions]="missions"></app-missions-activitysector-autocomplete></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <app-missions-skills-autocomplete></app-missions-skills-autocomplete>
-                </td>
-
-            </tr>
+                <td>
+                <app-missions-skills-autocomplete></app-missions-skills-autocomplete>
+            </td></tr>
         </table> 
     </form>
-    <button mat-stroked-button (click)="onSearch()" color="primary"><mat-icon>search</mat-icon> Rechercher</button>
+    <button mat-stroked-button (click)="onSearch()" color="primary"><mat-icon>search</mat-icon>Recherche avancée</button>
 </ng-template>

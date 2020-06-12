@@ -194,7 +194,6 @@ export class MissionService {
     for (var i in criteria)
       url = url.concat(encodeURIComponent(i), '=', encodeURIComponent(criteria[i]), '&');
     url = url.slice(0, url.length - 1);
-    console.log(url)
     return this._httpClient.get(url);
   }
 }

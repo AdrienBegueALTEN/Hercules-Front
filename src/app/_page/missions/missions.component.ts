@@ -1,3 +1,4 @@
+import { CustomerService } from './../../_services/customer.service';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { MissionService } from 'src/app/_services/mission.service';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -25,6 +26,8 @@ export class MissionsComponent implements OnInit {
 
   public readonly TITLE_KEY : string = 'title';
   public readonly LOCATION_KEY : string = 'location';
+  public readonly CONSULTANT_KEY : string = 'consultant';
+  public readonly CUSTOMER_KEY : string = 'customer';
 
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
   @ViewChild(ConsultantAutocompleteComponent) consultant: ConsultantAutocompleteComponent;
@@ -40,8 +43,8 @@ export class MissionsComponent implements OnInit {
   )
 
   consultants : any[];
+  customers : any[];
   missions: any[];
-  public consultantForm : FormControl;
   public showAdvancedSearch : boolean = false;
   public userIsManager : boolean = this._authService.userIsManager();
   public onlyMine : boolean = true;
@@ -52,45 +55,24 @@ export class MissionsComponent implements OnInit {
   constructor(
     private _missionService: MissionService,
     private _authService: AuthService,
-    private _consultantService : ConsultantService
-  ) { }
+    private _consultantService : ConsultantService,
+    private _customerService : CustomerService
+  ) {}
 
-  ngOnInit(): void {
-
+  public ngOnInit() : void {
     this._missionService.getMissions(this.userId).subscribe(
-      (data) => {
-        this.missions = data;
-      },
-      (err) => {
-        console.log(err);
-      }
+      missions => this.missions = missions,
+      error => console.log(error)
     )
-
     this._consultantService.getConsultants(false).subscribe(
-      (consultants) => {
-        this.consultants = consultants;
-      },
-      () => window.location.replace('')
+      consultants => this.consultants = consultants,
+      error => console.log(error)
     )
-
-
+    this._customerService.getAll().subscribe(
+      customers => this.customers = customers,
+      error => console.log(error)
+    )
   }
-
-  /*private _getValues() : object {
-
-    let lname = null;
-    let fname = null;
-    return {
-      missionTitle: this.title.getValue(),
-      missionCity: this.city.getValue(),
-      missionCountry: this.country.getValue(),
-      consultantLastName: lname,
-      consultantFirstName: fname,
-      customerName: this.client.getValue(),
-      activitySector: this.activtySector.getValue(),
-      skills: this.skills.getSkills()
-    };
-  }*/
 
   public onSearch() : void {
     var criteria : object = {};
@@ -98,18 +80,18 @@ export class MissionsComponent implements OnInit {
     if (this.grp.controls[this.TITLE_KEY].value !== '')
       criteria[this.TITLE_KEY] = this.grp.controls[this.TITLE_KEY].value;
 
-    ///criteria['customer'] = ;
+    if (this.grp.controls[this.CUSTOMER_KEY]?.valid)
+      criteria[this.CUSTOMER_KEY] = this.grp.controls[this.CUSTOMER_KEY].value.id;
 
-    const consultant = this.consultant.getValue();
-    if(typeof consultant !== 'string')
-      criteria['consutlant'] = this.consultant.getValue().id;
+    if (this.grp.controls[this.CONSULTANT_KEY]?.valid)
+      criteria[this.CONSULTANT_KEY] = this.grp.controls[this.CONSULTANT_KEY].value.id;
 
     if (this.grp.controls[this.LOCATION_KEY].value !== '')
       criteria[this.LOCATION_KEY] = this.grp.controls[this.LOCATION_KEY].value;
 
-    /*if (this.activtySector.getValue() !== "")
-      criteria['activitySector'] = this.activtySector.getValue();*/
-console.log(criteria)
+    if (this.activtySector.getValue() !== "")
+      criteria['activitySector'] = this.activtySector.getValue();
+
     this._missionService.advancedSearch(criteria).subscribe(
       result => {
         this.missions = result;
