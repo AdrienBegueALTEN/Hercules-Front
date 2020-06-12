@@ -3,11 +3,16 @@
 }
 
 .handler{
-    cursor: all-scroll;
+    cursor: grab;
+    color: #008BD2;
+}
+
+.handler:active{
+    cursor: grabbing;
 }
 
 .placeholder{
-    cursor: all-scroll;
+    cursor: grabbing;
     border: 2px dotted #008BD2;
     text-align: center;
 }

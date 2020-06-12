@@ -1,0 +1,10 @@
+<mat-form-field>
+  <mat-label>Secteur d'activité du client</mat-label>
+  <input matInput [formControl]="ctrl" [matAutocomplete]="auto" [required]="required">
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let activitySector of filteredActivitySectors | async" [value]="activitySector">
+      {{activitySector}}
+    </mat-option>
+  </mat-autocomplete>
+  <mat-error>{{getErrorText()}}</mat-error>
+</mat-form-field>

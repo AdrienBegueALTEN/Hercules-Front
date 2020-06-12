@@ -105,7 +105,7 @@ import { ChangePasswordDialogComponent } from './_dialog/change-password/change-
 import { NewUserDialogComponent } from './_dialog/new-user/new-user-dialog.component';
 import { ReleaseDateDialogComponent } from './_dialog/release-date/release-date-dialog.component';
 import { SkillTagsComponent } from './_input/skill-tags/skill-tags.component';
-import { MissionsActivitysectorAutocompleteComponent } from './_input/autocomplete/missions/activitysector/missions-activitysector-autocomplete/missions-activitysector-autocomplete.component';
+import { MissionsActivitysectorAutocompleteComponent } from './_input/autocomplete/activity-sector/activity-sector-autocomplete.component';
 import { MissionsCountryAutocompleteComponent } from './_input/autocomplete/missions/country/missions-country-autocomplete/missions-country-autocomplete.component';
 import { MissionsCustomerAutocompleteComponent } from './_input/autocomplete/missions/customer/missions-customer-autocomplete/missions-customer-autocomplete.component';
 import { MissionsTitleAutocompleteComponent } from './_input/autocomplete/missions/title/missions-title-autocomplete/missions-title-autocomplete.component';

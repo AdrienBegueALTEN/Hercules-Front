@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MissionsActivitysectorAutocompleteComponent } from './missions-activitysector-autocomplete.component';
+import { MissionsActivitysectorAutocompleteComponent } from './activity-sector-autocomplete.component';
 
 describe('MissionsActivitysectorAutocompleteComponent', () => {
   let component: MissionsActivitysectorAutocompleteComponent;

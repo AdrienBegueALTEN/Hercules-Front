@@ -1,23 +1,18 @@
 <form [formGroup]="grp">
   <table class="inputable">
     <tr><td><mat-form-field>
-      <mat-label>Nom</mat-label>
-      <input matInput formControlName="name" required>
-      <mat-error *ngIf="!grp.controls['name'].valid && grp.controls['name'].touched">
-        {{getNameErr()}}
+      <mat-label>Nom du client</mat-label>
+      <input matInput [formControlName]="NAME_KEY" required>
+      <mat-error>
+        {{getErrorText()}}
       </mat-error>
     </mat-form-field></td></tr>
-    <tr><td><mat-form-field>
-        <mat-label>Secteur d'activité</mat-label>
-        <input matInput formControlName="activitySector" [matAutocomplete]="auto" required>
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let activitySector of filteredActivitySectors | async" [value]="activitySector">
-            {{activitySector}}
-          </mat-option>
-        </mat-autocomplete>
-        <mat-error *ngIf="!grp.controls['activitySector'].valid && grp.controls['activitySector'].touched">
-          {{getActivitySectorErr()}}
-        </mat-error>
-      </mat-form-field></td></tr>
+    <tr><td>
+      <app-activity-sector-autocomplete 
+        [customers]="customers"
+        [required]="true"
+        (sendFormCtrl)="grp.addControl(ACTIVITY_SECTOR_KEY, $event)">
+    </app-activity-sector-autocomplete>
+    </td></tr>
   </table>
 </form>
