@@ -179,21 +179,21 @@ export class MissionService {
       httpOptions);
   }
 
-  public getAllSkills(): Observable<any> {
+  public getAllSkills() : Observable<any> {
     return this._httpClient.get(AppSettings.MISSION_API + 'projects/skills-all');
   }
 
-  public generatePDF(elements : any[]): Observable<any> {
+  public generatePDF(elements : any[]) : Observable<any> {
     return this._httpClient.post(AppSettings.MISSION_API + 'pdf',
       elements,
       {responseType: 'blob'});
   }
 
-  public advancedSearch(criteria : object) {
+  public advancedSearch(criteria : object) : Observable<any> {
     var url : string = AppSettings.MISSION_API + 'advancedSearch/?'
     for (var i in criteria)
       url = url.concat(encodeURIComponent(i), '=', encodeURIComponent(criteria[i]), '&');
-    url = url.slice(0, url.length - 2);
+    url = url.slice(0, url.length - 1);
     return this._httpClient.get(url);
   }
 }

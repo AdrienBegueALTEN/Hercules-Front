@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -12,17 +12,22 @@ const _filter = (name : string, value : string) : boolean => {
   templateUrl: './customer-autocomplete.component.html'
 })
 export class CustomerAutocompleteComponent implements OnInit {
-  ctrl = new FormControl('', [Validators.required, this._checkSelection]);
-  filteredCustomers : Observable<any[]>;
-  showNewOpt : boolean = false;
-
   @Input() customers : any[];
   @Input() canCreateNew : boolean = false;
+  @Input() required : boolean = false;
+
+  public ctrl : FormControl;
+  public filteredCustomers : Observable<any[]>;
+  public showNewOpt : boolean = false;
 
   @Output() sendFormCtrl = new EventEmitter<FormControl>();
   @Output() newCustomer = new EventEmitter();
 
-  constructor() {}
+  constructor() {
+    var validators : ValidatorFn[] = [this._checkSelection];
+    if (this.required) validators.push(Validators.required);
+    this.ctrl = new FormControl('', validators);
+  }
 
   ngOnInit() {
     this.filteredCustomers = this.ctrl.valueChanges

@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -19,9 +19,10 @@ const _filterGrpConsultants = (consultants : any[], value : string) : any[] => {
 })
 export class ConsultantAutocompleteComponent implements OnInit {
   @Input() canCreateNew : boolean = false;
+  @Input() required : boolean = false;
   @Input() consultants : any[];
 
-  ctrl = new FormControl('', [Validators.required, this._checkSelection]);
+  public ctrl : FormControl;
   filteredConsultants: Observable<any[]>;
   showNewOpt : boolean = false;
   displayInGrps: boolean = false;
@@ -29,9 +30,11 @@ export class ConsultantAutocompleteComponent implements OnInit {
   @Output() sendFormCtrl = new EventEmitter<FormControl>();
   @Output() newConsultant= new EventEmitter();
 
-  constructor(
-    private _authService : AuthService
-  ) {}
+  constructor(private _authService : AuthService) {
+    var validators : ValidatorFn[] = [this._checkSelection];
+    if (this.required) validators.push(Validators.required);
+    this.ctrl = new FormControl('', validators);
+  }
 
   ngOnInit() {
     this._initOptions();
@@ -101,11 +104,8 @@ export class ConsultantAutocompleteComponent implements OnInit {
     return (typeof control.value == 'string') ? { 'requirements': true } : null;
   }
 
-  
-
   public getValue(){
     return this.ctrl.value;
   }
-
   
 }

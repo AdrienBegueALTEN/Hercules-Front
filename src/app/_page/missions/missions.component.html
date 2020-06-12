@@ -1,7 +1,13 @@
-<div class="srch">
-    <div *ngIf="advancedSearchEnabled; then complex else simple"></div>
-</div> 
-<div class="arrow-down cplxSrch"></div>
+<mat-card>
+    <mat-card-title *ngIf="showAdvancedSearch">Recherche avancée</mat-card-title>
+    <mat-card-content>
+    <div *ngIf="showAdvancedSearch; then complex else simple"></div>
+</mat-card-content>
+</mat-card>
+
+<button mat-mini-fab (click)="toggleAdvancedSearch()" id="search-arrow" class="blue-shape">
+    <mat-icon>keyboard_arrow_{{showAdvancedSearch ? 'up' : 'down'}}</mat-icon>
+</button>
 
 <app-array-missions-view *ngIf="!!missions"
     [displayedColumns]="colsToDisp"
@@ -10,44 +16,57 @@
 </app-array-missions-view>
 
 <ng-template #simple>
-    <mat-form-field>
-        <mat-label>Chercher une mission</mat-label>
-        <input matInput (keyup)="arrayView.applyFilter($event)"
-            placeholder="Chercher une mission, une ville, un secteur d'activité...">
-    </mat-form-field>
-    <button class="cplxSrch cplxSrch-btn" (click)="advancedSearch()">
-        <mat-icon>add</mat-icon>
-    </button>
+    <table class="inputable">
+        <tr><td><mat-form-field>
+            <mat-label>Chercher une mission</mat-label>
+            <input matInput (keyup)="arrayView.applyFilter($event)"
+                placeholder="Chercher une mission, une ville, un secteur d'activité...">
+        </mat-form-field></td></tr>
+    </table>
 </ng-template>
 
 <ng-template #complex>
-    <table class="inputable">
-        <tr>
-            <td><app-missions-title-autocomplete [missions]="missions"></app-missions-title-autocomplete></td>
-            <td><app-missions-city-autocomplete [missions]="missions"></app-missions-city-autocomplete></td>
-            <td><app-missions-country-autocomplete [missions]="missions"></app-missions-country-autocomplete></td>
-        </tr>
-        <tr>
+    <form [formGroup]="grp">
+        <table class="inputable">
+            <tr><td>
+                <mat-form-field>
+                    <mat-label>Titre de la mission</mat-label>
+                    <input matInput [formControlName]="TITLE_KEY">
+                </mat-form-field>
+            </td>
             <td>
-                <app-consultant-autocomplete 
-                    *ngIf="!!consultants" 
+                <mat-form-field>
+                    <mat-label>Localisation de la mission</mat-label>
+                    <input matInput [formControlName]="LOCATION_KEY" placeholder="Ville ou pays où s'est déroulée la mission">
+                </mat-form-field>
+            </td></tr>
+            <tr><td>
+                <app-customer-autocomplete *ngIf="!!customers"
+                    [customers]="customers"
+                    (sendFormCtrl)="grp.addControl(CUSTOMER_KEY, $event)">
+                </app-customer-autocomplete>
+            </td>
+            <td>
+                <app-activity-sector-autocomplete *ngIf="!!customers"
+                    [customers]="customers"
+                    (sendFormCtrl)="grp.addControl(ACTIVITY_SECTOR_KEY, $event)">
+                </app-activity-sector-autocomplete>
+            </td></tr>
+            <tr><td colspan="2">
+                <app-consultant-autocomplete *ngIf="!!consultants" 
                     [consultants]="consultants" 
-                    (sendFormCtrl)="this.consultantForm = $event"></app-consultant-autocomplete>
-            </td>
-            <td><app-missions-customer-autocomplete [missions]="missions"></app-missions-customer-autocomplete></td>
-            <td><app-missions-activitysector-autocomplete [missions]="missions"></app-missions-activitysector-autocomplete></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <app-missions-skills-autocomplete></app-missions-skills-autocomplete>
-            </td>
-            <td style="text-align: right;">
-                <button mat-stroked-button (click)="sendAdvSearch()" color="primary"><mat-icon>search</mat-icon> Rechercher</button>
-            </td>
-        </tr>
-    </table>  
-    
-    <button class="cplxSrch cplxSrch-btn" (click)="advancedSearch()">
-        <mat-icon>remove</mat-icon>
-    </button>
+                    (sendFormCtrl)="grp.addControl(CONSULTANT_KEY, $event)">
+                </app-consultant-autocomplete>
+             </td></tr>
+            <tr><td colspan="2">
+                <app-skills-autocomplete></app-skills-autocomplete>
+            </td></tr>
+            <tr><td colspan="2">
+                <button mat-fab (click)="onSearch()" id="search-button" class="white-shape"
+                    title="Effectuer une recherche avancée">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </td></tr>
+        </table> 
+    </form>
 </ng-template>

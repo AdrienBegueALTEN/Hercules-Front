@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MissionsActivitysectorAutocompleteComponent } from './missions-activitysector-autocomplete.component';
+import { ActivitySectorAutocompleteComponent } from './activity-sector-autocomplete.component';
 
 describe('MissionsActivitysectorAutocompleteComponent', () => {
-  let component: MissionsActivitysectorAutocompleteComponent;
-  let fixture: ComponentFixture<MissionsActivitysectorAutocompleteComponent>;
+  let component: ActivitySectorAutocompleteComponent;
+  let fixture: ComponentFixture<ActivitySectorAutocompleteComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MissionsActivitysectorAutocompleteComponent ]
+      declarations: [ ActivitySectorAutocompleteComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MissionsActivitysectorAutocompleteComponent);
+    fixture = TestBed.createComponent(ActivitySectorAutocompleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
