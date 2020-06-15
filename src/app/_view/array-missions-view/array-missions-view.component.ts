@@ -136,7 +136,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   }
 
   public masterToggle() : void {
-    if (this.selection.selected.length === this.NB_MAX_CHECK)
+    if (this.selection.selected.length === this.getNbCheckableRow())
       this.selection.clear();
     else {
       let row = 0;

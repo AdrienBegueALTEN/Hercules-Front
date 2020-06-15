@@ -9,10 +9,10 @@
     <ng-container matColumnDef="select">
         <mat-header-cell *matHeaderCellDef>
             <mat-checkbox
-            *ngIf="getNbCheckableRow() <= NB_MAX_CHECK"
+            *ngIf="getNbCheckableRow() <= NB_MAX_CHECK && getNbCheckableRow() != 0"
                 (change)="$event ? masterToggle() : null"
-                [checked]="selection.selected.length === NB_MAX_CHECK"
-                [indeterminate]="selection.selected.length !== 0 && selection.selected.length < NB_MAX_CHECK">
+                [checked]="selection.selected.length === getNbCheckableRow()"
+                [indeterminate]="selection.selected.length !== 0 && selection.selected.length < getNbCheckableRow()">
             </mat-checkbox>
         </mat-header-cell>
 
