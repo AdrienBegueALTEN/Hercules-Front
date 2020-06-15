@@ -27,7 +27,7 @@ export class ManagersComponent implements OnInit {
   ) {}
 
   public ngOnInit() : void {
-    this._managerService.getAll().subscribe(
+    this._managerService.getAll(false).subscribe(
       (data) => this.dataSource = new MatTableDataSource(data),
       () => window.location.replace("")
     );

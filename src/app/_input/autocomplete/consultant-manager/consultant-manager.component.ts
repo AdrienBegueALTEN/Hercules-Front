@@ -33,7 +33,7 @@ export class ConsultantManagerComponent implements OnInit {
 
   initialize(){
     this.managerCtrl.setValue(this.consultant.manager);
-    this.managerService.getAll().subscribe(
+    this.managerService.getAll(true).subscribe(
       (data)=> {
         this.managers = data;
         this.filteredManagers = this.managerCtrl.valueChanges

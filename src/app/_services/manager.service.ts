@@ -10,8 +10,11 @@ export class ManagerService {
 
   constructor(private _httpClient : HttpClient) { }
 
-  getAll() : Observable<any[]> {
-    return this._httpClient.get<any[]>(AppSettings.MANAGER_API, AppSettings.HTTP_JSON_CONTENT);
+  getAll(enabled: boolean) : Observable<any[]> {
+    if(enabled===true)
+      return this._httpClient.get<any[]>(AppSettings.MANAGER_API + '?enabled=true', AppSettings.HTTP_JSON_CONTENT);
+    else
+      return this._httpClient.get<any[]>(AppSettings.MANAGER_API + '?enabled=false', AppSettings.HTTP_JSON_CONTENT);
   }
 
   getManagerById(id : String) : Observable<any> {
