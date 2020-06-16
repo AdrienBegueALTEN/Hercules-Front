@@ -94,10 +94,13 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
             this.ngOnInit();
             return;
           }
+          
         }
-      }
+        
+      },
+      err => this._showMessageDialog("Impossible de charger cette image.")
     )
-    this._showMessageDialog("Impossible de charger cette image.");
+    
   }
 
   public removePic(project: any){
