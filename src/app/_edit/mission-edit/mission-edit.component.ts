@@ -20,7 +20,7 @@ export class MissionEditComponent implements OnInit {
   readonly COUNTRY_KEY = 'country';
   readonly COUNTRY_TOOLTIP = 'Ville au sein duquel vous avez effectué la mission. En cas de télétravail, pays où se trouve le site du client.';
   readonly DESCRIPTION_KEY = 'description';
-  readonly DESCRIPTION_TOOLTIP = 'Descritpif complet présentant la mission dans sa globalité.';
+  readonly DESCRIPTION_TOOLTIP = 'Descriptif complet présentant la mission dans sa globalité.';
   readonly DESCRIPTION_MAX_LENGTH = 1000;
   readonly ROLE_KEY = 'consultantRole';
   readonly ROLE_TOOLTIP = 'Titre représentatif des différentes tâches que vous avez été amené à réaliser durant la mission.';
