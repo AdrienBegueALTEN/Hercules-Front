@@ -109,8 +109,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
 
   }
 
-
-
   nestedFilterCheck(search, data, key) {
     if (typeof data[key] === 'object') {
       for (const k in data[key]) {
@@ -130,19 +128,27 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   }
 
   public getNbCheckableRow() : number {
-    return this.dataSource.data
-      .filter(row => row.sheetStatus === SheetStatus.VALIDATED)
-      .length;
+    const checkableMission : any[] = this.dataSource.data.filter(row => row.sheetStatus === SheetStatus.VALIDATED);
+    var nbCheckableRow : number = 0;
+    checkableMission.forEach(mission => nbCheckableRow += mission.lastVersion.projects.length + 1);
+    return nbCheckableRow;
   }
 
   public masterToggle() : void {
     if (this.selection.selected.length === this.getNbCheckableRow())
       this.selection.clear();
     else {
-      let row = 0;
+      var row : number = 0, subRow : number, nbProjects : number;
       while (row < this.dataSource.data.length && this.selection.selected.length < this.NB_MAX_CHECK) {
-        if (this.dataSource.data[row].sheetStatus === SheetStatus.VALIDATED)
+        if (this.dataSource.data[row].sheetStatus === SheetStatus.VALIDATED) {
+          subRow = 0;
+          nbProjects = this.dataSource.data[row].lastVersion.projects.length;
           this.selection.select(this.dataSource.data[row]);
+          while (subRow < nbProjects && this.selection.selected.length < this.NB_MAX_CHECK) {
+            this.selection.select(this.dataSource.data[row].lastVersion.projects[subRow]);
+            subRow++;
+          };
+        }
         row++;
       };
     }
