@@ -16,38 +16,38 @@
             </mat-checkbox>
         </mat-header-cell>
 
-        <mat-cell *matCellDef="let element">
-            <mat-checkbox *ngIf="element.sheetStatus === 'VALIDATED' && (selection.selected.length < NB_MAX_CHECK || selection.isSelected(element))"
-                (click)="$event.stopPropagation() || onClick($event,element)"
-                (change)="$event ? selection.toggle(element) : null" [checked]="selection.isSelected(element)">
+        <mat-cell *matCellDef="let mission">
+            <mat-checkbox *ngIf="mission.sheetStatus === 'VALIDATED' && (selection.selected.length < NB_MAX_CHECK || selection.isSelected(mission))"
+                (click)="$event.stopPropagation() || onClick($event,mission)"
+                (change)="$event ? selection.toggle(mission) : null" [checked]="selection.isSelected(mission)">
             </mat-checkbox>
         </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="title">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Titre de la mission </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.lastVersion.title}} </mat-cell>
+        <mat-cell *matCellDef="let mission"> {{mission.lastVersion.title}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="consultant">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Consultant </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.consultant.firstname}} {{element.consultant.lastname}}
+        <mat-cell *matCellDef="let mission"> {{mission.consultant.firstname}} {{mission.consultant.lastname}}
         </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="customer">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Client </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.customer.name}} </mat-cell>
+        <mat-cell *matCellDef="let mission"> {{mission.customer.name}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="city">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Ville </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.lastVersion.city}} </mat-cell>
+        <mat-cell *matCellDef="let mission"> {{mission.lastVersion.city}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="country">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Ville </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.lastVersion.country}} </mat-cell>
+        <mat-cell *matCellDef="let mission"> {{mission.lastVersion.country}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="manager">
@@ -60,14 +60,14 @@
 
     <ng-container matColumnDef="numberOfProjects">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre de projets </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <i *ngIf="element.lastVersion.projects?.length > 0">{{element.lastVersion.projects?.length}}</i>
+        <mat-cell *matCellDef="let mission">
+            <i *ngIf="mission.lastVersion.projects?.length > 0">{{mission.lastVersion.projects?.length}}</i>
         </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="sheetStatus">
         <mat-header-cell *matHeaderCellDef>Statut de la fiche</mat-header-cell>
-        <mat-cell *matCellDef="let element" [ngSwitch]="element.sheetStatus">
+        <mat-cell *matCellDef="let mission" [ngSwitch]="mission.sheetStatus">
             <mat-icon *ngSwitchCase="'ON_WAITING'" style="color: red"
                 matTooltip="Fiche en attente">close</mat-icon>
             <mat-icon *ngSwitchCase="'ON_GOING'" style="color: orange"
@@ -76,7 +76,7 @@
                 matTooltip="Fiche validée">done_all</mat-icon>
 
             <button mat-icon-button
-                [routerLink]="['/missions', element.id]">
+                [routerLink]="['/missions', mission.id]">
                 <mat-icon matTooltip="Voir les détails">more_horiz</mat-icon>
             </button>
 
@@ -97,11 +97,12 @@
     <div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
         <div class="contours-margin" *ngIf="element?.lastVersion?.projects">
             <div *ngFor="let project of element.lastVersion.projects; let i = index">
-                <mat-checkbox (click)="$event.stopPropagation() || onClick($event,project)"
+                <mat-checkbox *ngIf="(selection.selected.length < NB_MAX_CHECK || selection.isSelected(project))"
+                    (click)="$event.stopPropagation() || onClick($event,project)"
                     (change)="$event ? selection.toggle(project) : null" [checked]="selection.isSelected(project)"
                     [disabled]='!(project?.title.length > 0)'>
-                        {{project.title || 'Projet n°' + (i + 1)}}
                 </mat-checkbox>
+                {{project.title || 'Projet n°' + (i + 1)}}
             </div>
         </div>
         <div class="contours-margin" *ngIf="!element.lastVersion.projects">
