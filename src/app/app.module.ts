@@ -92,7 +92,6 @@ import { ProjectsViewComponent } from "./_view/projects-view/projects-view.compo
 import { ProjectSingleViewComponent } from './_view/project-single-view/project-single-view.component';
 import { ProjectsEditComponent } from './_edit/projects-edit/projects-edit.component';
 import { ProjectSingleEditComponent } from './_edit/project-single-edit/project-single-edit.component';
-import { PaginatorProjectsComponent } from './_utils/paginator-projects/paginator-projects.component';
 import { ExternalHeaderComponent } from './_header/external/external-header.component';
 import { RecruitmentOfficersComponent } from './_page/recruitment-officers/recruitment-officers.component';
 import { RecruitmentOfficerPageComponent } from './_page/recruitment-officer/recruitment-officer-page.component';
@@ -154,7 +153,6 @@ import { ChooseFilenameDialogComponent } from './_dialog/choose-filename-dialog/
       ProjectSingleViewComponent,
       ProjectsEditComponent,
       ProjectSingleEditComponent,
-      PaginatorProjectsComponent,
       HomeComponent,
       MissionSheetPageComponent,
       ExternalHeaderComponent,
