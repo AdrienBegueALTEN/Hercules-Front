@@ -16,7 +16,7 @@ export class ProjectSingleEditComponent implements OnInit {
   readonly ENTITLED_KEY : string = 'title';
   readonly ENTITLED_TOOLTIP : string = 'Bref descriptif contenant des mots-clefs représentatifs du projet.';
   readonly DESCRIPTION_KEY : string = 'description';
-  readonly DESCRIPTION_TOOLTIP : string = 'Descritpif complet présentant le projet dans sa globalité.';
+  readonly DESCRIPTION_TOOLTIP : string = 'Descriptif complet présentant le projet dans sa globalité.';
   readonly DESCRIPTION_MAX_LENGTH : number = 1000;
   readonly BEGIN_KEY : string = 'beginDate';
   readonly BEGIN_TOOLTIP : string = 'Date à laquelle le projet a débuté.';
