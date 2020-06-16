@@ -15,6 +15,6 @@ export class FirstnameInputComponent extends MyInput {
   public getError() : string {
     return  this.ctrl.hasError(CtrlError.REQUIRED) ? 'Le prénom doit être renseigné' :
     this.ctrl.hasError(CtrlError.MAX_LENGTH) ? 'Le prénom est trop long' :
-    this.ctrl.hasError(CtrlError.PATTERN) ? 'Le prénom ne peut contenir que des lettres, éventuellement séparées pas un espace ou un tiret' : '';
+    this.ctrl.hasError(CtrlError.PATTERN) ? 'Le prénom ne peut contenir que des lettres, éventuellement séparées par un espace ou un tiret' : '';
   }
 }
