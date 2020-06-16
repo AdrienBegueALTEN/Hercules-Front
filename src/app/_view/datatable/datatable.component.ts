@@ -46,6 +46,8 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
     this.dataSource.sortingDataAccessor = (item, header) => {
       if (header === 'releaseDate')
         return ((!!item.releaseDate) ? "2" : "1").concat(item.lastname, item.firstname);
+      else if(header==='admin')
+        return (item.admin ? "1" : "2").concat(item.lastname, item.firstname);
       else return item[header];
     };
     this.dataSource.sort = this.sort;
