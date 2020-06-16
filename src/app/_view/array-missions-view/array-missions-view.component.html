@@ -102,7 +102,16 @@
                     (change)="$event ? selection.toggle(project) : null" [checked]="selection.isSelected(project)"
                     [disabled]='!(project?.title.length > 0)'>
                 </mat-checkbox>
-                {{project.title || 'Projet n°' + (i + 1)}}
+                <span class="project">{{project.title || 'Projet n°' + (i + 1)}}</span>
+                <small>
+                    {{project.beginDate | date:'dd/MM/yyyy - '}}{{project.endDate | date:'dd/MM/yyyy'}}
+                </small>
+                <span class="skills">
+                    <small *ngFor="let skill of project.skills, let j = index">
+                        <span *ngIf="j!=0"> / </span>{{skill.label}}
+                    </small>
+                </span>
+                
             </div>
         </div>
         <div class="contours-margin" *ngIf="!element.lastVersion.projects">
