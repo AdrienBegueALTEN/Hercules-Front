@@ -1,12 +1,14 @@
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
 import { FormGroup } from '@angular/forms';
+import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
 
 @Component({
   selector: 'app-projects-edit',
   templateUrl: './projects-edit.component.html'
 })
-export class ProjectsEditComponent {
+export class ProjectsEditComponent  {
   @Input() externalVersion : boolean = false;
   @Input() projects : any [];
 
@@ -22,6 +24,9 @@ export class ProjectsEditComponent {
   @Output() deleteImage : EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('tabGrp') tabGrp : MatTabGroup;
+  public constructor(
+    private _dialog : MatDialog
+  ) {}
 
   public receiveFormGrp(grp : FormGroup, index : number) : void {
     this.projectsForms[index] = grp;
@@ -35,5 +40,19 @@ export class ProjectsEditComponent {
       i++;
     } while (res && i < this.projectsForms.length);
     return res;
+  }
+
+  public onDelete(index : number) : void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.data = {
+      title : 'Validation de suppression',
+      message : 'Attention, cette action est irréversible.',
+      yes: 'Supprimer le projet',
+      no: 'Annuler'
+    };
+    const dialogRef = this._dialog.open(YesNoDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(data => {if (data) this.deletion.emit(index)});
+
   }
 }

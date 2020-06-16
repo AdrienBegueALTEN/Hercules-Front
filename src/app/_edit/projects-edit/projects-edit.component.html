@@ -1,13 +1,21 @@
-<mat-tab-group #tabGrp>
-  <ng-container *ngIf="!!projects">
+<mat-tab-group *ngIf="!!projects" #tabGrp>
+  <ng-container>
     <mat-tab *ngFor="let project of projects; let i = index">
       <ng-template mat-tab-label>
         {{project.title || 'Projet n°' + (i+1)}}
+        <button mat-icon-button  *ngIf="projects.length > 1" title="Retirer ce projet" color="warn" (click)="onDelete(i)">
+          <mat-icon>clear</mat-icon>
+        </button>
       </ng-template>
-      <app-project-single-edit [canBeDeteled]="projects.length > 1" [externalVersion]="externalVersion"
-        [project]="project" (update)="update.emit({index: i, key: $event.key, value: $event.value})"
-        (deletion)="deletion.emit(i)" (image)="image.emit($event)" (deleteImage)="deleteImage.emit($event)" (addSkillEvent)="addSkillEvent.emit($event)"
-        (removeSkillEvent)="removeSkillEvent.emit($event)" (sendFormGrp)="receiveFormGrp($event, i)">
+      <app-project-single-edit
+        [externalVersion]="externalVersion"
+        [project]="project"
+        (update)="update.emit({index: i, key: $event.key, value: $event.value})"
+        (image)="image.emit($event)"
+        (deleteImage)="deleteImage.emit($event)"
+        (addSkillEvent)="addSkillEvent.emit($event)"
+        (removeSkillEvent)="removeSkillEvent.emit($event)"
+        (sendFormGrp)="receiveFormGrp($event, i)">
       </app-project-single-edit>
     </mat-tab>
   </ng-container>

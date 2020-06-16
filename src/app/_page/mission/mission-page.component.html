@@ -32,13 +32,15 @@
           Nouvelle version
         </button>
         <button *ngIf="!mission.consultant.releaseDate && mission.sheetStatus !== 'VALIDATED'"
-          mat-button color="primary" (click)="onDownloadEmail()">
-          Télécharger un email contenant un lien d'accès pour 
-          {{mission.consultant.firstname}} {{mission.consultant.lastname}}
+          mat-button color="primary" (click)="onDownloadEmail()"
+          title="Télécharger un email prêt-à-l'envoi contenant un lien d'accès pour le consultant.">
+          Télécharger lien d'accès
         </button>
-        <button *ngIf="showValidate()"
-          mat-button color="accent" (click)="onValidate()">
-          Valider la dernière version
+        <button *ngIf="mission.sheetStatus !== 'VALIDATED'" mat-raised-button color="accent" 
+          (click)="onValidate()" [disabled]="!allFormsValid()"
+          [title]="!allFormsValid() ? 
+            'L\'intégralité des champs liés à la mission et à ses projets doivent être remplis avant de pouvoir valider la version actuelle.' : 'Valider la version.'">
+          Valider la version
         </button>
       </div>
     </div>

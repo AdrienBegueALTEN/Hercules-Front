@@ -78,10 +78,6 @@ export class ProjectSingleEditComponent implements OnInit {
       });
   }
 
-  public onDelete() : void {
-    this.deletion.emit();
-  }
-
   private _doUpdate(key : string) : boolean {
       return this.grp.controls[key].valid && this.grp.controls[key].dirty;
   }

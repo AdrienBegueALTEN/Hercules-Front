@@ -111,14 +111,13 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   }
 
   public showNewVersion() : boolean {
+    if (this.mission.sheetStatus !== SheetStatus.VALIDATED)
+      return false;
     const todayDate : Date = new Date();
     const lastVersionDate : Date = new Date(this.mission.versions[0].versionDate);
-    const lastVersionDateIsNotToday : boolean = 
-      lastVersionDate !== null &&
+    return lastVersionDate !== null &&
       todayDate.getFullYear() !== lastVersionDate.getFullYear() ||
-      todayDate.getMonth() !== lastVersionDate.getMonth() ||
       todayDate.getDate() !== lastVersionDate.getDate();
-    return lastVersionDateIsNotToday && this.mission.sheetStatus === SheetStatus.VALIDATED;
   }
 
   public getStatusText() : string {
@@ -238,7 +237,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
   public onValidate() : void {
     this._missionService.updateMission(this.mission.id, 'sheetStatus', SheetStatus.VALIDATED).subscribe(
-      () => this.mission.sheetStatus = SheetStatus.VALIDATED,
+      () => this.ngOnInit(),
       () => this._showMessageDialog("Impossible de valider la dernière fiche mission.")
     )
   }
@@ -251,13 +250,6 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
   public allFormsValid() : boolean {
     return (!this.missionEdit?.grp) ? false :
-    this.missionEdit.grp.valid && this.projectsEdit.allFormsValid();
-  }
-
-  public showValidate() : boolean {
-    return this.mission.sheetStatus !== SheetStatus.VALIDATED &&
-      this.selectedIndex !== this.CONSULTANT_TAB_INDEX && 
-      this.selectedIndex !== this.CUSTOMER_TAB_INDEX &&
-      this.allFormsValid();
+      this.missionEdit.grp.valid && this.projectsEdit.allFormsValid();
   }
 }

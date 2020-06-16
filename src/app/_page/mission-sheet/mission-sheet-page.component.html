@@ -3,7 +3,7 @@
   <div class="app-container">
     <mat-card>
       <mat-card-content>
-        <mat-horizontal-stepper (selectionChange)="onStepChange($event)" #stepper>
+        <mat-horizontal-stepper>
           <mat-step label="Informations générales">
             <div class="flex-row-container">
               <div class="step-content">
@@ -40,13 +40,13 @@
                   (deleteImage)="removePic($event)">
                 </app-projects-edit>
                 </div>
-                <button mat-fab matStepperNext [disabled]="!allFormsValid()"  color="accent" class="next step-nav">
+                <button mat-fab matStepperNext [disabled]="!allFormsValid()"  color="accent" class="next step-nav" (click)="onValidate()"
+                  [title]="!allFormsValid() ? 
+                    'L\'intégralité des champs liés à la mission et à ses projets doivent être remplis avant de pouvoir valider la fiche.' : 'Valider la fiche.'">
                   <mat-icon>done</mat-icon>
                 </button>
             </div>
           </mat-step>
-            <mat-step label="Valider la fiche" *ngIf="allFormsValid()">
-            </mat-step>
         </mat-horizontal-stepper>
       </mat-card-content>
     </mat-card>

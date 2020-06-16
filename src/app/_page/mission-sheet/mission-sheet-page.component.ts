@@ -1,4 +1,3 @@
-import { FormGroup } from '@angular/forms';
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { Component, OnInit, ViewChild, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
 import { MissionService } from 'src/app/_services/mission.service';
@@ -7,8 +6,6 @@ import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material/dial
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { HttpResponse } from '@angular/common/http';
 import { ProjectsEditComponent } from 'src/app/_edit/projects-edit/projects-edit.component';
-import { MatStepper } from '@angular/material/stepper';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MissionEditComponent } from 'src/app/_edit/mission-edit/mission-edit.component';
 import { SheetStatus } from 'src/app/_enums/sheet-status.enum';
 
@@ -26,7 +23,6 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
 
   @ViewChild('missionEditComponent') missionEdit : MissionEditComponent;
   @ViewChild('projectsEditComponent') projectsEdit : ProjectsEditComponent;
-  @ViewChild('stepper') stepper : MatStepper;
 
   constructor(
     private _cdr : ChangeDetectorRef,
@@ -136,12 +132,6 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
         ,
       () => this._showMessageDialog("Impossible de valider la fiche mission.")
     )
-  }
-
-  public onStepChange(event : StepperSelectionEvent) : void {
-    if (event.selectedIndex === VALIDATION_STEP && this.allFormsValid())
-      this.onValidate();
-    else this.stepper.selectedIndex = event.previouslySelectedIndex;
   }
 
   public allFormsValid() : boolean {
