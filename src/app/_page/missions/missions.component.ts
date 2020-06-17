@@ -21,6 +21,7 @@ export class MissionsComponent implements OnInit {
   public readonly CONSULTANT_KEY : string = 'consultant';
   public readonly CUSTOMER_KEY : string = 'customer';
   public readonly ACTIVITY_SECTOR_KEY : string = 'activitySector';
+  public readonly SKILLS_KEY : string = 'skills';
 
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
   @ViewChild(ActivitySectorAutocompleteComponent) activtySector: ActivitySectorAutocompleteComponent;
@@ -101,6 +102,11 @@ export class MissionsComponent implements OnInit {
 
     if (this.grp.controls[this.ACTIVITY_SECTOR_KEY]?.value !== '')
       criteria[this.ACTIVITY_SECTOR_KEY] = this.grp.controls[this.ACTIVITY_SECTOR_KEY].value;
+    
+    if(this.skills.getSkills().length>0)
+      criteria[this.SKILLS_KEY] = this.skills.getSkills();
+
+    console.log(criteria);
 
     this._missionService.advancedSearch(criteria).subscribe(
       result => {
