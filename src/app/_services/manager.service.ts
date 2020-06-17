@@ -33,11 +33,11 @@ export class ManagerService {
       {observe : 'response'});
   }
 
-  updateManager(id : number, fieldName : String, value : any) : Observable<any> {
+  updateManager(id : number, fieldname : String, value : any) : Observable<any> {
     return this._httpClient.put(AppSettings.MANAGER_API,
       { 
         "id" : id,
-        "fieldName" : fieldName,
+        "fieldname" : fieldname,
         "value" : value
       },
       {observe : 'response'});
