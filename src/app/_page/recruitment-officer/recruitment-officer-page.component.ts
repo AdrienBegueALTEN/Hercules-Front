@@ -1,9 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { RecruitmentOfficerService } from 'src/app/_services/recruitment-officer.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
-import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
+import { AuthService } from 'src/app/_services/auth.service';
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 
 @Component({
   selector: 'app-recruitment-officer-page',
@@ -14,9 +13,10 @@ export class RecruitmentOfficerPageComponent implements OnInit {
   public recruitmentOfficer : any;
 
   constructor(
+    private _authService : AuthService,
     private _recruitmentOfficerService : RecruitmentOfficerService,
+    private _dialogUtils: DialogUtilsService,
     private _route: ActivatedRoute,
-    private _dialog: MatDialog,
     private _router: Router
   ) {}
 
@@ -28,20 +28,31 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     );
   }
 
+  public onChangePasswordAcces() : void {
+    this._authService.passwordCreationAccess(this.recruitmentOfficer.id).subscribe(
+      blob => {
+        let fileName = this.recruitmentOfficer.firstname + '_' + this.recruitmentOfficer.lastname + '.eml';
+        fileName = fileName.toLowerCase();
+        saveAs(blob, fileName);
+      },
+      error => {
+        this._dialogUtils.showMsgDialog("Echec de la génération du fichier.");
+        console.log(error);
+      }
+    )
+  }
+
   public onSetReleaseDate() : void {
-    const dialogConfig = new MatDialogConfig();
-        dialogConfig.autoFocus = true;
-        dialogConfig.data = {
-          firstname : this.recruitmentOfficer.firsrname,
-          lastname : this.recruitmentOfficer.lastname
-        };
-    const dialogRef = this._dialog.open(DeactivateComponent, dialogConfig);
+    const dialogRef = this._dialogUtils.showDeactivateDialog(this.recruitmentOfficer);
     dialogRef.afterClosed().subscribe(
       releaseDate => {
         if (releaseDate) {
           this._recruitmentOfficerService.updateRecruitmentOfficer(this.recruitmentOfficer.id, 'releaseDate', releaseDate).subscribe(
             () => this.recruitmentOfficer.releaseDate = releaseDate, 
-            error => { this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error); }
+            error => { 
+              this._dialogUtils.showMsgDialog("Impossible d'indiquer la sortie des effectifs.");
+              console.log(error);
+            }
           )
         }
       }); 
@@ -50,22 +61,11 @@ export class RecruitmentOfficerPageComponent implements OnInit {
   public onDelete() : void {
     this._recruitmentOfficerService.deleteRecruitmentOfficer(this.recruitmentOfficer.id).subscribe(
       () => this._router.navigate(['/recruitment-officers']),
-      error => { this._handleError("Impossible de supprimer ce chargé de recrutement"); console.log(error); }
+      error => {
+        this._dialogUtils.showMsgDialog("Echec de la suppression.");
+        console.log(error);
+      }
     );
-  }
-
-  public onCancelReleaseDate() : void {
-    this._recruitmentOfficerService.updateRecruitmentOfficer(this.recruitmentOfficer.id,'releaseDate', null).subscribe(
-      () => this.recruitmentOfficer.releaseDate = null,
-      error => { this._handleError("Impossible de rendre ce chargé de recrutement actif à nouveau"); console.log(error); }
-    );
-  }
-
-  private _handleError(message : string) : void {
-    
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = message;
-    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 }
  

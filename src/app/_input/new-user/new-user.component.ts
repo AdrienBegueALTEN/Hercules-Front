@@ -1,9 +1,9 @@
 import { EmailInputComponent } from './../email-input/email-input.component';
 import { LastnameInputComponent } from './../lastname-input/lastname-input.component';
 import { FirstnameInputComponent } from './../firstname-input/firstname-input.component';
-import { StrUtilsService } from '../../_services/str-utils.service';
+import { StrUtilsService } from '../../_services/utils/str-utils.service';
 import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterContentInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 const FIRSTNAME_KEY = 'firstname';
 const LASTNAME_KEY = 'lastname';
