@@ -12,7 +12,9 @@ import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/ar
 export class CustomerPageComponent implements OnInit {
   public customer: any;
   public manager : boolean = this._authService.userIsManager();
+  public user : any = this._authService.getUser();
   public customersMissions : any[];
+  public userOwnsCustomer : boolean = false;
 
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
 
@@ -23,18 +25,23 @@ export class CustomerPageComponent implements OnInit {
     private _authService: AuthService
   ){}
 
+
   public ngOnInit() : void {
     const customer : number = this._route.snapshot.params['id'];
     this._customerService.getCustomer(customer).subscribe(
       (customer) => {
         this.customer = customer;
         this._customerService.getMissions(this.customer.id).subscribe(
-          customersMissions => this.customersMissions = customersMissions,
+          customersMissions => { this.customersMissions = customersMissions;
+                                 for (let mission of this.customersMissions) {
+                                  if(mission.consultant.manager.id===this.user.id)
+                                    this.userOwnsCustomer = true;
+                                 } },
           error => console.log(error)
         )
       },
       () => this._router.navigate(['/not-found'])
-    )
+    );
   }
 
   public onDelete() : void {

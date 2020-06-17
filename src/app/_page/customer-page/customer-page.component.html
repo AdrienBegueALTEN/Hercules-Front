@@ -4,7 +4,7 @@
       <ng-template mat-tab-label>
         {{customer.name}}
       </ng-template>
-      <div *ngIf="manager; then edit else view"></div>
+      <div *ngIf="(manager && userOwnsCustomer); then edit else view"></div>
     </mat-tab>
     <mat-tab *ngIf="customersMissions?.length !== 0">
       <ng-template mat-tab-label>
