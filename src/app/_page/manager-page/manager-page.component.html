@@ -12,20 +12,22 @@
                 {{userId == manager.id ? 'Vos' : 'Ses'}} consultants
               </ng-template>
               <app-datatable *ngIf="!!dataSource"
-              [columnsToDisplay]="['firstname', 'lastname', 'email', 'releaseDate']"
-              [dataSource]="dataSource"
-              label="consultant"
-              (rowClicked)="goToConsultantPage($event)">
+                [columnsToDisplay]="['firstname', 'lastname', 'email', 'releaseDate']"
+                [dataSource]="dataSource"
+                label="consultant"
+                (rowClicked)="goToConsultantPage($event)">
             </app-datatable>
             </mat-tab>
           </mat-tab-group>
     </mat-card-content>
     <mat-card-actions>
       <div *ngIf="userId != manager.id">
-        <button mat-button color="warn"
-          (click)="onSetReleaseDate()">
-          <div *ngIf="manager.releaseDate">Modifier la sortie des effectifs</div>
-          <div *ngIf="!manager.releaseDate">Indiquer la sortie des effectifs</div>
+        <button *ngIf="manager.releaseDate === null" mat-button color="primary"
+          (click)="onChangePasswordAcces()">
+          Télécharger lien modification mot de passe
+        </button>
+        <button mat-button color="warn" (click)="onSetReleaseDate()">
+          {{manager.releaseDate ? 'Modifier' : 'Indiquer'}} date de sortie des effectifs
         </button>
         <button mat-button color="warn" *ngIf="manager.consultants.length === 0"
           (click)="onDelete()">Supprimer ce manager en base</button>
