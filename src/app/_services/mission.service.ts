@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpBackend, HttpHeaders, HttpEvent, HttpRequest } from '@angular/common/http';
 
 const TOKEN_PREFIX : string = 'Bearer ';
+const MISSION_API : string = AppSettings.API_ENDPOINT + 'missions/';
+const PROJECT_API : string = MISSION_API + 'projects/';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,7 @@ export class MissionService {
     }
 
   public newMission(consultant : number, customer : number) : Observable<any> {
-    return this._httpClient.post(AppSettings.MISSION_API,
+    return this._httpClient.post(MISSION_API,
       {
         consultant : consultant,
         customer : customer,
@@ -27,28 +29,28 @@ export class MissionService {
   }
 
   public addVersion(mission : number) : Observable<any> {
-    return this._httpClient.get(AppSettings.MISSION_API + 'new-version/' + mission);
+    return this._httpClient.get(MISSION_API.concat() + 'new-version/' + mission);
   }
 
   public getMissionDetails(mission : number) : Observable<any> {
-    return this._httpClient.get(AppSettings.MISSION_API + mission);
+    return this._httpClient.get(MISSION_API + mission);
   }
 
   public getMissionDetailsFromToken(token : string) : Observable<any> {
-    return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'anonymous',
+    return this._notInteceptedHttpClient.get(MISSION_API + 'anonymous',
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
   public getMissions(manager? : number) : Observable<any> {
-    return this._httpClient.get(AppSettings.MISSION_API + (manager ? '?manager=' + manager : ''));
+    return this._httpClient.get(MISSION_API + (manager ? '?manager=' + manager : ''));
   }
 
   public deleteMission(id : number) : Observable<any> {
-    return this._httpClient.delete(AppSettings.MISSION_API + id);
+    return this._httpClient.delete(MISSION_API + id);
   }
 
   public updateMission(id : number, fieldname : String, value : any) : Observable<any> {
-    return this._httpClient.put(AppSettings.MISSION_API,
+    return this._httpClient.put(MISSION_API,
       {
         id : id,
         fieldname : fieldname,
@@ -58,7 +60,7 @@ export class MissionService {
   }
 
   public updateMissionFromToken(token : string, fieldname : String, value : any) : Observable<any> {
-    return this._notInteceptedHttpClient.put(AppSettings.MISSION_API + 'anonymous',
+    return this._notInteceptedHttpClient.put(MISSION_API + 'anonymous',
       {
         fieldname : fieldname,
         value : value,
@@ -67,16 +69,16 @@ export class MissionService {
   }
 
   public newProject(mission : number): Observable<any> {
-    return this._httpClient.get(AppSettings.MISSION_API + 'new-project/' + mission);
+    return this._httpClient.get(MISSION_API + 'new-project/' + mission);
   }
 
   public newProjectFromToken(token : string): Observable<any> {
-    return this._notInteceptedHttpClient.get(AppSettings.MISSION_API + 'new-project-anonymous',
+    return this._notInteceptedHttpClient.get(MISSION_API + 'new-project-anonymous',
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
   public updateProject(id : number, fieldname : String, value : any) : Observable<any> {
-    return this._httpClient.put(AppSettings.MISSION_API + 'projects',
+    return this._httpClient.put(PROJECT_API,
       {
         id : id,
         fieldname : fieldname,
@@ -86,7 +88,7 @@ export class MissionService {
   }
 
   public updateProjectFromToken(token : string, id : number, fieldname : String, value : any) : Observable<any> {
-    return this._notInteceptedHttpClient.put(AppSettings.MISSION_API + 'projects/anonymous',
+    return this._notInteceptedHttpClient.put(PROJECT_API + 'anonymous',
       {
         id : id,
         fieldname : fieldname,
@@ -96,11 +98,11 @@ export class MissionService {
   }
 
   public deleteProject(project : number){
-    return this._httpClient.delete(AppSettings.MISSION_API + 'projects/' + project);
+    return this._httpClient.delete(PROJECT_API + project);
   }
 
   public deleteProjectFromToken(token : string, project : number){
-    return this._notInteceptedHttpClient.delete(AppSettings.MISSION_API + 'projects/anonymous/' + project,
+    return this._notInteceptedHttpClient.delete(PROJECT_API + 'anonymous' + project,
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
@@ -108,7 +110,7 @@ export class MissionService {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
-    const req = new HttpRequest('POST', AppSettings.MISSION_API + "projects/" + projectId + '/upload-picture', formData, {
+    const req = new HttpRequest('POST', PROJECT_API + projectId + '/upload-picture', formData, {
       reportProgress: true,
       responseType: 'json'
     });
@@ -120,7 +122,7 @@ export class MissionService {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
-    const req = new HttpRequest('POST', AppSettings.MISSION_API + "projects/anonymous/" + projectId + '/upload-picture', formData, {
+    const req = new HttpRequest('POST', PROJECT_API + 'anonymous/' + projectId + '/upload-picture', formData, {
       reportProgress: true,
       responseType: 'json',
       headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) 
@@ -131,17 +133,17 @@ export class MissionService {
 
   public removePictureFromProject(project : number): Observable<any> {
     return this._httpClient.delete(
-      AppSettings.MISSION_API + 'projects/' + project + '/delete-picture');
+      PROJECT_API + project + '/delete-picture');
   }
 
   public removePictureFromProjectFromToken(project : number, token: string): Observable<any> {
     return this._notInteceptedHttpClient.delete(
-      AppSettings.MISSION_API + 'projects/anonymous/' + project + '/delete-picture',
+      PROJECT_API + 'anonymous/' + project + '/delete-picture',
       { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
   public addSkillToProject(project : number, labels : string[]): Observable<any> {
-    return this._httpClient.post(AppSettings.MISSION_API + 'projects/' + project + '/skills',
+    return this._httpClient.post(PROJECT_API + project + '/skills',
       labels,
       AppSettings.HTTP_JSON_CONTENT);
   }
@@ -151,12 +153,12 @@ export class MissionService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: skill
     };
     return this._httpClient.delete(
-      AppSettings.MISSION_API + 'projects/' + project + '/skills',
+      PROJECT_API + project + '/skills',
       httpOptions);
   }
 
   public addSkillToProjectFromToken(project : number, labels : string[], token : string): Observable<any> {
-    return this._notInteceptedHttpClient.post(AppSettings.MISSION_API + 'projects/anonymous/' + project + '/skills',
+    return this._notInteceptedHttpClient.post(PROJECT_API + 'anonymous/' + project + '/skills',
       labels,
       {
         headers: new HttpHeaders({ 
@@ -175,22 +177,22 @@ export class MissionService {
     };
     { headers: new HttpHeaders({ }) }
     return this._notInteceptedHttpClient.delete(
-      AppSettings.MISSION_API + 'projects/anonymous/' + project + '/skills',
+      PROJECT_API + 'anonymous/' + project + '/skills',
       httpOptions);
   }
 
   public getAllSkills() : Observable<any> {
-    return this._httpClient.get(AppSettings.MISSION_API + 'projects/skills-all');
+    return this._httpClient.get(PROJECT_API + 'skills-all');
   }
 
   public generatePDF(elements : any[]) : Observable<any> {
-    return this._httpClient.post(AppSettings.MISSION_API + 'pdf',
+    return this._httpClient.post(MISSION_API + 'pdf',
       elements,
       {responseType: 'blob'});
   }
 
   public advancedSearch(criteria : object) : Observable<any> {
-    var url : string = AppSettings.MISSION_API + 'advancedSearch/?'
+    var url : string = MISSION_API + 'advancedSearch/?'
     for (var i in criteria)
       url = url.concat(encodeURIComponent(i), '=', encodeURIComponent(criteria[i]), '&');
     url = url.slice(0, url.length - 1);
