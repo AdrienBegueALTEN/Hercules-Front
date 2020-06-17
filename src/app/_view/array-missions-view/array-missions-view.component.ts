@@ -254,4 +254,8 @@ generatePDF(selectedElements : any[],filename : string) : void {
     );
   }
 
+scroll(elementID) {
+  document.querySelector('#'+elementID+'').scrollIntoView({ behavior: 'smooth', block: 'center' });
+} 
+
 }
