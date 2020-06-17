@@ -62,7 +62,7 @@
                 <app-skills-autocomplete></app-skills-autocomplete>
             </td></tr>
             <tr><td colspan="2">
-                <button mat-fab (click)="onSearch()" id="search-button" class="white-shape"
+                <button mat-fab [disabled]="cooldownOn" (click)="onSearch();cooldownTime()" id="search-button" class="white-shape"
                     title="Effectuer une recherche avancée">
                     <mat-icon>search</mat-icon>
                 </button>
