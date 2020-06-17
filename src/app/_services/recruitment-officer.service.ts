@@ -37,7 +37,7 @@ export class RecruitmentOfficerService {
     return this._httpClient.put(AppSettings.RECRUITMENTOFFICER_API,
       { 
         id : id,
-        fieldname : fieldName,
+        fieldname : fieldname,
         value : value
       },
       {observe : 'response'});
