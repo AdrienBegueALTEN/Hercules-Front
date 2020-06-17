@@ -101,7 +101,7 @@
                 <mat-checkbox *ngIf="(selection.selected.length < NB_MAX_CHECK || selection.isSelected(project))"
                     (click)="$event.stopPropagation() || onClick($event,project)"
                     (change)="$event ? selection.toggle(project) : null" [checked]="selection.isSelected(project)"
-                    [disabled]='!(project?.title.length > 0)'>
+                    [disabled]='!(project?.title.length > 0) || element?.sheetStatus!=="VALIDATED"'>
                 </mat-checkbox>
                 <span class="project">{{project.title || 'Projet n°' + (i + 1)}}</span>
                 <small>
