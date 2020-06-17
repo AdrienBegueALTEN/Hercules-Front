@@ -1,10 +1,12 @@
-<h1 mat-dialog-title>Notifier la sortie de {{data.firstname}} {{data.lastname}}</h1>
+<h1 mat-dialog-title>Sortie des effectifs de {{user.firstname}} {{user.lastname}}</h1>
 <mat-dialog-content>
     <mat-form-field appearance="legacy">
-        <mat-label>Date de départ</mat-label>
+        <mat-label>Date de sortie</mat-label>
         <input type="date" matInput [formControl]="ctrl">
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-raised-button color="warn" (click)="onSubmit()">Confirmer la sortie des effectifs</button>
+    <button mat-button *ngIf="user.releaseDate !== null" color="primary" (click)="onSubmit()">Annuler la sortie des effectifs</button>
+    <button mat-raised-button color="primary" (click)="onSubmit(ctrl.value)">
+        {{!!user.releaseDate ? 'Modifier' : 'Confirmer'}}</button>
 </mat-dialog-actions>

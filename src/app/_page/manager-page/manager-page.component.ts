@@ -4,6 +4,7 @@ import { ManagerService } from 'src/app/_services/manager.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-manager-page',
@@ -52,11 +53,11 @@ export class ManagerPageComponent implements OnInit {
     const dialogRef = this._dialogUtils.showDeactivateDialog(this.manager);
     dialogRef.afterClosed().subscribe(
       releaseDate => {
-        if (releaseDate) {
+        if (!isUndefined(releaseDate)) {
           this._managerService.updateManager(this.manager.id, 'releaseDate', releaseDate).subscribe(
             () => this.manager.releaseDate = releaseDate, 
             error => { 
-              this._dialogUtils.showMsgDialog("Impossible d'indiquer la sortie des effectifs.");
+              this._dialogUtils.showMsgDialog("Echec de l'opération."); 
               console.log(error);
             }
           )
@@ -68,7 +69,7 @@ export class ManagerPageComponent implements OnInit {
     this._managerService.deleteManager(this.manager.id).subscribe(
       () => this._router.navigate(['/managers']),
       error => {
-        this._dialogUtils.showMsgDialog("Echec de la suppression.");
+        this._dialogUtils.showMsgDialog("Echec de la suppression en base.");
         console.log(error);
       }
     )

@@ -1,12 +1,10 @@
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConsultantService } from 'src/app/_services/consultant.service';
-import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
-import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
-import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
-import { HttpStatus } from 'src/app/_enums/http-status.enum';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-consultant-page',
@@ -25,7 +23,7 @@ export class ConsultantPageComponent implements OnInit {
     private _consultantService : ConsultantService,
     private _router : Router,
     private _route : ActivatedRoute,
-    private _dialog : MatDialog
+    private _dialogUtils : DialogUtilsService
   ) {}
 
   ngOnInit() {
@@ -35,7 +33,7 @@ export class ConsultantPageComponent implements OnInit {
         this.consultant = consultant;
         this._consultantService.getMissions(consultant.id).subscribe(
           consultantMissions => this.consultantsMissions = consultantMissions),
-          error => this._handleError("Impossible d'afficher les missions")
+          error => console.log(error)
         const user = this._authService.getUser();
         this.writingRights = 
           this._authService.userIsManager()
@@ -50,19 +48,15 @@ export class ConsultantPageComponent implements OnInit {
   }
 
   public onSetReleaseDate() : void {
-    const dialogConfig = new MatDialogConfig();
-        dialogConfig.autoFocus = true;
-        dialogConfig.data = {
-          firstname : this.consultant.firsrname,
-          lastname : this.consultant.lastname
-        };
-    const dialogRef = this._dialog.open(DeactivateComponent, dialogConfig);
+    const dialogRef = this._dialogUtils.showDeactivateDialog(this.consultant);
     dialogRef.afterClosed().subscribe(
       releaseDate => {
-        if (releaseDate) {
+        if (!isUndefined(releaseDate)) {
           this._consultantService.updateConsultant(this.consultant.id, 'releaseDate', releaseDate).subscribe(
             () => this.consultant.releaseDate = releaseDate, 
-            error => { this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error); }
+            error => { 
+              this._dialogUtils.showMsgDialog("Echec de l'opération."); 
+              console.log(error); }
           )
         }
       }); 
@@ -71,21 +65,9 @@ export class ConsultantPageComponent implements OnInit {
   public onDelete() : void {
     this._consultantService.deleteConsultant(this.consultant.id).subscribe(
       () => this._router.navigate(['/consultants']),
-      error => { this._handleError("Impossible de supprimer ce consultant"); console.log(error); }
+      error => { 
+        this._dialogUtils.showMsgDialog("Echec de la suppression en base.");
+        console.log(error); }
     )
-  }
-
-  public onCancelReleaseDate() : void {
-    this._consultantService.updateConsultant(this.consultant.id,"releaseDate",null).subscribe(
-      () => this.consultant.releaseDate = null,
-      (error) => { this._handleError("Impossible de rendre ce consultant actif à nouveau"); console.log(error); }
-    );
-  }
-
-  private _handleError(message : string) : void {
-    
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = message;
-    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 }

@@ -1,3 +1,4 @@
+import { isUndefined } from 'util';
 import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -7,13 +8,17 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './deactivate.component.html'
 })
 export class DeactivateComponent {
-  ctrl : FormControl = new FormControl(new Date().toISOString().substr(0, 10));
+  public ctrl : FormControl;
 
   constructor(
     private _dialogRef: MatDialogRef<DeactivateComponent>,
-    @Inject(MAT_DIALOG_DATA) public data : any) {};
+    @Inject(MAT_DIALOG_DATA) public user : any) {
+      if (isUndefined(user.releaseDate)) user.releaseDate = null;
+      this.ctrl = new FormControl(this.user.releaseDate !== null ?
+      this.user.releaseDate : new Date().toISOString().substr(0, 10));
+    };
 
-  onSubmit(){
-    this._dialogRef.close(this.ctrl.value);
+  onSubmit(releaseDate : string = null){
+    this._dialogRef.close(releaseDate);
   }
 }
