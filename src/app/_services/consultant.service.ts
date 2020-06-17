@@ -3,6 +3,8 @@ import { AppSettings } from './../app-settings';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+const API : string = AppSettings.API_ENDPOINT + 'consultants/';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,15 +13,15 @@ export class ConsultantService {
   constructor(private _httpClient : HttpClient) {}
 
   getConsultants(enabled : boolean = false) : Observable<any[]> {
-    return this._httpClient.get<any[]>(AppSettings.CONSULTANT_API + '?enabled=' + enabled, AppSettings.HTTP_JSON_CONTENT);
+    return this._httpClient.get<any[]>(API + '?enabled=' + enabled, AppSettings.HTTP_JSON_CONTENT);
   }
 
   getConsultant(id:number){
-    return this._httpClient.get<any>(AppSettings.CONSULTANT_API + id, AppSettings.HTTP_JSON_CONTENT);
+    return this._httpClient.get<any>(API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 
   newConsultant(email : string, firstname : string, lastname : string, manager : number) : Observable<any> {
-    return this._httpClient.post(AppSettings.CONSULTANT_API,
+    return this._httpClient.post(API,
       {
         email : email,
         lastname : lastname,
@@ -30,11 +32,11 @@ export class ConsultantService {
   }
 
   deleteConsultant(id : number) : Observable<any> {
-    return this._httpClient.delete(AppSettings.CONSULTANT_API + id, AppSettings.HTTP_JSON_CONTENT);
+    return this._httpClient.delete(API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 
   updateConsultant(id : number, fieldname : String, value : any) : Observable<any> {
-    return this._httpClient.put(AppSettings.CONSULTANT_API,
+    return this._httpClient.put(API,
       {
         id : id,
         fieldname : fieldname,
@@ -44,7 +46,7 @@ export class ConsultantService {
   }
 
   addDiploma(consultant : number, establishment : string, entitled : string, level : string, year : number) : Observable<any> {
-    return this._httpClient.put(AppSettings.CONSULTANT_API + "add-diploma",
+    return this._httpClient.put(API + "add-diploma",
       {
         consultant: consultant,
         establishment: establishment,
@@ -56,7 +58,7 @@ export class ConsultantService {
     }
   
   updateDiploma(diploma : number, fieldname : string, value : any) : Observable<any> {
-    return this._httpClient.put(AppSettings.CONSULTANT_API + "update-diploma",
+    return this._httpClient.put(API + "update-diploma",
       {
         id: diploma,
         fieldname: fieldname,
@@ -66,7 +68,7 @@ export class ConsultantService {
   }
 
   removeDiploma(consultant : number, diploma : number): Observable<any> {
-    return this._httpClient.put(AppSettings.CONSULTANT_API + "remove-diploma",
+    return this._httpClient.put(API + "remove-diploma",
     {
       consultant: consultant,
       diploma: diploma
@@ -75,7 +77,7 @@ export class ConsultantService {
   }
 
   public getMissions(consultant : number) : Observable<any> {
-    return this._httpClient.get(AppSettings.CONSULTANT_API + consultant + '/missions');
+    return this._httpClient.get(API + consultant + '/missions');
   }
 }
 

@@ -4,9 +4,10 @@ import { HttpClient, HttpBackend, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Role } from '../_enums/role.enum';
 
-const TOKEN_KEY = 'auth-token';
+const API : string  = AppSettings.API_ENDPOINT + 'auth/';
+const TOKEN_KEY : string = 'auth-token';
 const TOKEN_PREFIX : string = 'Bearer ';
-const USER_KEY = 'auth-user';
+const USER_KEY : string  = 'auth-user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -19,35 +20,35 @@ export class AuthService {
     }
 
   public login(credentials) : Observable<any> {
-    return this._httpClient.post(AppSettings.AUTH_API + 'signin', {
+    return this._httpClient.post(API + 'signin', {
       email: credentials.email,
       password: credentials.password
     }, AppSettings.HTTP_JSON_CONTENT);
   }
 
   public changePassword(currentPassword : string, newPassword : string) : Observable<any> {
-    return this._httpClient.put(AppSettings.AUTH_API + 'change-password', {
+    return this._httpClient.put(API + 'change-password', {
       currentPassword: currentPassword,
       newPassword: newPassword
     }, {observe: 'response'});
   }
 
   public checkPasswordTokenValidity(token : string) : Observable<any> {
-    return this._notInteceptedHttpClient.get(AppSettings.AUTH_API + 'change-password-anonymous',
+    return this._notInteceptedHttpClient.get(API + 'change-password-anonymous',
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
   public changePasswordAnonymous(token : string, newPassword : string) : Observable<any> {
-    return this._notInteceptedHttpClient.put(AppSettings.AUTH_API + 'change-password-anonymous', newPassword,
+    return this._notInteceptedHttpClient.put(API + 'change-password-anonymous', newPassword,
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
   public missionSheetAccess(mission : number) : Observable<any> {
-    return this._httpClient.get(AppSettings.AUTH_API + 'mission-sheet-access/' + mission, {responseType: 'blob'});
+    return this._httpClient.get(API + 'mission-sheet-access/' + mission, {responseType: 'blob'});
   }
 
   public passwordCreationAccess(user : number) : Observable<any> {
-    return this._httpClient.get(AppSettings.AUTH_API + 'password-creation-access/' + user, {responseType: 'blob'});
+    return this._httpClient.get(API + 'password-creation-access/' + user, {responseType: 'blob'});
   }
 
   public logout() : void {
