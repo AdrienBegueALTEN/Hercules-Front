@@ -33,11 +33,11 @@ export class ConsultantService {
     return this._httpClient.delete(AppSettings.CONSULTANT_API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 
-  updateConsultant(id : number, fieldName : String, value : any) : Observable<any> {
+  updateConsultant(id : number, fieldname : String, value : any) : Observable<any> {
     return this._httpClient.put(AppSettings.CONSULTANT_API,
       {
         id : id,
-        fieldName : fieldName,
+        fieldname : fieldname,
         value : value,
       },
       {observe: 'response'});
@@ -55,11 +55,11 @@ export class ConsultantService {
       AppSettings.HTTP_JSON_CONTENT);
     }
   
-  updateDiploma(diploma : number, fieldName : string, value : any) : Observable<any> {
+  updateDiploma(diploma : number, fieldname : string, value : any) : Observable<any> {
     return this._httpClient.put(AppSettings.CONSULTANT_API + "update-diploma",
       {
         id: diploma,
-        fieldName: fieldName,
+        fieldname: fieldname,
         value: value
       },
       AppSettings.HTTP_JSON_CONTENT);
