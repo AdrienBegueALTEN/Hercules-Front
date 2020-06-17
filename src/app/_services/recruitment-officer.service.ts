@@ -32,7 +32,7 @@ export class RecruitmentOfficerService {
       return this._httpClient.delete(AppSettings.RECRUITMENTOFFICER_API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 
-  updateRecruitmentOfficer(id : number, fieldName : String, value : any) : Observable<any>{
+  updateRecruitmentOfficer(id : number, fieldname : String, value : any) : Observable<any>{
   
     return this._httpClient.put(AppSettings.RECRUITMENTOFFICER_API,
       { 
