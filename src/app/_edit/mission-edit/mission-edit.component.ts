@@ -6,7 +6,8 @@ const NUMBER_PATTERN = '^\\d*$';
 
 @Component({
   selector: 'app-mission-edit',
-  templateUrl: './mission-edit.component.html'
+  templateUrl: './mission-edit.component.html',
+  styleUrls: ['./mission-edit.component.scss']
 })
 export class MissionEditComponent implements OnInit {
   @Input() externalVersion : boolean = false;
@@ -32,6 +33,7 @@ export class MissionEditComponent implements OnInit {
   readonly TOOLTIP_POS = 'before';
   readonly XP_KEY = 'consultantStartXp';
   readonly XP_TOOLTIP = 'Le nombre d\'années d\'expérience que vous aviez au départ de la mission.';
+
 
   grp : FormGroup;
 
@@ -105,6 +107,8 @@ export class MissionEditComponent implements OnInit {
           'Le niveau d\'expérience doit être renseigné.' :
           this.grp.controls[this.XP_KEY].hasError(CtrlError.MIN) ? 
             'Le niveau d\'expérience doit être strictement positif.' : '';
+      case this.CONTRACT_KEY :
+        return this.grp.controls[this.CONTRACT_KEY].hasError(CtrlError.REQUIRED) ? 'Le type de contrat doit être précisé.' : '' ;
       default :
         return "";
     }

@@ -62,7 +62,7 @@
           [matTooltip]="TEAM_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
         <mat-error>{{getErrorTxt(TEAM_KEY)}}</mat-error>
       </mat-form-field></td>
-      <td><mat-radio-group [formControlName]="CONTRACT_KEY" (change)="onChange(CONTRACT_KEY)">
+      <td><mat-radio-group [formControlName]="CONTRACT_KEY" (change)="onChange(CONTRACT_KEY)" required>
         <mat-label>Type de contrat</mat-label>
         <mat-radio-button
           value="technical_assistance"
@@ -71,6 +71,7 @@
           value="services_center"
           matTooltip="Centre De Services">CDS</mat-radio-button>
         <mat-radio-button value="flat_fee">Forfait</mat-radio-button>
+        <mat-error class="contractError">{{getErrorTxt(CONTRACT_KEY)}}</mat-error>
       </mat-radio-group></td>
     </tr>
     <tr><td colspan="2"><mat-form-field *ngIf="version[COMMENT_KEY]">
