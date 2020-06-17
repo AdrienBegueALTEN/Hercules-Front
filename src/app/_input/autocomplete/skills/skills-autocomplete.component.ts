@@ -8,10 +8,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 })
 export class SkillsAutocompleteComponent  {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  skills: any[] = [
-    'c++',
-    'java'
-  ];
+  skills: any[] = [];
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
