@@ -179,7 +179,7 @@ generatePDF(selectedElements : any[],filename : string) : void {
     });
     this._missionService.generatePDF(elements).subscribe(
       (content) => {  
-                        console.log(content.status);
+                        
                         this._snackBar.open("Le PDF a bien été enregistré",'X', { duration: 2000 });
                         var newBlob = new Blob([content], { type: "application/pdf" });
                         
@@ -194,7 +194,6 @@ generatePDF(selectedElements : any[],filename : string) : void {
                           dialogConfig.data = "Le fichier PDF n'a pas pu être enregistré.";
                           this._dialog.open(MessageDialogComponent,dialogConfig);
                         }
-                      
                   },
       (error) => {  if(error.error==="the file could not be saved"){
                       const dialogConfig = new MatDialogConfig();
