@@ -67,13 +67,6 @@ export class ManagerPageComponent implements OnInit {
     this._router.navigateByUrl('consultants/' + consultant);
   }
 
-  public onCancelReleaseDate() : void {
-    this._managerService.updateManager(this.manager.id,'releaseDate',null).subscribe(
-      () => this.manager.releaseDate = null,
-      (error) => { this._handleError("Impossible de rendre ce manager actif à nouveau"); console.log(error); }
-    );
-  }
-
   private _handleError(message : string) : void {
     
     const dialogConfig = new MatDialogConfig();

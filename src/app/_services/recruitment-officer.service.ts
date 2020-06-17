@@ -8,8 +8,6 @@ import { AppSettings } from './../app-settings';
 })
 export class RecruitmentOfficerService {
 
-  
-
   constructor(private _httpClient : HttpClient) { }
 
   getRecruitmentOfficers() : Observable<any[]> {
@@ -18,15 +16,14 @@ export class RecruitmentOfficerService {
 
   getRecruitmentOfficerById(id : String) : Observable<any> {
     return this._httpClient.get<any>(AppSettings.RECRUITMENTOFFICER_API+ id, AppSettings.HTTP_JSON_CONTENT);
-}
-
+  }
 
   addRecruitmentOfficer(firstname: String, lastname: String, email: String) : Observable<any> {
       return this._httpClient.post(AppSettings.RECRUITMENTOFFICER_API,
         { 
-          "email" : email,
-          "firstname" : firstname,
-          "lastname" : lastname
+          email : email,
+          firstname : firstname,
+          lastname : lastname
         },
         {observe : 'response'});
   }
@@ -39,9 +36,9 @@ export class RecruitmentOfficerService {
   
     return this._httpClient.put(AppSettings.RECRUITMENTOFFICER_API,
       { 
-        "id" : id,
-        "fieldname" : fieldname,
-        "value" : value
+        id : id,
+        fieldname : fieldname,
+        value : value
       },
       {observe : 'response'});
   }
