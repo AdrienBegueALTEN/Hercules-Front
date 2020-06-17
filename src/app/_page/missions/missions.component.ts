@@ -107,8 +107,6 @@ export class MissionsComponent implements OnInit {
     if(this.skills.getSkills().length>0)
       criteria[this.SKILLS_KEY] = this.skills.getSkills();
 
-    console.log(criteria);
-
     this._missionService.advancedSearch(criteria).subscribe(
       result => {
         this.missions = result;
