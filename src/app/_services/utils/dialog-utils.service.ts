@@ -24,7 +24,8 @@ constructor(private _dialog : MatDialog) { }
     dialogConfig.disableClose = false;
     dialogConfig.data = {
       firstname : user.firstname,
-      lastname : user.lastname
+      lastname : user.lastname,
+      releaseDate : user.releaseDate
     };
     return this._dialog.open(DeactivateComponent, dialogConfig);
   }

@@ -3,6 +3,7 @@ import { RecruitmentOfficerService } from 'src/app/_services/recruitment-officer
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
 import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-recruitment-officer-page',
@@ -46,11 +47,11 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     const dialogRef = this._dialogUtils.showDeactivateDialog(this.recruitmentOfficer);
     dialogRef.afterClosed().subscribe(
       releaseDate => {
-        if (releaseDate) {
+        if (!isUndefined(releaseDate)) {
           this._recruitmentOfficerService.updateRecruitmentOfficer(this.recruitmentOfficer.id, 'releaseDate', releaseDate).subscribe(
             () => this.recruitmentOfficer.releaseDate = releaseDate, 
             error => { 
-              this._dialogUtils.showMsgDialog("Impossible d'indiquer la sortie des effectifs.");
+              this._dialogUtils.showMsgDialog("Echec de l'opération."); 
               console.log(error);
             }
           )
@@ -62,7 +63,7 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     this._recruitmentOfficerService.deleteRecruitmentOfficer(this.recruitmentOfficer.id).subscribe(
       () => this._router.navigate(['/recruitment-officers']),
       error => {
-        this._dialogUtils.showMsgDialog("Echec de la suppression.");
+        this._dialogUtils.showMsgDialog("Echec de la suppression en base.");
         console.log(error);
       }
     );
