@@ -5,7 +5,7 @@
     (click)="refreshDatasource(true)" [(ngModel)]="onlyMine">
     Afficher uniquement les missions de mes consultants
 </mat-slide-toggle>
-<mat-table #table [dataSource]="dataSource" matSort>
+<mat-table #table [dataSource]="dataSource" matSort id="tableau">
     <ng-container matColumnDef="select">
         <mat-header-cell *matHeaderCellDef>
             <mat-checkbox
@@ -128,3 +128,7 @@
     (click)="onChooseFilenameDialog(this.selection.selected)" >
     Générer fiche PDF
 </button>
+
+<button mat-fab (click)="scroll('tableau')" color="primary" >
+    <mat-icon>keyboard_arrow_up</mat-icon>
+  </button>
