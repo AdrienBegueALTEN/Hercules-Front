@@ -47,20 +47,20 @@ export class MissionService {
     return this._httpClient.delete(AppSettings.MISSION_API + id);
   }
 
-  public updateMission(id : number, fieldName : String, value : any) : Observable<any> {
+  public updateMission(id : number, fieldname : String, value : any) : Observable<any> {
     return this._httpClient.put(AppSettings.MISSION_API,
       {
         id : id,
-        fieldName : fieldName,
+        fieldname : fieldname,
         value : value,
       },
       AppSettings.HTTP_JSON_CONTENT);
   }
 
-  public updateMissionFromToken(token : string, fieldName : String, value : any) : Observable<any> {
+  public updateMissionFromToken(token : string, fieldname : String, value : any) : Observable<any> {
     return this._notInteceptedHttpClient.put(AppSettings.MISSION_API + 'anonymous',
       {
-        fieldName : fieldName,
+        fieldname : fieldname,
         value : value,
       },
       { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
@@ -75,21 +75,21 @@ export class MissionService {
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
-  public updateProject(id : number, fieldName : String, value : any) : Observable<any> {
+  public updateProject(id : number, fieldname : String, value : any) : Observable<any> {
     return this._httpClient.put(AppSettings.MISSION_API + 'projects',
       {
         id : id,
-        fieldName : fieldName,
+        fieldname : fieldname,
         value : value,
       },
       AppSettings.HTTP_JSON_CONTENT);
   }
 
-  public updateProjectFromToken(token : string, id : number, fieldName : String, value : any) : Observable<any> {
+  public updateProjectFromToken(token : string, id : number, fieldname : String, value : any) : Observable<any> {
     return this._notInteceptedHttpClient.put(AppSettings.MISSION_API + 'projects/anonymous',
       {
         id : id,
-        fieldName : fieldName,
+        fieldname : fieldname,
         value : value,
       },
       { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });

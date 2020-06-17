@@ -24,21 +24,21 @@ export class ManagerService {
   addManager(email : String, firstname : String, lastname : String, admin : boolean) : Observable<any> {
     return this._httpClient.post(AppSettings.MANAGER_API,
       { 
-        "email" : email,
-        "firstname" : firstname,
-        "lastname" : lastname,
-        "isAdmin" : admin
+        email : email,
+        firstname : firstname,
+        lastname : lastname,
+        isAdmin : admin
         
       },
       {observe : 'response'});
   }
 
-  updateManager(id : number, fieldName : String, value : any) : Observable<any> {
+  updateManager(id : number, fieldname : String, value : any) : Observable<any> {
     return this._httpClient.put(AppSettings.MANAGER_API,
       { 
-        "id" : id,
-        "fieldName" : fieldName,
-        "value" : value
+        id : id,
+        fieldname : fieldname,
+        value : value
       },
       {observe : 'response'});
   }
