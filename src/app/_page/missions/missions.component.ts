@@ -42,6 +42,7 @@ export class MissionsComponent implements OnInit {
   public dataSource: MatTableDataSource<any>;
   public userId = this._authService.getUser().id;
   colsToDisp = ['select','title','consultant','customer','sheetStatus'];
+  cooldownOn = false;
 
   constructor(
     private _missionService: MissionService,
@@ -111,5 +112,14 @@ export class MissionsComponent implements OnInit {
     );
   }
 
+
+  cooldownTime() 
+  {
+    console.log(this.cooldownOn);
+    this.cooldownOn = true;
+
+    setTimeout(() => this.cooldownOn = false, 1000)
+
+  }
   
 }
