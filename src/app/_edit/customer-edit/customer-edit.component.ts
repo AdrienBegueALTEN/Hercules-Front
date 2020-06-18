@@ -50,7 +50,6 @@ export class CustomerEditComponent implements OnInit {
       event => {
         
         if (event instanceof HttpResponse) {
-          console.log(event.status);
           if(event.status == HttpStatus.OK ){
             this._snackBar.open('Logo changé', 'X', {duration: 2000});
             this.customer.logo = image.name;
