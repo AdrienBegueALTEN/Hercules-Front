@@ -2,7 +2,7 @@ import { CustomerService } from './../../_services/customer.service';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { MissionService } from 'src/app/_services/mission.service';
 import { AuthService } from 'src/app/_services/auth.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivitySectorAutocompleteComponent } from 'src/app/_input/autocomplete/activity-sector/activity-sector-autocomplete.component';
@@ -43,7 +43,8 @@ export class MissionsComponent implements OnInit {
   public showAdvancedSearch : boolean = false;
   public userIsManager : boolean = this._authService.userIsManager();
   public onlyMine : boolean = true;
-  public dataSource: MatTableDataSource<any>;
+  public dataSource : MatTableDataSource<any>;
+  public windowScrolled : boolean = false;
   public userId = this._authService.getUser().id;
   colsToDisp = ['select','title','consultant','customer','sheetStatus'];
   cooldownOn = false;
@@ -130,6 +131,10 @@ export class MissionsComponent implements OnInit {
 
   emitEventToChild() {
     this.eventsSubject.next();
+  }
+
+  onScrollUp() {
+    
   }
   
 }

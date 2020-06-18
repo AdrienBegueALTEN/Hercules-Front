@@ -66,7 +66,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.refreshDatasource();
-    this.eventsSubscription = this.events.subscribe(() => this.scrollTableau("tableau"));
   }
 
   ngAfterViewInit(){
@@ -253,7 +252,6 @@ generatePDF(selectedElements : any[],filename : string) : void {
     )
   }
 
-
   onChooseFilenameDialog(selectedElements : any[]){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = { filename :"fichesMissionsEtProjets.pdf"};
@@ -262,9 +260,4 @@ generatePDF(selectedElements : any[],filename : string) : void {
       (result) => { if(!!result) this.generatePDF(selectedElements,result);} 
     );
   }
-
-scrollTableau(elementID) {
-  document.querySelector('#'+elementID+'').scrollIntoView({ behavior: 'smooth', block: 'center' });
-} 
-
 }
