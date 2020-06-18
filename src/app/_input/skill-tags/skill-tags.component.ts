@@ -55,16 +55,19 @@ export class SkillTagsComponent implements OnInit {
   }
 
   add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
+    if(this.project.skills.length<10){
+      const input = event.input;
+      const value = event.value;
 
-    // Add our fruit
-    this.addSkill(value);
+      // Add our fruit
+      this.addSkill(value);
 
-    // Reset the input value
-    if (input) {
-      input.value = '';
+      // Reset the input value
+      if (input) {
+        input.value = '';
+      }
     }
+    
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
