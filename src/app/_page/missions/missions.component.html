@@ -9,14 +9,11 @@
     <mat-icon>keyboard_arrow_{{showAdvancedSearch ? 'up' : 'down'}}</mat-icon>
 </button>
 
-<app-array-missions-view *ngIf="!!missions"
+<app-array-missions-view *ngIf="!!missions" id="scrollTarget"
     [displayedColumns]="colsToDisp"
     [missions]="missions"
-    [showOnlyMineToogle]="true"
-    [events]="eventsSubject.asObservable()">
+    [showOnlyMineToogle]="true">
 </app-array-missions-view>
-
-<button mat-mini-fab id="scroll-up" class="white-shape" (click)="onScrollUp()"><mat-icon>arrow_upward</mat-icon></button>
 
 <ng-template #simple>
     <table class="inputable">

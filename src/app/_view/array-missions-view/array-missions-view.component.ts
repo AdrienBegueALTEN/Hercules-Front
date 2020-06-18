@@ -14,7 +14,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MissionColumnChoiceComponent } from 'src/app/_dialog/mission-column-choice/mission-column-choice.component';
 import * as FileSaver from 'file-saver';
 import { ChooseFilenameDialogComponent } from 'src/app/_dialog/choose-filename-dialog/choose-filename-dialog.component';
-import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-array-missions-view',
@@ -42,7 +41,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   dataSourceProjects: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
   searchValue:string = null;
-  private eventsSubscription: Subscription;
 
   public user : any = this._authService.getUser();
   public userIsManager : boolean = this._authService.userIsManager();
@@ -52,8 +50,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChildren(MatInput) matInputs: QueryList<MatInput>;
-
-  @Input() events: Observable<void>;
 
   isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
 
@@ -70,10 +66,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(){
     this.refreshDatasource();
-  }
-
-  ngOnDestroy() {
-    this.eventsSubscription.unsubscribe();
   }
 
   public modifyArray(missions: any[]){

@@ -2,13 +2,13 @@ import { CustomerService } from './../../_services/customer.service';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { MissionService } from 'src/app/_services/mission.service';
 import { AuthService } from 'src/app/_services/auth.service';
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivitySectorAutocompleteComponent } from 'src/app/_input/autocomplete/activity-sector/activity-sector-autocomplete.component';
 import { SkillsAutocompleteComponent } from 'src/app/_input/autocomplete/skills/skills-autocomplete.component';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-missions',
@@ -44,10 +44,10 @@ export class MissionsComponent implements OnInit {
   public userIsManager : boolean = this._authService.userIsManager();
   public onlyMine : boolean = true;
   public dataSource : MatTableDataSource<any>;
-  public windowScrolled : boolean = false;
   public userId = this._authService.getUser().id;
   colsToDisp = ['select','title','consultant','customer','sheetStatus'];
   cooldownOn = false;
+  public events: Observable<void> = this.eventsSubject.asObservable();
 
   constructor(
     private _missionService: MissionService,
@@ -120,21 +120,12 @@ export class MissionsComponent implements OnInit {
     );
   }
 
-
-  cooldownTime() 
-  {
+  cooldownTime() {
     this.cooldownOn = true;
-
     setTimeout(() => this.cooldownOn = false, 1000)
-
   }
 
   emitEventToChild() {
     this.eventsSubject.next();
   }
-
-  onScrollUp() {
-    
-  }
-  
 }
