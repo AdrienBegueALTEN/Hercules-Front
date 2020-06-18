@@ -13,6 +13,7 @@ import { HttpResponse } from '@angular/common/http';
 import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { MissionEditComponent } from 'src/app/_edit/mission-edit/mission-edit.component';
+import { HttpStatus } from 'src/app/_enums/http-status.enum';
 
 @Component({
   selector: 'app-mission-page',
@@ -176,7 +177,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     this._missionService.upload(imageFile.file, imageFile.project).subscribe(
       event => {
         if (event instanceof HttpResponse) {
-          if(event.status==200){
+          if(event.status == HttpStatus.OK){
             this._snackBar.open('Image changée', 'X', {duration: 2000});
             this.ngOnInit();
           }
@@ -185,7 +186,11 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
         }
       },
       err => {
-        this._showErrorDialog("Impossible de charger cette image.");
+        if(err.status == HttpStatus.BAD_REQUEST){
+          this._showErrorDialog("Le logo n'a pas été chargé, les extensions d'image acceptées sont les .jpg, .png et .gif uniquement.");
+        }
+        else
+          this._showErrorDialog("Impossible de charger cette image.");
       });
   }
 

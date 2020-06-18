@@ -94,11 +94,21 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
             this.ngOnInit();
             return;
           }
+          else if(event.status == HttpStatus.BAD_REQUEST){
+            this._showMessageDialog("Le logo n'a pas été chargé, les extensions d'image acceptées sont les .jpg, .png et .gif uniquement.");
+          }
+          else
+            this._showMessageDialog("Impossible de charger cette image.");
           
         }
         
       },
-      err => this._showMessageDialog("Impossible de charger cette image.")
+      err => { 
+        if(err.status == HttpStatus.BAD_REQUEST){
+          this._showMessageDialog("Le logo n'a pas été chargé, les extensions d'image acceptées sont les .jpg, .png et .gif uniquement.");
+        }
+        else
+          this._showMessageDialog("Impossible de charger cette image."); }
     )
     
   }
