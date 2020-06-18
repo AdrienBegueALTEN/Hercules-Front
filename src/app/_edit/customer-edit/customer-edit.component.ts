@@ -1,5 +1,6 @@
+import { DialogUtilsService } from './../../_services/utils/dialog-utils.service';
 import { HttpStatus } from './../../_enums/http-status.enum';
-import { Component, Input, Output, EventEmitter, AfterContentInit, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CustomerService } from 'src/app/_services/customer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppSettings } from 'src/app/app-settings';
@@ -15,7 +16,8 @@ export class CustomerEditComponent implements OnInit {
   public logoSrc : string = null;
   
   constructor(
-    private _customerService: CustomerService,
+    private _customerService : CustomerService,
+    private _dialogUtils : DialogUtilsService,
     private _snackBar: MatSnackBar
   ) {}
 
@@ -34,11 +36,21 @@ export class CustomerEditComponent implements OnInit {
   public onAddLogo(logo : any) {
     this._customerService.upload(logo, this.customer.id).subscribe(
       event => {
-        if (event instanceof HttpResponse && event.status === HttpStatus.OK)
-          this.logoSrc = AppSettings.CUSTOMER_LOGO_PATH + logo.name;
+        
+        if (event instanceof HttpResponse) {
+          if (event.status === HttpStatus.OK)
+            this.logoSrc = AppSettings.CUSTOMER_LOGO_PATH + logo.name;
+          else
+            this._dialogUtils.showMsgDialog("Impossible de charger cette image.");
+        }
       },
-      error => console.log(error)
-    );
+      err => {
+        if(err.status == HttpStatus.BAD_REQUEST){
+          this._dialogUtils.showMsgDialog("Le logo n'a pas été chargé, les extensions d'image acceptées sont les .jpg, .png et .gif uniquement.");
+        }
+        else
+          this._dialogUtils.showMsgDialog("Impossible de charger cette image.");
+      });
   }
 
   public onRemoveLogo() : void {

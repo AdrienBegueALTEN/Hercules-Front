@@ -2,12 +2,11 @@ import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { Component, OnInit, ViewChild, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
 import { MissionService } from 'src/app/_services/mission.service';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { HttpResponse } from '@angular/common/http';
 import { ProjectsEditComponent } from 'src/app/_edit/projects-edit/projects-edit.component';
 import { MissionEditComponent } from 'src/app/_edit/mission-edit/mission-edit.component';
 import { SheetStatus } from 'src/app/_enums/sheet-status.enum';
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 
 const VALIDATION_STEP : number = 2;
 
@@ -26,7 +25,7 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
 
   constructor(
     private _cdr : ChangeDetectorRef,
-    private _dialog : MatDialog,
+    private _dialogUtils : DialogUtilsService,
     private _missionService : MissionService,
     private _route : ActivatedRoute,
   ) {}
@@ -49,14 +48,14 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
       () => {
         this.mission[event.key] = event.value;
       },
-      () => this._showMessageDialog("Impossible de mettre à jour les données.")
+      () => this._dialogUtils.showMsgDialog("Impossible de mettre à jour les données.")
     )
   }
 
   public createNewProject() : void {
     this._missionService.newProjectFromToken(this._token).subscribe(
       () => this.ngOnInit(),
-      () => this._showMessageDialog("Impossible de créer un nouveau projet.")
+      () => this._dialogUtils.showMsgDialog("Impossible de créer un nouveau projet.")
     )
   }
 
@@ -64,7 +63,7 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     const projectId = this.mission.lastVersion.projects[event.index].id;
       this._missionService.updateProjectFromToken(this._token, projectId, event.key, event.value).subscribe(
         () => this.mission.lastVersion.projects[event.index][event.key] = event.value,
-        () => this._showMessageDialog("Impossible de mettre à jour le projet.")
+        () => this._dialogUtils.showMsgDialog("Impossible de mettre à jour le projet.")
       );
   }
 
@@ -75,23 +74,26 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
         this.mission.lastVersion.projects.splice(index, 1);
         this.projectsEdit.projectsForms[index] = null;
       },
-      () => this._showMessageDialog("Impossible de supprimer le projet.")
+      () => this._dialogUtils.showMsgDialog("Impossible de supprimer le projet.")
     )
-  }
-  
-  private _showMessageDialog(message : string) : MatDialogRef<MessageDialogComponent, any> {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = message;
-    return this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 
   public onAddPicture(event : any) : void {
     this._missionService.uploadProjectPictureFromToken(event.picture, event.project, this._token).subscribe(
       response => {
-        if (response instanceof HttpResponse && response.status === HttpStatus.OK)
-          this.ngOnInit();
+        if (response instanceof HttpResponse) {
+          if (response.status === HttpStatus.OK)
+            this.ngOnInit();
+          else
+            this._dialogUtils.showMsgDialog("Impossible de charger cette image.");
+        }
       },
-      error => console.log(error)
+      error => { 
+        if (error.status === HttpStatus.BAD_REQUEST)
+          this._dialogUtils.showMsgDialog("Le logo n'a pas été chargé, les extensions d'image acceptées sont les .jpg, .png et .gif uniquement.");
+        else
+          this._dialogUtils.showMsgDialog("Impossible de charger cette image.");
+      }
     );
   }
 
@@ -105,25 +107,25 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
   public addSkillToProject(skill: any){
     this._missionService.addSkillToProjectFromToken(skill.project,[skill.skill], this._token).subscribe(
       () => {},
-      () => this._showMessageDialog("Impossible d'ajouter la compétence.")
+      () => this._dialogUtils.showMsgDialog("Impossible d'ajouter la compétence.")
     );
   }
 
   public removeSkillFromProject(skill: any){
     this._missionService.removeSkillFromProjectFromToken(skill.project,skill.skill, this._token).subscribe(
       () => {},
-      () => this._showMessageDialog("Impossible de supprimer la compétence.")
+      () => this._dialogUtils.showMsgDialog("Impossible de supprimer la compétence.")
     )
   }
 
   public onValidate() : void {
     this._missionService.updateMissionFromToken(this._token, 'sheetStatus', SheetStatus.VALIDATED).subscribe(
       () => {
-        const dialogRef = this._showMessageDialog("La fiche a bien été validée et transmise.");
+        const dialogRef = this._dialogUtils.showMsgDialog("La fiche a bien été validée et transmise.");
         dialogRef.beforeClosed().subscribe(() => window.location.replace(''));
       }
         ,
-      () => this._showMessageDialog("Impossible de valider la fiche mission.")
+      () => this._dialogUtils.showMsgDialog("Impossible de valider la fiche mission.")
     )
   }
 

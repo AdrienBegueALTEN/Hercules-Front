@@ -1,9 +1,14 @@
 <mat-card>
     <mat-card-title *ngIf="showAdvancedSearch">Recherche avancée</mat-card-title>
     <mat-card-content>
-    <div *ngIf="showAdvancedSearch; then complex else simple"></div>
+    <div *ngIf="showAdvancedSearch; then complex else simple">
+        
+    </div>
 </mat-card-content>
+
 </mat-card>
+
+
 
 <button mat-mini-fab (click)="toggleAdvancedSearch()" id="search-arrow" class="blue-shape">
     <mat-icon>keyboard_arrow_{{showAdvancedSearch ? 'up' : 'down'}}</mat-icon>
@@ -12,7 +17,8 @@
 <app-array-missions-view *ngIf="!!missions"
     [displayedColumns]="colsToDisp"
     [missions]="missions"
-    [showOnlyMineToogle]="true">
+    [showOnlyMineToogle]="true"
+    [events]="eventsSubject.asObservable()">
 </app-array-missions-view>
 
 <ng-template #simple>
@@ -62,10 +68,12 @@
                 <app-skills-autocomplete></app-skills-autocomplete>
             </td></tr>
             <tr><td colspan="2">
-                <button mat-fab [disabled]="cooldownOn" (click)="onSearch();cooldownTime()" id="search-button" class="white-shape"
+                  <button mat-button (click)="setAllMissions()" color="primary">Réinitialiser la recherche</button>
+                <button mat-fab [disabled]="cooldownOn" (click)="onSearch();cooldownTime();emitEventToChild()" id="search-button" class="white-shape"
                     title="Effectuer une recherche avancée">
                     <mat-icon>search</mat-icon>
                 </button>
+                
             </td></tr>
         </table> 
     </form>

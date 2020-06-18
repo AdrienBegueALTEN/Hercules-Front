@@ -3,9 +3,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SheetStatus } from './../../_enums/sheet-status.enum';
 import { AuthService } from 'src/app/_services/auth.service';
 import { MissionService } from '../../_services/mission.service';
-import { Component, OnInit, AfterContentChecked, ChangeDetectorRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, AfterContentChecked, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { MatTabGroup } from '@angular/material/tabs';
 import { saveAs } from "file-saver";
@@ -13,8 +13,8 @@ import { HttpResponse } from '@angular/common/http';
 import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { MissionEditComponent } from 'src/app/_edit/mission-edit/mission-edit.component';
-import { AppSettings } from 'src/app/app-settings';
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 
 @Component({
   selector: 'app-mission-page',
@@ -37,7 +37,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   constructor(
     private _authService : AuthService,
     private _cdr : ChangeDetectorRef,
-    private _dialog : MatDialog,
+    private _dialogUtils : DialogUtilsService,
     private _missionService : MissionService,
     private _route : ActivatedRoute,
     private _snackBar: MatSnackBar,
@@ -70,14 +70,14 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
           this.mission.versions[0][event.key] = event.value;
           this.mission.sheetStatus = SheetStatus.ON_GOING;
         },
-        () => this._showErrorDialog("Impossible de mettre à jour les données.")
+        () => this._dialogUtils.showMsgDialog("Impossible de mettre à jour les données.")
       )
   }
 
   public onNewVersion() : void {
     this._missionService.addVersion(this.mission.id).subscribe(
       () => this.ngOnInit(),
-      () => this._showErrorDialog("Impossible de créer une nouvelle version.")
+      () => this._dialogUtils.showMsgDialog("Impossible de créer une nouvelle version.")
     );
   }
 
@@ -93,7 +93,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
           ".eml").toLowerCase();
         saveAs(blob, fileName);
       },
-      () => this._showErrorDialog("Impossible de télécharger le fichier.")
+      () => this._dialogUtils.showMsgDialog("Impossible de télécharger le fichier.")
     );
   }
 
@@ -137,16 +137,10 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     return 'Fiche '.concat(str);
   }
 
-  private _showErrorDialog(message : string) : void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = message;
-    this._dialog.open(MessageDialogComponent, dialogConfig);
-  }
-
   public createNewProject() : void {
     this._missionService.newProject(this.mission.id).subscribe(
       () => this.ngOnInit(),
-      () => this._showErrorDialog("Impossible de créer un nouveau projet.")
+      () => this._dialogUtils.showMsgDialog("Impossible de créer un nouveau projet.")
     )
   }
 
@@ -158,7 +152,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
           this.mission.sheetStatus = SheetStatus.ON_GOING;
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
         },
-        () => this._showErrorDialog("Impossible de mettre à jour le projet.")
+        () => this._dialogUtils.showMsgDialog("Impossible de mettre à jour le projet.")
       );
   }
 
@@ -169,17 +163,26 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
         this.mission.versions[0].projects.splice(index, 1);
         this.mission.sheetStatus = SheetStatus.ON_GOING;
       },
-      () => this._showErrorDialog("Impossible de supprimer le projet.")
+      () => this._dialogUtils.showMsgDialog("Impossible de supprimer le projet.")
     )
   }
 
   public onAddPicture(event : any) : void {
     this._missionService.uploadProjectPicture(event.picture, event.project).subscribe(
       response => {
-        if (response instanceof HttpResponse && response.status === HttpStatus.OK)
-          this.ngOnInit();
+        if (response instanceof HttpResponse)
+          if (response.status === HttpStatus.OK)
+            this.ngOnInit();
+          else
+            this._dialogUtils.showMsgDialog("Impossible de charger cette image.");
       },
-      error => console.log(error)
+      error => {
+        if(error.status == HttpStatus.BAD_REQUEST){
+          this._dialogUtils.showMsgDialog("Le logo n'a pas été chargé, les extensions d'image acceptées sont les .jpg, .png et .gif uniquement.");
+        }
+        else
+          this._dialogUtils.showMsgDialog("Impossible de charger cette image.");
+      }
     );
   }
 
@@ -191,13 +194,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   }
 
   public onSetReleaseDate() : void {
-    const dialogConfig = new MatDialogConfig();
-        dialogConfig.autoFocus = true;
-        dialogConfig.data = {
-          firstname : this.mission.consultant.firsrname,
-          lastname : this.mission.consultant.lastname
-        };
-    const dialogRef = this._dialog.open(DeactivateComponent, dialogConfig);
+    const dialogRef = this._dialogUtils.showDeactivateDialog(this.mission.consultant)
     dialogRef.afterClosed().subscribe(
       data => {
         if (data) {
@@ -229,14 +226,8 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   public onValidate() : void {
     this._missionService.updateMission(this.mission.id, 'sheetStatus', SheetStatus.VALIDATED).subscribe(
       () => this.ngOnInit(),
-      () => this._showMessageDialog("Impossible de valider la dernière fiche mission.")
+      () => this._dialogUtils.showMsgDialog("Impossible de valider la dernière fiche mission.")
     )
-  }
-
-  private _showMessageDialog(message : string) : void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = message;
-    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 
   public allFormsValid() : boolean {

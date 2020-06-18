@@ -3,5 +3,6 @@ export enum HttpStatus {
   CREATED = 201,
   ACCEPTED = 202,
   FORBIDDEN = 403,
-  CONFLICT = 409
+  CONFLICT = 409,
+  BAD_REQUEST = 400
 }

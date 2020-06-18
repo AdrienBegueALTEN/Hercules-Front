@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivitySectorAutocompleteComponent } from 'src/app/_input/autocomplete/activity-sector/activity-sector-autocomplete.component';
 import { SkillsAutocompleteComponent } from 'src/app/_input/autocomplete/skills/skills-autocomplete.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-missions',
@@ -26,6 +27,8 @@ export class MissionsComponent implements OnInit {
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
   @ViewChild(ActivitySectorAutocompleteComponent) activtySector: ActivitySectorAutocompleteComponent;
   @ViewChild(SkillsAutocompleteComponent) skills: SkillsAutocompleteComponent;
+
+  eventsSubject: Subject<void> = new Subject<void>();
 
   public grp : FormGroup = new FormBuilder().group(
     {
@@ -119,11 +122,14 @@ export class MissionsComponent implements OnInit {
 
   cooldownTime() 
   {
-    console.log(this.cooldownOn);
     this.cooldownOn = true;
 
     setTimeout(() => this.cooldownOn = false, 1000)
 
+  }
+
+  emitEventToChild() {
+    this.eventsSubject.next();
   }
   
 }
