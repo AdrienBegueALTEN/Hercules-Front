@@ -101,33 +101,29 @@ footer {
      float: right;
  }
 
- .img-container{
-        position: relative;
-        text-align: center;
-        color: white;
- }
+.label-icon {
+    margin-right: 8px;
+}
 
- .centered {
-    background-color: red;
-    color: white;
-    padding: 10px;
-    display: none;
+mat-radio-button {
+    padding-left: 16px;
+}
+
+.img-box {
+    width: 250px;
+    height: 250px;
+    float: right;
+    position: relative;
+    text-align: center;
+}
+
+.centered {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 100px;
-  }
+}
 
-  .img:hover + .centered, .centered:hover{
-    cursor: pointer;
-    display: inline-block;
-  }
-
-  .label-icon {
-    margin-right: 8px;
-  }
-
-  mat-radio-button {
-      padding-left: 16px;
-  }
+.left-part {
+    flex-grow: 1;
+}

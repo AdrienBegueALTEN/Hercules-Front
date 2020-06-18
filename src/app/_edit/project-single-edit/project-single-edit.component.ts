@@ -1,12 +1,14 @@
+import { AppSettings } from 'src/app/app-settings';
 import { CtrlError } from 'src/app/_enums/ctrl-error.enum';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 const SEMANTICS_ERR : string = 'semantics';
 
 @Component({
   selector: 'app-project-single-edit',
-  templateUrl: './project-single-edit.component.html'
+  templateUrl: './project-single-edit.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class ProjectSingleEditComponent implements OnInit {
   @Input() canBeDeteled : boolean = false;
@@ -26,24 +28,19 @@ export class ProjectSingleEditComponent implements OnInit {
   readonly TOOLTIP_POS : string = 'before';
 
   public grp : FormGroup;
-  public selectedFiles : FileList;
-  public currentFileRealName : string;
-  public srcPic;
-  public isImgHover = false;
+  public pictureSrc : string = null;
 
-  @Output() update : EventEmitter<any> = new EventEmitter<any>();
-  @Output() deletion : EventEmitter<void> = new EventEmitter<void>();
-  @Output() image : EventEmitter<any> = new EventEmitter<any>();
-  @Output() deleteImage : EventEmitter<any> = new EventEmitter<any>();
+  @Output() addPicture = new EventEmitter<any>();
   @Output() addSkillEvent = new EventEmitter<any>();
-  @Output() removeSkillEvent = new EventEmitter<any>()
-  @Output() sendFormGrp = new EventEmitter<FormGroup>()
-
-  constructor() {}
+  @Output() deletion : EventEmitter<void> = new EventEmitter<void>();
+  @Output() removePicture = new EventEmitter<void>();
+  @Output() removeSkillEvent = new EventEmitter<any>();
+  @Output() sendFormGrp = new EventEmitter<FormGroup>();
+  @Output() update : EventEmitter<any> = new EventEmitter<any>();
 
   public ngOnInit() : void {
-    this.srcPic = 'http://localhost:8080/hercules/missions/projects/picture/' + this.project.picture;
-    this.currentFileRealName = !!this.project.picture ? 'Remplacer l\'image liée au projet' : 'Lier une image au projet...';
+    if (this.project.picture)
+      this.pictureSrc = AppSettings.PROJECT_PICTURE_PATH + this.project.picture;
     this.grp = new FormBuilder().group({
       title: [this.project[this.ENTITLED_KEY], [Validators.required, Validators.maxLength(100)]],
       description: [this.project[this.DESCRIPTION_KEY], [Validators.required, Validators.maxLength(this.DESCRIPTION_MAX_LENGTH)]],
@@ -80,18 +77,6 @@ export class ProjectSingleEditComponent implements OnInit {
 
   private _doUpdate(key : string) : boolean {
       return this.grp.controls[key].valid && this.grp.controls[key].dirty;
-  }
-
-  public upload(image) {
-    /*this.selectedFiles = event.target.files;
-    this.currentFileRealName = this.selectedFiles.item(0).name;
-    let name = sha1(this.project.title+this.project.id+"logo");
-    let extension = this.selectedFiles.item(0).name.split('.').pop(); 
-    let renamedFile = new File([this.selectedFiles.item(0)],name+'.'+extension);*/
-    this.image.emit({
-        file:image,
-        project:this.project.id
-    });
   }
 
   public getErrorTxt(key : string) : string {

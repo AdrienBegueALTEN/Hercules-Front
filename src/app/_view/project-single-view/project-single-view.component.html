@@ -1,17 +1,24 @@
-<mat-list *ngIf="project">
-    <mat-list-item>
-      <h1 matLine>Intitulé de projet</h1>
-      <p matLine>{{project.title || 'Non renseigné'}}</p>
-    </mat-list-item>
-    <mat-list-item>
-      <h1 matLine>Description du projet</h1>
-      <p matLine>{{project.description || 'Pas de description'}}</p>
-    </mat-list-item>
-    <mat-list-item>
-      <h1 matLine>Durée du projet</h1>
-      <p matLine>Du {{project.beginDate | date:'dd/MM/yyyy'  || '?'}} au {{project.endDate | date:'dd/MM/yyyy' || '?'}}</p>
-    </mat-list-item>
-  </mat-list>
-  <mat-chip-list>
-    <mat-chip *ngFor="let skill of project.skills">{{skill.label}}</mat-chip>
-</mat-chip-list>
+<div *ngIf="!!project" class="flex-row-container">
+    <mat-list class="left-part">
+      <mat-list-item>
+        <h1 matLine>Intitulé de projet</h1>
+        <p matLine>{{project.title || 'Non renseigné'}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h1 matLine>Description du projet</h1>
+        <p matLine>{{project.description || 'Pas de description'}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h1 matLine>Durée du projet</h1>
+        <p matLine>Du {{project.beginDate | date:'dd/MM/yyyy'  || '?'}} au {{project.endDate | date:'dd/MM/yyyy' || '?'}}</p>
+      </mat-list-item>
+    </mat-list>
+    <mat-chip-list>
+      <mat-chip *ngFor="let skill of project.skills">{{skill.label}}</mat-chip>
+  </mat-chip-list>
+  <div *ngIf="!!project.picture" class="img-box">
+    <div class="centered">
+        <app-img-box [src]="pictureSrc"></app-img-box>
+    </div>
+  </div>
+</div>

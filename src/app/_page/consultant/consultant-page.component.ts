@@ -14,9 +14,9 @@ import { isUndefined } from 'util';
 export class ConsultantPageComponent implements OnInit {
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
   consultant : any;
-  writingRights : boolean = false;
-  writingRights2 : boolean = false;
-  consultantsMissions : any[];
+  public user : any = this._authService.getUser();
+  public userIsManager : boolean = this._authService.userIsManager();
+  public consultantsMissions : any[];
 
   constructor(
     private _authService : AuthService,
@@ -34,14 +34,6 @@ export class ConsultantPageComponent implements OnInit {
         this._consultantService.getMissions(consultant.id).subscribe(
           consultantMissions => this.consultantsMissions = consultantMissions),
           error => console.log(error)
-        const user = this._authService.getUser();
-        this.writingRights = 
-          this._authService.userIsManager()
-          && (consultant.manager.id == user.id || consultant.manager.releaseDate != null)
-          && consultant.releaseDate == null;
-        this.writingRights2 = 
-          this._authService.userIsManager()
-          && (consultant.manager.id == user.id || consultant.manager.releaseDate != null);
       },
       () => this._router.navigate(['/not-found'])
     )
@@ -67,7 +59,18 @@ export class ConsultantPageComponent implements OnInit {
       () => this._router.navigate(['/consultants']),
       error => { 
         this._dialogUtils.showMsgDialog("Echec de la suppression en base.");
-        console.log(error); }
+        console.log(error);
+      }
+    )
+  }
+
+  public onManage() : void {
+    this._consultantService.updateConsultant(this.consultant.id, 'manager', this.user.id).subscribe(
+      () => this.ngOnInit(),
+      error => { 
+        this._dialogUtils.showMsgDialog("Echec de l'opération.");
+        console.log(error);
+      }
     )
   }
 }

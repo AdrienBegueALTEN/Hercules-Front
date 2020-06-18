@@ -73,7 +73,6 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     this._missionService.deleteProjectFromToken(this._token, projectId).subscribe(
       () => {
         this.mission.lastVersion.projects.splice(index, 1);
-        this.projectsEdit.tabGrp.selectedIndex = 0;
         this.projectsEdit.projectsForms[index] = null;
       },
       () => this._showMessageDialog("Impossible de supprimer le projet.")
@@ -86,30 +85,21 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     return this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 
-  public addImage(imageFile){
-    this._missionService.uploadFromToken(imageFile.file, imageFile.project, this._token).subscribe(
-      event => {
-        if (event instanceof HttpResponse) {
-          if(event.status == HttpStatus.OK){
-            this.ngOnInit();
-            return;
-          }
-          
-        }
-        
+  public onAddPicture(event : any) : void {
+    this._missionService.uploadProjectPictureFromToken(event.picture, event.project, this._token).subscribe(
+      response => {
+        if (response instanceof HttpResponse && response.status === HttpStatus.OK)
+          this.ngOnInit();
       },
-      err => this._showMessageDialog("Impossible de charger cette image.")
-    )
-    
+      error => console.log(error)
+    );
   }
 
-  public removePic(project: any){
-    this._missionService.removePictureFromProjectFromToken(project.id, this._token).subscribe(
-      () => {
-        project.picture = null;
-      },
-      (err) => console.log(err)
-    )
+  public onRemovePicture(event : any) : void {
+    this._missionService.removePictureFromProjectFromToken(event.project, this._token).subscribe(
+      () => this.ngOnInit(),
+      error => console.log(error)
+    );
   }
 
   public addSkillToProject(skill: any){

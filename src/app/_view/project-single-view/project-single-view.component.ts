@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AppSettings } from 'src/app/app-settings';
 
 @Component({
   selector: 'app-project-single-view',
@@ -6,11 +7,11 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProjectSingleViewComponent implements OnInit {
   @Input() project;
-  src;
-  constructor() { }
+
+  public pictureSrc : string;
 
   ngOnInit(): void {
-    this.src = 'http://localhost:8080/hercules/missions/projects/picture/'+this.project.picture;
+    this.pictureSrc = AppSettings.PROJECT_PICTURE_PATH + this.project.picture;
   }
 
 }

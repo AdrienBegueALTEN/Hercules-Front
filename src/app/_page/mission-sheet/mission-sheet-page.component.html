@@ -31,13 +31,13 @@
                 <app-projects-edit #projectsEditComponent 
                   [projects]="mission.lastVersion.projects"
                   [externalVersion]="true"
-                  (new)="createNewProject()"
-                  (update)="updateProject($event)"
-                  (deletion)="deleteProject($event)"
-                  (image)="addImage($event)"
+                  (addPicture)="onAddPicture($event)"
                   (addSkillEvent)="addSkillToProject($event)"
+                  (deletion)="deleteProject($event)"
+                  (new)="createNewProject()"
+                  (removePicture)="onRemovePicture($event)"
                   (removeSkillEvent)="removeSkillFromProject($event)"
-                  (deleteImage)="removePic($event)">
+                  (update)="updateProject($event)">
                 </app-projects-edit>
                 </div>
                 <button mat-fab matStepperNext [disabled]="!allFormsValid()"  color="accent" class="next step-nav" (click)="onValidate()"

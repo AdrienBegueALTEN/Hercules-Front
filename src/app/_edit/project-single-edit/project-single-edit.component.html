@@ -1,65 +1,64 @@
 <div *ngIf="!!project">
-    <form [formGroup]="grp">
-        <table class="inputable">
-            <tr>
-                <td colspan="2">
-                    <mat-form-field>
-                        <mat-label>Intitulé du projet</mat-label>
-                        <input matInput type="text" maxlength="100" [formControlName]="ENTITLED_KEY" (change)="onChange(ENTITLED_KEY)" required>
-                        <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-                        [matTooltip]="ENTITLED_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
-                        <mat-error>{{getErrorTxt(ENTITLED_KEY)}}</mat-error>
-                    </mat-form-field>
-                </td>
-                <td rowspan="3" *ngIf="project.picture" style="padding: 0; margin: 0; width: 300px;">
-                    <div class="img-container">
-                        <img class="img" height="300px" [src]="srcPic" alt="Image"
-                            (mouseover)="isImgHover = true" (mouseout)="isImgHover = false"
-                            [style.opacity]="isImgHover?0.1:1">
-                        <div class="centered" (mouseover)="isImgHover = true" (mouseout)="isImgHover = false">
-                            <button mat-icon-button (click)="deleteImage.emit(project)"><mat-icon>delete</mat-icon></button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <mat-form-field>
-                        <mat-label>Description</mat-label>
-                        <textarea matInput maxlength="1000" type="text" [formControlName]="DESCRIPTION_KEY" (change)="onChange(DESCRIPTION_KEY)" required></textarea>
-                        <mat-icon matSuffix *ngIf="externalVersion" color="primary" required
-                        [matTooltip]="DESCRIPTION_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
-                        <mat-error>{{getErrorTxt(DESCRIPTION_KEY)}}</mat-error>
-                        <mat-hint>{{grp.controls[DESCRIPTION_KEY].value?.length || 0}} / {{DESCRIPTION_MAX_LENGTH}}</mat-hint>
-                    </mat-form-field>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <mat-form-field>
-                        <mat-label>Début</mat-label>
-                        <input matInput type="date" [formControlName]="BEGIN_KEY" (blur)="onChange(BEGIN_KEY)" required>
-                        <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-                        [matTooltip]="BEGIN_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
-                        <mat-error *ngIf="!grp.controls[BEGIN_KEY].valid && grp.controls[BEGIN_KEY].touched">
-                            {{getErrorTxt(BEGIN_KEY)}}
-                        </mat-error>
-                    </mat-form-field>
-                </td>
-                <td>
-                    <mat-form-field>
-                        <mat-label>Fin</mat-label>
-                        <input matInput type="date" [formControlName]="END_KEY" (blur)="onChange(END_KEY)" required>
-                        <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-                        [matTooltip]="END_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
-                        <mat-error *ngIf="!grp.controls[END_KEY].valid && grp.controls[END_KEY].touched">
-                            {{getErrorTxt(END_KEY)}}
-                        </mat-error>
-                    </mat-form-field>
-                </td>
-            </tr>
-        </table>
-    </form>
+    <div class="flex-row-container">
+        <div class="left-part">
+            <form [formGroup]="grp">
+                <table class="inputable">
+                    <tr>
+                        <td colspan="2">
+                            <mat-form-field>
+                                <mat-label>Intitulé du projet</mat-label>
+                                <input matInput type="text" maxlength="100" [formControlName]="ENTITLED_KEY" (change)="onChange(ENTITLED_KEY)" required>
+                                <mat-icon matSuffix *ngIf="externalVersion" color="primary"
+                                [matTooltip]="ENTITLED_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
+                                <mat-error>{{getErrorTxt(ENTITLED_KEY)}}</mat-error>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <mat-form-field>
+                                <mat-label>Description</mat-label>
+                                <textarea matInput maxlength="1000" type="text" [formControlName]="DESCRIPTION_KEY" (change)="onChange(DESCRIPTION_KEY)" required></textarea>
+                                <mat-icon matSuffix *ngIf="externalVersion" color="primary" required
+                                [matTooltip]="DESCRIPTION_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
+                                <mat-error>{{getErrorTxt(DESCRIPTION_KEY)}}</mat-error>
+                                <mat-hint>{{grp.controls[DESCRIPTION_KEY].value?.length || 0}} / {{DESCRIPTION_MAX_LENGTH}}</mat-hint>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mat-form-field>
+                                <mat-label>Début</mat-label>
+                                <input matInput type="date" [formControlName]="BEGIN_KEY" (blur)="onChange(BEGIN_KEY)" required>
+                                <mat-icon matSuffix *ngIf="externalVersion" color="primary"
+                                [matTooltip]="BEGIN_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
+                                <mat-error *ngIf="!grp.controls[BEGIN_KEY].valid && grp.controls[BEGIN_KEY].touched">
+                                    {{getErrorTxt(BEGIN_KEY)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <mat-label>Fin</mat-label>
+                                <input matInput type="date" [formControlName]="END_KEY" (blur)="onChange(END_KEY)" required>
+                                <mat-icon matSuffix *ngIf="externalVersion" color="primary"
+                                [matTooltip]="END_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
+                                <mat-error *ngIf="!grp.controls[END_KEY].valid && grp.controls[END_KEY].touched">
+                                    {{getErrorTxt(END_KEY)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+          <div class="img-box">
+            <div class="centered">
+              <div *ngIf="!!pictureSrc; then picture else noPicture"></div>
+            </div>
+          </div>
+      </div>
     <table class="inputable">
         <tr>
             <td>
@@ -71,12 +70,13 @@
                 </app-skill-tags>
             </td>
         </tr>
-        <tr>
-            <td>
-                <app-upload-image (image)="upload($event)"
-                    [id]="project.id"
-                    [btn]="'Selectionner une photo du projet'"></app-upload-image>
-            </td>
-        </tr>
     </table>
 </div>
+
+<ng-template #picture>
+    <app-img-box [src]="pictureSrc" [allowDelete]="true" (delete)="removePicture.emit()"></app-img-box>
+</ng-template>
+
+<ng-template #noPicture>
+    <app-upload-image [id]="project.id" [title]="'Ajouter une image'" (image)="addPicture.emit($event)"></app-upload-image>
+</ng-template>

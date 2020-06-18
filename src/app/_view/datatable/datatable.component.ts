@@ -1,10 +1,10 @@
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { AuthService } from 'src/app/_services/auth.service';
-import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
 import { Component, ViewChild, Input, Output, EventEmitter, AfterViewInit, OnChanges } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-datatable',
@@ -31,7 +31,7 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
 
   constructor(
     private _authService: AuthService,
-    private _dialog: MatDialog
+    private _dialogUtils: DialogUtilsService
   ) {}
 
   public ngAfterViewInit(): void {
@@ -65,17 +65,11 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
     this.rowClicked.emit(elementId);
   }
 
-  public onDeactivate(index : number, user : any) : void {
-    const dialogConfig = new MatDialogConfig();
-        dialogConfig.autoFocus = true;
-        dialogConfig.data = {
-          firstname : user.firsrname,
-          lastname : user.lastname
-        };
-    const dialogRef = this._dialog.open(DeactivateComponent, dialogConfig);
+  public onSetReleaseDate(index : number, user : any) : void {
+    const dialogRef = this._dialogUtils.showDeactivateDialog(user);
     dialogRef.afterClosed().subscribe(
       releaseDate => {
-        if (releaseDate)
+        if (!isUndefined(releaseDate))
           this.deactivate.emit(
             {
               index: index,

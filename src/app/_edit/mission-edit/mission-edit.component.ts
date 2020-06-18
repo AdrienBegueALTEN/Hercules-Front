@@ -34,7 +34,6 @@ export class MissionEditComponent implements OnInit {
   readonly XP_KEY = 'consultantStartXp';
   readonly XP_TOOLTIP = 'Le nombre d\'années d\'expérience que vous aviez au départ de la mission.';
 
-
   grp : FormGroup;
 
   @Output() update : EventEmitter<any> = new EventEmitter<any>();

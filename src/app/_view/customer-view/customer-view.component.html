@@ -1,5 +1,21 @@
-<mat-card>
-    <mat-icon>domain</mat-icon> {{customer.activitySector?customer.activitySector:'Aucun secteur d\'activité'}}<br>
-    <mat-icon>description</mat-icon> {{customer.description?customer.description:'Aucune description'}}
-    <p>Logo</p>
-</mat-card>
+<div *ngIf="!!customer" class="flex-row-container">
+    <mat-list class="left-part">
+        <mat-list-item>
+            <h1 matLine>Nom</h1>
+            <p matLine>{{customer[NAME_KEY]}}</p>
+        </mat-list-item>
+        <mat-list-item>
+            <h1 matLine>Secteur d'activité</h1>
+            <p matLine>{{customer[ACTIVITY_SECTOR_KEY]}}</p>
+        </mat-list-item>
+        <mat-list-item>
+            <h1 matLine>Description</h1>
+            <p matLine>{{customer[DESCRIPTION_KEY] || 'Aucune description.'}}</p>
+        </mat-list-item>
+    </mat-list>
+    <div *ngIf="!!customer.logo" class="img-box">
+        <div class="centered">
+            <app-img-box [src]="logoSrc"></app-img-box>
+        </div>
+    </div>
+</div>

@@ -1,32 +1,28 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as sha1 from 'js-sha1';
-import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-upload-image',
   templateUrl: './upload-image.component.html'
 })
-export class UploadImageComponent implements OnInit {
+export class UploadImageComponent {
+  @Input() id : number;
+  @Input() title : string;
 
-  @Input() id: number;
-  @Input() btn: string;
   @Output() image = new EventEmitter<any>();
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  selectFile(event) {
+  public selectImg(event) : void {
     const date = new Date();
     let selectedFiles = event.target.files;
-    let name = sha1(date.toISOString()+this.id);
-    let extension = selectedFiles.item(0).name.split('.').pop(); 
-    let renamedFile = new File([selectedFiles.item(0)],name+'.'+extension);
-    this.image.emit(renamedFile);
+    if (!!selectedFiles) {
+      let name = sha1(date.toISOString()+this.id);
+      let extension = selectedFiles.item(0).name.split('.').pop(); 
+      let renamedFile = new File([selectedFiles.item(0)],name+'.'+extension);
+      this.image.emit(renamedFile);
+    }
   }
 
-  openInput(){ 
+  public openInput() : void { 
     document.getElementById("logoInput").click();
   }
 

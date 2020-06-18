@@ -1,36 +1,32 @@
-<div class="contours">
-    
-    <table>
-        <tr>
-            <td>
-                <app-name-cust-input
-                    (customerChange)="updateCustomer($event)" 
-                    [customer]="customer"></app-name-cust-input>
-                <app-activity-sector-cust-input
-                    (customerChange)="updateCustomer($event)" 
-                    [customer]="customer"></app-activity-sector-cust-input>
-                <app-description-cust-input
-                    (customerChange)="updateCustomer($event)" 
-                    [customer]="customer"></app-description-cust-input>
-                <!--<app-logo-cust-input
-                    (image)="addImage($event)" 
-                    [customer]="customer"></app-logo-cust-input>-->
-                <app-upload-image 
-                    (image)="addImage($event)"
-                    [id]="customer.id"
-                    [btn]="'Selectionner un logo'"></app-upload-image>
-            </td>
-            <td style="padding: 0; margin: 0; width: 300px;" *ngIf="customer.logo">
-                <div class="img-container">
-                    <img class="img" width="100px" [src]="srcLogo" alt="Logo" 
-                        (mouseover)="isImgHover = true" (mouseout)="isImgHover = false"
-                        [style.opacity]="isImgHover?0.1:1">
-                    <div class="centered" (mouseover)="isImgHover = true" (mouseout)="isImgHover = false">
-                        <button mat-icon-button (click)="deleteLogo()"><mat-icon>delete</mat-icon></button>
-                    </div>
-                </div>
-                
-            </td>
-        </tr>
+<div *ngIf="!!customer" class="flex-row-container">
+    <table class="inputable left-part">
+        <tr><td>
+        <app-name-cust-input
+            (customerChange)="updateCustomer($event)" 
+            [customer]="customer"></app-name-cust-input>
+        </td></tr>
+        <tr><td>
+        <app-activity-sector-cust-input
+            (customerChange)="updateCustomer($event)" 
+            [customer]="customer"></app-activity-sector-cust-input>
+        </td></tr>
+        <tr><td>
+        <app-description-cust-input
+            (customerChange)="updateCustomer($event)" 
+            [customer]="customer"></app-description-cust-input>
+        </td></tr>
     </table>
+    <div class="img-box">
+        <div class="centered">
+          <div *ngIf="!!logoSrc; then logo else noLogo"></div>
+        </div>
+    </div>
 </div>
+
+<ng-template #logo>
+    <app-img-box [src]="logoSrc" [title]="'Supprimer le logo.'" [allowDelete]="true" (delete)="onRemoveLogo()"></app-img-box>
+</ng-template>
+  
+<ng-template #noLogo>
+    <app-upload-image [id]="customer.id" [title]="'Ajouter un logo.'" (image)="onAddLogo($event)"></app-upload-image>
+</ng-template>

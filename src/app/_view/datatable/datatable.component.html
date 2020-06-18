@@ -78,14 +78,14 @@
             <mat-icon>tag</mat-icon>
             <span>Accéder à {{user.id !== loggedUser ? 'sa' : 'votre'}} page personnelle</span>
           </button>
-          <div *ngIf="!user.releaseDate && loggedUserIsManager && 
+          <div *ngIf="loggedUserIsManager && 
             (user.admin == null || user.id !== loggedUser) &&
             (user.manager == null || user.manager.id === loggedUser)">
-            <button mat-menu-item (click)="onDeactivate(index, user)">
+            <button mat-menu-item (click)="onSetReleaseDate(index, user)">
               <mat-icon>flag</mat-icon>
-              <span>Indiquer la sortie des effectifs</span>
+              <span>{{user.releaseDate ? 'Modifier' : 'Indiquer'}} date de sortie des effectifs</span>
             </button>
-            <button *ngIf="user.admin != null" mat-menu-item (click)="setAdmin.emit({index: index, manager: user.id, admin: !user.admin})">
+            <button *ngIf="user.admin != null && user.releaseDate == null" mat-menu-item (click)="setAdmin.emit({index: index, manager: user.id, admin: !user.admin})">
               <mat-icon>{{user.admin ? 'undo' : 'redo'}}</mat-icon>
               {{user.admin ? 'Retirer' : 'Octroyer'}} les droits d'administrateur
             </button>

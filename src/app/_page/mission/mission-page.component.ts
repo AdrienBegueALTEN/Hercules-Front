@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SheetStatus } from './../../_enums/sheet-status.enum';
 import { AuthService } from 'src/app/_services/auth.service';
 import { MissionService } from '../../_services/mission.service';
-import { Component, OnInit, AfterContentChecked, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterContentChecked, ChangeDetectorRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
@@ -13,6 +13,8 @@ import { HttpResponse } from '@angular/common/http';
 import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { MissionEditComponent } from 'src/app/_edit/mission-edit/mission-edit.component';
+import { AppSettings } from 'src/app/app-settings';
+import { HttpStatus } from 'src/app/_enums/http-status.enum';
 
 @Component({
   selector: 'app-mission-page',
@@ -166,30 +168,29 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       () => {
         this.mission.versions[0].projects.splice(index, 1);
         this.mission.sheetStatus = SheetStatus.ON_GOING;
-        this.projectsEdit.tabGrp.selectedIndex = 0;
       },
       () => this._showErrorDialog("Impossible de supprimer le projet.")
     )
   }
 
-  addImage(imageFile){
-    this._missionService.upload(imageFile.file, imageFile.project).subscribe(
-      event => {
-        if (event instanceof HttpResponse) {
-          if(event.status==200){
-            this._snackBar.open('Image changée', 'X', {duration: 2000});
-            this.ngOnInit();
-          }
-          else
-            this._showErrorDialog("Impossible de charger cette image.");
-        }
+  public onAddPicture(event : any) : void {
+    this._missionService.uploadProjectPicture(event.picture, event.project).subscribe(
+      response => {
+        if (response instanceof HttpResponse && response.status === HttpStatus.OK)
+          this.ngOnInit();
       },
-      err => {
-        this._showErrorDialog("Impossible de charger cette image.");
-      });
+      error => console.log(error)
+    );
   }
 
-  onSetReleaseDate() : void {
+  public onRemovePicture(event : any) : void {
+    this._missionService.removePictureFromProject(event.project).subscribe(
+      () => this.ngOnInit(),
+      error => console.log(error)
+    );
+  }
+
+  public onSetReleaseDate() : void {
     const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
@@ -200,7 +201,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     dialogRef.afterClosed().subscribe(
       data => {
         if (data) {
-          this._consultantService.updateConsultant(this.mission.consultant.id,'releaseDate',data).subscribe(
+          this._consultantService.updateConsultant(this.mission.consultant.id, 'releaseDate', data).subscribe(
             () => {
               this.mission.consultant.releaseDate = data;
               this.ngOnInit();
@@ -221,16 +222,6 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   public removeSkillFromProject(skill: any){
     this._missionService.removeSkillFromProject(skill.project,skill.skill).subscribe(
       () => this._snackBar.open('La compétence '+skill.skill.label+' est retirée.', 'X', {duration: 2000}),
-      (err) => console.log(err)
-    )
-  }
-
-  public removePic(project: any){
-    this._missionService.removePictureFromProject(project.id).subscribe(
-      () => {
-        project.picture = null;
-        this._snackBar.open('L\'image est supprimée.', 'X', {duration: 2000})
-      },
       (err) => console.log(err)
     )
   }

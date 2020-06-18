@@ -10,10 +10,10 @@
       <app-project-single-edit
         [externalVersion]="externalVersion"
         [project]="project"
-        (update)="update.emit({index: i, key: $event.key, value: $event.value})"
-        (image)="image.emit($event)"
-        (deleteImage)="deleteImage.emit($event)"
+        (addPicture)="addPicture.emit({picture: $event, project: project.id, index: i})"
         (addSkillEvent)="addSkillEvent.emit($event)"
+        (update)="update.emit({index: i, key: $event.key, value: $event.value})"
+        (removePicture)="removePicture.emit({project: project.id, index: i})"
         (removeSkillEvent)="removeSkillEvent.emit($event)"
         (sendFormGrp)="receiveFormGrp($event, i)">
       </app-project-single-edit>

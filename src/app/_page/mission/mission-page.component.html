@@ -96,14 +96,15 @@
 
 <ng-template #projectsEdit>
   <app-projects-edit #projectsEditComponent
-  [projects]="mission.versions[selectedIndex].projects"
-  (new)="createNewProject()"
-  (update)="updateProject($event)"
-  (deletion)="deleteProject($event)"
-  (image)="addImage($event)"
-  (addSkillEvent)="addSkillToProject($event)"
-  (removeSkillEvent)="removeSkillFromProject($event)"
-  (deleteImage)="removePic($event)"></app-projects-edit>
+    [projects]="mission.versions[selectedIndex].projects"
+    (addPicture)="onAddPicture($event)"
+    (addSkillEvent)="addSkillToProject($event)"
+    (deletion)="deleteProject($event)"
+    (new)="createNewProject()"
+    (removePicture)="onRemovePicture($event)"
+    (removeSkillEvent)="removeSkillFromProject($event)"
+    (update)="updateProject($event)">
+  </app-projects-edit>
 </ng-template>
 
 <ng-template #projectsView>

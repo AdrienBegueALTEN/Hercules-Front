@@ -87,7 +87,6 @@ import { CustomerPageComponent } from './_page/customer-page/customer-page.compo
 import { NameCustInputComponent } from './_input/customer-inputs/name-cust-input/name-cust-input.component';
 import { ActivitySectorCustInputComponent } from './_input/customer-inputs/activity-sector-cust-input/activity-sector-cust-input.component';
 import { DescriptionCustInputComponent } from './_input/customer-inputs/description-cust-input/description-cust-input.component';
-import { LogoCustInputComponent } from './_input/customer-inputs/logo-cust-input/logo-cust-input.component';
 import { ProjectsViewComponent } from "./_view/projects-view/projects-view.component";
 import { ProjectSingleViewComponent } from './_view/project-single-view/project-single-view.component';
 import { ProjectsEditComponent } from './_edit/projects-edit/projects-edit.component';
@@ -109,9 +108,9 @@ import { NewCustomerDialogComponent } from './_dialog/new-customer/new-customer-
 import { UploadImageComponent } from './_input/upload-image/upload-image.component';
 import { MissionColumnChoiceComponent } from './_dialog/mission-column-choice/mission-column-choice.component';
 import { ChooseFilenameDialogComponent } from './_dialog/choose-filename-dialog/choose-filename-dialog.component';
+import { ImgBoxComponent } from './img-box/img-box.component';
 
 @NgModule({
-
    declarations: [
       AppComponent,
       ConsultantAutocompleteComponent,
@@ -148,7 +147,6 @@ import { ChooseFilenameDialogComponent } from './_dialog/choose-filename-dialog/
       NameCustInputComponent,
       ActivitySectorCustInputComponent,
       DescriptionCustInputComponent,
-      LogoCustInputComponent,
       ProjectsViewComponent,
       ProjectSingleViewComponent,
       ProjectsEditComponent,
@@ -179,7 +177,8 @@ import { ChooseFilenameDialogComponent } from './_dialog/choose-filename-dialog/
       ManagerEditComponent,
       ManagerViewComponent,
       ChooseFilenameDialogComponent,
-      SkillsAutocompleteComponent
+      SkillsAutocompleteComponent,
+      ImgBoxComponent
    ],
    imports: [
       AppRoutingModule,
@@ -221,13 +220,8 @@ import { ChooseFilenameDialogComponent } from './_dialog/choose-filename-dialog/
    ],
    providers: [
       authInterceptorProviders,
-      MissionService,
-      {  provide: MatPaginatorIntl, 
-         useValue: getFrenchPaginatorIntl() 
-      }
+      MissionService
    ],
-   
-
    bootstrap: [
       AppComponent
    ],
