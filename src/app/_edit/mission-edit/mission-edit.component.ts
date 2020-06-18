@@ -50,9 +50,8 @@ export class MissionEditComponent implements OnInit {
       country : [this.version[this.COUNTRY_KEY], [Validators.required, Validators.maxLength(100)]],
       teamSize : [this.version[this.TEAM_KEY], [Validators.required, Validators.min(1), Validators.pattern(NUMBER_PATTERN)]],
       contractType : [this.version[this.CONTRACT_KEY], [Validators.required]],
+      comment : [this.version[this.COMMENT_KEY], Validators.maxLength(this.COMMENT_MAX_LENGTH)]
     });
-    if (this.version[this.COMMENT_KEY])
-      this.grp.addControl(this.COMMENT_KEY, new FormControl(this.version[this.COMMENT_KEY], [Validators.maxLength(this.COMMENT_MAX_LENGTH)]));
   }
 
   public onChange(key : string) : void {
