@@ -32,9 +32,9 @@
     <ng-container matColumnDef="manager">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Manager</th>
       <td mat-cell *matCellDef="let user" (click)="onRow(user.id)" [ngClass]="{'element-disabled': !!user.releaseDate}">
+        <mat-icon id="manager-warning" *ngIf="!!user.manager.releaseDate && !user.releaseDate" color="warn" 
+          matTooltip="Ce manager n'est plus actif." matTooltipPosition="right">warning</mat-icon>
         {{user.manager.id === loggedUser ? 'Vous' : user.manager.firstname + ' ' + user.manager.lastname}}
-        <mat-icon *ngIf="!!user.manager.releaseDate && !user.releaseDate" color="warn" 
-        matTooltip="Ce manager n'est plus actif." matTooltipPosition="right">warning</mat-icon>
       </td>
     </ng-container>
     <ng-container matColumnDef="releaseDate">

@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
   constructor(private _authService : AuthService) {}
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    if (this._authService.isAuthenticated()) return true;
+    if (this._authService.isAuthentificated()) return true;
     else window.location.replace('login');
   }
 }

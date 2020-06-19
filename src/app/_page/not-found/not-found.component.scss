@@ -1,0 +1,15 @@
+mat-card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+mat-icon {
+    float: right;
+    margin-left: 10px;
+}
+
+a {
+    display: block;
+}

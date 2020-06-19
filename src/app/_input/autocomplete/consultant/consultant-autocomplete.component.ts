@@ -39,7 +39,6 @@ export class ConsultantAutocompleteComponent implements OnInit {
   ngOnInit() {
     this._initOptions();
     this.sendFormCtrl.emit(this.ctrl);
-    console.log(this.consultants);
   }
 
   private _initOptions() {

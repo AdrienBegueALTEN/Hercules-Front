@@ -48,8 +48,8 @@
       <a [href]="'/consultants/' + mission.consultant.id" mat-button color="accent">
         Se rendre sur la page personnelle de {{mission.consultant.firstname}} {{mission.consultant.lastname}}
       </a>
-      <button *ngIf="userIsConsultantManager && !mission.consultant.releaseDate" mat-button color="warn" (click)="onSetReleaseDate()">
-        Indiquer la sortie des effectifs de {{mission.consultant.firstname}} {{mission.consultant.lastname}}
+      <button *ngIf="userIsConsultantManager" mat-button color="warn" (click)="onSetReleaseDate()">
+        {{mission.consultant.releaseDate ? 'Modifier' : 'Indiquer'}} la sortie des effectifs de {{mission.consultant.firstname}} {{mission.consultant.lastname}}
       </button>
     </div>
     <div *ngSwitchCase="CUSTOMER_TAB_INDEX">

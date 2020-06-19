@@ -74,7 +74,7 @@ export class AuthService {
     return JSON.parse(sessionStorage.getItem(USER_KEY));
   }
 
-  public isAuthenticated() : boolean { return !!this.getToken(); }
+  public isAuthentificated() : boolean { return !!this.getToken(); }
 
   public userIsAdmin() : boolean {
     return this._userHasRole(Role.ADMIN);
