@@ -11,6 +11,7 @@
         <mat-option *ngFor="let manager of filteredManagers | async" [value]="manager">
           <span>{{manager.firstname}} {{manager.lastname}}</span> -
           <i>{{manager.email}}</i>
+          <small *ngIf="!!manager.releaseDate" style="color:orange"> - Sortie prévue le {{manager.releaseDate | date:'dd-MM-yyyy'}}</small>
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
