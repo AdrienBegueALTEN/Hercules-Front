@@ -220,7 +220,10 @@ import { ImgBoxComponent } from './img-box/img-box.component';
    ],
    providers: [
       authInterceptorProviders,
-      MissionService
+      MissionService,
+      {  provide: MatPaginatorIntl, 
+         useValue: getFrenchPaginatorIntl() 
+      }
    ],
    bootstrap: [
       AppComponent

@@ -90,7 +90,7 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
       },
       error => { 
         if (error.status === HttpStatus.BAD_REQUEST)
-          this._dialogUtils.showMsgDialog("Le logo n'a pas été chargé, les extensions d'image acceptées sont les .jpg, .png et .gif uniquement.");
+          this._dialogUtils.showMsgDialog("Le logo n'a pas été chargé, seules les images de moins d'un Mo en .jpg, .png, .gif, .ico et .webp sont acceptées.");
         else
           this._dialogUtils.showMsgDialog("Impossible de charger cette image.");
       }
