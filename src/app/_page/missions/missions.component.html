@@ -18,9 +18,8 @@
 <ng-template #simple>
     <table class="inputable">
         <tr><td><mat-form-field>
-            <mat-label>Chercher une mission</mat-label>
-            <input matInput (keyup)="arrayView.applyFilter($event)"
-                placeholder="Chercher une mission, une ville, un secteur d'activité...">
+            <mat-label>Recherche par mots-clefs</mat-label>
+            <input matInput (keyup)="arrayView.applyFilter($event)">
         </mat-form-field></td></tr>
     </table>
 </ng-template>

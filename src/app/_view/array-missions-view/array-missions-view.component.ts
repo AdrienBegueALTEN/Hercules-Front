@@ -103,8 +103,10 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
       };
       const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
       // Transform the filter by converting it to lowercase and removing whitespace.
-      const transformedFilter = filter.trim().toLowerCase();
-      return dataStr.indexOf(transformedFilter) !== -1;
+      const keywords : string[] = filter.split(" ");
+      var matches : boolean = true;
+      keywords.forEach(keyword => matches = matches && dataStr.indexOf(keyword.toLowerCase()) !== -1)
+      return matches;
     };
 
   }
@@ -116,9 +118,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
           search = this.nestedFilterCheck(search, data[key], k);
         }
       }
-    } else {
-      search += data[key];
-    }
+    } else search += data[key];
     return search;
   }
 
@@ -155,10 +155,8 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   }
 
 generatePDF(selectedElements : any[],filename : string) : void {
-
-    if(filename.search(".pdf")==-1){
+    if (filename.search(".pdf") == -1)
       filename = filename + ".pdf";
-    }
 
     let elements : any[] = [];
     selectedElements.forEach( function (value){
