@@ -6,13 +6,15 @@
         <div *ngIf="displayInGrps">
           <mat-optgroup *ngFor="let grp of filteredConsultants | async" [label]="grp.name">
             <mat-option *ngFor="let consultant of grp.consultants" [value]="consultant">
-              <p><b>{{consultant.firstname + ' ' + consultant.lastname}}</b> - <i>{{consultant.email}}</i></p>
+              <p><b>{{consultant.firstname + ' ' + consultant.lastname}}</b> - <i>{{consultant.email}}</i>
+                <small *ngIf="!!consultant.releaseDate" style="color:orange"> - Sortie prévue le {{consultant.releaseDate | date:'dd-MM-yyyy'}}</small></p>
             </mat-option>
           </mat-optgroup>
         </div>
         <div *ngIf="!displayInGrps">
           <mat-option *ngFor="let consultant of filteredConsultants | async" [value]="consultant">
-            <p><b>{{consultant.firstname + ' ' + consultant.lastname}}</b> - <i>{{consultant.email}}</i></p>
+            <p><b>{{consultant.firstname + ' ' + consultant.lastname}}</b> - <i>{{consultant.email}}</i>
+              <small *ngIf="!!consultant.releaseDate" style="color:orange"> - Sortie prévue le {{consultant.releaseDate | date:'dd-MM-yyyy'}}</small></p>
           </mat-option>
         </div>
         <mat-option disabled *ngIf="showNewOpt">
