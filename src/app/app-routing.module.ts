@@ -13,13 +13,13 @@ import { MissionPageComponent } from './_page/mission/mission-page.component';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
 import { HomeComponent } from './home/home.component';
 import { CustomersComponent } from './_page/customers/customers.component';
-import { CustomerPageComponent } from './_page/customer-page/customer-page.component';
+import { CustomerPageComponent } from './_page/customer/customer-page.component';
 import { MissionSheetPageComponent } from './_page/mission-sheet/mission-sheet-page.component';
 import { RecruitmentOfficerPageComponent } from './_page/recruitment-officer/recruitment-officer-page.component';
 import { RecruitmentOfficersComponent } from './_page/recruitment-officers/recruitment-officers.component';
 import { AdminGuard } from './_services/guard/admin-guard.service';
 import { ManagersComponent } from './_page/managers/managers.component';
-import { ManagerPageComponent } from './_page/manager-page/manager-page.component';
+import { ManagerPageComponent } from './_page/manager/manager-page.component';
 
 const routes: Routes = [
   { 
