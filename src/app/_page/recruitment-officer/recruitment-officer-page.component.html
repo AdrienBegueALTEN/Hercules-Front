@@ -10,7 +10,7 @@
           </mat-tab-group>
     </mat-card-content>
     <mat-card-actions>
-      <button *ngIf="recruitmentOfficer.releaseDate === null" mat-button color="primary"
+      <button *ngIf="recruitmentOfficer.releaseDate !== null" mat-button color="primary"
         (click)="onChangePasswordAcces()"> Télécharger lien modification mot de passe
       </button>
       <button mat-button color="warn" (click)="onSetReleaseDate()">

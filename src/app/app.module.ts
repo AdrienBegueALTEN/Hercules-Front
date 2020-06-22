@@ -83,7 +83,7 @@ import { ConsultantPageComponent } from './_page/consultant/consultant-page.comp
 import { ArrayMissionComponent } from './array-mission/array-mission.component';
 import { CustomersComponent } from './_page/customers/customers.component';
 import { NavHeaderComponent } from './_header/nav/nav-header.component';
-import { CustomerPageComponent } from './_page/customer-page/customer-page.component';
+import { CustomerPageComponent } from './_page/customer/customer-page.component';
 import { NameCustInputComponent } from './_input/customer-inputs/name-cust-input/name-cust-input.component';
 import { ActivitySectorCustInputComponent } from './_input/customer-inputs/activity-sector-cust-input/activity-sector-cust-input.component';
 import { DescriptionCustInputComponent } from './_input/customer-inputs/description-cust-input/description-cust-input.component';
@@ -98,7 +98,7 @@ import { MissionsComponent } from './_page/missions/missions.component';
 import { OkDialogComponent } from './_dialog/ok/ok-dialog.component';
 import { ArrayMissionsViewComponent } from './_view/array-missions-view/array-missions-view.component';
 import { ManagersComponent } from './_page/managers/managers.component';
-import { ManagerPageComponent } from './_page/manager-page/manager-page.component';
+import { ManagerPageComponent } from './_page/manager/manager-page.component';
 import { ChangePasswordDialogComponent } from './_dialog/change-password/change-password-dialog.component';
 import { NewUserDialogComponent } from './_dialog/new-user/new-user-dialog.component';
 import { ReleaseDateDialogComponent } from './_dialog/release-date/release-date-dialog.component';
