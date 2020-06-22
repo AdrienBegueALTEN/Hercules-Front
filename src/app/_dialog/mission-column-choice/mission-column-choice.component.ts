@@ -12,7 +12,6 @@ export class MissionColumnChoiceComponent implements OnInit {
   selectedCols = [];
 
   translation: any[] = [
-    {name:'select',french:'Livret PDF'},
     {name:'title',french:'Titre'},
     {name:'consultant',french:'Consultant'},
     {name:'customer',french:'Client'},
@@ -46,7 +45,7 @@ export class MissionColumnChoiceComponent implements OnInit {
   }
 
   private emitColumns(){
-    let res = [];
+    let res = ['select'];
     for(let col of this.translation){
       if(this.data.cols.includes(col.name)){
         res.push(col.name);
@@ -58,10 +57,12 @@ export class MissionColumnChoiceComponent implements OnInit {
   private orderTranslation(){
     let newIdx = 0;
     for(let col of this.data.cols){
-      const c = this.translation.filter(c => c.name==col)[0]
-      const currentIdx: number = this.translation.indexOf(c);
-      this.move(currentIdx,newIdx,this.translation);
-      newIdx++;
+      if(col!='select'){
+        const c = this.translation.filter(c => c.name==col)[0]
+        const currentIdx: number = this.translation.indexOf(c);
+        this.move(currentIdx,newIdx,this.translation);
+        newIdx++;
+      }
     }
   }
 

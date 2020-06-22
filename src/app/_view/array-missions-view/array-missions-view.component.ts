@@ -236,8 +236,8 @@ generatePDF(selectedElements : any[],filename : string) : void {
       }
     });
     dialogRef.componentInstance.colsEvent.subscribe(
-      (data)=>{
-        this.displayedColumns = data
+      (data: any[])=>{
+        this.displayedColumns = data;
       }
     )
   }
