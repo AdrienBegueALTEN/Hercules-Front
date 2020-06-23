@@ -8,6 +8,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 
 const CONST_NEW : string = 'newPassword';
 const CONST_CONFIRMATION : string = 'confirmation';
+const PASSWORD_PATTERN : string = '(?=.*\\d)(?=.*[a-zA-Z])(?=.*[#{}\\[\\]()<>@%$+*\\-_~/!?])([a-zA-Z\\d#{}\\[\\]()<>@%$+*\\-_~/!?]{8,16})';
 
 export function checkConfirmation (ctrl : AbstractControl) {
   let res : any = 
@@ -35,7 +36,7 @@ export class ChangePasswordDialogComponent {
     private _authService : AuthService,
     private _dialogRef : MatDialogRef<ChangePasswordDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public user : number = null) {
-    this.grp.addControl(this.NEW_KEY, new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]));
+    this.grp.addControl(this.NEW_KEY, new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16), Validators.pattern(PASSWORD_PATTERN)]));
     this.grp.addControl(this.CONFIRMATION_KEY, new FormControl(''));
     this.grp.setValidators(checkConfirmation);
     if (!!this.user)
@@ -56,9 +57,10 @@ export class ChangePasswordDialogComponent {
   public getErrorText(key : string) : string {
     switch (key) {
       case this.NEW_KEY:
-        return this.grp.controls[key].hasError(CtrlError.REQUIRED) ? 'Le nouveau mot de passe doit être renseigné.' :
-        this.grp.controls[key].hasError(CtrlError.MIN_LENGTH) ? 'Le nouveau mot de passe est trop court.' :
-        this.grp.controls[key].hasError(CtrlError.MAX_LENGTH) ? 'Le nouveau mot de passe est trop long.' : '';
+        return this.grp.controls[key].hasError(CtrlError.REQUIRED) ? 'Le nouveau mot de passe est obligatioire.' :
+        this.grp.controls[key].hasError(CtrlError.MIN_LENGTH) ? 'Le nouveau mot de passe doit contenir au moins 6 caractères.' :
+        this.grp.controls[key].hasError(CtrlError.MAX_LENGTH) ? 'Le nouveau mot de passe ne peut pas contenir plus de 16 caractères' : 
+        this.grp.controls[key].hasError(CtrlError.PATTERN) ? 'Le nouveau mot de passe doit contenir au moins une lettre, un chiffre et un caractère spécial.' : '';
       default : return '';
     }
   }
