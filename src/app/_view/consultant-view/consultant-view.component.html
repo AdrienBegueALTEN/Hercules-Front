@@ -16,6 +16,17 @@
     <p matLine>{{getXpToText()}}</p>
   </mat-list-item>
     <div *ngIf="consultant[RELEASE_DATE_KEY]; then releaseDate else manager"></div>
+    <mat-list-item  *ngIf="consultant.diplomas?.length > 0">
+      <h1 matLine>Diplômes</h1>
+      <mat-list matLine>
+        <mat-list-item *ngFor="let diploma of consultant.diplomas; let i = index">
+          <h1 matLine>{{diploma.entitled}}</h1>
+          <p matLine><b>Etablissement d'obtention :</b> {{diploma.establishment}}</p>
+          <p matLine><b>Niveau :</b> {{diploma.level}}</p>
+          <p matLine><b>Année d'obtention :</b> {{diploma.year}}</p>
+        </mat-list-item>
+      </mat-list>
+    </mat-list-item>
 </mat-list>
 
 <ng-template #releaseDate>

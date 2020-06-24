@@ -35,7 +35,6 @@ constructor(private _dialog : MatDialog) { }
   public showChangePasswordDialog(user? : number) : MatDialogRef<ChangePasswordDialogComponent, any> {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    dialogConfig.height = 'auto';
     if (!!user) {
       dialogConfig.data = user;
       dialogConfig.disableClose = false;
