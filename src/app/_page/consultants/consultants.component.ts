@@ -1,3 +1,4 @@
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit} from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -36,7 +37,7 @@ export class ConsultantsComponent implements OnInit {
   constructor(
     private _authService : AuthService,
     private _consultantService : ConsultantService,
-    private _dialog : MatDialog,
+    private _dialogUtils : DialogUtilsService,
     private _router : Router
   ) {}
 
@@ -101,15 +102,12 @@ export class ConsultantsComponent implements OnInit {
   public onDeactivate(event : any) : void {
     this._consultantService.updateConsultant(event.user, 'releaseDate', event.releaseDate).subscribe(
       () => this.ngOnInit(),
-      () => this._showMessageDialog("Impossible de notifier la sortie des effectifs.")
+      () => this._dialogUtils.showMsgDialog("Impossible de notifier la sortie des effectifs.")
     );
   }
 
   public newConsultant() : void {
-    let dialogConfig = new MatDialogConfig();
-    dialogConfig.data = { label: this.LABEL }
-    const dialogRef = this._dialog.open(NewUserDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(
+    this._dialogUtils.showNewUserDialog(this.LABEL).afterClosed().subscribe(
       (user : any) => {
         if (isUndefined(user)) return;
         this._consultantService.newConsultant(user.email, user.firstname, user.lastname, this._loggedUserId).subscribe(
@@ -129,14 +127,8 @@ export class ConsultantsComponent implements OnInit {
       let message : string = "Impossible d'ajouter ce " + this.LABEL + ".";
       if (response.status === HttpStatus.ACCEPTED)
         message = message.concat(" L'adresse email renseignée est indisponible.");
-      this._showMessageDialog(message);
+      this._dialogUtils.showMsgDialog(message);
     } else this.ngOnInit();
-  }
-  
-  private _showMessageDialog(message : string) : void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = message;
-    this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 }
 

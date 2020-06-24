@@ -40,8 +40,7 @@ export class ConsultantPageComponent implements OnInit {
   }
 
   public onSetReleaseDate() : void {
-    const dialogRef = this._dialogUtils.showDeactivateDialog(this.consultant);
-    dialogRef.afterClosed().subscribe(
+    this._dialogUtils.showDeactivateDialog(this.consultant).afterClosed().subscribe(
       releaseDate => {
         if (!isUndefined(releaseDate)) {
           this._consultantService.updateConsultant(this.consultant.id, 'releaseDate', releaseDate).subscribe(

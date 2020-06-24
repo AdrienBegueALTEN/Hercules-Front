@@ -1,8 +1,6 @@
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../_services/auth.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ChangePasswordDialogComponent } from 'src/app/_dialog/change-password/change-password-dialog.component';
-import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -11,13 +9,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['../header.scss']
 })
 export class NavHeaderComponent implements OnInit {
-  user : any;
-  userIsAdmin : boolean = false;
-  userIsManager : boolean = false;
+  public user : any;
+  public userIsAdmin : boolean = false;
+  public userIsManager : boolean = false;
 
   constructor(
     private _authService : AuthService,
-    private _dialog : MatDialog,
+    private _dialogUtils : DialogUtilsService,
     private _snackBar: MatSnackBar
   ) {}
 
@@ -28,23 +26,15 @@ export class NavHeaderComponent implements OnInit {
   }
 
   public onChangePassword() : void {
-    let dialogConfig = new MatDialogConfig();
-    dialogConfig.data = this.user.id;
-    this._dialog.open(ChangePasswordDialogComponent, dialogConfig).afterClosed().subscribe(
+    this._dialogUtils.showChangePasswordDialog(this.user.id).afterClosed().subscribe(
       ok => {
         if (!!ok) {
           if (ok) this._snackBar.open('Votre mot de passe a bien été modifié.', 'X', {duration: 2000});
-          else this._showMessageDialog('Impossible de modifier le mot de passe.');
+          else this._dialogUtils.showMsgDialog('Impossible de modifier le mot de passe.');
         }
       }
     )
   }
 
   public onLogout() : void { this._authService.logout(); }
-
-  private _showMessageDialog(message : string) : void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = message;
-    this._dialog.open(MessageDialogComponent, dialogConfig);
-  }
 }

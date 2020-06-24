@@ -24,7 +24,7 @@
       <div *ngIf="userId != manager.id">
         <button *ngIf="manager.releaseDate === null" mat-button color="primary"
           (click)="onChangePasswordAcces()">
-          Télécharger lien modification mot de passe
+          Lien de réinitialisation de mot de passe
         </button>
         <button mat-button color="warn" (click)="onSetReleaseDate()">
           {{manager.releaseDate ? 'Modifier' : 'Indiquer'}} date de sortie des effectifs
