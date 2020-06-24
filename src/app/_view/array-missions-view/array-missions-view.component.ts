@@ -73,6 +73,10 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
  * Contains projects fetched from child component
  */
   dataSourceProjects: MatTableDataSource<any>;
+
+  /**
+ * Contains the contents of selected rows
+ */
   selection = new SelectionModel<any>(true, []);
 
   /**
@@ -93,7 +97,14 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
  */
   innerDisplayedColumns: string[] = ['select', 'project-name', 'project-description'];
 
+  /**
+ * Paginates the table and alllows the user to select the numlber of items per page and browses next pages
+ */
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  /**
+ * Sorts the table by its columns
+ */
   @ViewChild(MatSort) sort: MatSort;
   @ViewChildren(MatInput) matInputs: QueryList<MatInput>;
 
@@ -196,7 +207,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
 
    /**
  * 
- * Computes the number of validated missions
+ * Computes the number of missions where the mission sheet is validated
  * @returns Number of validated missions inside the missions array
  */
   public getNbCheckableRow() : number {
