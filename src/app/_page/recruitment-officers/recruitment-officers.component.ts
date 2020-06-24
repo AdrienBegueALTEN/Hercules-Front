@@ -1,16 +1,13 @@
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { DatatableComponent } from './../../_view/datatable/datatable.component';
 import { AuthService } from 'src/app/_services/auth.service';
-import { Component, OnInit, ViewChild, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogConfig, } from '@angular/material/dialog';
 import { RecruitmentOfficerService } from 'src/app/_services/recruitment-officer.service';
-import { NewUserDialogComponent } from 'src/app/_dialog/new-user/new-user-dialog.component';
-import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { saveAs } from "file-saver";
 import { isUndefined } from 'util';
 import { Router } from '@angular/router';
-import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-recruitment-officers',
@@ -26,8 +23,8 @@ export class RecruitmentOfficersComponent implements OnInit {
   constructor(
     private _authService : AuthService,
     private _recruitmentOfficerService : RecruitmentOfficerService, 
-    private _dialog: MatDialog,
-    private _router: Router) { }
+    private _dialogUtils : DialogUtilsService,
+    private _router : Router) { }
 
   public ngOnInit() : void {
     this.dataSource = new MatTableDataSource();
@@ -41,12 +38,7 @@ export class RecruitmentOfficersComponent implements OnInit {
   }
 
   public newRecruitmentOfficer() : void {
-    let dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      label: this.LABEL
-    }
-    const dialogRef = this._dialog.open(NewUserDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(
+    this._dialogUtils.showNewUserDialog(this.LABEL).afterClosed().subscribe(
       (user : any) => {
         if (isUndefined(user)) return;
         this._recruitmentOfficerService.addRecruitmentOfficer(user.firstname, user.lastname, user.email).subscribe(
@@ -58,17 +50,14 @@ export class RecruitmentOfficersComponent implements OnInit {
                 fileName = fileName.toLowerCase();
                 saveAs(blob, fileName);
               },
-              error => { this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error);}
+              () => this._dialogUtils.showMsgDialog("Impossible d'indiquer la sortie des effectifs")
             )
             this.ngOnInit();
           },
           error => {
             if (error.status == HttpStatus.CONFLICT) {
-              const dialogConfig = new MatDialogConfig();
-              dialogConfig.data = 'Cette adresse mail est indisponible.';
-              this._dialog.open(MessageDialogComponent, dialogConfig);
-            } else { this._handleError("Erreur de création d'accès"); 
-                     console.log(error); }
+              this._dialogUtils.showMsgDialog('Cette adresse mail est indisponible.');
+            } else this._dialogUtils.showMsgDialog("Erreur de création d'accès");
           }
         );
       }
@@ -80,14 +69,9 @@ export class RecruitmentOfficersComponent implements OnInit {
   }
 
   public onDeactivate(event : any) : void {
-    this._recruitmentOfficerService.updateRecruitmentOfficer(event.user, 'releaseDate', event.releaseDate)
-      .subscribe(() => this.ngOnInit(), error => {this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error); });
-  }
-
-  private _handleError(message : string) : void {
-    
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = message;
-    this._dialog.open(MessageDialogComponent, dialogConfig);
+    this._recruitmentOfficerService.updateRecruitmentOfficer(event.user, 'releaseDate', event.releaseDate).subscribe(
+      () => this.ngOnInit(),
+      () => this._dialogUtils.showMsgDialog("Impossible d'indiquer la sortie des effectifs")
+    );
   }
 }

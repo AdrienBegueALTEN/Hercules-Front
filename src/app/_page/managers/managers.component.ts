@@ -1,10 +1,8 @@
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { HttpStatus } from './../../_enums/http-status.enum';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ManagerService } from 'src/app/_services/manager.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
-import { NewUserDialogComponent } from 'src/app/_dialog/new-user/new-user-dialog.component';
 import { AuthService } from 'src/app/_services/auth.service';
 import { isUndefined } from 'util';
 import { saveAs } from "file-saver";
@@ -22,8 +20,8 @@ export class ManagersComponent implements OnInit {
   constructor(
     private _authService : AuthService,
     private _managerService : ManagerService, 
-    private _dialog: MatDialog,
-    private _router: Router
+    private _dialogUtils : DialogUtilsService,
+    private _router : Router
   ) {}
 
   public ngOnInit() : void {
@@ -34,13 +32,7 @@ export class ManagersComponent implements OnInit {
   }
 
   public newManager() : void {
-    let dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      label: this.LABEL,
-      newManager: true
-    }
-    const dialogRef = this._dialog.open(NewUserDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(
+    this._dialogUtils.showNewUserDialog(this.LABEL, true).afterClosed().subscribe(
       (user : any) => {
         if (isUndefined(user)) return;
         this._managerService.addManager(user.email, user.firstname, user.lastname, user.isAdmin).subscribe(
@@ -52,16 +44,14 @@ export class ManagersComponent implements OnInit {
                 fileName = fileName.toLowerCase();
                 saveAs(blob, fileName);
               },
-              error => { this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error); }
+              () => { this._dialogUtils.showMsgDialog("Impossible d'indiquer la sortie des effectifs"); }
             )
             this.ngOnInit()
           },
           error => {
             if (error.status == HttpStatus.CONFLICT) {
-              const dialogConfig = new MatDialogConfig();
-              dialogConfig.data = 'Cette adresse mail est indisponible.';
-              this._dialog.open(MessageDialogComponent, dialogConfig);
-            } else { this._handleError("Erreur de création d'accès"); console.log(error); }
+              this._dialogUtils.showMsgDialog('Cette adresse mail est indisponible.');
+            } else this._dialogUtils.showMsgDialog("Erreur de création d'accès");
           }
         )
       }
@@ -74,18 +64,11 @@ export class ManagersComponent implements OnInit {
 
   public onDeactivate(event : any) : void {
     this._managerService.updateManager(event.user, 'releaseDate', event.releaseDate)
-      .subscribe(() => this.ngOnInit(), error => { this._handleError("Impossible d'indiquer la sortie des effectifs"); console.log(error); });
+      .subscribe(() => this.ngOnInit(), error => { this._dialogUtils.showMsgDialog("Impossible d'indiquer la sortie des effectifs"); });
   }
 
   public setAdmin(event : any) : void {
     this._managerService.updateManager(event.manager, 'isAdmin', event.admin)
-      .subscribe(() => this.ngOnInit(), error => { this._handleError("Impossible de modifier les droits d'administrateurs"); console.log(error); });
-  }
-
-  private _handleError(message : string) : void {
-    
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = message;
-    this._dialog.open(MessageDialogComponent, dialogConfig);
+      .subscribe(() => this.ngOnInit(), error => { this._dialogUtils.showMsgDialog("Impossible de modifier les droits d'administrateurs"); });
   }
 }

@@ -44,8 +44,7 @@ export class RecruitmentOfficerPageComponent implements OnInit {
   }
 
   public onSetReleaseDate() : void {
-    const dialogRef = this._dialogUtils.showDeactivateDialog(this.recruitmentOfficer);
-    dialogRef.afterClosed().subscribe(
+    this._dialogUtils.showDeactivateDialog(this.recruitmentOfficer).afterClosed().subscribe(
       releaseDate => {
         if (!isUndefined(releaseDate)) {
           this._recruitmentOfficerService.updateRecruitmentOfficer(this.recruitmentOfficer.id, 'releaseDate', releaseDate).subscribe(

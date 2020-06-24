@@ -50,8 +50,7 @@ export class ManagerPageComponent implements OnInit {
   }
 
   public onSetReleaseDate() : void {
-    const dialogRef = this._dialogUtils.showDeactivateDialog(this.manager);
-    dialogRef.afterClosed().subscribe(
+    this._dialogUtils.showDeactivateDialog(this.manager).afterClosed().subscribe(
       releaseDate => {
         if (!isUndefined(releaseDate)) {
           this._managerService.updateManager(this.manager.id, 'releaseDate', releaseDate).subscribe(

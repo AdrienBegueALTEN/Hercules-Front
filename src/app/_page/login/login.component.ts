@@ -1,8 +1,7 @@
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ChangePasswordDialogComponent } from 'src/app/_dialog/change-password/change-password-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { Md5 } from 'ts-md5';
 
@@ -25,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private _authService: AuthService,
-    private _dialog : MatDialog,
+    private _dialogUtils : DialogUtilsService,
     private _route : ActivatedRoute
   ) {}
 
@@ -34,9 +33,7 @@ export class LoginComponent implements OnInit {
     if (!token) return;
     this._authService.checkPasswordTokenValidity(token).subscribe(
       () => {
-        const dialogConfig : MatDialogConfig = new MatDialogConfig();
-        dialogConfig.disableClose = true;
-        this._dialog.open(ChangePasswordDialogComponent, dialogConfig).afterClosed().subscribe(
+        this._dialogUtils.showChangePasswordDialog().afterClosed().subscribe(
           newPassword => {
             this._authService.changePasswordAnonymous(token, newPassword).subscribe(
               (apiData) => {

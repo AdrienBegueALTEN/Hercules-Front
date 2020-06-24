@@ -66,8 +66,7 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
   }
 
   public onSetReleaseDate(index : number, user : any) : void {
-    const dialogRef = this._dialogUtils.showDeactivateDialog(user);
-    dialogRef.afterClosed().subscribe(
+    this._dialogUtils.showDeactivateDialog(user).afterClosed().subscribe(
       releaseDate => {
         if (!isUndefined(releaseDate))
           this.deactivate.emit(
