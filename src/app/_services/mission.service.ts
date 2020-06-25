@@ -19,6 +19,11 @@ export class MissionService {
       this._notInteceptedHttpClient = new HttpClient(this._httpBackend);
     }
 
+    /**
+     * Creates a new mission
+     * @param consultant Consultant ID
+     * @param customer Customer ID
+     */
   public newMission(consultant : number, customer : number) : Observable<any> {
     return this._httpClient.post(MISSION_API,
       {
@@ -28,10 +33,18 @@ export class MissionService {
     AppSettings.HTTP_JSON_CONTENT);
   }
 
+  /**
+   * Add a new version to the project. The project is linked to the mission
+   * @param mission Mission ID
+   */
   public addVersion(mission : number) : Observable<any> {
     return this._httpClient.get(MISSION_API.concat() + 'new-version/' + mission);
   }
 
+  /**
+   * Get mission informations from its ID
+   * @param mission Mission ID
+   */
   public getMissionDetails(mission : number) : Observable<any> {
     return this._httpClient.get(MISSION_API + mission);
   }
@@ -41,10 +54,21 @@ export class MissionService {
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
+  /**
+   * Fetches all validated missions sheets. 
+   * If manager ID is present, it also fetches all missions sheets from the manager linked to this ID.
+   * Thus, a manager will only see all validated missions form other managers and all of his missions.
+   * A recruitement officer won't have a manager ID. Thus, a recruitement officer will only see validated missions sheets.
+   * @param manager Manager ID : Optionnal
+   */
   public getMissions(manager? : number) : Observable<any> {
     return this._httpClient.get(MISSION_API + (manager ? '?manager=' + manager : ''));
   }
 
+  /**
+   * Deletes a mission by its ID. Also deletes all projects and versions linked to this mission
+   * @param id Mission ID
+   */
   public deleteMission(id : number) : Observable<any> {
     return this._httpClient.delete(MISSION_API + id);
   }
@@ -68,10 +92,18 @@ export class MissionService {
       { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
+  /**
+   * Creates a new project. The project is linked to the mission ID
+   * @param mission Mission ID
+   */
   public newProject(mission : number): Observable<any> {
     return this._httpClient.get(MISSION_API + 'new-project/' + mission);
   }
 
+  /**
+   * Allows an unauthanticated user to create a new project
+   * @param token Token provided to the unauthenticated user
+   */
   public newProjectFromToken(token : string): Observable<any> {
     return this._notInteceptedHttpClient.get(MISSION_API + 'new-project-anonymous',
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
@@ -97,10 +129,20 @@ export class MissionService {
       { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
+  /**
+   * Deletes a project from its ID for an authenticated user. Also deletes all versions linked to this ID
+   * @param project Project ID
+   */
   public deleteProject(project : number){
     return this._httpClient.delete(PROJECT_API + project);
   }
 
+  /**
+   * Deletes a project from its ID for an unauthenticated user. Also deletes all versions linked to this ID.
+   * The token is used to check if the user is allowed to edit the project
+   * @param token Token provided to the unauthenticated user
+   * @param project Project ID
+   */
   public deleteProjectFromToken(token : string, project : number){
     return this._notInteceptedHttpClient.delete(PROJECT_API + 'anonymous' + project,
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
@@ -131,23 +173,43 @@ export class MissionService {
     return this._notInteceptedHttpClient.request(req);
   }
 
+  /**
+   * Removes the picture from a project for an authenticated user
+   * @param project Project ID
+   */
   public removePictureFromProject(project : number): Observable<any> {
     return this._httpClient.delete(
       PROJECT_API + project + '/delete-picture');
   }
 
+  /**
+   * Removes the picture from a project for an unauthenticated user. 
+   * The token is used to check if the user is allowed to edit the project
+   * @param project Project ID
+   * @param token Token provided to the unauthenticated user
+   */
   public removePictureFromProjectFromToken(project : number, token: string): Observable<any> {
     return this._notInteceptedHttpClient.delete(
       PROJECT_API + 'anonymous/' + project + '/delete-picture',
       { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
+  /**
+   * Add new skills to a project for an authenticated user
+   * @param project Project ID
+   * @param labels New skills 
+   */
   public addSkillToProject(project : number, labels : string[]): Observable<any> {
     return this._httpClient.post(PROJECT_API + project + '/skills',
       labels,
       AppSettings.HTTP_JSON_CONTENT);
   }
 
+  /**
+   * Remove skills from a project for an authenticated user. 
+   * @param project Project ID
+   * @param skill Skills to remove
+   */
   public removeSkillFromProject(project : number, skill : any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: skill
@@ -157,6 +219,13 @@ export class MissionService {
       httpOptions);
   }
 
+  /**
+   * Add new skills to a project for an unauthenticated user. 
+   * The token is used to check if the user is allowed to edit the project
+   * @param project Project ID
+   * @param labels New skills
+   * @param token Token provided to the unauthenticated user
+   */
   public addSkillToProjectFromToken(project : number, labels : string[], token : string): Observable<any> {
     return this._notInteceptedHttpClient.post(PROJECT_API + 'anonymous/' + project + '/skills',
       labels,
@@ -168,6 +237,13 @@ export class MissionService {
       });
   }
 
+    /**
+   * Remove skills from a project for an unauthenticated user. 
+   * The token is used to check if the user is allowed to edit the project
+   * @param project Project ID
+   * @param labels Skills to remove
+   * @param token Token provided to the unauthenticated user
+   */
   public removeSkillFromProjectFromToken(project : number, skill : any, token : string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({ 
@@ -181,16 +257,27 @@ export class MissionService {
       httpOptions);
   }
 
+  /**
+   * Gets all skills
+   */
   public getAllSkills() : Observable<any> {
     return this._httpClient.get(PROJECT_API + 'skills-all');
   }
 
+  /**
+   * Generates a PDF. The PDF contains every element selected by the user in the mission table
+   * @param elements Table elements selected by the user
+   */
   public generatePDF(elements : any[]) : Observable<any> {
     return this._httpClient.post(MISSION_API + 'pdf',
       elements,
       {responseType: 'blob'});
   }
 
+  /**
+   * Fetches all missions matching the criteria entered by the user
+   * @param criteria Object containing every criteria requested by the user
+   */
   public advancedSearch(criteria : object) : Observable<any> {
     var url : string = MISSION_API + 'advancedSearch/?'
     for (var i in criteria)
