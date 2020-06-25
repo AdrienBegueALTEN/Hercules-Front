@@ -74,13 +74,10 @@ import { CustomerEditComponent } from './_edit/customer-edit/customer-edit.compo
 import { CustomerViewComponent } from './_view/customer-view/customer-view.component';
 import { ConsultantManagerComponent } from './_input/autocomplete/consultant-manager/consultant-manager.component';
 import { ConsultantDiplomaComponent } from './_edit/consultant-edit/diploma/diploma-edit.component';
-import { ArrayMissionItemComponent } from './array-mission/array-mission-item/array-mission-item.component';
-import { ArrayProjectItemComponent } from './array-mission/array-project-item/array-project-item.component';
 
 import { MissionService } from './_services/mission.service';
 import { getFrenchPaginatorIntl } from './_services/french-paginator-intl';
 import { ConsultantPageComponent } from './_page/consultant/consultant-page.component';
-import { ArrayMissionComponent } from './array-mission/array-mission.component';
 import { CustomersComponent } from './_page/customers/customers.component';
 import { NavHeaderComponent } from './_header/nav/nav-header.component';
 import { CustomerPageComponent } from './_page/customer/customer-page.component';
@@ -134,9 +131,6 @@ import { ImgBoxComponent } from './img-box/img-box.component';
       ConsultantEditComponent,
       CustomerViewComponent,
       CustomerEditComponent,
-      ArrayMissionComponent,
-      ArrayMissionItemComponent,
-      ArrayProjectItemComponent,
       ConsultantPageComponent,
       CustomersComponent,
       MissionPageComponent,
