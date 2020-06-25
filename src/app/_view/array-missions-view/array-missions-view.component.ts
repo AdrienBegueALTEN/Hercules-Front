@@ -98,7 +98,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   innerDisplayedColumns: string[] = ['select', 'project-name', 'project-description'];
 
   /**
- * Paginates the table and alllows the user to select the numlber of items per page and browses next pages
+ * Paginates the table, allows the user to select the number of items per page and to browse next pages
  */
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
