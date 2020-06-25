@@ -43,7 +43,7 @@
           <mat-expansion-panel *ngFor="let diploma of consultant.diplomas; let i = index">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{diploma.entitled}}
+                <span>{{diploma.entitled}}</span> {{diploma.year}}
               </mat-panel-title>
             </mat-expansion-panel-header>
           <app-diploma-edit
