@@ -324,9 +324,12 @@ generatePDF(selectedElements : any[],filename : string) : void {
     }
   }
 
+  /*
   onClickProjects(event) {
     event.preventDefault();
   }
+*/
+
 
   /**
  * 
