@@ -19,17 +19,29 @@ import { SharedModule } from './shared/shared.module';
 import { DialogModule } from './_dialog/dialog.module';
 import { EditModule } from './_edit/edit.module';
 import { PageModule } from './_page/page.module';
+import { HeaderModule } from './_header/header.module';
+import { ViewModule } from './_view/view.module';
+import { ImgBoxModule } from './img-box/img-box.module';
+import { ArrayMissionModule } from './array-mission/array-mission.module';
+import { InputModule } from './_input/input.module';
+import { HomeModule } from './home/home.module';
 
 
 @NgModule({
    declarations: [
-      AppComponent
+      AppComponent,
    ],
    imports: [
       SharedModule,
       DialogModule,
       EditModule,
-      PageModule
+      PageModule,
+      HeaderModule,
+      ViewModule,
+      ImgBoxModule,
+      ArrayMissionModule,
+      InputModule,
+      HomeModule
    ],
    providers: [
       authInterceptorProviders,

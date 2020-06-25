@@ -16,6 +16,11 @@ import { ManagersComponent } from './managers/managers.component';
 import { ManagerPageComponent } from './manager/manager-page.component';
 import { EditModule } from '../_edit/edit.module';
 import { SharedModule } from '../shared/shared.module';
+import { HeaderModule } from '../_header/header.module';
+import { ViewModule } from '../_view/view.module';
+import { InputModule } from '../_input/input.module';
+import { LoginComponent } from './login/login.component';
+import { AutocompleteModule } from '../_input/autocomplete/autocomplete.module';
 
 
 
@@ -35,11 +40,16 @@ import { SharedModule } from '../shared/shared.module';
     RecruitmentOfficerPageComponent,
     ManagersComponent,
     ManagerPageComponent,
+    LoginComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
-    EditModule
+    EditModule,
+    HeaderModule,
+    ViewModule,
+    InputModule,
+    AutocompleteModule
   ]
 })
 export class PageModule { }

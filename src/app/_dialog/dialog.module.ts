@@ -11,6 +11,7 @@ import { ChangePasswordDialogComponent } from './change-password/change-password
 import { OkDialogComponent } from './ok/ok-dialog.component';
 import { NewCustomerDialogComponent } from './new-customer/new-customer-dialog.component';
 import { SharedModule } from '../shared/shared.module';
+import { InputModule } from '../_input/input.module';
 
 
 
@@ -29,7 +30,8 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    InputModule
   ]
 })
 export class DialogModule { }

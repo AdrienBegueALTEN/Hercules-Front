@@ -1,37 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SkillsAutocompleteComponent } from '../_input/autocomplete/skills/skills-autocomplete.component';
-import { ConsultantAutocompleteComponent } from '../_input/autocomplete/consultant/consultant-autocomplete.component';
-import { CustomerAutocompleteComponent } from '../_input/autocomplete/customer/customer-autocomplete.component';
-import { LoginComponent } from '../_page/login/login.component';
-import { NewUserComponent } from '../_input/new-user/new-user.component';
-import { NewCustomerComponent } from '../_input/new-customer/new-customer.component';
-import { ConsultantManagerComponent } from '../_input/autocomplete/consultant-manager/consultant-manager.component';
-import { FirstnameInputComponent } from '../_input/firstname-input/firstname-input.component';
-import { LastnameInputComponent } from '../_input/lastname-input/lastname-input.component';
-import { EmailInputComponent } from '../_input/email-input/email-input.component';
-import { ConsultantViewComponent } from '../_view/consultant-view/consultant-view.component';
-import { CustomerViewComponent } from '../_view/customer-view/customer-view.component';
-import { ArrayMissionComponent } from '../array-mission/array-mission.component';
-import { ArrayMissionItemComponent } from '../array-mission/array-mission-item/array-mission-item.component';
-import { ArrayProjectItemComponent } from '../array-mission/array-project-item/array-project-item.component';
-import { MissionViewComponent } from '../_view/mission-view/mission-view.component';
-import { NavHeaderComponent } from '../_header/nav/nav-header.component';
-import { NameCustInputComponent } from '../_input/customer-inputs/name-cust-input/name-cust-input.component';
-import { ActivitySectorCustInputComponent } from '../_input/customer-inputs/activity-sector-cust-input/activity-sector-cust-input.component';
-import { DescriptionCustInputComponent } from '../_input/customer-inputs/description-cust-input/description-cust-input.component';
-import { ProjectsViewComponent } from '../_view/projects-view/projects-view.component';
-import { ProjectSingleViewComponent } from '../_view/project-single-view/project-single-view.component';
-import { HomeComponent } from '../home/home.component';
-import { ExternalHeaderComponent } from '../_header/external/external-header.component';
-import { ArrayMissionsViewComponent } from '../_view/array-missions-view/array-missions-view.component';
-import { DatatableComponent } from '../_view/datatable/datatable.component';
-import { SkillTagsComponent } from '../_input/skill-tags/skill-tags.component';
-import { ActivitySectorAutocompleteComponent } from '../_input/autocomplete/activity-sector/activity-sector-autocomplete.component';
-import { UploadImageComponent } from '../_input/upload-image/upload-image.component';
-import { RecruitmentOfficerViewComponent } from '../_view/recruitment-officer-view/recruitment-officer-view.component';
-import { ManagerViewComponent } from '../_view/manager-view/manager-view.component';
-import { ImgBoxComponent } from '../img-box/img-box.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CdkStepperModule } from '@angular/cdk/stepper';
@@ -73,38 +41,6 @@ import { CdkDetailRowDirective } from '../_directive/cdk-detail-row.directive';
 
 @NgModule({
   declarations: [
-    ConsultantAutocompleteComponent,
-    CustomerAutocompleteComponent,
-    LoginComponent,
-    NewCustomerComponent,
-    NewUserComponent,
-    ConsultantManagerComponent,
-    FirstnameInputComponent,
-    LastnameInputComponent,
-    EmailInputComponent,
-    ConsultantViewComponent,
-    CustomerViewComponent,
-    ArrayMissionComponent,
-    ArrayMissionItemComponent,
-    ArrayProjectItemComponent,
-    MissionViewComponent,
-    NavHeaderComponent,
-    NameCustInputComponent,
-    ActivitySectorCustInputComponent,
-    DescriptionCustInputComponent,
-    ProjectsViewComponent,
-    ProjectSingleViewComponent,
-    HomeComponent,
-    ExternalHeaderComponent,
-    ArrayMissionsViewComponent,
-    DatatableComponent,
-    SkillTagsComponent,
-    ActivitySectorAutocompleteComponent,
-    UploadImageComponent,
-    RecruitmentOfficerViewComponent,
-    ManagerViewComponent,
-    SkillsAutocompleteComponent,
-    ImgBoxComponent,
     CdkDetailRowDirective,
   ],
   imports: [
@@ -148,38 +84,6 @@ import { CdkDetailRowDirective } from '../_directive/cdk-detail-row.directive';
   ],
   exports: [
     CdkDetailRowDirective,
-    ConsultantAutocompleteComponent,
-    CustomerAutocompleteComponent,
-    LoginComponent,
-    NewUserComponent,
-    NewCustomerComponent,
-    ConsultantManagerComponent,
-    FirstnameInputComponent,
-    LastnameInputComponent,
-    EmailInputComponent,
-    ConsultantViewComponent,
-    CustomerViewComponent,
-    ArrayMissionComponent,
-    ArrayMissionItemComponent,
-    ArrayProjectItemComponent,
-    MissionViewComponent,
-    NavHeaderComponent,
-    NameCustInputComponent,
-    ActivitySectorCustInputComponent,
-    DescriptionCustInputComponent,
-    ProjectsViewComponent,
-    ProjectSingleViewComponent,
-    HomeComponent,
-    ExternalHeaderComponent,
-    ArrayMissionsViewComponent,
-    DatatableComponent,
-    SkillTagsComponent,
-    ActivitySectorAutocompleteComponent,
-    UploadImageComponent,
-    RecruitmentOfficerViewComponent,
-    ManagerViewComponent,
-    SkillsAutocompleteComponent,
-    ImgBoxComponent,
     BrowserModule,
     BrowserAnimationsModule,
     CdkStepperModule,

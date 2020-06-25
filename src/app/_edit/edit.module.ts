@@ -9,6 +9,10 @@ import { RecruitmentOfficerEditComponent } from './recruitment-officer-edit/recr
 import { ManagerEditComponent } from './manager-edit/manager-edit.component';
 import { SharedModule } from '../shared/shared.module';
 import { ConsultantDiplomaComponent } from './consultant-edit/diploma/diploma-edit.component';
+import { ImgBoxModule } from '../img-box/img-box.module';
+import { InputModule } from '../_input/input.module';
+import { AutocompleteModule } from '../_input/autocomplete/autocomplete.module';
+import { CustomerInputsModule } from '../_input/customer-inputs/customer-inputs.module';
 
 
 
@@ -26,6 +30,10 @@ import { ConsultantDiplomaComponent } from './consultant-edit/diploma/diploma-ed
   imports: [
     CommonModule,
     SharedModule,
+    ImgBoxModule,
+    InputModule,
+    AutocompleteModule,
+    CustomerInputsModule
   ],
   exports: [
     MissionEditComponent,
