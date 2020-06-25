@@ -98,7 +98,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   innerDisplayedColumns: string[] = ['select', 'project-name', 'project-description'];
 
   /**
- * Paginates the table and alllows the user to select the numlber of items per page and browses next pages
+ * Paginates the table, allows the user to select the number of items per page and to browse next pages
  */
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -179,11 +179,12 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
    /**
  * Searches for any missions that matches the input string
  * 
- * @param search The input string entered by the user
- * @param data The data that needs to be searched
- * @param key Algorithm needs it to return the informations that match the search string
+ * @param search Data matching the input string
+ * @param data Same content as search but sorted and inside an array
+ * @param key Field in the JSON nest
  */
   nestedFilterCheck(search, data, key) {
+    console.log(search);
     if (typeof data[key] === 'object') {
       for (const k in data[key]) {
         if (data[key][k] !== null) {
@@ -324,9 +325,12 @@ generatePDF(selectedElements : any[],filename : string) : void {
     }
   }
 
+  /*
   onClickProjects(event) {
     event.preventDefault();
   }
+*/
+
 
   /**
  * 

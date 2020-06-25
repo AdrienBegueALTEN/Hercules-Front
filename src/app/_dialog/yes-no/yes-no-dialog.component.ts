@@ -6,9 +6,26 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
   templateUrl: './yes-no-dialog.component.html'
 })
 export class YesNoDialogComponent {
+
+ 
+  /**
+   * Title of the message box
+   */
   title : string;
+
+  /**
+   * Body of the textbox
+   */
   message : string;
+
+  /**
+   * Text displayed if user wants to confirm last action
+   */
   yes : string;
+
+  /**
+   * Text displayed if user wants to undo last action
+   */
   no : string;
 
   constructor(
