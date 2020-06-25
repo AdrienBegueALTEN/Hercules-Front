@@ -12,14 +12,33 @@ export class ConsultantService {
 
   constructor(private _httpClient : HttpClient) {}
 
+
+  /**
+   * Retrieves all consultants or only those still active (ie consultants still working for the company) from the API
+   * @param active Indicates if only active consultants should be returned. 
+   * If true, only returns active consultants
+   * If false, returns all consultants
+   */
   public getConsultants(active : boolean = false) : Observable<any[]> {
     return this._httpClient.get<any[]>(API + '?active=' + active, AppSettings.HTTP_JSON_CONTENT);
   }
 
+  /**
+   * Retrieves informations from the API with consultant ID
+   * @param id Consultant ID
+   */
   public getConsultant(id:number){
     return this._httpClient.get<any>(API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 
+  /**
+   * Creates a new consultant 
+   * 
+   * @param email Email of the new consultant
+   * @param firstname First name of the new consultant
+   * @param lastname Last name of the new consultant
+   * @param manager Manager of the new consultant
+   */
   public newConsultant(email : string, firstname : string, lastname : string, manager : number) : Observable<any> {
     return this._httpClient.post(API,
       {
@@ -31,6 +50,10 @@ export class ConsultantService {
       {observe: 'response'});
   }
 
+  /**
+   * Deletes a consultant
+   * @param id Deletes a consultant with his id
+   */
   public deleteConsultant(id : number) : Observable<any> {
     return this._httpClient.delete(API + id, AppSettings.HTTP_JSON_CONTENT);
   }
@@ -76,6 +99,7 @@ export class ConsultantService {
     , AppSettings.HTTP_JSON_CONTENT);
   }
 
+  
   public getMissions(consultant : number) : Observable<any> {
     return this._httpClient.get(API + consultant + '/missions');
   }
