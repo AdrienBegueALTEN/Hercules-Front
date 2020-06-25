@@ -22,7 +22,6 @@ import { PageModule } from './_page/page.module';
 import { HeaderModule } from './_header/header.module';
 import { ViewModule } from './_view/view.module';
 import { ImgBoxModule } from './img-box/img-box.module';
-import { ArrayMissionModule } from './array-mission/array-mission.module';
 import { InputModule } from './_input/input.module';
 import { HomeModule } from './home/home.module';
 
@@ -39,7 +38,6 @@ import { HomeModule } from './home/home.module';
       HeaderModule,
       ViewModule,
       ImgBoxModule,
-      ArrayMissionModule,
       InputModule,
       HomeModule
    ],
