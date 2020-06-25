@@ -15,6 +15,9 @@ import { MissionColumnChoiceComponent } from 'src/app/_dialog/mission-column-cho
 import * as FileSaver from 'file-saver';
 import { ChooseFilenameDialogComponent } from 'src/app/_dialog/choose-filename-dialog/choose-filename-dialog.component';
 
+/**
+ * Fetches all missions and displays the contents to the user with a table
+ */
 @Component({
   selector: 'app-array-missions-view',
   templateUrl: './array-missions-view.component.html',
@@ -28,29 +31,86 @@ import { ChooseFilenameDialogComponent } from 'src/app/_dialog/choose-filename-d
   ],
 })
 export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
+
+
+  /**
+ * Get all missions from the child component
+ */
   @Input() missions : any[];
+
+  /**
+ * Get the value of the integer from 
+ */
   @Input() showOnlyMineToogle : boolean = false;
+
+  /**
+ * Columns used to display missions
+ */
   @Input() displayedColumns : string[] = ['select', 'title', 'consultant', 'customer', 'city', 'manager', 'numberOfProjects', 'sheetStatus'];
 
+  /**
+ * Integer limiting the number of selected elements
+ */
   readonly NB_MAX_CHECK : number = 30;
 
+   /**
+ * Emits the delete event to the child component
+ */
   @Output() deleteEvent = new EventEmitter<any>();
 
+  /**
+ * If true, only displays missions belonging to the connected user
+ * If false, displays every single mission
+ */
   onlyMine = true;
+
+  /**
+ * Contains missions fetched from child component
+ */
   dataSource: MatTableDataSource<any>;
+
+  /**
+ * Contains projects fetched from child component
+ */
   dataSourceProjects: MatTableDataSource<any>;
+
+  /**
+ * Contains the contents of selected rows
+ */
   selection = new SelectionModel<any>(true, []);
+
+  /**
+ * Contains the input value entered by the user when he uses basic search
+ */
   searchValue:string = null;
 
   public user : any = this._authService.getUser();
+
+  /**
+ * If true, the user is manager
+ * If false, the user is a recruitment officer
+ */
   public userIsManager : boolean = this._authService.userIsManager();
 
+  /**
+ * Columns used to display projects
+ */
   innerDisplayedColumns: string[] = ['select', 'project-name', 'project-description'];
 
+  /**
+ * Paginates the table and alllows the user to select the numlber of items per page and browses next pages
+ */
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  /**
+ * Sorts the table by its columns
+ */
   @ViewChild(MatSort) sort: MatSort;
   @ViewChildren(MatInput) matInputs: QueryList<MatInput>;
 
+  /**
+ * Uses the cdkdetailrow directive, allowing to expand missions to displays projects
+ */
   isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
 
   constructor(
@@ -68,6 +128,11 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     this.refreshDatasource();
   }
 
+
+  /**
+ * Changes the value of the datasource with a new missions array
+ * @param missions New missions array
+ */
   public modifyArray(missions: any[]){
     this.missions = missions;
     this.refreshDatasource();
@@ -111,6 +176,13 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
 
   }
 
+   /**
+ * Searches for any missions that matches the input string
+ * 
+ * @param search The input string entered by the user
+ * @param data The data that needs to be searched
+ * @param key Algorithm needs it to return the informations that match the search string
+ */
   nestedFilterCheck(search, data, key) {
     if (typeof data[key] === 'object') {
       for (const k in data[key]) {
@@ -122,11 +194,22 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     return search;
   }
 
+  /**
+ * Apply a filter for simple search
+ * 
+ * @param event This event is triggered when the user types anything inside the basic search bar 
+ */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+
+   /**
+ * 
+ * Computes the number of missions where the mission sheet is validated
+ * @returns Number of validated missions inside the missions array
+ */
   public getNbCheckableRow() : number {
     const checkableMission : any[] = this.dataSource.data.filter(row => row.sheetStatus === SheetStatus.VALIDATED);
     var nbCheckableRow : number = 0;
@@ -134,6 +217,10 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     return nbCheckableRow;
   }
 
+
+  /**
+ * Toggle every validated mission
+ */
   public masterToggle() : void {
     if (this.selection.selected.length === this.getNbCheckableRow())
       this.selection.clear();
@@ -154,6 +241,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     }
   }
 
+  
 generatePDF(selectedElements : any[],filename : string) : void {
     if (filename.search(".pdf") == -1)
       filename = filename + ".pdf";
@@ -209,6 +297,13 @@ generatePDF(selectedElements : any[],filename : string) : void {
 
 
   }
+
+   /**
+ * 
+ * Allows an element to be clicked if the number of selected elements doesn't exceed the value of NB_MAX_CHECK
+ * @param event Prevents the checkbox from being clicked if it doesn't match all conditions
+ * @param row Checks if a checkbox isn't already checked
+ */
   onClick(event, row) {
     if (this.selection.selected.length >= this.NB_MAX_CHECK && !(this.selection.isSelected(row))) {
       event.preventDefault();
@@ -219,6 +314,10 @@ generatePDF(selectedElements : any[],filename : string) : void {
     }
   }
 
+  /**
+ * 
+ * Displays a snack bar message to the user when the number of selected elements exceed the value of NB_MAX_CHECK
+ */
   SnackBarMessage() {
     if (this.selection.selected.length >= this.NB_MAX_CHECK) {
       this._snackBar.open('Vous avez dépassé le nombre d\'éléments sélectionnés autorisé : ' + this.NB_MAX_CHECK, 'X', { duration: 2000 });
@@ -229,6 +328,10 @@ generatePDF(selectedElements : any[],filename : string) : void {
     event.preventDefault();
   }
 
+  /**
+ * 
+ * Allows the user to select the displayed columns he wants
+ */
   openColsChoice(){
     const dialogRef = this._dialog.open(MissionColumnChoiceComponent, {
       data: {
