@@ -18,8 +18,7 @@ export class MissionColumnChoiceComponent implements OnInit {
     {name:'city',french:'Ville'},
     {name:'country',french:'Pays'},
     {name:'manager',french:'Manager'},
-    {name:'numberOfProjects',french:'Nombre de projets'},
-    {name:'sheetStatus',french:'Statut de la fiche'},
+    {name:'numberOfProjects',french:'Nombre de projets'}
   ];
 
 
@@ -33,7 +32,7 @@ export class MissionColumnChoiceComponent implements OnInit {
 
   onColChanged(event, col: any){
     if(event.checked)
-      this.data.cols.push(col)
+      this.data.cols.push(col);
     else
       this.data.cols = this.data.cols.filter(c => c!==col);
     this.emitColumns();
@@ -45,19 +44,19 @@ export class MissionColumnChoiceComponent implements OnInit {
   }
 
   private emitColumns(){
-    let res = ['select'];
-    for(let col of this.translation){
-      if(this.data.cols.includes(col.name)){
-        res.push(col.name);
-      }
-    }
+    var res = ['select'];
+    this.translation.forEach(column => {
+      if (this.data.cols.includes(column.name))
+        res.push(column.name);
+    });
+    res.push('sheetStatus');
     this.colsEvent.emit(res);
   }
 
   private orderTranslation(){
     let newIdx = 0;
     for(let col of this.data.cols){
-      if(col!='select'){
+      if(col != 'select' && col != 'sheetStatus') {
         const c = this.translation.filter(c => c.name==col)[0]
         const currentIdx: number = this.translation.indexOf(c);
         this.move(currentIdx,newIdx,this.translation);

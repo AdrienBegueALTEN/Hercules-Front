@@ -325,13 +325,6 @@ generatePDF(selectedElements : any[],filename : string) : void {
     }
   }
 
-  /*
-  onClickProjects(event) {
-    event.preventDefault();
-  }
-*/
-
-
   /**
  * 
  * Allows the user to select the displayed columns he wants
