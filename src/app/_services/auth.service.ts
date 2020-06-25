@@ -26,6 +26,11 @@ export class AuthService {
     }, AppSettings.HTTP_JSON_CONTENT);
   }
 
+  /**
+   * Changes the password of the logged in user
+   * @param currentPassword Current password of the logged in user
+   * @param newPassword New password requested by the user
+   */
   public changePassword(currentPassword : string, newPassword : string) : Observable<any> {
     return this._httpClient.put(API + 'change-password', {
       currentPassword: currentPassword,
@@ -51,6 +56,9 @@ export class AuthService {
     return this._httpClient.get(API + 'password-creation-access/' + user, {responseType: 'blob'});
   }
 
+  /**
+   * Logs out the user
+   */
   public logout() : void {
     window.sessionStorage.clear();
     window.location.replace('login');
@@ -74,16 +82,26 @@ export class AuthService {
     return JSON.parse(sessionStorage.getItem(USER_KEY));
   }
 
+  /**
+   * Checks if user is authenticated
+   */
   public isAuthentificated() : boolean { return !!this.getToken(); }
 
   public userIsAdmin() : boolean {
     return this._userHasRole(Role.ADMIN);
   }
 
+  /**
+   * Checks if the authenticated user is manager
+   */
   public userIsManager() : boolean {
     return this._userHasRole(Role.MANAGER);
   }
 
+  /**
+   * Checks if the authenticated user has a specific role
+   * @param role Role to check
+   */
   private _userHasRole(role : Role) : boolean {
     return !!this.getUser() && this.getUser().roles.includes(role);
   }

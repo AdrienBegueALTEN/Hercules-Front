@@ -51,13 +51,19 @@ export class ConsultantService {
   }
 
   /**
-   * Deletes a consultant
-   * @param id Deletes a consultant with his id
+   * Deletes a consultant from its ID
+   * @param id Consultant ID
    */
   public deleteConsultant(id : number) : Observable<any> {
     return this._httpClient.delete(API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 
+  /**
+   * 
+   * @param id Consultant ID
+   * @param fieldname Edited field
+   * @param value New value
+   */
   public updateConsultant(id : number, fieldname : String, value : any) : Observable<any> {
     return this._httpClient.put(API,
       {
@@ -80,6 +86,12 @@ export class ConsultantService {
       AppSettings.HTTP_JSON_CONTENT);
     }
   
+    /**
+     * Update the diploma fields
+     * @param diploma Diploma ID
+     * @param fieldname Edited field
+     * @param value New diploma value
+     */
   public updateDiploma(diploma : number, fieldname : string, value : any) : Observable<any> {
     return this._httpClient.put(API + "update-diploma",
       {
@@ -90,6 +102,11 @@ export class ConsultantService {
       AppSettings.HTTP_JSON_CONTENT);
   }
 
+  /**
+   * Deletes a diploma linked to the consultant
+   * @param consultant Consultant ID
+   * @param diploma Diploma ID
+   */
   public removeDiploma(consultant : number, diploma : number): Observable<any> {
     return this._httpClient.put(API + "remove-diploma",
     {
@@ -99,7 +116,10 @@ export class ConsultantService {
     , AppSettings.HTTP_JSON_CONTENT);
   }
 
-  
+  /**
+   * Get all missions from a consultant
+   * @param consultant Consultant ID
+   */
   public getMissions(consultant : number) : Observable<any> {
     return this._httpClient.get(API + consultant + '/missions');
   }
