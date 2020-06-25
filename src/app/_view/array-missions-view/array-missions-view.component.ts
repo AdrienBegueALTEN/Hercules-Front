@@ -179,11 +179,12 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
    /**
  * Searches for any missions that matches the input string
  * 
- * @param search The input string entered by the user
- * @param data The data that needs to be searched
- * @param key Algorithm needs it to return the informations that match the search string
+ * @param search Data matching the input string
+ * @param data Same content as search but sorted and inside an array
+ * @param key Field in the JSON nest
  */
   nestedFilterCheck(search, data, key) {
+    console.log(search);
     if (typeof data[key] === 'object') {
       for (const k in data[key]) {
         if (data[key][k] !== null) {
