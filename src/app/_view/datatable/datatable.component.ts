@@ -52,6 +52,9 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
   @Output() setAdmin : EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('paginator') paginator: MatPaginator;
+  /**
+   * Allows content to be sorted
+   */
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
@@ -81,6 +84,10 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
     this.dataSource.paginator = this.paginator;
   }
 
+  /**
+   * Apply a filter on the datasource by the string entered 
+   * @param event Even is triggered when an user types anything on the basic search bar
+   */
   public applyFilter(event: Event) : void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

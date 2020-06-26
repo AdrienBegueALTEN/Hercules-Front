@@ -5,7 +5,14 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './projects-view.component.html'
 })
 export class ProjectsViewComponent implements OnInit {
+  /**
+   * Contains all projects
+   */
   @Input() projects;
+
+  /**
+   * Project index number
+   */
   currentIndex: number;
   constructor() { }
 
@@ -13,6 +20,10 @@ export class ProjectsViewComponent implements OnInit {
     this.currentIndex = 0; 
   }
 
+  /**
+   * Get project index
+   * @param index Project index
+   */
   getIndex(index:number){
     this.currentIndex = index;
   }

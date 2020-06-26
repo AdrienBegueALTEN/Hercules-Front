@@ -1,15 +1,25 @@
 import { Component, Input } from '@angular/core';
 
+/**
+ * Defines how the mission informations are displayed to the user
+ */
 @Component({
   selector: 'app-mission-view',
   templateUrl: './mission-view.component.html',
   styleUrls: ['./mission-view.component.scss']
 })
 export class MissionViewComponent {
+  /**
+   * Contains the missions version
+   */
   @Input() version : any;
 
   constructor() {}
 
+
+  /**
+   * Converts consultant information into something more readable 
+   */
   public getConsultantStartXpToText() : string {
     if (!this.version.consultantStartXp) return "Non renseignée"
     switch (this.version.consultantStartXp) {
@@ -22,6 +32,9 @@ export class MissionViewComponent {
     }
   }
 
+  /**
+   * Converts contract information into something more readable
+   */
   public getContractTypeToString() : string {
     switch (this.version.contractType) {
       case 'flat_fee' :
@@ -35,6 +48,9 @@ export class MissionViewComponent {
     }
   }
 
+  /**
+   * Converts country information into something more readable 
+   */
   public getLocalisationToString() : string {
     let str : string;
     if (this.version.city) {
@@ -45,6 +61,9 @@ export class MissionViewComponent {
     return str
   }
 
+  /**
+   * Converts contract team size into something more readable 
+   */
   public getContractTeamSizeToString() : string {
     if (!this.version.teamSize) return "Non renseignée"
     return this.version.teamSize > 1 ? 

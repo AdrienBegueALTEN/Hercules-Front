@@ -6,8 +6,14 @@ import { AppSettings } from 'src/app/app-settings';
   templateUrl: './project-single-view.component.html'
 })
 export class ProjectSingleViewComponent implements OnInit {
+  /**
+   * Contains the project object
+   */
   @Input() project;
 
+  /**
+   * Absolute path of the picture
+   */
   public pictureSrc : string;
 
   ngOnInit(): void {

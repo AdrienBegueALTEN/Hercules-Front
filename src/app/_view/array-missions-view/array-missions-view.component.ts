@@ -103,7 +103,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   /**
- * Sorts the table by its columns
+ * Allow the content to be sorted
  */
   @ViewChild(MatSort) sort: MatSort;
   @ViewChildren(MatInput) matInputs: QueryList<MatInput>;
