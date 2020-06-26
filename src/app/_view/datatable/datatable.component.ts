@@ -12,18 +12,43 @@ import { isUndefined } from 'util';
   styleUrls: ['./datatable.component.scss']
 })
 export class DatatableComponent implements AfterViewInit,OnChanges {
+
+  /**
+   * Columns displayed by the table
+   */
   @Input() columnsToDisplay : string [];
+  /**
+   * Gets the table contents from child component
+   */
   @Input() dataSource: MatTableDataSource<any>;
   @Input() label : string;
   @Input() showAdd : boolean = false;
 
+  /**
+   * Gets user id from authService
+   */
   readonly loggedUser : number = this._authService.getUser().id;
+  /**
+   * True : User is Manager
+   * False : User is not a Manager
+   */
   readonly loggedUserIsManager : boolean = this._authService.userIsManager();
+  /**
+   * True : User is Admin
+   * False : User is not an Admin
+   */
   readonly loggedUserIsAdmin : boolean = this._authService.userIsAdmin();
 
   @Output() deactivate : EventEmitter<any> = new EventEmitter<any>();
   @Output() newElement : EventEmitter<void> = new EventEmitter<void>();
+  /**
+   * Event is triggered when a row is clicked
+   */
   @Output() rowClicked : EventEmitter<number> = new EventEmitter<number>();
+
+  /**
+   * Event is triggered when an user is set as admin
+   */
   @Output() setAdmin : EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('paginator') paginator: MatPaginator;
@@ -61,6 +86,10 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  /**
+   * Emits an event when a row is clicked
+   * @param elementId Row ID
+   */
   public onRow(elementId : number) : void {
     this.rowClicked.emit(elementId);
   }

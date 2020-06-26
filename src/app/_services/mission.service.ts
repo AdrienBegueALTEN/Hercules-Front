@@ -7,6 +7,9 @@ const TOKEN_PREFIX : string = 'Bearer ';
 const MISSION_API : string = AppSettings.API_ENDPOINT + 'missions/';
 const PROJECT_API : string = MISSION_API + 'projects/';
 
+/**
+ * The purpose of this service is to fetch, create, edit and delete missions from the API
+ */
 @Injectable({
   providedIn: 'root'
 })
