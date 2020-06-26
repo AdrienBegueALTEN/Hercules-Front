@@ -1,5 +1,5 @@
-<mat-tab-group>
-  <ng-container  *ngIf="!!projects" #tabGrp>
+<mat-tab-group #tabGrp>
+  <ng-container *ngIf="!!projects">
     <mat-tab *ngFor="let project of projects; let i = index">
       <ng-template mat-tab-label>
         {{project.title || 'Projet n°' + (i+1)}}

@@ -1,3 +1,4 @@
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -26,7 +27,10 @@ export class ConsultantDiplomaComponent implements OnInit {
   @Output() deletion = new EventEmitter<number>();
   @Output() reload = new EventEmitter<any>();
   
-  constructor(private _consultantService: ConsultantService) {}
+  constructor(
+    private _consultantService : ConsultantService,
+    private _dialogUtils : DialogUtilsService
+  ) {}
 
   public ngOnInit() : void {
     const maxYear : number = new Date().getFullYear();
@@ -71,14 +75,20 @@ export class ConsultantDiplomaComponent implements OnInit {
   }
 
   public onDelete() : void {
-    this._consultantService.removeDiploma(
-      this.consultant,
-      this.diploma[this.ID_KEY])
-    .subscribe(
-      () => this.deletion.emit(this.diploma[this.ID_KEY]),
-      (err) => {
-        console.log(err);
+    this._dialogUtils.showYesNoDialog(
+      'Validation de suppression',
+      'Attention, cette action est irréversible.',
+      'Supprimer le diplôme',
+      'Annuler').afterClosed().subscribe(yes => {
+        if (yes) this._removeDiploma(this.consultant, this.diploma[this.ID_KEY]);
       }
+    );
+  }
+
+  private _removeDiploma(consultant : number, diploma : number) {
+    this._consultantService.removeDiploma(consultant, diploma).subscribe(
+      () => this.deletion.emit(this.diploma[this.ID_KEY]),
+      error => console.log(error)
     )
   }
 }
