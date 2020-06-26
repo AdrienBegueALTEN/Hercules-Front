@@ -1,5 +1,17 @@
 @import 'src/vars';
 
+@media screen and (max-width: 1400px) {
+    .menu-desktop{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1401px) {
+    .menu-mobile{
+        display: none;
+    }
+}
+
 #home {
     position: absolute;
     top: 10px;
@@ -10,6 +22,17 @@
 
 #actions {
     float: right;
+    height: 38px;
+}
+
+#actions button {
+    background-color: rgba(255, 255, 255, 0.2);
+    height: 100%;
+    border-radius: 0 !important;
+}
+
+#actions button mat-icon {
+    vertical-align: middle;
 }
 
 #actions button {
