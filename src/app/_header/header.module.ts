@@ -5,7 +5,9 @@ import { ExternalHeaderComponent } from './external/external-header.component';
 import { SharedModule } from '../shared/shared.module';
 
 
-
+/**
+ * Module with the components that manages the header in the application
+ */
 @NgModule({
   declarations: [
     NavHeaderComponent,

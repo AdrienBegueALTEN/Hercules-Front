@@ -1,41 +1,72 @@
 <header *ngIf="user">
   <div class="head">
-      <nav>
-          <ul>
-              <li><a routerLink="/customers" title="Liste des clients">Clients</a></li>
-              <li><a routerLink="/consultants" title="Liste des consultants">Consultants</a></li>
-              <li><a routerLink="" title="Liste des missions">Missions</a></li>
-              <div *ngIf="userIsManager">
-                <li class="firstOfSection"><a routerLink="/new-mission" title="Créer une nouvelle mission">Nouvelle mission</a></li>
-                <div *ngIf="userIsAdmin">
-                  <li class="firstOfSection"><a routerLink="/recruitment-officers" title="Liste des chargés de recrutement">CDR</a></li>
-                  <li><a routerLink="/managers" title="Liste des managers">Managers</a></li>
-                  <li><a routerLink="/admin-panel" title="Panneau de gestion">Gestion</a></li>
-                </div>
+      <nav class="menu-desktop">
+        <ul>
+            <li><a routerLink="/customers" title="Liste des clients">Clients</a></li>
+            <li><a routerLink="/consultants" title="Liste des consultants">Consultants</a></li>
+            <li><a routerLink="" title="Liste des missions">Missions</a></li>
+            <div *ngIf="userIsManager">
+              <li class="firstOfSection"><a routerLink="/new-mission" title="Créer une nouvelle mission">Nouvelle mission</a></li>
+              <div *ngIf="userIsAdmin">
+                <li class="firstOfSection"><a routerLink="/recruitment-officers" title="Liste des chargés de recrutement">CDR</a></li>
+                <li><a routerLink="/managers" title="Liste des managers">Managers</a></li>
+                <li><a routerLink="/admin-panel" title="Panneau de gestion">Gestion</a></li>
               </div>
-          </ul>
+            </div>
+        </ul>
       </nav>
-      <div id="actions">
-        <button mat-icon-button [matMenuTriggerFor]="appMenu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #appMenu="matMenu">
-          <button mat-menu-item (click)="onChangePassword()">
-            <mat-icon>vpn_key</mat-icon>
-            <span>Modifier mon mot de passe</span>
-          </button>
-          <button mat-menu-item (click)="onLogout()">
-            <mat-icon>exit_to_app</mat-icon>
-            <span>Me déconnecter</span>
-          </button>
-        </mat-menu>
-    </div>
+      <div class="menu-mobile">
+        <button mat-stroked-button [matMenuTriggerFor]="menuMobile"><mat-icon>menu</mat-icon></button>
+      </div>
   </div>
   <div class="foot">
-      <a title="Liste des missions" routerLink=""><img id="home" src="assets/img/logo/alten.png" alt="Logo ALTEN"></a>
-        <div class="user">
-            <mat-icon>account_circle</mat-icon>
-            {{user.firstname}} {{user.lastname}}
-        </div>
+    <a title="Liste des missions" routerLink=""><img id="home" src="assets/img/logo/alten.png" alt="Logo ALTEN"></a>
+    <div class="user">
+      <mat-icon>account_circle</mat-icon>
+      {{user.firstname}} {{user.lastname}}
+    </div>
+    <div id="actions">
+      <button mat-button [matMenuTriggerFor]="appMenu">
+        <mat-icon>power_settings_new</mat-icon>
+      </button>
+    </div>
   </div>
 </header>
+
+<mat-menu #appMenu="matMenu">
+  <button mat-menu-item (click)="onChangePassword()">
+    <mat-icon>vpn_key</mat-icon>
+    <span>Modifier mon mot de passe</span>
+  </button>
+  <button mat-menu-item (click)="onLogout()">
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Me déconnecter</span>
+  </button>
+</mat-menu>
+
+<mat-menu #menuMobile="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="arrays">
+    <mat-icon>table_chart</mat-icon>
+    <span>Tableaux</span>
+  </button>
+  <a *ngIf="userIsManager" mat-menu-item routerLink="/new-mission" title="Créer une nouvelle mission">
+    <mat-icon>add</mat-icon>
+    <span>Nouvelle mission</span>
+  </a>
+  <button *ngIf="userIsAdmin" mat-menu-item [matMenuTriggerFor]="admin">
+    <mat-icon>admin_panel_settings</mat-icon>
+    <span>Administration</span>
+  </button>
+</mat-menu>
+
+<mat-menu #arrays="matMenu">
+  <a mat-menu-item routerLink="/customers" title="Liste des clients">Clients</a>
+  <a mat-menu-item routerLink="/consultants" title="Liste des consultants">Consultants</a>
+  <a mat-menu-item routerLink="" title="Liste des missions">Missions</a>
+</mat-menu>
+
+<mat-menu #admin="matMenu">
+  <a mat-menu-item routerLink="/recruitment-officers" title="Liste des chargés de recrutement">CDR</a>
+  <a mat-menu-item routerLink="/managers" title="Liste des managers">Managers</a>
+  <a mat-menu-item routerLink="/admin-panel" title="Panneau de gestion">Gestion</a>
+</mat-menu>

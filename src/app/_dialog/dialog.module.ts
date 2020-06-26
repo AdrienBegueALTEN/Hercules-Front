@@ -6,7 +6,6 @@ import { YesNoDialogComponent } from './yes-no/yes-no-dialog.component';
 import { ChooseFilenameDialogComponent } from './choose-filename-dialog/choose-filename-dialog.component';
 import { MissionColumnChoiceComponent } from './mission-column-choice/mission-column-choice.component';
 import { NewUserDialogComponent } from './new-user/new-user-dialog.component';
-import { ReleaseDateDialogComponent } from './release-date/release-date-dialog.component';
 import { ChangePasswordDialogComponent } from './change-password/change-password-dialog.component';
 import { OkDialogComponent } from './ok/ok-dialog.component';
 import { NewCustomerDialogComponent } from './new-customer/new-customer-dialog.component';
@@ -14,7 +13,9 @@ import { SharedModule } from '../shared/shared.module';
 import { InputModule } from '../_input/input.module';
 
 
-
+/**
+ * Module for the components that manages the dialog windows.
+ */
 @NgModule({
   declarations: [
     MessageDialogComponent,
@@ -23,7 +24,6 @@ import { InputModule } from '../_input/input.module';
     ChooseFilenameDialogComponent,
     MissionColumnChoiceComponent,
     NewUserDialogComponent,
-    ReleaseDateDialogComponent,
     ChangePasswordDialogComponent,
     OkDialogComponent,
     NewCustomerDialogComponent

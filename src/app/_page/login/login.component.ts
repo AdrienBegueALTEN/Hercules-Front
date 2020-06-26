@@ -2,7 +2,7 @@ import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/_services/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Md5 } from 'ts-md5';
 
 const EMAIL_KEY : string = 'email';
@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _dialogUtils : DialogUtilsService,
-    private _route : ActivatedRoute
+    private _route : ActivatedRoute,
+    private _router : Router
   ) {}
 
   public ngOnInit(): void {
@@ -36,20 +37,8 @@ export class LoginComponent implements OnInit {
         this._dialogUtils.showChangePasswordDialog().afterClosed().subscribe(
           newPassword => {
             this._authService.changePasswordAnonymous(token, newPassword).subscribe(
-              (apiData) => {
-                this._authService.saveToken(apiData.accessToken);
-                this._authService.saveUser(apiData.user);
-                window.location.replace('');
-              },
-              () => window.location.replace('')
-            )
-          },
-          () => window.location.replace('')
-        )
-      },
-      () => window.location.replace('')
-    )
-  }
+              (apiData) => this._login(apiData),
+      )})})}
 
   public onSubmit() : void {
     let credentials = {
@@ -58,12 +47,14 @@ export class LoginComponent implements OnInit {
     }
 
     this._authService.login(credentials).subscribe(
-      data => {
-        this._authService.saveToken(data.accessToken);
-        this._authService.saveUser(data.user);
-        window.location.replace('');
-      },
+      data => this._login(data),
       () => this.isLoginFailed = true
     );
+  }
+
+  private _login(data : any) : void {
+    this._authService.saveToken(data.accessToken);
+    this._authService.saveUser(data.user);
+    this._router.navigateByUrl('');
   }
 }

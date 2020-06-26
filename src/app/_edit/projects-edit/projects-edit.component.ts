@@ -1,7 +1,7 @@
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { MatTabGroup } from '@angular/material/tabs';
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
 
 @Component({
   selector: 'app-projects-edit',
@@ -22,8 +22,10 @@ export class ProjectsEditComponent  {
   @Output() removeSkillEvent = new EventEmitter<any>();
   @Output() update : EventEmitter<any> = new EventEmitter<any>();
 
+  @ViewChild('tabGrp') tabGrp : MatTabGroup;
+
   public constructor(
-    private _dialog : MatDialog
+    private _dialogUtils : DialogUtilsService
   ) {}
 
   public receiveFormGrp(grp : FormGroup, index : number) : void {
@@ -41,15 +43,16 @@ export class ProjectsEditComponent  {
   }
 
   public onDelete(index : number) : void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.data = {
-      title : 'Validation de suppression',
-      message : 'Attention, cette action est irréversible.',
-      yes: 'Supprimer le projet',
-      no: 'Annuler'
-    };
-    const dialogRef = this._dialog.open(YesNoDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(data => {if (data) this.deletion.emit(index)});
+    this._dialogUtils.showYesNoDialog(
+      'Validation de suppression',
+      'Attention, cette action est irréversible.',
+      'Supprimer le projet',
+      'Annuler').afterClosed().subscribe(yes => {
+        if (yes) {
+          this.deletion.emit(index)
+          this.tabGrp.selectedIndex = 0;
+        }
+      }
+    );
   }
 }

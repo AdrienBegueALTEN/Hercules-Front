@@ -1,3 +1,6 @@
+/**
+ * Enumeration of errors in the inputs
+ */
 export enum CtrlError {
   PATTERN = 'pattern',
   REQUIRED = 'required',

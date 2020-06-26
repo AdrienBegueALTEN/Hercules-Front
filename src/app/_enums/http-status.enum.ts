@@ -1,3 +1,6 @@
+/**
+ * Enumeration of http status used in the project
+ */
 export enum HttpStatus {
   OK = 200,
   CREATED = 201,

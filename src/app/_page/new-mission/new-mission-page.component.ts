@@ -1,3 +1,4 @@
+import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { NewUserComponent } from './../../_input/new-user/new-user.component';
 import { AuthService } from 'src/app/_services/auth.service';
 import { YesNoDialogComponent } from '../../_dialog/yes-no/yes-no-dialog.component';
@@ -8,10 +9,11 @@ import { Component, OnInit, ChangeDetectorRef, AfterContentChecked, ViewChild } 
 import { CustomerService } from '../../_services/customer.service';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { HttpStatus } from '../../_enums/http-status.enum';
-import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { MessageDialogComponent } from '../../_dialog/message/message-dialog.component';
 import { ConsultantAutocompleteComponent } from '../../_input/autocomplete/consultant/consultant-autocomplete.component';
+import { Router } from '@angular/router';
 
 const CONSULTANT_STEP : number = 0;
 const CUSTOMER_STEP : number = 1;
@@ -35,12 +37,13 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
   @ViewChild('newConsultant') newConsultantChild : NewUserComponent;
 
   constructor(
+    private _authService : AuthService,
     private _cdr: ChangeDetectorRef,
     private _consultantService : ConsultantService,
     private _customerService : CustomerService,
-    private _dialog : MatDialog,
+    private _dialogUtils : DialogUtilsService,
     private _missionService : MissionService,
-    private _authService : AuthService
+    private _router : Router
   ){}
 
   public ngOnInit() : void {
@@ -92,7 +95,7 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
 
   private _createMissionFinalStep(consultantId : number, newConsultant : boolean, customerId : number, newCustomer : boolean) : void {
     this._missionService.newMission(consultantId, customerId).subscribe(
-      missionId => { window.location.replace('missions/' + missionId); }, //The mission has been successfully created
+      missionId => { this._router.navigateByUrl('missions/' + missionId); }, //The mission has been successfully created
       () => { this._handleNewMissionError(consultantId, newConsultant, customerId, newCustomer); }); //An error occurred during the creation of the new mission
   }
 
@@ -100,19 +103,14 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
     switch(response.status) {
       case HttpStatus.ACCEPTED : //The email is already used by a consultant
         const email = this.consultantForm.value.email;
-        const dialogConfig = new MatDialogConfig();
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        dialogConfig.data = {
-          title : 'Consultant existant',
-          message : 'Un consultant est déjà lié à l\'adresse email "' + email + '". Que souhaitez vous faire ?',
-          yes: 'Poursuivre l\'opération avec le consultant existant',
-          no: 'Modifier l\'email'
-        };
-        const dialogRef = this._dialog.open(YesNoDialogComponent, dialogConfig);
-        dialogRef.afterClosed().subscribe(
-          data => {
-            if (data) {
+        this._dialogUtils.showYesNoDialog(
+          'Consultant existant',
+          'Un consultant est déjà lié à l\'adresse email "' + email + '". Que souhaitez vous faire ?',
+          'Poursuivre l\'opération avec le consultant existant',
+          'Modifier l\'email'
+        ).afterClosed().subscribe(
+          yes => {
+            if (yes) {
               const id : number = parseInt(String(response.body));
               this._createMissionCustomerStep(id, false);
             } else this.stepper.selectedIndex = CONSULTANT_STEP;
@@ -129,13 +127,11 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
     const dialogConfig = new MatDialogConfig();
     switch(error.status) {
       case HttpStatus.CONFLICT :
-        dialogConfig.data = 'L\'adresse email renseignée pour le consultant n\'est pas disponible. Merci de bien vouloir en choisir une autre.';
-        const dialogRef = this._dialog.open(MessageDialogComponent, dialogConfig);
-        dialogRef.afterClosed().subscribe(() => this.stepper.selectedIndex = CONSULTANT_STEP);  
+        this._dialogUtils.showMsgDialog('L\'adresse email renseignée pour le consultant n\'est pas disponible. Merci de bien vouloir en choisir une autre.').afterClosed().subscribe(
+          () => this.stepper.selectedIndex = CONSULTANT_STEP);  
         break;
       default :
-        dialogConfig.data = 'Le consultant n\'a pas pu être créé.';
-        this._dialog.open(MessageDialogComponent, dialogConfig);
+        this._dialogUtils.showMsgDialog('Le consultant n\'a pas pu être créé.')
     }
   }
 
@@ -143,18 +139,14 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
     switch(response.status) {
       case HttpStatus.ACCEPTED : //The customer already exists
         const customer = this.customerForm.value.name;
-        const dialogConfig = new MatDialogConfig();
-        dialogConfig.disableClose = true;
-        dialogConfig.data = {
-          title : 'Client existant',
-          message : 'Le client "' + customer + '" existe déjà. Que souhaitez vous faire ?',
-          yes: 'Continuer avec le client existant',
-          no: 'Modifier le client'
-        };
-        const dialogRef = this._dialog.open(YesNoDialogComponent, dialogConfig);
-        dialogRef.afterClosed().subscribe(
-          data => {
-            if (data) {
+        this._dialogUtils.showYesNoDialog(
+          'Client existant',
+          'Le client "' + customer + '" existe déjà. Que souhaitez vous faire ?',
+          'Continuer avec le client existant',
+          'Modifier le client'
+        ).afterClosed().subscribe(
+          yes => {
+            if (yes) {
               this.newCustomer = false;
               const customerId : number = parseInt(String(response.body));
               this._createMissionFinalStep(consultantId, newConsultant, customerId, false);
@@ -176,9 +168,7 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
     if (newConsultant)
       this._consultantService.deleteConsultant(consultantId).subscribe();
 
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = 'Le client n\'a pas pu être créé.';
-    this._dialog.open(MessageDialogComponent, dialogConfig);
+    this._dialogUtils.showMsgDialog('Le client n\'a pas pu être créé.');
   }
 
   private _handleNewMissionError(consultantId : number, newConsultant : boolean, customerId : number, newCustomer : boolean) : void {
@@ -186,10 +176,7 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
       this._consultantService.deleteConsultant(consultantId).subscribe();
     if (newCustomer)
       this._customerService.deleteCustomer(customerId).subscribe();
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = 'La mission n\'a pas pu être créée.';
-    const dialogRef = this._dialog.open(MessageDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(
-      () => { window.location.replace('') });
+    this._dialogUtils.showMsgDialog('La mission n\'a pas pu être créée.').afterClosed().subscribe(
+      () => { this._router.navigateByUrl('') });
   }
 }

@@ -1,7 +1,9 @@
 import {Directive, HostBinding, HostListener, Input, TemplateRef, ViewContainerRef} from '@angular/core';
 
 
-
+/**
+ * Directive that is used for expanding a line in a mat-table
+ */
 @Directive({
     selector: '[cdkDetailRow]'
   })

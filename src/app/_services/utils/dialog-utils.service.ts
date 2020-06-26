@@ -1,3 +1,4 @@
+import { YesNoDialogComponent } from 'src/app/_dialog/yes-no/yes-no-dialog.component';
 import { NewUserDialogComponent } from 'src/app/_dialog/new-user/new-user-dialog.component';
 import { ChangePasswordDialogComponent } from 'src/app/_dialog/change-password/change-password-dialog.component';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
@@ -53,4 +54,16 @@ constructor(private _dialog : MatDialog) { }
     return this._dialog.open(NewUserDialogComponent, dialogConfig);
   }
 
+  public showYesNoDialog(title : string, msg : string, yes : string, no : string) : MatDialogRef<YesNoDialogComponent, any> {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = true;
+    dialogConfig.data = {
+      title : title,
+      message : msg,
+      yes: yes,
+      no: no
+    };
+    return this._dialog.open(YesNoDialogComponent, dialogConfig);
+  }
 }

@@ -61,7 +61,7 @@ export class ChangePasswordDialogComponent {
   }
 
   /**
-   * Sends a http request to the API to change the password with the fields
+   * Sends a http request to the API to change the password with the inputs
    */
   public onSubmit() : void {
     const newPassword : string = (String)(Md5.hashStr(this.grp.controls[this.NEW_KEY].value));
