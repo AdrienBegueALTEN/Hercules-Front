@@ -7,7 +7,14 @@ import { MatChipInputEvent } from '@angular/material/chips';
   templateUrl: './skills-autocomplete.component.html'
 })
 export class SkillsAutocompleteComponent  {
+  /**
+   * The array contains keystrokes that trigger the creation of a new skill
+   */
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  /**
+   * Contains all skills
+   */
   skills: any[] = [];
 
   add(event: MatChipInputEvent): void {
@@ -23,6 +30,10 @@ export class SkillsAutocompleteComponent  {
     }
   }
 
+  /**
+   * Removes a skill
+   * @param skill Skill to remove
+   */
   remove(skill: string): void {
     const index = this.skills.indexOf(skill);
 
@@ -31,6 +42,9 @@ export class SkillsAutocompleteComponent  {
     }
   }
 
+  /**
+   * Get all skills
+   */
   public getSkills(){
     return this.skills;
   }
