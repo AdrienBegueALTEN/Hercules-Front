@@ -10,6 +10,10 @@ import { SkillsAutocompleteComponent } from 'src/app/_input/autocomplete/skills/
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject, Observable } from 'rxjs';
 
+/**
+ * This component is the core component of the missions table
+ * It gathers everything needed to fill the table and interacts with it
+ */
 @Component({
   selector: 'app-missions',
   templateUrl: './missions.component.html',
@@ -17,15 +21,42 @@ import { Subject, Observable } from 'rxjs';
 })
 export class MissionsComponent implements OnInit {
 
+  /**
+   * Title key
+   */
   public readonly TITLE_KEY : string = 'title';
+  /**
+   * Locatin key
+   */
   public readonly LOCATION_KEY : string = 'location';
+  /**
+   * Consultant key
+   */
   public readonly CONSULTANT_KEY : string = 'consultant';
+  /**
+   * Customer key
+   */
   public readonly CUSTOMER_KEY : string = 'customer';
+  /**
+   * Activity sector key
+   */
   public readonly ACTIVITY_SECTOR_KEY : string = 'activitySector';
+  /**
+   * Skills key
+   */
   public readonly SKILLS_KEY : string = 'skills';
 
+  /**
+   * Gets the view from the child component
+   */
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
+  /**
+   * Gets activity sector autocomplete feature from the child component
+   */
   @ViewChild(ActivitySectorAutocompleteComponent) activtySector: ActivitySectorAutocompleteComponent;
+  /**
+   * Gets skills autocomplete feature from the child component
+   */
   @ViewChild(SkillsAutocompleteComponent) skills: SkillsAutocompleteComponent;
 
   eventsSubject: Subject<void> = new Subject<void>();
@@ -36,16 +67,54 @@ export class MissionsComponent implements OnInit {
       location : ''
     }
   )
-
+/**
+ * Consultants array
+ * Contains every consultant
+ */
   consultants : any[];
+  /**
+   * Customers array
+   * Contains every customer
+   */
   customers : any[];
+  /**
+   * Missions array
+   * Contains every mission allowed to be fetched
+   */
   missions: any[];
+  /**
+   * True : Shows advanced search
+   * False : Hides advanced search
+   */
   public showAdvancedSearch : boolean = false;
+  /**
+   * True : User is manager
+   * False : User isn't manager
+   */
   public userIsManager : boolean = this._authService.userIsManager();
+  /**
+   * True : hides missions not belonging to the user's consultant
+   * False : shows every missions
+   */
   public onlyMine : boolean = true;
+  /**
+   * Data source containing missions
+   */
   public dataSource : MatTableDataSource<any>;
+  /**
+   * Contains user ID
+   */
   public userId = this._authService.getUser().id;
+  /**
+   * Default columns to be displayed in the missions table
+   */
   colsToDisp = ['select','title','consultant','customer','sheetStatus'];
+  /**
+   * Cooldown is used to limit the number of requests by the user when he uses advanced search
+   * The user can do one request per second.
+   * True : Cooldown is enabled. The user can't temporarily use the advanced search
+   * False : Cooldown is disabled. The user can use the advanced search
+   */
   cooldownOn = false;
   public events: Observable<void> = this.eventsSubject.asObservable();
 
@@ -71,6 +140,10 @@ export class MissionsComponent implements OnInit {
     )
   }
 
+  /**
+   * Toggles advanced search
+   * When advanced search is enabled, the basic search is disabled and any content inside the basic search is cleared
+   */
   public toggleAdvancedSearch(){
     this.showAdvancedSearch = !this.showAdvancedSearch;
     if(!this.showAdvancedSearch){
@@ -78,6 +151,9 @@ export class MissionsComponent implements OnInit {
     }
   }
   
+  /**
+   * Reset table content when advanced search is used
+   */
   public setAllMissions(){
     this._missionService.getMissions(this.userId).subscribe(
       (data) => {
@@ -90,6 +166,12 @@ export class MissionsComponent implements OnInit {
     )
   }
 
+  /**
+   * Advanced search
+   * The function checks which criterion is used.
+   * The function will then send the request containing the criteria used by the user
+   * It will then get a new missions array matching the criteria
+   */
   public onSearch() : void {
     var criteria : object = {};
 
@@ -120,11 +202,17 @@ export class MissionsComponent implements OnInit {
     );
   }
 
+  /**
+   * When the function is called, cooldown is true until one second passes
+   */
   cooldownTime() {
     this.cooldownOn = true;
     setTimeout(() => this.cooldownOn = false, 1000)
   }
 
+  /**
+   * When it's called, emit an event to the child component
+   */
   emitEventToChild() {
     this.eventsSubject.next();
   }
