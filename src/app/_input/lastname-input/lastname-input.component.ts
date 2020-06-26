@@ -12,6 +12,9 @@ import { InputType } from 'src/app/_enums/input-type.enum';
 export class LastnameInputComponent extends MyInput {
   constructor() { super("Nom", InputType.TEXT, [Validators.pattern(AppSettings.NAME_PATTERN), Validators.maxLength(100)]); }
 
+  /**
+   * Returns an error depending of the user input
+   */
   public getError() : string {
     return  this.ctrl.hasError(CtrlError.REQUIRED) ? 'Le nom doit être renseigné' :
             this.ctrl.hasError(CtrlError.MAX_LENGTH) ? 'Le nom est trop long' :

@@ -9,9 +9,19 @@ import { CtrlError } from 'src/app/_enums/ctrl-error.enum';
   templateUrl: './activity-sector-autocomplete.component.html',
 })
 export class ActivitySectorAutocompleteComponent implements OnInit {
+  /**
+   * Gets customers from child component
+   */
   @Input() customers : any[];
+
+  /**
+   * Get boolean form child component
+   */
   @Input() required : boolean = false;
 
+/**
+ * Array containing all activity sectors
+ */
   activitySectors : string[];
   filteredActivitySectors : Observable<string[]>;
   public ctrl : FormControl = new FormControl('', this.required ? [Validators.required] : null);
@@ -34,6 +44,10 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
     return  this.ctrl.hasError(CtrlError.REQUIRED) ? 'Le secteur d\'activité du client doit être renseigné.' : '';
   }
 
+  /**
+   * 
+   * @param value Text to search
+   */
   private _filter(value : string) : string[] {
     const filterValue = value.toLowerCase();
     const filteredActivitySectors = this.activitySectors.filter(activitySector => activitySector.toLowerCase().indexOf(filterValue) >= 0);

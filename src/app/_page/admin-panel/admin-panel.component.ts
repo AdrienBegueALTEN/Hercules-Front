@@ -16,6 +16,9 @@ export class AdminPanelComponent {
     private _grdpService : GRDPService
   ) {}
 
+  /**
+   * Shows a message to the user, depending on the success of enforcing GRDP
+   */
   public onGRDP() : void {
     this._grdpService.applyGRDP().subscribe(
       () => this._snackBar.open('Le RGPD a bien été appliqué.', 'X', {duration: 2000}),
@@ -23,6 +26,7 @@ export class AdminPanelComponent {
     );
   }
 
+  
   private _showMessageDialog(message : string) : void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = message;
