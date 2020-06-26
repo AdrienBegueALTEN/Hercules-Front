@@ -41,6 +41,10 @@ export class SkillTagsComponent implements OnInit {
     );
   }
 
+  /**
+   * Add a new skill to the project
+   * @param value New skill entered by the user
+   */
   addSkill(value){
     let capVal = value.toUpperCase();
     if(capVal!='' && !this.project.skills.map(p => p.label.toUpperCase()).includes(capVal)){
@@ -75,6 +79,11 @@ export class SkillTagsComponent implements OnInit {
     //this.skillCtrl.setValue(null);
   }
 
+
+  /**
+   * Removes a skill
+   * @param skill Skill to be removed
+   */
   remove(skill: any): void {
     const index = this.project.skills.indexOf(skill);
     if (index >= 0) 
@@ -85,6 +94,10 @@ export class SkillTagsComponent implements OnInit {
     })
   }
 
+  /**
+   * Filters a skill by the value entered by the user
+   * @param value String entered by the user
+   */
   private _filter(value: string): string[] {
     
     const filterValue = value.toLowerCase();
