@@ -2,6 +2,9 @@ import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
+/**
+ * Component for a dialog window that serves to control the displayed columns in the mission table and their orders.
+ */
 @Component({
   selector: 'app-mission-column-choice',
   templateUrl: './mission-column-choice.component.html',
@@ -9,8 +12,15 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class MissionColumnChoiceComponent implements OnInit {
   @Output() colsEvent = new EventEmitter<any>();
+  
+  /**
+   * Selected columns that the user want to display
+   */
   selectedCols = [];
 
+  /**
+   * Map that links the columns name in english and in french
+   */
   translation: any[] = [
     {name:'title',french:'Titre'},
     {name:'consultant',french:'Consultant'},
@@ -30,6 +40,11 @@ export class MissionColumnChoiceComponent implements OnInit {
     this.orderTranslation();
   }
 
+  /**
+   * Function that is activated when the box of a column is checked and it adds the column.
+   * @param event Event done by the user : checking or unchecking
+   * @param col Column concerned by the action of the user
+   */
   onColChanged(event, col: any){
     if(event.checked)
       this.data.cols.push(col);
@@ -38,11 +53,17 @@ export class MissionColumnChoiceComponent implements OnInit {
     this.emitColumns();
   }
 
+  /**
+   * Function that is activated when a column was dragged and dropped, it changes its position.
+   * @param event Event done by the user : drag and drop
+   */
   onDrop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.translation, event.previousIndex, event.currentIndex);
     this.emitColumns();
   }
-
+  /**
+   * Function that sends a list of the columns to the parent.
+   */
   private emitColumns(){
     var res = ['select'];
     this.translation.forEach(column => {
@@ -52,7 +73,9 @@ export class MissionColumnChoiceComponent implements OnInit {
     res.push('sheetStatus');
     this.colsEvent.emit(res);
   }
-
+  /**
+   * Function that modifies the order of the columns in translation by using the same order as in data.cols
+   */
   private orderTranslation(){
     let newIdx = 0;
     for(let col of this.data.cols){
@@ -65,6 +88,12 @@ export class MissionColumnChoiceComponent implements OnInit {
     }
   }
 
+  /**
+   * Functions that modifies the position of an element in an array 
+   * @param from initial position
+   * @param to final position
+   * @param array array where the element is moved
+   */
   private move(from, to, array) {
     array.splice(to, 0, array.splice(from, 1)[0]);
   };

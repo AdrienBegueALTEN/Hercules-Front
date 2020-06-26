@@ -19,12 +19,12 @@ export class YesNoDialogComponent {
   message : string;
 
   /**
-   * Text displayed if user wants to confirm last action
+   * Text displayed in the button to confirm the action
    */
   yes : string;
 
   /**
-   * Text displayed if user wants to undo last action
+   * Text displayed in the button to cancel the action
    */
   no : string;
 
@@ -37,7 +37,13 @@ export class YesNoDialogComponent {
       this.no = data.no;
     }
 
+  /**
+   * Function activated if the cancel button is clicked and it closes the window and sends false
+   */
   onNo() : void { this._dialogRef.close(false); }
+  /**
+   * Function activated if the confirmation button is clicked and it closes the window and sends true
+   */
   onYes() : void { this._dialogRef.close(true); }
 
 }

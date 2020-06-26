@@ -4,10 +4,7 @@ import { Component, OnInit} from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConsultantService } from '../../_services/consultant.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { isUndefined } from 'util';
-import { NewUserDialogComponent } from 'src/app/_dialog/new-user/new-user-dialog.component';
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { Router } from '@angular/router';
 
