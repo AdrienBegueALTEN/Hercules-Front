@@ -18,6 +18,9 @@ export function checkConfirmation (ctrl : AbstractControl) {
   return res;
  }
 
+ /**
+  * Component for the dialog window for modifying a password
+  */
 @Component({
   selector: 'app-change-password-dialog',
   templateUrl: './change-password-dialog.component.html',
@@ -43,6 +46,9 @@ export class ChangePasswordDialogComponent {
       this.grp.addControl(this.CURRENT_KEY, new FormControl('', [Validators.required]));
   }
 
+  /**
+   * Sends a http request to the API to change the password with the fields
+   */
   public onSubmit() : void {
     const newPassword : string = (String)(Md5.hashStr(this.grp.controls[this.NEW_KEY].value));
     if (!!this.user) {
@@ -54,10 +60,14 @@ export class ChangePasswordDialogComponent {
     } else this._dialogRef.close(newPassword);
   }
 
+  /**
+   * Functions that returns an error string adapted to the given field's name and the errors.
+   * @param key Name of field in the FormControl
+   */
   public getErrorText(key : string) : string {
     switch (key) {
       case this.NEW_KEY:
-        return this.grp.controls[key].hasError(CtrlError.REQUIRED) ? 'Le nouveau mot de passe est obligatioire.' :
+        return this.grp.controls[key].hasError(CtrlError.REQUIRED) ? 'Le nouveau mot de passe est obligatoire.' :
         this.grp.controls[key].hasError(CtrlError.MIN_LENGTH) ? 'Le nouveau mot de passe doit contenir au moins 6 caractères.' :
         this.grp.controls[key].hasError(CtrlError.MAX_LENGTH) ? 'Le nouveau mot de passe ne peut pas contenir plus de 16 caractères' : 
         this.grp.controls[key].hasError(CtrlError.PATTERN) ? 'Le nouveau mot de passe doit contenir au moins une lettre, un chiffre et un caractère spécial.' : '';
@@ -65,12 +75,19 @@ export class ChangePasswordDialogComponent {
     }
   }
 
+  /**
+   * Function that returns a boolean that indicates if the user can use the submit button.
+   */
   public canSubmit() : boolean {
     return this.grp.controls[this.NEW_KEY].valid &&
       (this.user === null || this.grp.controls[this.CURRENT_KEY].valid) &&
       (!this.hiddenNew || this.grp.controls[this.CONFIRMATION_KEY].valid);
   }
 
+  /**
+   * Function that receives an error and if it has a status forbidden it will keep the window open and else close it
+   * @param error Error received by the API
+   */
   private _handleSubmitError(error : Response) : void {
     if (error.status == HttpStatus.FORBIDDEN) {
       this.wrongPassword = true; console.log(true)

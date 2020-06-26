@@ -1,12 +1,12 @@
 import { AppSettings } from 'src/app/app-settings';
 import { CtrlError } from 'src/app/_enums/ctrl-error.enum';
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 const SEMANTICS_ERR : string = 'semantics';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
+export class ErrorController implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid);
@@ -38,7 +38,7 @@ export class ProjectSingleEditComponent implements OnInit {
   public grp : FormGroup;
   public pictureSrc : string = null;
 
-  matcher = new MyErrorStateMatcher();
+  errorController = new ErrorController();
 
   @Output() addPicture = new EventEmitter<any>();
   @Output() addSkillEvent = new EventEmitter<any>();

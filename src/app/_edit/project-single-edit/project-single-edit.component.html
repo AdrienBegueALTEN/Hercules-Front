@@ -30,7 +30,7 @@
                         <td>
                             <mat-form-field>
                                 <mat-label>Début</mat-label>
-                                <input matInput type="date" [formControlName]="BEGIN_KEY" (blur)="onChange(BEGIN_KEY)" [errorStateMatcher]="matcher" required>
+                                <input matInput type="date" [formControlName]="BEGIN_KEY" (blur)="onChange(BEGIN_KEY)" [errorStateMatcher]="errorController" required>
                                 <mat-icon matSuffix *ngIf="externalVersion" color="primary"
                                 [matTooltip]="BEGIN_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
                                 <mat-error *ngIf="!grp.controls[BEGIN_KEY].valid">
@@ -41,7 +41,7 @@
                         <td>
                             <mat-form-field>
                                 <mat-label>Fin</mat-label>
-                                <input matInput type="date" [formControlName]="END_KEY" (blur)="onChange(END_KEY)" [errorStateMatcher]="matcher" required>
+                                <input matInput type="date" [formControlName]="END_KEY" (blur)="onChange(END_KEY)" [errorStateMatcher]="errorController" required>
                                 <mat-icon matSuffix *ngIf="externalVersion" color="primary"
                                 [matTooltip]="END_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
                                 <mat-error *ngIf="!grp.controls[END_KEY].valid">

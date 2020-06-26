@@ -3,7 +3,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
-
+/**
+ * Component for the dialog window for choosing a file's name.
+ */
 @Component({
   selector: 'app-choose-filename-dialog',
   templateUrl: './choose-filename-dialog.component.html',
