@@ -1,9 +1,17 @@
 import { AppSettings } from 'src/app/app-settings';
 import { CtrlError } from 'src/app/_enums/ctrl-error.enum';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 const SEMANTICS_ERR : string = 'semantics';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid);
+  }
+}
 
 @Component({
   selector: 'app-project-single-edit',
@@ -29,6 +37,8 @@ export class ProjectSingleEditComponent implements OnInit {
 
   public grp : FormGroup;
   public pictureSrc : string = null;
+
+  matcher = new MyErrorStateMatcher();
 
   @Output() addPicture = new EventEmitter<any>();
   @Output() addSkillEvent = new EventEmitter<any>();
@@ -60,11 +70,8 @@ export class ProjectSingleEditComponent implements OnInit {
         this.grp.controls[this.END_KEY].setErrors({SEMANTICS_ERR : true});
         return;
       } else {
-        if (this.grp.controls[this.BEGIN_KEY].hasError(SEMANTICS_ERR)) {
-          delete this.grp.controls[this.BEGIN_KEY].errors[SEMANTICS_ERR];
-        }
-        if (this.grp.controls[this.END_KEY].hasError(SEMANTICS_ERR))
-          delete this.grp.controls[this.END_KEY].errors[SEMANTICS_ERR];
+          this.grp.controls[this.BEGIN_KEY].setErrors(null);
+          this.grp.controls[this.END_KEY].setErrors(null);
       }
     }
 
