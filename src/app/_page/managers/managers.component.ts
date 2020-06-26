@@ -13,6 +13,9 @@ import { Router } from '@angular/router';
   templateUrl: './managers.component.html'
 })
 export class ManagersComponent implements OnInit {
+  /**
+   * Data source containing the managers
+   */
   public dataSource: MatTableDataSource<any>;
 
   readonly LABEL : string = 'manager';
@@ -31,6 +34,10 @@ export class ManagersComponent implements OnInit {
     );
   }
 
+  /**
+   * Function to create a new manager
+   * If the user can't create a new manager, returns an error message to the manager
+   */
   public newManager() : void {
     this._dialogUtils.showNewUserDialog(this.LABEL, true).afterClosed().subscribe(
       (user : any) => {
@@ -62,11 +69,19 @@ export class ManagersComponent implements OnInit {
     this._router.navigateByUrl('managers/' + manager);
   }
 
+  /**
+   * Sets the release date for a manager
+   * @param event Event is triggered when the user sets a release date for another user
+   */
   public onDeactivate(event : any) : void {
     this._managerService.updateManager(event.user, 'releaseDate', event.releaseDate)
       .subscribe(() => this.ngOnInit(), error => { this._dialogUtils.showMsgDialog("Impossible d'indiquer la sortie des effectifs"); });
   }
 
+  /**
+   * 
+   * @param event Event is triggered when an user set another user as admin
+   */
   public setAdmin(event : any) : void {
     this._managerService.updateManager(event.manager, 'isAdmin', event.admin)
       .subscribe(() => this.ngOnInit(), error => { this._dialogUtils.showMsgDialog("Impossible de modifier les droits d'administrateurs"); });

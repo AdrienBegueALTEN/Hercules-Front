@@ -6,6 +6,9 @@ import { ConsultantService } from 'src/app/_services/consultant.service';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
 import { isUndefined } from 'util';
 
+/**
+ * Handles the consultant page data
+ */
 @Component({
   selector: 'app-consultant-page',
   templateUrl: './consultant-page.component.html',
@@ -13,9 +16,22 @@ import { isUndefined } from 'util';
 })
 export class ConsultantPageComponent implements OnInit {
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
+  /**
+   * Consultant object
+   */
   consultant : any;
+  /**
+   * User object
+   */
   public user : any = this._authService.getUser();
+  /**
+   * True : User is manager
+   * False : User isn't manager
+   */
   public userIsManager : boolean = this._authService.userIsManager();
+  /**
+   * Contains every mission linked to the consultant
+   */
   public consultantsMissions : any[];
 
   constructor(
@@ -39,6 +55,10 @@ export class ConsultantPageComponent implements OnInit {
     )
   }
 
+  /**
+   * Sets a release date for the consultant
+   * If the user can't delete a consultant, returns an error message
+   */
   public onSetReleaseDate() : void {
     this._dialogUtils.showDeactivateDialog(this.consultant).afterClosed().subscribe(
       releaseDate => {
@@ -53,6 +73,10 @@ export class ConsultantPageComponent implements OnInit {
       }); 
   }
 
+  /**
+   * Deletes a consultant
+   * If the user can't delete a consultant, returns an error message
+   */
   public onDelete() : void {
     this._consultantService.deleteConsultant(this.consultant.id).subscribe(
       () => this._router.navigate(['/consultants']),
@@ -63,6 +87,10 @@ export class ConsultantPageComponent implements OnInit {
     )
   }
 
+  /**
+   * Updates a consultant
+   * If the user can't delete a consultant, returns an error message
+   */
   public onManage() : void {
     this._consultantService.updateConsultant(this.consultant.id, 'manager', this.user.id).subscribe(
       () => this.ngOnInit(),

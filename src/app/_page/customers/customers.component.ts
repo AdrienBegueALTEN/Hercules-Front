@@ -8,13 +8,23 @@ import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { NewCustomerDialogComponent } from 'src/app/_dialog/new-customer/new-customer-dialog.component';
 
+/**
+ * Handles customers data
+ */
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent implements OnInit {
+  /**
+   * Customers array
+   * Contains every customer
+   */
   customers: any[];
+  /**
+   * Data source containing every customer, but formatted to make the array usable in customers table
+   */
   dataSource: MatTableDataSource<any>;
 
   constructor(
@@ -33,11 +43,19 @@ export class CustomersComponent implements OnInit {
     )
   }
 
+  /**
+   * Filter customers by the content of the search bar
+   * @param event Event is triggered when an user types anything inside the search bar
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  /**
+   * Creates a new customer
+   * If it can't be created, returns an error message to the user
+   */
   public newCustomer() : void {
     let dialogConfig = new MatDialogConfig();
     dialogConfig.data = this.customers;
