@@ -5,12 +5,7 @@
         {{skill}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
-      <mat-chip *ngIf="skills.length==0" [selectable]="true"
-               [removable]="true">
-        Chercher par tags
-      <mat-icon matChipRemove>cancel</mat-icon>
-      </mat-chip>
-      <input placeholder="Chercher par compétences"
+      <input placeholder="Rechercher des compétences"
              [matChipInputFor]="chipList"
              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
              [matChipInputAddOnBlur]="true"

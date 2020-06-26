@@ -1,10 +1,14 @@
-<div *ngIf="!!customer" class="flex-row-container">
-    <table class="inputable left-part">
+<div *ngIf="!!customer">
+    <table class="inputable">
         <tr><td>
         <app-name-cust-input
             (customerChange)="updateCustomer($event)" 
             [customer]="customer"></app-name-cust-input>
-        </td></tr>
+        </td>
+        <td rowspan="3" class="img-td">
+            <div *ngIf="!!logoSrc; then logo else noLogo"></div>
+        </td>
+    </tr>
         <tr><td>
         <app-activity-sector-cust-input
             (customerChange)="updateCustomer($event)" 
@@ -16,11 +20,6 @@
             [customer]="customer"></app-description-cust-input>
         </td></tr>
     </table>
-    <div class="img-box">
-        <div class="centered">
-          <div *ngIf="!!logoSrc; then logo else noLogo"></div>
-        </div>
-    </div>
 </div>
 
 <ng-template #logo>
@@ -28,5 +27,5 @@
 </ng-template>
   
 <ng-template #noLogo>
-    <app-upload-image [id]="customer.id" [title]="'Ajouter un logo.'" (image)="onAddLogo($event)"></app-upload-image>
+    <app-upload-image style="margin: auto;" [id]="customer.id" [title]="'Ajouter un logo.'" (image)="onAddLogo($event)"></app-upload-image>
 </ng-template>

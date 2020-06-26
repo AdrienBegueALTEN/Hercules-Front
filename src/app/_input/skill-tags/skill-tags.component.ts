@@ -9,8 +9,7 @@ import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-skill-tags',
-  templateUrl: './skill-tags.component.html',
-  styleUrls: ['./skill-tags.component.scss']
+  templateUrl: './skill-tags.component.html'
 })
 export class SkillTagsComponent implements OnInit {
   @Input() project: any;

@@ -8,6 +8,5 @@ export class ImgBoxComponent {
   @Input() public allowDelete : boolean = false;
   @Input() public src : string;
   @Input() public title : string = 'Supprimer l\'image.';
-  public isImgHover : boolean = false;
   @Output() delete : EventEmitter<void> = new EventEmitter();
 }

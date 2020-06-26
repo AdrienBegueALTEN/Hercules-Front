@@ -1,67 +1,58 @@
 <div *ngIf="!!project">
-    <div class="flex-row-container">
-        <div class="left-part">
-            <form [formGroup]="grp">
-                <table class="inputable">
-                    <tr>
-                        <td colspan="2">
-                            <mat-form-field>
-                                <mat-label>Intitulé du projet</mat-label>
-                                <input matInput type="text" maxlength="100" [formControlName]="ENTITLED_KEY" (change)="onChange(ENTITLED_KEY)" required>
-                                <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-                                [matTooltip]="ENTITLED_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
-                                <mat-error>{{getErrorTxt(ENTITLED_KEY)}}</mat-error>
-                            </mat-form-field>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <mat-form-field>
-                                <mat-label>Description</mat-label>
-                                <textarea matInput maxlength="1000" type="text" [formControlName]="DESCRIPTION_KEY" (change)="onChange(DESCRIPTION_KEY)" required></textarea>
-                                <mat-icon matSuffix *ngIf="externalVersion" color="primary" required
-                                [matTooltip]="DESCRIPTION_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
-                                <mat-error>{{getErrorTxt(DESCRIPTION_KEY)}}</mat-error>
-                                <mat-hint>{{grp.controls[DESCRIPTION_KEY].value?.length || 0}} / {{DESCRIPTION_MAX_LENGTH}}</mat-hint>
-                            </mat-form-field>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <mat-form-field>
-                                <mat-label>Début</mat-label>
-                                <input matInput type="date" [formControlName]="BEGIN_KEY" (blur)="onChange(BEGIN_KEY)" required>
-                                <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-                                [matTooltip]="BEGIN_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
-                                <mat-error *ngIf="!grp.controls[BEGIN_KEY].valid && grp.controls[BEGIN_KEY].touched">
-                                    {{getErrorTxt(BEGIN_KEY)}}
-                                </mat-error>
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field>
-                                <mat-label>Fin</mat-label>
-                                <input matInput type="date" [formControlName]="END_KEY" (blur)="onChange(END_KEY)" required>
-                                <mat-icon matSuffix *ngIf="externalVersion" color="primary"
-                                [matTooltip]="END_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
-                                <mat-error *ngIf="!grp.controls[END_KEY].valid && grp.controls[END_KEY].touched">
-                                    {{getErrorTxt(END_KEY)}}
-                                </mat-error>
-                            </mat-form-field>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-          <div class="img-box">
-            <div class="centered">
-              <div *ngIf="!!pictureSrc; then picture else noPicture"></div>
-            </div>
-          </div>
-      </div>
-    <table class="inputable">
+    <form [formGroup]="grp">
+        <table class="inputable">
+            <tr>
+                <td colspan="2">
+                    <mat-form-field>
+                        <mat-label>Intitulé du projet</mat-label>
+                        <input matInput type="text" maxlength="100" [formControlName]="ENTITLED_KEY" (change)="onChange(ENTITLED_KEY)" required>
+                        <mat-icon matSuffix *ngIf="externalVersion" color="primary"
+                        [matTooltip]="ENTITLED_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
+                        <mat-error>{{getErrorTxt(ENTITLED_KEY)}}</mat-error>
+                    </mat-form-field>
+                </td>
+                <td rowspan="3" class="img-td">
+                    <div *ngIf="!!pictureSrc; then picture else noPicture"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field>
+                        <mat-label>Début</mat-label>
+                        <input matInput type="date" [formControlName]="BEGIN_KEY" (blur)="onChange(BEGIN_KEY)" required>
+                        <mat-icon matSuffix *ngIf="externalVersion" color="primary"
+                        [matTooltip]="BEGIN_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
+                        <mat-error *ngIf="!grp.controls[BEGIN_KEY].valid && grp.controls[BEGIN_KEY].touched">
+                            {{getErrorTxt(BEGIN_KEY)}}
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <mat-label>Fin</mat-label>
+                        <input matInput type="date" [formControlName]="END_KEY" (blur)="onChange(END_KEY)" required>
+                        <mat-icon matSuffix *ngIf="externalVersion" color="primary"
+                        [matTooltip]="END_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
+                        <mat-error *ngIf="!grp.controls[END_KEY].valid && grp.controls[END_KEY].touched">
+                            {{getErrorTxt(END_KEY)}}
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <mat-form-field>
+                        <mat-label>Description</mat-label>
+                        <textarea matInput maxlength="1000" type="text" [formControlName]="DESCRIPTION_KEY" (change)="onChange(DESCRIPTION_KEY)" required></textarea>
+                        <mat-icon matSuffix *ngIf="externalVersion" color="primary" required
+                        [matTooltip]="DESCRIPTION_TOOLTIP" [matTooltipPosition]="TOOLTIP_POS">{{TOOLTIP_ICON}}</mat-icon>
+                        <mat-error>{{getErrorTxt(DESCRIPTION_KEY)}}</mat-error>
+                        <mat-hint>{{grp.controls[DESCRIPTION_KEY].value?.length || 0}} / {{DESCRIPTION_MAX_LENGTH}}</mat-hint>
+                    </mat-form-field>
+                </td>
+            </tr>
         <tr>
-            <td>
+            <td colspan="3">
                 <app-skill-tags 
                     [project]="project"
                     [externalVersion]="externalVersion"
@@ -71,6 +62,7 @@
             </td>
         </tr>
     </table>
+</form>
 </div>
 
 <ng-template #picture>

@@ -1,8 +1,7 @@
-<div *ngIf="src" (mouseover)="isImgHover = true" (mouseout)="isImgHover = false">
-  <img class="centered" width="100px" [src]="src" alt="Logo" [style.opacity]="isImgHover && allowDelete ? 0.25 : 1">
+<div *ngIf="src">
+  <img width="250px" heigth="250px" [src]="src" alt="Logo">
   <button *ngIf="allowDelete" mat-icon-button color="warn" [title]="title"
-    (click)="delete.emit()"
-    [style.opacity]="isImgHover ? 1 : 0">
+    (click)="delete.emit()">
     <mat-icon>highlight_off</mat-icon>
   </button>
 </div>

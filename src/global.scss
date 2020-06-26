@@ -109,21 +109,7 @@ mat-radio-button {
     padding-left: 16px;
 }
 
-.img-box {
+.img-td {
     width: 250px;
-    height: 250px;
-    float: right;
-    position: relative;
     text-align: center;
-}
-
-.centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.left-part {
-    flex-grow: 1;
 }
