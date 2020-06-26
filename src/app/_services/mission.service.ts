@@ -148,7 +148,7 @@ export class MissionService {
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
-  public uploadProjectPicture(file: File, projectId: number): Observable<HttpEvent<any>> {
+  public uploadProjectPicture(file: any, projectId: number): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('blob', file.blob);
     formData.append('name', file.name);
