@@ -9,7 +9,7 @@ const SEMANTICS_ERR : string = 'semantics';
 export class ErrorController implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid);
+    return !!(control && form.touched && control.invalid);
   }
 }
 
