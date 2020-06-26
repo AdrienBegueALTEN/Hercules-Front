@@ -26,9 +26,23 @@ export function checkConfirmation (ctrl : AbstractControl) {
   templateUrl: './change-password-dialog.component.html',
 })
 export class ChangePasswordDialogComponent {
+  /**
+   * True : Current password is hidden
+   * False : Current password is shown
+   */
   public hiddenCurrent : boolean = true;
+
+  /**
+   * True : New password is hidden
+   * False : New password is shown
+   */
   public hiddenNew  : boolean = true;
   public grp : FormGroup = new FormBuilder().group({});
+
+  /**
+   * True : Entered password doesn't match current password
+   * False : Entered password matches the current password
+   */
   public wrongPassword : boolean = false;
 
   readonly CONFIRMATION_KEY = CONST_CONFIRMATION;
@@ -77,6 +91,8 @@ export class ChangePasswordDialogComponent {
 
   /**
    * Function that returns a boolean that indicates if the user can use the submit button.
+   * True : User can submit the form because the content and password length are valid
+   * False : User can't submit the form
    */
   public canSubmit() : boolean {
     return this.grp.controls[this.NEW_KEY].valid &&

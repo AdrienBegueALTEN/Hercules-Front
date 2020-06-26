@@ -150,7 +150,8 @@ export class MissionService {
 
   public uploadProjectPicture(file: File, projectId: number): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
-    formData.append('file', file);
+    formData.append('blob', file.blob);
+    formData.append('name', file.name);
 
     const req = new HttpRequest('POST', PROJECT_API + projectId + '/upload-picture', formData, {
       reportProgress: true,
