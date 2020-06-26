@@ -17,8 +17,9 @@ export class UploadImageComponent {
     if (!!selectedFiles) {
       let name = sha1(date.toISOString()+this.id);
       let extension = selectedFiles.item(0).name.split('.').pop(); 
-      let renamedFile = new File([selectedFiles.item(0)],name+'.'+extension);
-      this.image.emit(renamedFile);
+      //let renamedFile = new File([selectedFiles.item(0)],name+'.'+extension);
+      let blob =  new Blob([selectedFiles.item(0)], {type : 'image/jpeg'});
+      this.image.emit({blob: blob, name: name+'.'+extension});
     }
   }
 

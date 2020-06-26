@@ -58,9 +58,10 @@ export class CustomerService {
    * @param file Customer logo (image file)
    * @param id Customer ID
    */
-  upload(file: File, id: number): Observable<HttpEvent<any>> {
+  upload(file: any, id: number): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
-    formData.append('file', file);
+    formData.append('blob', file.blob);
+    formData.append('name', file.name);
 
     const req = new HttpRequest('POST', API + id + '/logo', formData, {
       reportProgress: true,
