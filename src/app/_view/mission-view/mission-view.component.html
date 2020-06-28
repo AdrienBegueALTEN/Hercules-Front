@@ -1,5 +1,5 @@
 <mat-list *ngIf="version">
-  <mat-list-item>
+  <mat-list-item class="huge-list-item">
     <h1 matLine>Intitulé de la mission</h1>
     <p matLine>{{version.title || 'Non renseigné'}}</p>
   </mat-list-item>
@@ -11,7 +11,7 @@
     <h1 matLine>Expérience du consultant au début de la mission</h1>
     <p matLine>{{getConsultantStartXpToText()}}</p>
   </mat-list-item>
-  <mat-list-item>
+  <mat-list-item class="huge-list-item">
     <h1 matLine>Description de la mission</h1>
     <p matLine>{{version.description || 'Pas de description'}}</p>
   </mat-list-item>
@@ -27,7 +27,7 @@
     <h1 matLine>Taille de l'équipe</h1>
     <p matLine>{{getContractTeamSizeToString()}}</p>
   </mat-list-item>
-  <mat-list-item>
+  <mat-list-item class="huge-list-item">
     <h1 matLine>Commentaire du client/manager</h1>
     <p matLine>{{version.comment || 'Aucun commentaire'}}</p>
   </mat-list-item>
