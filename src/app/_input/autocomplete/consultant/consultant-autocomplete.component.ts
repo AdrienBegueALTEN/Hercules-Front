@@ -18,12 +18,21 @@ const _filterGrpConsultants = (consultants : any[], value : string) : any[] => {
   templateUrl: './consultant-autocomplete.component.html'
 })
 export class ConsultantAutocompleteComponent implements OnInit {
+  /**
+   * The user has creation right.
+   */
   @Input() canCreateNew : boolean = false;
+  /**
+   * A value is required.
+   */
   @Input() required : boolean = false;
   @Input() consultants : any[];
 
   public ctrl : FormControl;
   filteredConsultants: Observable<any[]>;
+  /**
+   * Boolean to tell if a add button mush be displayed in the lsit of results when no consultant can be found.
+   */
   showNewOpt : boolean = false;
   displayInGrps: boolean = false;
 
@@ -41,6 +50,11 @@ export class ConsultantAutocompleteComponent implements OnInit {
     this.sendFormCtrl.emit(this.ctrl);
   }
 
+  /**
+   * Initialize two arrays of consultants : one for the connected manager's consultants,
+   * and the second for the other consultants.
+   * It also prepares the autocomplete results array with the two groups of consultants.
+   */
   private _initOptions() {
     const user = this._authService.getUser();
     if (this._authService.userIsManager()) {
@@ -75,17 +89,34 @@ export class ConsultantAutocompleteComponent implements OnInit {
     }
   }
 
+  /**
+   * Function to display a consutlant in the results of the autocomplete. 
+   * It show the firstname and lastname of a consutlant.
+   * @param consultant Constultant to display
+   */
   displayFn(consultant : any) : string {
     return consultant ? consultant.firstname + ' ' + consultant.lastname : '';
   }
 
+  /**
+   * Send an event when the add button is clicked.
+   */
   onNew() { this.newConsultant.emit(); }
 
+  /**
+   * Update the 
+   * @param value Value from the HTML input
+   */
   private _filter(value : string) : any[] {
     const filterValue = value.toLowerCase();
     return this.consultants.filter(consultant => _filterConsultant(consultant, filterValue));
   }
 
+  /**
+   * Create both list of consultant results depending on th input value.
+   * If there is no results, then the showNewOpt is set to true.
+   * @param value 
+   */
   private _filterGrps(value : string) : any[] {
     if (value == null) {
       this.showNewOpt = false;
@@ -100,6 +131,11 @@ export class ConsultantAutocompleteComponent implements OnInit {
     return filteredConsultants;
   }
 
+  /**
+   * Check if a control value is a string.
+   * It returns an object saying the requirements are good if the control.
+   * @param control 
+   */
   private _checkSelection(control) {
     return (typeof control.value == 'string') ? { 'requirements': true } : null;
   }

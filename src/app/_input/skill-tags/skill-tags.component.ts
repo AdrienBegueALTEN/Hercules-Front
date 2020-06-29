@@ -12,16 +12,24 @@ import { startWith, map } from 'rxjs/operators';
   templateUrl: './skill-tags.component.html'
 })
 export class SkillTagsComponent implements OnInit {
+  /**
+   * Project where the skill are added.
+   */
   @Input() project: any;
+  /**
+   * Bollean to show if the component is part of the page without authentication needed.
+   */
   @Input() externalVersion : boolean = false;
   
-  visible = true;
-  addOnBlur = true;
+
+  /**
+   * Array of skills in the database
+   */
   allSkills;
   filteredSkills: Observable<any[]>;
   skillCtrl = new FormControl();
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('skillInput') skillInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   @Output() addSkillEvent = new EventEmitter<any>();
@@ -29,6 +37,9 @@ export class SkillTagsComponent implements OnInit {
 
   constructor(private _missionService : MissionService) {}
 
+  /**
+   * Initialize the allSkills array.
+   */
   ngOnInit(){
     this._missionService.getAllSkills().subscribe(
       (data) => {
@@ -42,8 +53,8 @@ export class SkillTagsComponent implements OnInit {
   }
 
   /**
-   * Add a new skill to the project
-   * @param value New skill entered by the user
+   * Add a new skill to the project.
+   * @param value New skill name
    */
   addSkill(value){
     let capVal = value.toUpperCase();
@@ -57,6 +68,10 @@ export class SkillTagsComponent implements OnInit {
     
   }
 
+  /**
+   * Get the value of the skill from the HTML chip input annd add it to the project.
+   * @param event New skill chip
+   */
   add(event: MatChipInputEvent) : void {
     if (this.project.skills.length < 10){
       const input = event.input;
@@ -66,8 +81,12 @@ export class SkillTagsComponent implements OnInit {
     }
   }
 
+  /**
+   * Add the selected element from the autocomplete to the HTML input.
+   * @param event Autocomplete selected value
+   */
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruitInput.nativeElement.value = event.option.viewValue;
+    this.skillInput.nativeElement.value = event.option.viewValue;
   }
 
 
