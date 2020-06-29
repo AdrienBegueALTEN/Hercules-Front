@@ -4,13 +4,25 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
+/**
+ * Component for the parts that serve to modify a diploma
+ */
 @Component({
   selector: 'app-diploma-edit',
   templateUrl: './diploma-edit.component.html'
 })
 export class ConsultantDiplomaComponent implements OnInit {
+  /**
+   * ID of the consultant
+   */
   @Input() consultant : number;
+  /**
+   * Object diploma with the information
+   */
   @Input() diploma : any;
+  /**
+   * Boolean that indicates if the diploma is new
+   */
   @Input() new : boolean;
 
   readonly ESTABLISHMENT_KEY : string = 'establishment';
@@ -19,10 +31,20 @@ export class ConsultantDiplomaComponent implements OnInit {
   readonly LEVEL_KEY : string = 'level';
   readonly YEAR_KEY : string = 'year';
 
+  /**
+   * Form for a diploma
+   */
   public grp : FormGroup;
 
+  /**
+   * List of already known cities of diploma filtered by the given letters
+   */
   filteredDiplomasCity: Observable<any[]>;
+  /**
+   * List of already known schools of diploma filtered by the given letters
+   */
   filteredDiplomasSchool: Observable<any[]>;
+
 
   @Output() deletion = new EventEmitter<number>();
   @Output() reload = new EventEmitter<any>();
@@ -43,6 +65,10 @@ export class ConsultantDiplomaComponent implements OnInit {
     });
   }
 
+  /**
+   * Function activated when a field for the diploma is updated and it sends an http request to update the database
+   * @param key name of the updated field
+   */
   public onChange(key : string) : void {
     if (!this._doUpdate(key)) return;
 
@@ -55,10 +81,17 @@ export class ConsultantDiplomaComponent implements OnInit {
     );
   }
 
+  /**
+   * Function that indicates if an update has been made in a field
+   * @param key name of the field
+   */
   private _doUpdate(key : string) {
     return !this.new && this.grp.controls[key].valid && this.grp.controls[key].dirty;
   }
 
+  /**
+   * Function activated when a new diploma is created and it sends an http request to add it in the database
+   */
   public onCreate() : void {
     this._consultantService.addDiploma(
       this.consultant,
@@ -74,6 +107,9 @@ export class ConsultantDiplomaComponent implements OnInit {
     );
   }
 
+  /**
+   * Function activated when a diploma is deleted and it sends an http request to remove it in the database
+   */
   public onDelete() : void {
     this._dialogUtils.showYesNoDialog(
       'Validation de suppression',
@@ -85,6 +121,11 @@ export class ConsultantDiplomaComponent implements OnInit {
     );
   }
 
+  /**
+   * Function that sends an http request to remove a diploma of a consultant from the database
+   * @param consultant ID of the consultant
+   * @param diploma ID of the diploma
+   */
   private _removeDiploma(consultant : number, diploma : number) {
     this._consultantService.removeDiploma(consultant, diploma).subscribe(
       () => this.deletion.emit(this.diploma[this.ID_KEY]),

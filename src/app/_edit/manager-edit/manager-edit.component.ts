@@ -7,13 +7,22 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ManagerService } from 'src/app/_services/manager.service';
 
+/**
+ * Component for the parts that serve to modify a manager
+ */
 @Component({
   selector: 'app-manager-edit',
   templateUrl: './manager-edit.component.html'
 })
 export class ManagerEditComponent {
+  /**
+   * Object with the details of the manager
+   */
   @Input() manager : any;
 
+  /**
+   * Form of the manager
+   */
   public grp : FormGroup = new FormBuilder().group({});
   
   readonly EMAIL_KEY : string = 'email';
@@ -28,6 +37,10 @@ export class ManagerEditComponent {
     private _snackBar: MatSnackBar,
   ) {}
 
+  /**
+   * Function activated when a field is updated and it sends an http request to update the field of the manager in the database
+   * @param key name of the field
+   */
   public valueChange(key : string) : void {
     if (!(this.grp.controls[key].valid && this.grp.controls[key].dirty)) return;
     this._managerService.updateManager(this.manager.id, key, this.grp.controls[key].value).subscribe(
@@ -39,11 +52,18 @@ export class ManagerEditComponent {
     )
   }
 
+  /**
+   * Function that changes the administration rights of the manager in the database by sending an http request
+   */
   public adminToogle() : void {
     this._managerService.updateManager(this.manager.id, 'isAdmin', !this.manager.admin)
       .subscribe(() => {}, error => {this._handleError(error.status); console.log(error); } );
   }
 
+  /**
+   * Function that display a window with an error message dpending on a given status
+   * @param status Status of an http request
+   */
   private _handleError(status : number) : void {
     let message : string;
     switch(status) {
