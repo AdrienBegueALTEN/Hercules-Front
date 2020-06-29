@@ -41,6 +41,7 @@ export class DescriptionCustInputComponent implements OnInit {
 
   /**
    * Check if value is different from the current description.
+   * @returns True if the new description is different
    */
   check(): boolean{
     const val = this.descriptionCtrl.value as string;

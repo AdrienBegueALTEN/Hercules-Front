@@ -29,6 +29,7 @@ export class NewCustomerComponent implements OnInit {
 
   /**
    * Create an error message if the name is not present
+   * @returns Error message
    */
   public getErrorText() : string {
     return this.grp.get(this.NAME_KEY).hasError(CtrlError.REQUIRED) ? 'Le nom du client doit être renseigné.' : '';

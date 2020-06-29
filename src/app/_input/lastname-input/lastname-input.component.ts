@@ -15,6 +15,7 @@ export class LastnameInputComponent extends MyInput {
    /**
    * Returns an error depending of the user input :
    * the name is required or it is too long or it has numbers in it.
+   * @returns Error message
    */
   public getError() : string {
     return  this.ctrl.hasError(CtrlError.REQUIRED) ? 'Le nom doit être renseigné' :

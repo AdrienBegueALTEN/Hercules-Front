@@ -45,6 +45,7 @@ export class NameCustInputComponent implements OnInit {
 
   /**
    * Check if the control value is different from the current name or is not empty, else create an error message.
+   * @returns True if the name is not the same and is present.
    */
   check(): boolean{
     const val = this.nameCtrl.value as string;

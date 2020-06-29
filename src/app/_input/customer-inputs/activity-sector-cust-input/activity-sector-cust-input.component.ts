@@ -77,6 +77,7 @@ export class ActivitySectorCustInputComponent implements OnInit {
    * Check the new activity sector. If it is the same, returns false.
    * If the input is empty, an error message appears and returns false.
    * Else return true.
+   * @returns True if the sector is present and different
    */
   check(): boolean{
     const val = this.activitySectorCtrl.value as string;
@@ -94,6 +95,7 @@ export class ActivitySectorCustInputComponent implements OnInit {
   /**
    * Filtering function to search for activity sector.
    * @param value value to look for
+   * @returns List of filtered sectors
    */
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();

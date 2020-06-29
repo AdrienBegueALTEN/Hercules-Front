@@ -14,7 +14,8 @@ export class EmailInputComponent extends MyInput {
 
   /**
    * Create a message error depending on cases : 
-   * the email is empty, the email has too much characters or id doesn't correspond to the format xx.yy@alten.com
+   * the email is empty, the email has too much characters or id doesn't correspond to the format xx.yy@alten.com.
+   * @returns Error message
    */
    public getError() : string {
     return  this.ctrl.hasError(CtrlError.REQUIRED) ? 'L\'adresse email doit être renseignée' :
