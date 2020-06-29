@@ -9,6 +9,10 @@ const TOKEN_KEY : string = 'auth-token';
 const TOKEN_PREFIX : string = 'Bearer ';
 const USER_KEY : string  = 'auth-user';
 
+/**
+ * Checks if the user is allowed to do actions
+ */
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private _notInteceptedHttpClient : HttpClient;
@@ -18,7 +22,10 @@ export class AuthService {
     private _httpClient : HttpClient) {
       this._notInteceptedHttpClient = new HttpClient(this._httpBackend);
     }
-
+/**
+ * Sends credentials to the API
+ * @param credentials User credentials
+ */
   public login(credentials) : Observable<any> {
     return this._httpClient.post(API + 'signin', {
       email: credentials.email,
@@ -38,6 +45,10 @@ export class AuthService {
     }, {observe: 'response'});
   }
 
+  /**
+   * Check if the stored token matches the expected token when changing password
+   * @param token Token to check
+   */
   public checkPasswordTokenValidity(token : string) : Observable<any> {
     return this._notInteceptedHttpClient.get(API + 'change-password-anonymous',
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
@@ -48,6 +59,10 @@ export class AuthService {
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
+  /**
+   * Checks if the mission can be seen by the user
+   * @param mission Mission to be accessed
+   */
   public missionSheetAccess(mission : number) : Observable<any> {
     return this._httpClient.get(API + 'mission-sheet-access/' + mission, {responseType: 'blob'});
   }
@@ -64,15 +79,26 @@ export class AuthService {
     window.location.replace('login');
   }
 
+  /**
+   * Save a new token
+   * @param token Token to be saved
+   */
   public saveToken(token : string) : void {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.setItem(TOKEN_KEY, token);
   }
 
+  /**
+   * Gets token stored in the browser
+   */
   public getToken() : string {
     return sessionStorage.getItem(TOKEN_KEY);
   }
 
+  /**
+   * Save an user
+   * @param user User to be saved
+   */
   public saveUser(user : any) :void {
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -90,6 +116,10 @@ export class AuthService {
    */
   public isAuthentificated() : boolean { return !!this.getToken(); }
 
+  /**
+   * True : User is admin
+   * False : User isn't admin
+   */
   public userIsAdmin() : boolean {
     return this._userHasRole(Role.ADMIN);
   }
