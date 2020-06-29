@@ -8,6 +8,9 @@ import { isUndefined } from 'util';
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { Router } from '@angular/router';
 
+/**
+ * Handles consultants data
+ */
 @Component({
   selector: 'app-consultants',
   templateUrl: './consultants.component.html',
@@ -21,14 +24,41 @@ import { Router } from '@angular/router';
   ],
 })
 export class ConsultantsComponent implements OnInit {
+  /**
+   * True : User is manager
+   * False : User isn't manager
+   */
   readonly userIsManager : boolean = this._authService.userIsManager();
+  /**
+   * True : Only shows consultants linked with the logged in user
+   * False : Shows every consultant
+   */
   public onlyMine : boolean = this.userIsManager;
+  /**
+   * Consultants array
+   * Contains every consultant
+   */
   private consultants: any[];
+  /**
+   * Gets user ID
+   */
   private _loggedUserId = this._authService.getUser().id;
+    /**
+   * Data source containing every consultant, but formatted to make the array usable in customer table
+   */
   public dataSource: MatTableDataSource<any>;
+  /**
+ * Columns used to display consultants
+ */
   public columnsToDisplay : string[] = ['firstname', 'lastname', 'email', 'releaseDate', 'userActions'];
 
+  /**
+   * This variable is used to make the application knows which dialog box it's supposed to display to the user
+   */
   readonly LABEL : string = "consultant";
+  /**
+   * Defines the manager column index
+   */
   readonly MANAGER_COLUMN_INDEX : number = 3;
 
   constructor(
@@ -48,6 +78,10 @@ export class ConsultantsComponent implements OnInit {
     )
   }
 
+  /**
+   * Refreshed the data source
+   * When onlyMine is true, all consultants displayed are linked to the manager
+   */
   public refreshDatasource() : void {
     this.dataSource = this.onlyMine ?
       this.dataSource = new MatTableDataSource(this.consultants.filter((cons) => cons.manager.id == this._loggedUserId)) :
@@ -82,6 +116,10 @@ export class ConsultantsComponent implements OnInit {
     return search;
   }
 
+  /**
+   * Apply the filter and searches through the consultants array
+   * @param event Even is triggered when the user types anything inside the search bar
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -103,6 +141,10 @@ export class ConsultantsComponent implements OnInit {
     );
   }
 
+  /**
+   * Creates a new consultant
+   * If he can't be created, returns an error message to the user
+   */
   public newConsultant() : void {
     this._dialogUtils.showNewUserDialog(this.LABEL).afterClosed().subscribe(
       (user : any) => {
@@ -115,10 +157,19 @@ export class ConsultantsComponent implements OnInit {
     )
   }
 
+ /**
+   * Redirects the user to the consultant page
+   * @param consultant Consultant the user clicked on
+   */
   public goToConsultantPage(consultant : number) {
     this._router.navigateByUrl('consultants/' + consultant);
   }
 
+  /**
+   * Handles creation error
+   * Checks the API response when a consultant is created
+   * @param response Type of response sent by the API
+   */
   private _handleAddResponse(response : Response) {
     if (response.status !== HttpStatus.CREATED) {
       let message : string = "Impossible d'ajouter ce " + this.LABEL + ".";

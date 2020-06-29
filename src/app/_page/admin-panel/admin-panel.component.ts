@@ -4,6 +4,9 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+/**
+ * Handles actions in admin panel
+ */
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
@@ -26,7 +29,10 @@ export class AdminPanelComponent {
     );
   }
 
-  
+  /**
+   * Shows the message dialog
+   * @param message Message to display to the admin
+   */
   private _showMessageDialog(message : string) : void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = message;

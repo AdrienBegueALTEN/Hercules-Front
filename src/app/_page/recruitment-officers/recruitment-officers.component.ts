@@ -9,15 +9,27 @@ import { saveAs } from "file-saver";
 import { isUndefined } from 'util';
 import { Router } from '@angular/router';
 
+/**
+ * Handles recruitment officer informations
+ */
 @Component({
   selector: 'app-recruitment-officers',
   templateUrl: './recruitment-officers.component.html'
 })
 export class RecruitmentOfficersComponent implements OnInit {
+  /**
+   * Contains formated recruitment officers informations
+   */
   public dataSource: MatTableDataSource<any>;
 
+  /**
+   * This variable is used to make the application knows which dialog box it's supposed to display to the user
+   */
   readonly LABEL : string = 'chargé de recrutement';
 
+  /**
+   * Gets the table format
+   */
   @ViewChild(DatatableComponent, { static: true }) datatable : DatatableComponent;
 
   constructor(
@@ -37,6 +49,9 @@ export class RecruitmentOfficersComponent implements OnInit {
     );
   }
 
+  /**
+   * Open a new dialog box and the required fields to create a new recruitment officer
+   */
   public newRecruitmentOfficer() : void {
     this._dialogUtils.showNewUserDialog(this.LABEL).afterClosed().subscribe(
       (user : any) => {

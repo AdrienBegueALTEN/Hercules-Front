@@ -23,9 +23,16 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
  * Array containing all activity sectors
  */
   activitySectors : string[];
+
+  /**
+   * Array containing the activity sectors matching the searched text
+   */
   filteredActivitySectors : Observable<string[]>;
   public ctrl : FormControl = new FormControl('', this.required ? [Validators.required] : null);
 
+  /**
+   * Form sent to parent component
+   */
   @Output() sendFormCtrl = new EventEmitter<FormControl>();
 
   constructor() {}
@@ -45,7 +52,7 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
   }
 
   /**
-   * 
+   * Function filtering 
    * @param value Text to search
    */
   private _filter(value : string) : string[] {
@@ -53,6 +60,7 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
     const filteredActivitySectors = this.activitySectors.filter(activitySector => activitySector.toLowerCase().indexOf(filterValue) >= 0);
     return filteredActivitySectors;
   }
+
 
   private _getActivitySectorsSet(customers : any[]) : string[] {
     var i, out = [], obj = {};

@@ -1,9 +1,17 @@
 import { Injectable } from '@angular/core';
 
+/**
+ * Normalizes the user input
+ */
 @Injectable({
   providedIn: 'root'
 })
+
 export class StrUtilsService {
+  /**
+ *  Changes the user input to make searching by name easier.
+ * For instance, if someone is called "Bègue", the user will be able to find him by typing "Begue"
+ */
   public normalizeName(str : string) : string {
     str = str.toLocaleLowerCase();
     str = str.replace(/[àáâãäå]/g, 'a');
