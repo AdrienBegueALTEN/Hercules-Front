@@ -14,8 +14,9 @@ const EMAIL_KEY = 'email';
   templateUrl: './new-user.component.html'
 })
 export class NewUserComponent implements OnInit, AfterContentInit  {
+  /** Form group for creation of a user */
   public grp : FormGroup;
-
+  /** Event containing the form group */
   @Output() sendFormGrp : EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   @ViewChild('firstname') firstname : FirstnameInputComponent;
@@ -42,6 +43,10 @@ export class NewUserComponent implements OnInit, AfterContentInit  {
     this._changerDetectorReg.detectChanges();
   }
 
+  /**
+   * Fonction to update the email input with the lastname et firstname previously completed in order to create an ALTEN email
+   * and fill the email field with the email.
+   */
   autoCompleteEmail() : void {
     let firstname = this._strUtilsService.normalizeName(this.grp.get(FIRSTNAME_KEY).value);
     let lastname = this._strUtilsService.normalizeName(this.grp.get(LASTNAME_KEY).value);

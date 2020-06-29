@@ -13,7 +13,8 @@ export class FirstnameInputComponent extends MyInput {
   constructor() {  super("Prénom", InputType.TEXT, [Validators.pattern(AppSettings.NAME_PATTERN), Validators.maxLength(100)]); }
 
   /**
-   * Returns an error depending of the user input
+   * Returns an error depending of the user input :
+   * the name is required or it is too long or it has numbers in it.
    */
   public getError() : string {
     return  this.ctrl.hasError(CtrlError.REQUIRED) ? 'Le prénom doit être renseigné' :
