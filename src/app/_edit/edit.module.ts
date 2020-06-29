@@ -15,7 +15,9 @@ import { AutocompleteModule } from '../_input/autocomplete/autocomplete.module';
 import { CustomerInputsModule } from '../_input/customer-inputs/customer-inputs.module';
 
 
-
+/**
+ * Module for the components that are used for the modification of elements
+ */
 @NgModule({
   declarations: [
     ConsultantEditComponent,

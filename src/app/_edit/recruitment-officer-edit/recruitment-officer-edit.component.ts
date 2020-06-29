@@ -6,13 +6,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 
+/**
+ * Component for the parts that serve to modify a recruitment officer
+ */
 @Component({
   selector: 'app-recruitment-officer-edit',
   templateUrl: './recruitment-officer-edit.component.html'
 })
 export class RecruitmentOfficerEditComponent {
+  /**
+   * Object with the details of a recruitment officer
+   */
   @Input() recruitmentOfficer : any;
 
+  /**
+   * Form for the recruitment officer
+   */
   public grp : FormGroup = new FormBuilder().group({});
   
   readonly EMAIL_KEY = 'email';
@@ -24,7 +33,10 @@ export class RecruitmentOfficerEditComponent {
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
   ) {}
-
+  /**
+   * Function activated when a field is updated and it sends an http request to modify the recruitment officer in the database then it displays an appropriate message
+   * @param key name of the field
+   */
   valueChange(key : string) : void {
     if (!(this.grp.controls[key].valid && this.grp.controls[key].dirty)) return;
     this._recruitmentOfficerService.updateRecruitmentOfficer(
@@ -36,7 +48,10 @@ export class RecruitmentOfficerEditComponent {
       error => { this._handleError(error.status); console.log(error); }
     )
   }
-
+  /**
+   * Function that displays an error message adapted to the given status
+   * @param status Status of an http request
+   */
   private _handleError(status : number) : void {
     let message : string;
     switch(status) {
