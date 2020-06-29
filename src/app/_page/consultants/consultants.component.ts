@@ -53,7 +53,7 @@ export class ConsultantsComponent implements OnInit {
   public columnsToDisplay : string[] = ['firstname', 'lastname', 'email', 'releaseDate', 'userActions'];
 
   /**
-   * Consultant key
+   * This variable is used to make the application knows which dialog box it's supposed to display to the user
    */
   readonly LABEL : string = "consultant";
   /**

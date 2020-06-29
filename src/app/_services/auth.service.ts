@@ -78,6 +78,9 @@ export class AuthService {
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
+  /**
+   * Gets the current user
+   */
   public getUser() {
     return JSON.parse(sessionStorage.getItem(USER_KEY));
   }

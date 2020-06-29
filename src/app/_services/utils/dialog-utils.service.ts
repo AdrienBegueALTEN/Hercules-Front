@@ -16,6 +16,10 @@ export class DialogUtilsService {
 
 constructor(private _dialog : MatDialog) { }
 
+/**
+ * Shows a dialog box to the user
+ * @param message Text of the dialog box
+ */
   public showMsgDialog(message : string) : MatDialogRef<MessageDialogComponent, any> {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
@@ -24,6 +28,10 @@ constructor(private _dialog : MatDialog) { }
     return this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 
+  /**
+   * Shows the deactivate dialog box to the user
+   * @param user User to deactivate
+   */
   public showDeactivateDialog(user : any) : MatDialogRef<DeactivateComponent, any> {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
@@ -36,6 +44,10 @@ constructor(private _dialog : MatDialog) { }
     return this._dialog.open(DeactivateComponent, dialogConfig);
   }
 
+  /**
+   * Shows the change password dialog to the user
+   * @param user User involved in the password change
+   */
   public showChangePasswordDialog(user? : number) : MatDialogRef<ChangePasswordDialogComponent, any> {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
@@ -46,7 +58,11 @@ constructor(private _dialog : MatDialog) { }
     return this._dialog.open(ChangePasswordDialogComponent, dialogConfig);
   }
 
-
+/**
+ * Shows new user dialog box if manager doesn't exist
+ * @param label Label to search into the dialog box
+ * @param newManager True : The manager is new and dooesn't exust yet. False : The manager already exists
+ */
   public showNewUserDialog(label : string, newManager : boolean = false) : MatDialogRef<NewUserDialogComponent, any> {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
