@@ -1,3 +1,4 @@
+import { DateUtilsService } from './../../_services/utils/dateUtils.service';
 import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -23,7 +24,8 @@ export class ConsultantPageComponent implements OnInit {
     private _consultantService : ConsultantService,
     private _router : Router,
     private _route : ActivatedRoute,
-    private _dialogUtils : DialogUtilsService
+    private _dialogUtils : DialogUtilsService,
+    private _dateUtils : DateUtilsService
   ) {}
 
   ngOnInit() {
@@ -71,5 +73,13 @@ export class ConsultantPageComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  public isActive() : boolean {
+    return this._dateUtils.userIsActive(this.consultant);
+  }
+
+  public managerIsActive() : boolean {
+    return this._dateUtils.userIsActive(this.consultant.manager);
   }
 }

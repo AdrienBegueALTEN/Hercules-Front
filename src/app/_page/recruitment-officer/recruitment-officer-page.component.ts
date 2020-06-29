@@ -1,3 +1,4 @@
+import { DateUtilsService } from './../../_services/utils/dateUtils.service';
 import { Component, OnInit} from '@angular/core';
 import { RecruitmentOfficerService } from 'src/app/_services/recruitment-officer.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,9 +17,10 @@ export class RecruitmentOfficerPageComponent implements OnInit {
   constructor(
     private _authService : AuthService,
     private _recruitmentOfficerService : RecruitmentOfficerService,
-    private _dialogUtils: DialogUtilsService,
-    private _route: ActivatedRoute,
-    private _router: Router
+    private _dialogUtils : DialogUtilsService,
+    private _route : ActivatedRoute,
+    private _router : Router,
+    private _dateUtils : DateUtilsService
   ) {}
 
   public ngOnInit(): void {
@@ -66,6 +68,10 @@ export class RecruitmentOfficerPageComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  public isActive() : boolean {
+    return this._dateUtils.userIsActive(this.recruitmentOfficer);
   }
 }
  

@@ -1,3 +1,4 @@
+import { DateUtilsService } from './../../_services/utils/dateUtils.service';
 import { DialogUtilsService } from './../../_services/utils/dialog-utils.service';
 import { Component, OnInit } from '@angular/core';
 import { ManagerService } from 'src/app/_services/manager.service';
@@ -19,9 +20,10 @@ export class ManagerPageComponent implements OnInit {
   constructor(
     private _authService : AuthService,
     private _managerService : ManagerService,
-    private _route: ActivatedRoute,
-    private _dialogUtils: DialogUtilsService,
-    private _router: Router
+    private _route : ActivatedRoute,
+    private _dialogUtils : DialogUtilsService,
+    private _router : Router,
+    private _dateUtils : DateUtilsService
   ) {}
 
   public ngOnInit(): void {
@@ -76,5 +78,9 @@ export class ManagerPageComponent implements OnInit {
 
   public goToConsultantPage(consultant : number) {
     this._router.navigateByUrl('consultants/' + consultant);
+  }
+
+  public isActive() : boolean {
+    return this._dateUtils.userIsActive(this.manager);
   }
 }

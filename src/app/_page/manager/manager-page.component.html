@@ -5,7 +5,7 @@
               <ng-template mat-tab-label>
                 {{manager.firstname}} {{manager.lastname}}
               </ng-template>
-              <div *ngIf="!manager.releaseDate; then edit else view"></div>
+              <div *ngIf="isActive(); then edit else view"></div>
             </mat-tab>
             <mat-tab *ngIf="manager.consultants.length > 0">
               <ng-template mat-tab-label>
@@ -22,11 +22,11 @@
     </mat-card-content>
     <mat-card-actions>
       <div *ngIf="userId != manager.id">
-        <button *ngIf="manager.releaseDate === null" mat-button color="primary"
+        <button *ngIf="isActive()" mat-button color="primary"
           (click)="onChangePasswordAcces()">
           Lien de réinitialisation de mot de passe
         </button>
-        <button mat-button color="warn" (click)="onSetReleaseDate()">
+        <button mat-button color="accent" (click)="onSetReleaseDate()">
           {{manager.releaseDate ? 'Modifier' : 'Indiquer'}} date de sortie des effectifs
         </button>
         <button mat-button color="warn" *ngIf="manager.consultants.length === 0"

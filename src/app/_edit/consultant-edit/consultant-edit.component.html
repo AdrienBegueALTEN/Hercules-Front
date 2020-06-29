@@ -1,5 +1,5 @@
 <div *ngIf="consultant">
-  <div class="contours" id="infos" *ngIf="consultant.manager.releaseDate==null">
+  <div class="contours" id="infos">
     <mat-card-title>Informations personnelles</mat-card-title>
       <mat-card-content>
         <form [formGroup]="grp">
@@ -36,7 +36,7 @@
       </form>
       </mat-card-content>
     </div>
-    <div class="contours" *ngIf="consultant.manager.releaseDate==null">
+    <div class="contours">
       <mat-card-title>Formation</mat-card-title>
       <mat-card-content>
         <mat-accordion>
@@ -56,7 +56,7 @@
         <div *ngIf="showNewDiploma; then newDiplomaForm else newDiplomaButton"></div>
       </mat-card-content>
     </div>
-    <div class="contours" [class.manager-gone-background]="consultant.manager.releaseDate!=null">
+    <div class="contours" [class.manager-gone-background]="!managerIsActive()">
       <mat-card-title>Manager</mat-card-title>
       <mat-card-content>
         <app-consultant-manager [consultant]="consultant" (managerChange)="updateManager($event)"></app-consultant-manager>

@@ -1,3 +1,4 @@
+import { DateUtilsService } from './../../_services/utils/dateUtils.service';
 import { HttpStatus } from './../../_enums/http-status.enum';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
@@ -27,7 +28,8 @@ export class ConsultantEditComponent implements OnInit {
   constructor(
     private _consultantService : ConsultantService,
     private _dialog : MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _dateUtils : DateUtilsService
   ) { }
 
   public ngOnInit(): void {
@@ -71,8 +73,9 @@ export class ConsultantEditComponent implements OnInit {
     this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 
-  updateManager(manager:any){
-    this._consultantService.updateConsultant(this.consultant.id,'manager',manager.id).subscribe(
+  updateManager(manager : any) {
+    console.log(manager.id)
+    this._consultantService.updateConsultant(this.consultant.id,'manager', manager.id).subscribe(
       () => {
         this.consultant['manager'] = manager;
         this._snackBar.open('Mise à jour effectuée', 'x', {duration: 2000});
@@ -97,5 +100,9 @@ export class ConsultantEditComponent implements OnInit {
       default :
         return "";
     }
+  }
+
+  public managerIsActive() : boolean {
+    return this._dateUtils.userIsActive(this.consultant.manager);
   }
 }
