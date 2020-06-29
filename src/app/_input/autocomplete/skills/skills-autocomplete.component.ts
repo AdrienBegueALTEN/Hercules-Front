@@ -48,6 +48,7 @@ export class SkillsAutocompleteComponent  {
 
   /**
    * Get all skills
+   * @returns List of skills
    */
   public getSkills(){
     return this.skills;

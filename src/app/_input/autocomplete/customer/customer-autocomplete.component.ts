@@ -69,6 +69,7 @@ export class CustomerAutocompleteComponent implements OnInit {
   /**
    * Fuction to display a customer name if the autocomplete results.
    * @param customer Customer object
+   * @returns The customer name
    */
   displayFn(customer : any) : string {
     return customer ? customer.name : '';
@@ -83,6 +84,7 @@ export class CustomerAutocompleteComponent implements OnInit {
    * Filter the customer according to a value.
    * If none are found, it set showNewOpt to true.
    * @param name Value to look for.
+   * @returns List of filtered customers
    */
   private _filter(name : string) : any[] {
     if (name == null) {
@@ -99,6 +101,7 @@ export class CustomerAutocompleteComponent implements OnInit {
   /**
    * Check if the control value is of type string.
    * @param control From control to check
+   * @returns \{ 'requirements': true \} if value is a string
    */
   private _checkSelection(control) {
     return (typeof control.value == 'string') ? { 'requirements': true } : null;

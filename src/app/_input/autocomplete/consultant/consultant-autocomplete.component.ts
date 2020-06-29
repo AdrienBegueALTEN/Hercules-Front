@@ -93,6 +93,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
    * Function to display a consutlant in the results of the autocomplete. 
    * It show the firstname and lastname of a consutlant.
    * @param consultant Constultant to display
+   * @returns Identity of a consultant as a string
    */
   displayFn(consultant : any) : string {
     return consultant ? consultant.firstname + ' ' + consultant.lastname : '';
@@ -106,6 +107,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
   /**
    * Update the 
    * @param value Value from the HTML input
+   * @returns List of filtered consutlant
    */
   private _filter(value : string) : any[] {
     const filterValue = value.toLowerCase();
@@ -113,9 +115,10 @@ export class ConsultantAutocompleteComponent implements OnInit {
   }
 
   /**
-   * Create both list of consultant results depending on th input value.
+   * Create both list of consultant results depending on the input value.
    * If there is no results, then the showNewOpt is set to true.
    * @param value 
+   * @returns two groups of filtered consultants
    */
   private _filterGrps(value : string) : any[] {
     if (value == null) {
@@ -135,6 +138,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
    * Check if a control value is a string.
    * It returns an object saying the requirements are good if the control.
    * @param control 
+   * @returns \{ 'requirements': true \} if control value is a string
    */
   private _checkSelection(control) {
     return (typeof control.value == 'string') ? { 'requirements': true } : null;

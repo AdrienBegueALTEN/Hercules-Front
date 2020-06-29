@@ -59,7 +59,7 @@ export class ConsultantManagerComponent implements OnInit {
         this.filteredManagers = this.managerCtrl.valueChanges
           .pipe(
             startWith(''),
-            map(state => state ? this._filterStates(state) : this.managers.slice())
+            map(state => state ? this._filterManager(state) : this.managers.slice())
           );
       },
       (err) => {
@@ -71,8 +71,9 @@ export class ConsultantManagerComponent implements OnInit {
   /**
    * Filtering function to search the managers which names contain the value.
    * @param value Value to look for
+   * @returns List of filtered managers
    */
-  private _filterStates(value: string): any[] {
+  private _filterManager(value: string): any[] {
     const filterValue = value.toString().toLowerCase();
 
     return this.managers.filter(m => m.email.toLowerCase().includes(filterValue));

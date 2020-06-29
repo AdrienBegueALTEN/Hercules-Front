@@ -52,7 +52,8 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
 
   /**
    * Create the error message.
-   */
+   * @returns Error message
+   */ 
   public getErrorText() : string {
     return  this.ctrl.hasError(CtrlError.REQUIRED) ? 'Le secteur d\'activité du client doit être renseigné.' : '';
   }
@@ -60,6 +61,7 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
   /**
    * Filter function for the autocomplete.
    * @param value Value to look for
+   * @returns list of filtered sectors
    */
   private _filter(value : string) : string[] {
     const filterValue = value.toLowerCase();
@@ -70,6 +72,7 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
   /**
    * Return all activity sector taken from a list of customers.
    * @param customers List of customer
+   * @returns List of all sectors
    */
   private _getActivitySectorsSet(customers : any[]) : string[] {
     var i, out = [], obj = {};
