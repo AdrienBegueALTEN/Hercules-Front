@@ -43,6 +43,10 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     )
   }
 
+  /**
+   * Sets a release date for a recruitment officer
+   * If the date can't be set, returns an error message to the user
+   */
   public onSetReleaseDate() : void {
     this._dialogUtils.showDeactivateDialog(this.recruitmentOfficer).afterClosed().subscribe(
       releaseDate => {
@@ -58,6 +62,10 @@ export class RecruitmentOfficerPageComponent implements OnInit {
       }); 
   }
 
+  /**
+   * Deletes the chosen recruitment officer
+   * If he can't be deleted, returns an error message to the user
+   */
   public onDelete() : void {
     this._recruitmentOfficerService.deleteRecruitmentOfficer(this.recruitmentOfficer.id).subscribe(
       () => this._router.navigate(['/recruitment-officers']),

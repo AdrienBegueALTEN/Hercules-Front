@@ -13,6 +13,9 @@ import { MissionEditComponent } from 'src/app/_edit/mission-edit/mission-edit.co
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 
+/**
+ * Handles logic on the mission page
+ */
 @Component({
   selector: 'app-mission-page',
   templateUrl: './mission-page.component.html',
@@ -22,9 +25,22 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   readonly CONSULTANT_TAB_INDEX : number = 2;
   readonly CUSTOMER_TAB_INDEX : number = 3;
   
+  /**
+   * Contains all missions
+   */
   mission : any;
+
   selectedIndex : number = 0;
+    /**
+   * True : User is manager
+   * False : User isn't manager
+   */
   userIsManager : boolean = false;
+
+  /**
+   * True : User is the consultant's manager
+   * False : User isn't the consultant manager
+   */
   userIsConsultantManager : boolean = false;
 
   @ViewChild('tabGrp') tabGrp : MatTabGroup;
@@ -72,6 +88,9 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       )
   }
 
+  /**
+   * Creates a new mission version
+   */
   public onNewVersion() : void {
     this._missionService.addVersion(this.mission.id).subscribe(
       () => this.ngOnInit(),
@@ -79,6 +98,10 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     );
   }
 
+  /**
+   * Generates the email to download using the consultant fist and last name as filename
+   * Returns an error if the user can't
+   */
   public onDownloadEmail() : void {
     this._authService.missionSheetAccess(this.mission.id).subscribe(
       blob => {
@@ -110,6 +133,9 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     return this.mission.versions.length > 1;
   }
 
+  /**
+   * Shows new mission version window
+   */
   public showNewVersion() : boolean {
     if (this.mission.sheetStatus !== SheetStatus.VALIDATED)
       return false;
@@ -120,6 +146,9 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       todayDate.getDate() !== lastVersionDate.getDate();
   }
 
+  /**
+   * Changes view depending of the sheet status
+   */
   public getStatusText() : string {
     let str : string;
     switch (this.mission.sheetStatus) {
@@ -135,12 +164,17 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     return 'Fiche '.concat(str);
   }
 
+  /**
+   * Creates a new project.
+   * Returns an error when user can't.
+   */
   public createNewProject() : void {
     this._missionService.newProject(this.mission.id).subscribe(
       () => this.ngOnInit(),
       () => this._dialogUtils.showMsgDialog("Impossible de créer un nouveau projet.")
     )
   }
+
 
   public updateProject(event : any) : void {
     const projectId = this.mission.versions[0].projects[event.index].id;
@@ -154,6 +188,10 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       );
   }
 
+  /**
+   * Deletes a project from a mission
+   * @param index Index of the project to delete
+   */
   public deleteProject(index : number) : void {
     const projectId = this.mission.versions[0].projects[index].id;
     this._missionService.deleteProject(projectId).subscribe(
@@ -207,6 +245,10 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       }); 
   }
 
+  /**
+   * Add a skill to a project
+   * @param skill Skill to add to the project
+   */
   public addSkillToProject(skill: any){
     this._missionService.addSkillToProject(skill.project, [skill.skill]).subscribe(
       () => this._snackBar.open('La compétence \'' + skill.skill + '\' a été enregistrée.', 'X', {duration: 2000}),
@@ -214,6 +256,10 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     );
   }
 
+  /**
+   * Removes a skill from a project
+   * @param skill Skill to remove to the project
+   */
   public removeSkillFromProject(skill: any){
     this._missionService.removeSkillFromProject(skill.project, skill.skill).subscribe(
       () => this._snackBar.open('La compétence \'' + skill.skill.label + '\' a été retirée.', 'X', {duration: 2000}),
@@ -221,6 +267,9 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     )
   }
 
+/**
+ * Validates a new mission version
+ */
   public onValidate() : void {
     this._missionService.updateMission(this.mission.id, 'sheetStatus', SheetStatus.VALIDATED).subscribe(
       () => this.ngOnInit(),
@@ -228,11 +277,17 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     )
   }
 
+/**
+ * Checks if all forms are valid, ie if all fields are filled
+ */
   public allFormsValid() : boolean {
     return (!this.missionEdit?.grp) ? false :
       this.missionEdit.grp.valid && this.projectsEdit.allFormsValid();
   }
 
+  /**
+   * Deletes a mission
+   */
   public onDelete() : void {
     this._missionService.deleteMission(this.mission.id).subscribe(
       () => this._router.navigateByUrl('')

@@ -9,6 +9,9 @@ export class AdminGuard implements CanActivate {
 
   constructor(private _authService : AuthService) {}
 
+  /**
+   * Checks if the user is admin
+   */
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (this._authService.getUser().roles.includes(Role.ADMIN)) return true;
     else window.location.replace('not-found');
