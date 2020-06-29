@@ -5,16 +5,16 @@
               <ng-template mat-tab-label>
                 {{recruitmentOfficer.firstname}} {{recruitmentOfficer.lastname}}
               </ng-template>
-              <div *ngIf="!recruitmentOfficer.releaseDate; then edit else view"></div>
+              <div *ngIf="isActive(); then edit else view"></div>
             </mat-tab>
           </mat-tab-group>
     </mat-card-content>
     <mat-card-actions>
-      <button *ngIf="recruitmentOfficer.releaseDate !== null" mat-button color="primary"
+      <button *ngIf="isActive()" mat-button color="primary"
         (click)="onChangePasswordAcces()">
         Lien de réinitialisation de mot de passe
       </button>
-      <button mat-button color="warn" (click)="onSetReleaseDate()">
+      <button mat-button color="accent" (click)="onSetReleaseDate()">
         {{recruitmentOfficer.releaseDate ? 'Modifier' : 'Indiquer'}} date de sortie des effectifs
       </button>
       <button mat-button color="warn" (click)="onDelete()">Supprimer ce CDR en base</button>

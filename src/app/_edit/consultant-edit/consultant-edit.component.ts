@@ -1,3 +1,4 @@
+import { DateUtilsService } from './../../_services/utils/dateUtils.service';
 import { HttpStatus } from './../../_enums/http-status.enum';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
@@ -40,7 +41,8 @@ export class ConsultantEditComponent implements OnInit {
   constructor(
     private _consultantService : ConsultantService,
     private _dialog : MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _dateUtils : DateUtilsService
   ) { }
 
   public ngOnInit(): void {
@@ -138,5 +140,9 @@ export class ConsultantEditComponent implements OnInit {
       default :
         return "";
     }
+  }
+
+  public managerIsActive() : boolean {
+    return this._dateUtils.userIsActive(this.consultant.manager);
   }
 }

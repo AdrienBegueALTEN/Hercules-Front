@@ -1,3 +1,4 @@
+import { DateUtilsService } from './../../_services/utils/dateUtils.service';
 import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Component, ViewChild, Input, Output, EventEmitter, AfterViewInit, OnChanges } from '@angular/core';
@@ -64,8 +65,9 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private _authService: AuthService,
-    private _dialogUtils: DialogUtilsService
+    private _authService : AuthService,
+    private _dateUtils : DateUtilsService,
+    private _dialogUtils : DialogUtilsService
   ) {}
 
   public ngAfterViewInit(): void {
@@ -120,5 +122,9 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
           )
       }
     );
+  }
+
+  public userIsActive(user : any) : boolean {
+    return this._dateUtils.userIsActive(user);
   }
 }

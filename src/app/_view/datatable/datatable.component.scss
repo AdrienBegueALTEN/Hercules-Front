@@ -15,12 +15,12 @@ mat-paginator {
 }
 
 .element-row:hover {
-  background-color: #cfcece;
+  background-color: lightgrey;
   cursor: pointer;
 }
 
-.element-disabled {
-  color: gray;
+.element-disabled > * {
+  opacity: 0.5;
 }
 
 #manager-warning {
