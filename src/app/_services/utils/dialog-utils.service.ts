@@ -6,6 +6,9 @@ import { Injectable } from '@angular/core';
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
 import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
 
+/**
+ * Contents of the dialog box displayed to the user
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -42,6 +45,7 @@ constructor(private _dialog : MatDialog) { }
     } else dialogConfig.disableClose = true;
     return this._dialog.open(ChangePasswordDialogComponent, dialogConfig);
   }
+
 
   public showNewUserDialog(label : string, newManager : boolean = false) : MatDialogRef<NewUserDialogComponent, any> {
     const dialogConfig = new MatDialogConfig();

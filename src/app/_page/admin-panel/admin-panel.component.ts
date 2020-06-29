@@ -29,7 +29,10 @@ export class AdminPanelComponent {
     );
   }
 
-  
+  /**
+   * Shows the message dialog
+   * @param message Message to display to the admin
+   */
   private _showMessageDialog(message : string) : void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = message;

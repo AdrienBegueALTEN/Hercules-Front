@@ -117,7 +117,7 @@ export class ConsultantsComponent implements OnInit {
   }
 
   /**
-   * 
+   * Apply the filter and searches through the consultants array
    * @param event Even is triggered when the user types anything inside the search bar
    */
   applyFilter(event: Event) {
@@ -157,6 +157,10 @@ export class ConsultantsComponent implements OnInit {
     )
   }
 
+ /**
+   * Redirects the user to the consultant page
+   * @param consultant Consultant the user clicked on
+   */
   public goToConsultantPage(consultant : number) {
     this._router.navigateByUrl('consultants/' + consultant);
   }

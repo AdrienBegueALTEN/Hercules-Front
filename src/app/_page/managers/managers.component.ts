@@ -18,6 +18,9 @@ export class ManagersComponent implements OnInit {
    */
   public dataSource: MatTableDataSource<any>;
 
+  /**
+   * This variable is used to make the application knows which dialog box it's supposed to display to the user
+   */
   readonly LABEL : string = 'manager';
 
   constructor(
@@ -65,6 +68,10 @@ export class ManagersComponent implements OnInit {
     )
   }
 
+  /**
+   * Redirects the user to the manager page
+   * @param manager Manager the user clicked on
+   */
   public goToManagerPage(manager : number) : void {
     this._router.navigateByUrl('managers/' + manager);
   }
@@ -79,7 +86,7 @@ export class ManagersComponent implements OnInit {
   }
 
   /**
-   * 
+   * Sets another user as admin
    * @param event Event is triggered when an user set another user as admin
    */
   public setAdmin(event : any) : void {
