@@ -21,6 +21,9 @@ import { AdminGuard } from './_services/guard/admin-guard.service';
 import { ManagersComponent } from './_page/managers/managers.component';
 import { ManagerPageComponent } from './_page/manager/manager-page.component';
 
+/**
+ * Path of the API for the http requests
+ */
 const routes: Routes = [
   { 
     path: '', canActivate: [AuthGuard],
@@ -46,6 +49,9 @@ const routes: Routes = [
   { path: '**', component: PageNotFoundComponent },
 ];
 
+/**
+ * Module for the paths of the http requests
+ */
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
     onSameUrlNavigation: 'reload'

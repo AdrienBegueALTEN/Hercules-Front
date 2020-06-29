@@ -29,8 +29,8 @@ export class AppComponent implements OnInit {
   }
 
   /**
-   * True : Shows the header
-   * False : Hides the header
+   * Function for the apparition of the header
+   * @returns True : Shows the header / False : Hides the header
    */
   public showNavigationHeader() : boolean {
     return true;

@@ -38,7 +38,9 @@ import { AppRoutingModule } from '../app-routing.module';
 import { CdkDetailRowDirective } from '../_directive/cdk-detail-row.directive';
 
 
-
+/**
+ * Module that contains all the angular modules used in the project 
+ */
 @NgModule({
   declarations: [
     CdkDetailRowDirective,

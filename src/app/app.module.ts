@@ -25,7 +25,9 @@ import { ImgBoxModule } from './img-box/img-box.module';
 import { InputModule } from './_input/input.module';
 import { HomeModule } from './home/home.module';
 
-
+/**
+ * Main module of the application that contains the others
+ */
 @NgModule({
    declarations: [
       AppComponent,

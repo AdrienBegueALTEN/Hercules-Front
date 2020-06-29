@@ -6,6 +6,9 @@ import { HttpHeaders } from '@angular/common/http';
 
 const LETTERS = 'A-ZÉa-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ';
 
+/**
+ * Class that contains regex patterns and strings used in the projects
+ */
 export class AppSettings {
     /**
      * Defines the allowed email pattern
