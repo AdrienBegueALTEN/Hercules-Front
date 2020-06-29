@@ -54,6 +54,13 @@ constructor(private _dialog : MatDialog) { }
     return this._dialog.open(NewUserDialogComponent, dialogConfig);
   }
 
+  /**
+   * 
+   * @param title Text to display to the user when dialog box opens
+   * @param msg Text to display if user clicks "yes"
+   * @param yes Replaces the text inside the "yes" button
+   * @param no Replaces the text inside the "no" button
+   */
   public showYesNoDialog(title : string, msg : string, yes : string, no : string) : MatDialogRef<YesNoDialogComponent, any> {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
