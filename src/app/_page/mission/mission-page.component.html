@@ -42,6 +42,9 @@
             'L\'intégralité des champs liés à la mission et à ses projets doivent être remplis avant de pouvoir valider la version actuelle.' : 'Valider la version.'">
           Valider la version
         </button>
+        <button *ngIf="userIsConsultantManager && mission.versions[0].versionDate == null" mat-button color="warn" (click)="onDelete()">
+          Supprimer cette mission en base
+        </button>
       </div>
     </div>
     <div *ngSwitchCase="CONSULTANT_TAB_INDEX">

@@ -113,3 +113,12 @@ mat-radio-button {
     width: 250px;
     text-align: center;
 }
+
+.huge-list-item {
+    margin : 10px 0 !important;
+    height: auto !important;
+}
+
+.huge-list-item p {
+    white-space: normal !important;
+}

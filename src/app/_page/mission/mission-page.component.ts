@@ -1,16 +1,13 @@
+import { MissionService } from './../../_services/mission.service';
 import { ProjectsEditComponent } from './../../_edit/projects-edit/projects-edit.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SheetStatus } from './../../_enums/sheet-status.enum';
 import { AuthService } from 'src/app/_services/auth.service';
-import { MissionService } from '../../_services/mission.service';
 import { Component, OnInit, AfterContentChecked, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MatDialogConfig } from '@angular/material/dialog';
-import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatTabGroup } from '@angular/material/tabs';
 import { saveAs } from "file-saver";
 import { HttpResponse } from '@angular/common/http';
-import { DeactivateComponent } from 'src/app/_dialog/deactivate/deactivate.component';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { MissionEditComponent } from 'src/app/_edit/mission-edit/mission-edit.component';
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
@@ -40,6 +37,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     private _dialogUtils : DialogUtilsService,
     private _missionService : MissionService,
     private _route : ActivatedRoute,
+    private _router : Router,
     private _snackBar: MatSnackBar,
     private _consultantService : ConsultantService
   ) {}
@@ -54,7 +52,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
         this.userIsConsultantManager = this.userIsManager 
           && mission.consultant.manager.id == this._authService.getUser().id;
       },
-      () => window.location.replace('not-found')
+      () => this._router.navigateByUrl('not-found')
     )
   }
 
@@ -210,15 +208,15 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   }
 
   public addSkillToProject(skill: any){
-    this._missionService.addSkillToProject(skill.project,[skill.skill]).subscribe(
-      () => this._snackBar.open('La compétence '+skill.skill+' est enregistrée.', 'X', {duration: 2000}),
+    this._missionService.addSkillToProject(skill.project, [skill.skill]).subscribe(
+      () => this._snackBar.open('La compétence \'' + skill.skill + '\' a été enregistrée.', 'X', {duration: 2000}),
       (err) => console.log(err) 
     );
   }
 
   public removeSkillFromProject(skill: any){
-    this._missionService.removeSkillFromProject(skill.project,skill.skill).subscribe(
-      () => this._snackBar.open('La compétence '+skill.skill.label+' est retirée.', 'X', {duration: 2000}),
+    this._missionService.removeSkillFromProject(skill.project, skill.skill).subscribe(
+      () => this._snackBar.open('La compétence \'' + skill.skill.label + '\' a été retirée.', 'X', {duration: 2000}),
       (err) => console.log(err)
     )
   }
@@ -233,5 +231,11 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   public allFormsValid() : boolean {
     return (!this.missionEdit?.grp) ? false :
       this.missionEdit.grp.valid && this.projectsEdit.allFormsValid();
+  }
+
+  public onDelete() : void {
+    this._missionService.deleteMission(this.mission.id).subscribe(
+      () => this._router.navigateByUrl('')
+    )
   }
 }
