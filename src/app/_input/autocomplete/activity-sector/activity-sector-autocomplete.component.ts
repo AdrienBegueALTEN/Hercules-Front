@@ -19,17 +19,27 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
    */
   @Input() required : boolean = false;
 
-/**
- * Array containing all activity sectors
- */
+  /**
+   * Array containing all activity sectors
+   */
   activitySectors : string[];
+
+  /**
+   * Array containing the activity sectors matching the searched text
+   */
   filteredActivitySectors : Observable<string[]>;
   public ctrl : FormControl = new FormControl('', this.required ? [Validators.required] : null);
 
+  /**
+   * Form sent to parent component
+   */
   @Output() sendFormCtrl = new EventEmitter<FormControl>();
 
   constructor() {}
 
+  /**
+   * Initialize the activity sector array.
+   */
   public ngOnInit() : void {
     this.activitySectors = this._getActivitySectorsSet(this.customers);
     this.filteredActivitySectors = this.ctrl.valueChanges
@@ -40,13 +50,16 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
     this.sendFormCtrl.emit(this.ctrl);
   }
 
+  /**
+   * Create the error message.
+   */
   public getErrorText() : string {
     return  this.ctrl.hasError(CtrlError.REQUIRED) ? 'Le secteur d\'activité du client doit être renseigné.' : '';
   }
 
   /**
-   * 
-   * @param value Text to search
+   * Filter function for the autocomplete.
+   * @param value Value to look for
    */
   private _filter(value : string) : string[] {
     const filterValue = value.toLowerCase();
@@ -54,6 +67,10 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
     return filteredActivitySectors;
   }
 
+  /**
+   * Return all activity sector taken from a list of customers.
+   * @param customers List of customer
+   */
   private _getActivitySectorsSet(customers : any[]) : string[] {
     var i, out = [], obj = {};
     for (i = 0; i < customers.length; i++) {

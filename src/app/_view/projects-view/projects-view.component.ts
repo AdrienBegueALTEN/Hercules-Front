@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+/**
+ * Gets informations about the clicked on by the user
+ */
 @Component({
   selector: 'app-projects-view',
   templateUrl: './projects-view.component.html'

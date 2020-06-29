@@ -10,15 +10,36 @@ import { startWith, map, delay } from 'rxjs/operators';
   styleUrls: ['./activity-sector-cust-input.component.scss']
 })
 export class ActivitySectorCustInputComponent implements OnInit {
+  /**
+   * Customer object to modify
+   */
   @Input() customer: any;
+  /**
+   * Event with the changed customer
+   */
   @Output() customerChange = new EventEmitter<any>();
+  /**
+   * Form control
+   */
   activitySectorCtrl = new FormControl();
+  /**
+   * Error message
+   */
   message = "";
+  /**
+   * List of all sectors
+   */
   sectors: string[];
+  /**
+   * Observfable list of filtered activity sectors.
+   */
   filteredSectors: Observable<string[]>;
 
   constructor(private _customerService: CustomerService) { }
 
+  /**
+   * Initialize the array for the autocomplete and create the filtering functions.
+   */
   ngOnInit(): void {
     this.activitySectorCtrl.setValue(this.customer.activitySector);
     this._customerService.getAll().subscribe(
@@ -39,9 +60,12 @@ export class ActivitySectorCustInputComponent implements OnInit {
     )
   }
 
+  /**
+   * When submitted, the value is checked. If it is a good value, 
+   * an event is emitted with the customer changed.
+   */
   onSubmit(){
     if(this.activitySectorCtrl.value!=null){
-      console.log(this.message);
       if(this.check()){
         this.customer.activitySector = this.activitySectorCtrl.value;
         this.customerChange.emit(this.customer);
@@ -49,6 +73,11 @@ export class ActivitySectorCustInputComponent implements OnInit {
     }
   }
 
+  /**
+   * Check the new activity sector. If it is the same, returns false.
+   * If the input is empty, an error message appears and returns false.
+   * Else return true.
+   */
   check(): boolean{
     const val = this.activitySectorCtrl.value as string;
     if(val == this.customer.activitySector ){
@@ -62,6 +91,10 @@ export class ActivitySectorCustInputComponent implements OnInit {
     return true;
   }
 
+  /**
+   * Filtering function to search for activity sector.
+   * @param value value to look for
+   */
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 

@@ -4,13 +4,22 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 const NUMBER_PATTERN = '^\\d*$';
 
+/**
+ * Component for the parts that serve to modify a mission
+ */
 @Component({
   selector: 'app-mission-edit',
   templateUrl: './mission-edit.component.html',
   styleUrls: ['./mission-edit.component.scss']
 })
 export class MissionEditComponent implements OnInit {
+  /**
+   * Boolean that indicates if the mission is updated by the consultant with an external link
+   */
   @Input() externalVersion : boolean = false;
+  /**
+   * Object with the details of the version of a mission
+   */
   @Input() version : any;
 
   readonly CITY_KEY = 'city';
@@ -34,6 +43,9 @@ export class MissionEditComponent implements OnInit {
   readonly XP_KEY = 'consultantStartXp';
   readonly XP_TOOLTIP = 'Le nombre d\'années d\'expérience que vous aviez au départ de la mission.';
 
+  /**
+   * Form for the mission
+   */
   grp : FormGroup;
 
   @Output() update : EventEmitter<any> = new EventEmitter<any>();
@@ -54,6 +66,9 @@ export class MissionEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Function activated when a field is updated and it sends an http request to update it in the database
+   */
   public onChange(key : string) : void {
     if (!this._doUpdate(key)) return;
       const newValue : any = (key === this.TEAM_KEY || key === this.XP_KEY) ? 
@@ -61,6 +76,10 @@ export class MissionEditComponent implements OnInit {
       this.update.emit({key : key, value : newValue});
   }
 
+  /**
+   * Function that returns a label depending on a given name
+   * @returns a label corresponding to the given name
+   */
   public getLabelText(key : string) : string {
     switch (key) {
       case this.ROLE_KEY :
@@ -74,10 +93,19 @@ export class MissionEditComponent implements OnInit {
     }
   }
 
+  /**
+   * Function that indicates if a specific field has been updated
+   * @param key name of the field
+   */
   private _doUpdate(key : string) {
     return this.grp.controls[key].valid && this.grp.controls[key].dirty;
   }
 
+  /**
+   * Functions that gives an error text adapted to a given field's name
+   * @param key name of field
+   * @returns an error linked to the given field's name
+   */
   public getErrorTxt(key : string) : string {
     switch (key) {
       case this.CITY_KEY :

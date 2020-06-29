@@ -8,11 +8,17 @@ import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.c
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CtrlError } from 'src/app/_enums/ctrl-error.enum';
 
+/**
+ * Component for the parts that serve to modify a consultant
+ */
 @Component({
   selector: 'app-consultant-edit',
   templateUrl: './consultant-edit.component.html'
 })
 export class ConsultantEditComponent implements OnInit {
+  /**
+   * Object with the details of the consultant
+   */
   @Input() consultant : any;
 
   readonly EMAIL_KEY = 'email';
@@ -20,7 +26,14 @@ export class ConsultantEditComponent implements OnInit {
   readonly LASTNAME_KEY = 'lastname';
   readonly XP_KEY = 'experience';
 
+  /**
+   * Boolean that indicates if the inputs to add a new diploma has to be shown or not
+   */
   showNewDiploma : boolean = false;
+
+  /**
+   * Form for a consultant
+   */
   grp : FormGroup = new FormBuilder().group({});
 
   @Output() reload = new EventEmitter<any>();
@@ -36,10 +49,19 @@ export class ConsultantEditComponent implements OnInit {
     this.grp.addControl(this.XP_KEY, new FormControl(this.consultant[this.XP_KEY], [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern('^\\d*$')]))
   }
 
+  /**
+   * Function that adds a new field to the form
+   * @param key name of the field
+   * @param ctrl FormControl for the field
+   */
   addCtrl(key : string, ctrl : FormControl) : void {
     this.grp.addControl(key, ctrl);
   }
 
+  /**
+   * Function activated when a field is updated and it sends an http request to update the field of the consultant in the database
+   * @param key name of the field
+   */
   valueChange(key : string) : void {
     if (!this._doUpdate(key))
       return;
@@ -54,11 +76,18 @@ export class ConsultantEditComponent implements OnInit {
         error => { this._handleError(error.status); console.log(error); }
       )
   }
-
+  /**
+   * Function that verifies if a specific field has been updated
+   * @param key name of the field
+   */
   private _doUpdate(key : string) {
     return this.grp.controls[key].valid && this.grp.controls[key].dirty;
   }
 
+  /**
+   * Function that opens a window to display an error message depending on the status of the request
+   * @param status Status of the response from an http request 
+   */
   private _handleError(status : number) : void {
     let message : string;
     switch(status) {
@@ -73,9 +102,12 @@ export class ConsultantEditComponent implements OnInit {
     this._dialog.open(MessageDialogComponent, dialogConfig);
   }
 
-  updateManager(manager : any) {
-    console.log(manager.id)
-    this._consultantService.updateConsultant(this.consultant.id,'manager', manager.id).subscribe(
+  /**
+   * Function that updates the manager of the consultant in the database with an http request
+   * @param manager object with the details of the manager
+   */
+  updateManager(manager:any){
+    this._consultantService.updateConsultant(this.consultant.id,'manager',manager.id).subscribe(
       () => {
         this.consultant['manager'] = manager;
         this._snackBar.open('Mise à jour effectuée', 'x', {duration: 2000});
@@ -85,11 +117,19 @@ export class ConsultantEditComponent implements OnInit {
     )
   }
   
+  /**
+   * Function that refreshes the page
+   */
   sendReload() {
     this.ngOnInit();
     this.reload.emit();
   }
 
+  /**
+   * Function that returns an error message depending on what is the error and the name of the given field
+   * @param key name of the field
+   * @returns error message or an empty string
+   */
   public getErrorTxt(key : string) : string {
     switch (key) {
       case this.XP_KEY :

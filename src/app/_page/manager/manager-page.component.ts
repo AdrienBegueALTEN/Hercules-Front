@@ -7,14 +7,26 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { isUndefined } from 'util';
 
+/**
+ * Handles the actoins in the manager page
+ */
 @Component({
   selector: 'app-manager-page',
   templateUrl: './manager-page.component.html',
   styleUrls: ['./manager-page.component.scss']
 })
 export class ManagerPageComponent implements OnInit {
+  /**
+   * Contains manager informations
+   */
   public manager : any;
+  /**
+   * Formats the manager information
+   */
   public dataSource : MatTableDataSource<any>;
+  /**
+   * Gets the user ID of the logged in user
+   */
   readonly userId : number = this._authService.getUser().id;
 
   constructor(
@@ -51,6 +63,9 @@ export class ManagerPageComponent implements OnInit {
     )
   }
 
+  /**
+   * Sets a release date for the manager
+   */
   public onSetReleaseDate() : void {
     this._dialogUtils.showDeactivateDialog(this.manager).afterClosed().subscribe(
       releaseDate => {
@@ -66,6 +81,10 @@ export class ManagerPageComponent implements OnInit {
       }); 
   }
 
+  /**
+   * Deletes the manager from the database
+   * If the user can't delete the manager, it will display an error
+   */
   public onDelete() : void {
     this._managerService.deleteManager(this.manager.id).subscribe(
       () => this._router.navigate(['/managers']),
@@ -76,6 +95,10 @@ export class ManagerPageComponent implements OnInit {
     )
   }
 
+  /**
+   * Redirects the user to the consultant page
+   * @param consultant Consultant the user clicked on
+   */
   public goToConsultantPage(consultant : number) {
     this._router.navigateByUrl('consultants/' + consultant);
   }

@@ -13,14 +13,26 @@ export class ErrorController implements ErrorStateMatcher {
   }
 }
 
+/**
+ * Component for the parts that serve to modify a single project
+ */
 @Component({
   selector: 'app-project-single-edit',
   templateUrl: './project-single-edit.component.html',
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class ProjectSingleEditComponent implements OnInit {
+  /**
+   * Boolean that indicates if the project can be removed
+   */
   @Input() canBeDeteled : boolean = false;
+  /**
+   * Boolean that indicates if the project is updated by the consultant with an external link
+   */
   @Input() externalVersion : boolean = false;
+  /**
+   * Object with the details of the project
+   */
   @Input() project : any;
 
   readonly ENTITLED_KEY : string = 'title';
@@ -35,9 +47,18 @@ export class ProjectSingleEditComponent implements OnInit {
   readonly TOOLTIP_ICON : string = 'help_outline';
   readonly TOOLTIP_POS : string = 'before';
 
+  /**
+   * Form for the project
+   */
   public grp : FormGroup;
+  /**
+   * Path of the picture for the project
+   */
   public pictureSrc : string = null;
 
+  /**
+   * Error manager for the dates of the period
+   */
   errorController = new ErrorController();
 
   @Output() addPicture = new EventEmitter<any>();
@@ -60,6 +81,10 @@ export class ProjectSingleEditComponent implements OnInit {
     this.sendFormGrp.emit(this.grp);
   }
 
+  /**
+   * Function activated when a field is updated and it sends an http request to update the field in the database, it also manages the errors for the dates 
+   * @param key name of the field
+   */
   public onChange(key : string) : void {
     if ((key === this.BEGIN_KEY || key === this.END_KEY) 
         && !!this.grp.controls[this.BEGIN_KEY].value && !!this.grp.controls[this.END_KEY].value) {
@@ -82,10 +107,20 @@ export class ProjectSingleEditComponent implements OnInit {
       });
   }
 
+  /**
+   * Function that indicates if a specific field has been updated
+   * @param key name of the field
+   * @returns Boolean that indicates if the field has been updated
+   */
   private _doUpdate(key : string) : boolean {
       return this.grp.controls[key].valid && this.grp.controls[key].dirty;
   }
 
+  /**
+   * Function that returns an error text adapted to the given name field
+   * @param key name of the field
+   * @returns error text linked to the given field's name
+   */
   public getErrorTxt(key : string) : string {
     switch (key) {
       case this.ENTITLED_KEY :

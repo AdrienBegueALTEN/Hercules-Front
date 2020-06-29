@@ -6,11 +6,22 @@ import * as sha1 from 'js-sha1';
   templateUrl: './upload-image.component.html'
 })
 export class UploadImageComponent {
+  /**
+   * Id of projet or client
+   */
   @Input() id : number;
   @Input() title : string;
-
+  /**
+   * Image event emmitted containing the blob and the hashed name
+   */
   @Output() image = new EventEmitter<any>();
 
+  /**
+   * Get the file from the HTML file picker, then a hashed name is created with the date of the day
+   * and and id so that the name always change on upload.
+   * Finally then tan event conataining both the blob of the file and the new name.
+   * @param event 
+   */
   public selectImg(event) : void {
     const date = new Date();
     let selectedFiles = event.target.files;
@@ -23,6 +34,9 @@ export class UploadImageComponent {
     }
   }
 
+  /**
+   * Simulates a click of an html file picker.
+   */
   public openInput() : void { 
     document.getElementById("logoInput").click();
   }

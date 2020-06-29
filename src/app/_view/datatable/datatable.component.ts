@@ -7,6 +7,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { isUndefined } from 'util';
 
+/**
+ * Handles data need for the tables
+ */
 @Component({
   selector: 'app-datatable',
   templateUrl: './datatable.component.html',
@@ -52,6 +55,9 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
    */
   @Output() setAdmin : EventEmitter<any> = new EventEmitter<any>();
 
+  /**
+   * Paginates the table, allows the user to select the number of items per page and to browse next pages
+   */
   @ViewChild('paginator') paginator: MatPaginator;
   /**
    * Allows content to be sorted
