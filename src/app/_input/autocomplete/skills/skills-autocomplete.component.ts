@@ -17,6 +17,10 @@ export class SkillsAutocompleteComponent  {
    */
   skills: any[] = [];
 
+  /**
+   * Add a skill to the array
+   * @param event Mat chip event containign the name of a skill
+   */
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;

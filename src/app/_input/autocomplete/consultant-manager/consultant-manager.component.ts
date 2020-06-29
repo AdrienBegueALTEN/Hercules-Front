@@ -12,11 +12,25 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './consultant-manager.component.html'
 })
 export class ConsultantManagerComponent implements OnInit {
+  /**
+   * The consultant to change his maanger.
+   */
   @Input() consultant:any;
+  /**
+   * Event with selected manager.
+   */
   @Output() managerChange = new EventEmitter<any>();
+  /**
+   * Manager input control.
+   */
   managerCtrl = new FormControl();
+  /**
+   * List of managers for the autocomplete
+   */
   filteredManagers: Observable<any[]>;
-
+  /**
+   * List of all managers that can be selected.
+   */
   managers: any[];
 
   constructor(private formBuilder: FormBuilder,
@@ -31,6 +45,12 @@ export class ConsultantManagerComponent implements OnInit {
     this.initialize();
   }
 
+  /**
+   * Initialise the autocomplete component : 
+   * sets the current maanger name in the input,
+   * retrieves all active managers
+   * and initialize the filter function for the automplete.
+   */
   initialize(){
     this.managerCtrl.setValue(this.consultant.manager);
     this.managerService.getAll(true).subscribe(
@@ -48,12 +68,19 @@ export class ConsultantManagerComponent implements OnInit {
     );
   }
 
+  /**
+   * Filtering function to search the managers which names contain the value.
+   * @param value Value to look for
+   */
   private _filterStates(value: string): any[] {
     const filterValue = value.toString().toLowerCase();
 
     return this.managers.filter(m => m.email.toLowerCase().includes(filterValue));
   }
 
+  /**
+   * On submit, emits an event with the selected manager.
+   */
   onSubmit(){
     if(this.managerCtrl.value!=null){
       this.managerChange.emit(this.managerCtrl.value);
