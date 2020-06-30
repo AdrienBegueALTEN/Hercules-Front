@@ -84,6 +84,9 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
  */
   searchValue:string = null;
 
+  /**
+   * Gets the logged in user
+   */
   public user : any = this._authService.getUser();
 
   /**
@@ -138,6 +141,12 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     this.refreshDatasource();
   }
 
+  /**
+   * Refreshes the data source.
+   * If the user wants to filter missions, the datasource needs to be filtered to take the user's choice into account
+   * @param revert True : Reverts the "only my consultant's missions" filtering . 
+   * 
+   */
   public refreshDatasource(revert : boolean = false) {
     this.selection.clear()
     let data = this.missions;
@@ -242,7 +251,12 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  
+/**
+ * Generates a PDF.
+ * The function will fetch the selected elements and will create a PDF with the name typed by the user
+ * @param selectedElements These elements will in the generated PDF
+ * @param filename Name of the PDF. It's chosen by the user
+ */
 generatePDF(selectedElements : any[],filename : string) : void {
     if (filename.search(".pdf") == -1)
       filename = filename + ".pdf";
@@ -317,7 +331,7 @@ generatePDF(selectedElements : any[],filename : string) : void {
 
   /**
  * 
- * Displays a snack bar message to the user when the number of selected elements exceed the value of NB_MAX_CHECK
+ * Displays a snack bar message to the user when the number of selected elements exceed the value of NB_MAX_CHECK (by default, it's 30)
  */
   SnackBarMessage() {
     if (this.selection.selected.length >= this.NB_MAX_CHECK) {
@@ -342,6 +356,11 @@ generatePDF(selectedElements : any[],filename : string) : void {
     )
   }
 
+  /**
+   * Shows the PDF dialog box to the user. This dialog box will allow the user to type a filename.
+   * By default, 
+   * @param selectedElements Elements selected by the user
+   */
   onChooseFilenameDialog(selectedElements : any[]){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = { filename :"fichesMissionsEtProjets.pdf"};

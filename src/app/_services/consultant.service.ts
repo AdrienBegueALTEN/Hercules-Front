@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 
 const API : string = AppSettings.API_ENDPOINT + 'consultants/';
 
+/**
+ * The purpose of this service is to fetch, create, edit and delete consultants from the API
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -74,6 +77,14 @@ export class ConsultantService {
       {observe: 'response'});
   }
 
+  /**
+   * Add diploma to a new consultant
+   * @param consultant ID of the involved consultant
+   * @param establishment School attended by the consultant
+   * @param entitled Diploma title
+   * @param level Diploma level
+   * @param year Graduation year
+   */
   public addDiploma(consultant : number, establishment : string, entitled : string, level : string, year : number) : Observable<any> {
     return this._httpClient.put(API + "add-diploma",
       {

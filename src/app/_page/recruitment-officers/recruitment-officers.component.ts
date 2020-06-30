@@ -79,6 +79,10 @@ export class RecruitmentOfficersComponent implements OnInit {
     )
   }
 
+  /**
+   * Redirects the user to the recruitment officer page
+   * @param consultant Recruitment officer the user clicked on
+   */
   public goToRecruitmentOfficerPage(event : number) : void {
     this._router.navigateByUrl('recruitment-officers/' + event);
   }

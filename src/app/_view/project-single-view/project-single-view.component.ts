@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppSettings } from 'src/app/app-settings';
 
+/**
+ * Handles the data for the single project view
+ */
 @Component({
   selector: 'app-project-single-view',
   templateUrl: './project-single-view.component.html'

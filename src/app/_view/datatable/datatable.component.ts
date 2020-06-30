@@ -78,6 +78,9 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
     this._sortAndPagination();
   }
 
+  /**
+   * Sorts the datasource by the chosen column
+   */
   private _sortAndPagination() : void {
     this.dataSource.sortingDataAccessor = (item, header) => {
       if (header === 'releaseDate')
@@ -124,6 +127,13 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
     );
   }
 
+  /**
+   * Checks if the user is still active.
+   * An user isn't active if :
+   * -a release date was set
+   * -the set release date is reached
+   * @param user User to check for activity
+   */
   public userIsActive(user : any) : boolean {
     return this._dateUtils.userIsActive(user);
   }

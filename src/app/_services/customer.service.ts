@@ -5,6 +5,9 @@ import { AppSettings } from './../app-settings';
 
 const API : string = AppSettings.API_ENDPOINT + 'customers/';
 
+/**
+ * The purpose of this service is to fetch, create, edit and delete customers from the API
+ */
 @Injectable({
   providedIn: 'root'
 })

@@ -5,6 +5,9 @@ import { HttpClient } from '@angular/common/http';
 
 const API : string = AppSettings.API_ENDPOINT + 'managers/';
 
+/**
+ * The purpose of this service is to fetch, create, edit and delete managers from the API
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -47,10 +50,10 @@ export class ManagerService {
   }
 
   /**
-   * 
-   * @param id 
-   * @param fieldname 
-   * @param value 
+   * Updates a manager with new values
+   * @param id ID of the manager to update
+   * @param fieldname Fieldname to update
+   * @param value New value
    */
   updateManager(id : number, fieldname : String, value : any) : Observable<any> {
     return this._httpClient.put(API,
