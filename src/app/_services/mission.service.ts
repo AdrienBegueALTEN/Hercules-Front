@@ -52,6 +52,10 @@ export class MissionService {
     return this._httpClient.get(MISSION_API + mission);
   }
 
+  /**
+   * Get the details of a mission for an anonymous user
+   * @param token token of the anonymous user
+   */
   public getMissionDetailsFromToken(token : string) : Observable<any> {
     return this._notInteceptedHttpClient.get(MISSION_API + 'anonymous',
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
@@ -76,6 +80,12 @@ export class MissionService {
     return this._httpClient.delete(MISSION_API + id);
   }
 
+  /**
+   * Modifies the field of a specific mission
+   * @param id ID of the mission
+   * @param fieldname field's name
+   * @param value new modified value
+   */
   public updateMission(id : number, fieldname : String, value : any) : Observable<any> {
     return this._httpClient.put(MISSION_API,
       {
@@ -86,6 +96,12 @@ export class MissionService {
       AppSettings.HTTP_JSON_CONTENT);
   }
 
+  /**
+   * Modifies the field of a specific mission if the user is anonymous
+   * @param token token of the anonymous user
+   * @param fieldname field's name
+   * @param value new modifies value
+   */
   public updateMissionFromToken(token : string, fieldname : String, value : any) : Observable<any> {
     return this._notInteceptedHttpClient.put(MISSION_API + 'anonymous',
       {
@@ -112,6 +128,12 @@ export class MissionService {
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
+  /**
+   * Modifies the field of a specific project
+   * @param id ID of the project
+   * @param fieldname field's name
+   * @param value new modified value
+   */
   public updateProject(id : number, fieldname : String, value : any) : Observable<any> {
     return this._httpClient.put(PROJECT_API,
       {
@@ -122,6 +144,13 @@ export class MissionService {
       AppSettings.HTTP_JSON_CONTENT);
   }
 
+  /**
+   * Modifies the field of a specific project for an anonymous user
+   * @param token token of the anonymous user
+   * @param id ID of the project
+   * @param fieldname field's name
+   * @param value new modified value
+   */
   public updateProjectFromToken(token : string, id : number, fieldname : String, value : any) : Observable<any> {
     return this._notInteceptedHttpClient.put(PROJECT_API + 'anonymous',
       {
@@ -151,6 +180,11 @@ export class MissionService {
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
+  /**
+   * Adds a picture to the given project
+   * @param file picture
+   * @param projectId ID of the project
+   */
   public uploadProjectPicture(file: any, projectId: number): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('blob', file.blob);
@@ -164,6 +198,12 @@ export class MissionService {
     return this._httpClient.request(req);
   }
 
+  /**
+   * Adds a picture to the given project for an anonymous user
+   * @param file picture
+   * @param projectId ID of the project
+   * @param token token of the anonymous user
+   */
   public uploadProjectPictureFromToken(file: File, projectId: number, token: string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('file', file);

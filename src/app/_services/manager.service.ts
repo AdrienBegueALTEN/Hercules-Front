@@ -16,7 +16,7 @@ export class ManagerService {
   constructor(private _httpClient : HttpClient) { }
 
   /**
-   * 
+   * Gets all manager's information 
    * @param onlyActive If true, only returns active managers. If false, returns any consultants
    */
   getAll(onlyActive: boolean) : Observable<any[]> {
@@ -24,7 +24,7 @@ export class ManagerService {
   }
 
   /**
-   * Gets manager informatons by its ID
+   * Gets manager informations by its ID
    * @param id Manager ID
    */
   getManagerById(id : String) : Observable<any> {

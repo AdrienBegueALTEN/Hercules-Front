@@ -18,9 +18,7 @@ export class ConsultantService {
 
   /**
    * Retrieves all consultants or only those still active (ie consultants still working for the company) from the API
-   * @param active Indicates if only active consultants should be returned. 
-   * If true, only returns active consultants
-   * If false, returns all consultants
+   * @param active Indicates if only active consultants should be returned. <br> If true, only returns active consultants <br> If false, returns all consultants
    */
   public getConsultants(active : boolean = false) : Observable<any[]> {
     return this._httpClient.get<any[]>(API + '?active=' + active, AppSettings.HTTP_JSON_CONTENT);

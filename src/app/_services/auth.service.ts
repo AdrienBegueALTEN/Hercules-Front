@@ -46,7 +46,7 @@ export class AuthService {
   }
 
   /**
-   * Check if the stored token matches the expected token when changing password
+   * Checks if the stored token matches the expected token when changing password
    * @param token Token to check
    */
   public checkPasswordTokenValidity(token : string) : Observable<any> {
@@ -54,19 +54,30 @@ export class AuthService {
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
+  /**
+   * Modifies the password when a non identified user changes it
+   * @param token token of the anonymous user
+   * @param newPassword new given password
+   */
   public changePasswordAnonymous(token : string, newPassword : string) : Observable<any> {
     return this._notInteceptedHttpClient.put(API + 'change-password-anonymous', newPassword,
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 
   /**
-   * Checks if the mission can be seen by the user
+   * Creates an eml file with a link for modifying the mission
    * @param mission Mission to be accessed
+   * @returns eml file with the link for mission's modification
    */
   public missionSheetAccess(mission : number) : Observable<any> {
     return this._httpClient.get(API + 'mission-sheet-access/' + mission, {responseType: 'blob'});
   }
 
+  /**
+   * Creates an eml file with a link for the given user to create his password
+   * @param user ID of the member that needs a link to create a password
+   * @returns eml file with the link for password's creation
+   */
   public passwordCreationAccess(user : number) : Observable<any> {
     return this._httpClient.get(API + 'password-creation-access/' + user, {responseType: 'blob'});
   }
@@ -90,6 +101,7 @@ export class AuthService {
 
   /**
    * Gets token stored in the browser
+   * @returns token
    */
   public getToken() : string {
     return sessionStorage.getItem(TOKEN_KEY);

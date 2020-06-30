@@ -5,6 +5,9 @@ import { AppSettings } from '../app-settings';
 
 const API : string = AppSettings.API_ENDPOINT + 'grdp/';
 
+/**
+ * Service that manages the GRPD's maneuvers
+ */
 @Injectable({
   providedIn: 'root'
 })
