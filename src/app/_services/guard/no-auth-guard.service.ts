@@ -3,6 +3,9 @@ import { CanActivate } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Observable } from 'rxjs';
 
+/**
+ * Guard that checks if a user is not authentified
+ */
 @Injectable({ providedIn: 'root' })
 export class NoAuthGuard implements CanActivate {
 

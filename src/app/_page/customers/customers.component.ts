@@ -71,10 +71,18 @@ export class CustomersComponent implements OnInit {
     )
   }
 
+  /**
+   * Function that leads the user to a given customer page
+   * @param customer ID of the customer
+   */
   public goToCustomerPage(customer : number) {
     this._router.navigateByUrl('customers/' + customer);
   }
 
+  /**
+   * Function that manages the display of error messages if adding a new customer fails
+   * @param response Response from an http request for adding a customer
+   */
   private _handleAddResponse(response : Response) {
     if (response.status !== HttpStatus.CREATED) {
       let message : string = "Impossible d'ajouter ce client.";
@@ -84,6 +92,10 @@ export class CustomersComponent implements OnInit {
     } else this.ngOnInit();
   }
   
+  /**
+   * Function used to display a given message in a window
+   * @param message Message to display
+   */
   private _showMessageDialog(message : string) : void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = message;

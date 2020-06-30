@@ -23,7 +23,9 @@ import { LoginComponent } from './login/login.component';
 import { AutocompleteModule } from '../_input/autocomplete/autocomplete.module';
 
 
-
+/**
+ * Module for the component that manages the main apparence of the different pages
+ */
 @NgModule({
   declarations: [
     NewMissionPageComponent,

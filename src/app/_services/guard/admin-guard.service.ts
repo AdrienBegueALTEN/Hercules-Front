@@ -4,6 +4,9 @@ import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Role } from 'src/app/_enums/role.enum';
 
+/**
+ * Guard that checks if the user has the administration rights
+ */
 @Injectable({ providedIn: 'root' })
 export class AdminGuard implements CanActivate {
 

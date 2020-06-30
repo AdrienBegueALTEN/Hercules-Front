@@ -4,6 +4,9 @@ import { AuthService } from '../auth.service';
 import { Role } from 'src/app/_enums/role.enum';
 import { Observable } from 'rxjs';
 
+/**
+ * Guard that verifies if the user is manager
+ */
 @Injectable({
   providedIn: 'root'
 })

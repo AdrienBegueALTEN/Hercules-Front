@@ -49,6 +49,9 @@ export class ManagerPageComponent implements OnInit {
     );
   }
 
+  /**
+   * Function activated when the user wants to generate an eml file for password modification for the manager, it sends an http request to create the eml file with the link 
+   */
   public onChangePasswordAcces() : void {
     this._authService.passwordCreationAccess(this.manager.id).subscribe(
       blob => {

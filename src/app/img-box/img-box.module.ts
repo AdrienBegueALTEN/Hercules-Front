@@ -4,7 +4,9 @@ import { ImgBoxComponent } from './img-box.component';
 import { SharedModule } from '../shared/shared.module';
 
 
-
+/**
+ * Module that manages the display of images
+ */
 @NgModule({
   declarations: [
     ImgBoxComponent,

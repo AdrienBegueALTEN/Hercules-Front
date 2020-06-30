@@ -125,6 +125,9 @@ export class ConsultantsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  /**
+   * Function activated with the button to only see the manager's consultants, it either hides the lines or reshow them
+   */
   public onOnlyMine() : void {
     this.onlyMine = !this.onlyMine;
     if (this.onlyMine) {
@@ -134,6 +137,10 @@ export class ConsultantsComponent implements OnInit {
     this.refreshDatasource();
   }
 
+  /**
+   * Function activated when a consultant is released, it sends an http request to update the database with the release's date
+   * @param event information of the relase received from the child
+   */
   public onDeactivate(event : any) : void {
     this._consultantService.updateConsultant(event.user, 'releaseDate', event.releaseDate).subscribe(
       () => this.ngOnInit(),
