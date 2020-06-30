@@ -36,7 +36,9 @@ export class RecruitmentOfficerPageComponent implements OnInit {
       () => this._router.navigate(['not-found'])
     );
   }
-
+  /**
+   * Function activated when the user clicks on the button to generate an eml file for changing password, it sends an http request to create the file with the link and gets it back
+   */
   public onChangePasswordAcces() : void {
     this._authService.passwordCreationAccess(this.recruitmentOfficer.id).subscribe(
       blob => {

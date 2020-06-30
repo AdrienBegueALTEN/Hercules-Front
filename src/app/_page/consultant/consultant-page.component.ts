@@ -105,7 +105,7 @@ export class ConsultantPageComponent implements OnInit {
 
   /**
    * Function that checks if the consultant is active
-   * @returns boolean : True the consultant is active / False the consultant is inactive
+   * @returns True: the consultant is active <br> False: the consultant is inactive
    */
   public isActive() : boolean {
     return this._dateUtils.userIsActive(this.consultant);
@@ -113,7 +113,7 @@ export class ConsultantPageComponent implements OnInit {
 
   /**
    * Function that checks if the manager of the consultant is active
-   * @returns boolean : True the manager is active / False the manager is inactive
+   * @returns True: the manager is active <br> False: the manager is inactive
    */
   public managerIsActive() : boolean {
     return this._dateUtils.userIsActive(this.consultant.manager);

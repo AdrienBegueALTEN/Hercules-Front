@@ -87,6 +87,10 @@ export class RecruitmentOfficersComponent implements OnInit {
     this._router.navigateByUrl('recruitment-officers/' + event);
   }
 
+  /**
+   * Function activated when a recruitment officer is released, it sends an http request to change it in the database and then displays an appropriate message
+   * @param event details on the recruitment officer and his given release's date
+   */
   public onDeactivate(event : any) : void {
     this._recruitmentOfficerService.updateRecruitmentOfficer(event.user, 'releaseDate', event.releaseDate).subscribe(
       () => this.ngOnInit(),

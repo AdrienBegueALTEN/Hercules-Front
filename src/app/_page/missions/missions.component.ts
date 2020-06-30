@@ -60,7 +60,9 @@ export class MissionsComponent implements OnInit {
   @ViewChild(SkillsAutocompleteComponent) skills: SkillsAutocompleteComponent;
 
   eventsSubject: Subject<void> = new Subject<void>();
-
+  /**
+   * Form for the missions
+   */
   public grp : FormGroup = new FormBuilder().group(
     {
       title : '',

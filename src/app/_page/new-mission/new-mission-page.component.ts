@@ -33,6 +33,9 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
    * False : the consultant exists
    */
   newConsultant : boolean = false;
+  /**
+   * Form for a consultant
+   */
   consultantForm : FormControl | FormGroup;
   /**
    * True : the customer doesn't exist yet
@@ -86,11 +89,18 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
     this.customerForm = customer;
   }
 
+  /**
+   * Function that creates the mission if the user enters in the third step for a new mission, ie he has given a customer and a consultant
+   * @param event details on the selected step
+   */
   onStepChange(event : StepperSelectionEvent) : void {
     if (event.selectedIndex === NEW_MISSION_STEP)
       this._createMissionConsultantStep();
   }
 
+  /**
+   * Function that sends an http request and creates the consultant in the database if it's a new one and then goes to the customer part
+   */
   private _createMissionConsultantStep() : void {
     let consultant = this.consultantForm.value;
     if (this.newConsultant) { //A new consultant need to be created
@@ -101,6 +111,11 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
     } else this._createMissionCustomerStep(consultant.id, false); //The consultant step is OK, passage to the customer step
   }
 
+  /**
+   * Function that sends an http request and creates the customer in the database if it's a new one and then goes to the mission part
+   * @param consultantId ID of the consultant of the mission
+   * @param newConsultant boolean that indicates if the consultant was created in this process
+   */
   private _createMissionCustomerStep(consultantId : number, newConsultant : boolean) : void {
     let customer = this.customerForm.value;
     if (this.newCustomer) { //A new customer need to be created
@@ -110,12 +125,23 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
     } else this._createMissionFinalStep(consultantId, newConsultant, customer.id, false); //The customer step is OK, passage to the final step
   }
 
+  /**
+   * Function that sends an http request and creates the new mission in the database
+   * @param consultantId ID of the consultant
+   * @param newConsultant boolean that indicates if the consultant was created in this process
+   * @param customerId ID of the customer
+   * @param newCustomer boolean that indicates if the customer was created in this process
+   */
   private _createMissionFinalStep(consultantId : number, newConsultant : boolean, customerId : number, newCustomer : boolean) : void {
     this._missionService.newMission(consultantId, customerId).subscribe(
       missionId => { this._router.navigateByUrl('missions/' + missionId); }, //The mission has been successfully created
       () => { this._handleNewMissionError(consultantId, newConsultant, customerId, newCustomer); }); //An error occurred during the creation of the new mission
   }
 
+  /**
+   * Function that displays a window if the response has the already used email status
+   * @param response Response from the request for adding a consultant
+   */
   private _handleNewConsultantResponse(response : Response) : void {
     switch(response.status) {
       case HttpStatus.ACCEPTED : //The email is already used by a consultant
@@ -139,7 +165,10 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
         break;
     }
   }
-
+  /**
+   * Function that displays an error message for a response for adding a new consultant
+   * @param error Response from the request for adding a consultant
+   */
   private _handleNewConsultantError(error : Response) : void {
     const dialogConfig = new MatDialogConfig();
     switch(error.status) {
@@ -151,7 +180,10 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
         this._dialogUtils.showMsgDialog('Le consultant n\'a pas pu être créé.')
     }
   }
-
+  /**
+   * Function that displays a window if the response has the already existing customer status
+   * @param response Response from the request for adding a customer
+   */
   private _handleNewCustomerResponse(consultantId : number, newConsultant : boolean, response : Response) : void {
     switch(response.status) {
       case HttpStatus.ACCEPTED : //The customer already exists
@@ -181,6 +213,10 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
     }
   }
 
+  /**
+   * Function that displays an error message for a response for adding a new customer
+   * @param error Response from the request for adding a customer
+   */
   private _handleNewCustomerError(consultantId : number, newConsultant : boolean) : void {
     if (newConsultant)
       this._consultantService.deleteConsultant(consultantId).subscribe();
@@ -188,6 +224,13 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
     this._dialogUtils.showMsgDialog('Le client n\'a pas pu être créé.');
   }
 
+  /**
+   * Function that displays an error message for a response for adding a new mission and deletes the added elements
+   * @param consultantId ID of the consultant
+   * @param newConsultant boolean that indicates if the consultant was created in this process
+   * @param customerId ID of the customer
+   * @param newCustomer boolean that indicates if the customer was created in this process
+   */
   private _handleNewMissionError(consultantId : number, newConsultant : boolean, customerId : number, newCustomer : boolean) : void {
     if (newConsultant)
       this._consultantService.deleteConsultant(consultantId).subscribe();

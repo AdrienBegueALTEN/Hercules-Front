@@ -170,6 +170,7 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
 
   /**
    * Checks if all forms are valid
+   * @returns boolean that indicates if the mission and its projects are correctly filled
    */
   public allFormsValid() : boolean {
     return (!this.missionEdit?.grp) ? false :

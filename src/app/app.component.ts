@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
 
   /**
    * Function for the apparition of the header
-   * @returns True : Shows the header / False : Hides the header
+   * @returns True : Shows the header <br> False : Hides the header
    */
   public showNavigationHeader() : boolean {
     return true;

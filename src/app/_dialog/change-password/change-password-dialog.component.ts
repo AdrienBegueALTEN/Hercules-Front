@@ -92,7 +92,7 @@ export class ChangePasswordDialogComponent {
 
   /**
    * Function that returns a boolean that indicates if the user can use the submit button.
-   * @returns True : User can submit the form because the content and password length are valid / False : User can't submit the form
+   * @returns True : User can submit the form because the content and password length are valid <br> False : User can't submit the form
    */
   public canSubmit() : boolean {
     return this.grp.controls[this.NEW_KEY].valid &&

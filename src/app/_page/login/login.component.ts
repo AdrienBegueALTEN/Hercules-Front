@@ -19,11 +19,11 @@ const PASSWORD_KEY : string = 'password';
 export class LoginComponent implements OnInit {
 
   /**
-   * True : the identifiers were false / False : the identifiers are good or the user didn't try to connect yet
+   * True : the identifiers were false <br> False : the identifiers are good or the user didn't try to connect yet
    */
   public isLoginFailed : boolean = false;
   /**
-   * True : the password is hidden / False : the password is visible
+   * True : the password is hidden <br> False : the password is visible
    */
   public hidePassword : boolean = true;
 

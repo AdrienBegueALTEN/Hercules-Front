@@ -29,7 +29,9 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
    * Contains all missions
    */
   mission : any;
-
+  /**
+   * Index for the selected version of the mission
+   */
   selectedIndex : number = 0;
     /**
    * True : User is manager
@@ -76,6 +78,10 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     this._cdr.detectChanges();
   }
 
+  /**
+   * Function activated when a field's mission is updated, it sends an http request to update the field in the database and then displays appropriate message
+   * @param event details of the mission received from a child
+   */
   public updateMission(event : any) : void {
     this._missionService
       .updateMission(this.mission.id, event.key, event.value).subscribe(
@@ -99,7 +105,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
   }
 
   /**
-   * Generates the email to download using the consultant fist and last name as filename
+   * Generates the email to download using the consultant first and last name as filename
    * Returns an error if the user can't
    */
   public onDownloadEmail() : void {
@@ -118,23 +124,36 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     );
   }
 
+  /**
+   * Function that checks if the mission is modifiable
+   * @returns True: the mission is modifiable , because the user is the mission's manager, the last version is selected and it's not validated <br> False: the mission isn't modifiable
+   */
   public showMissionEdit() : boolean {
     return this.userIsConsultantManager && 
       this.selectedIndex === 0 &&
       this.mission.sheetStatus !== SheetStatus.VALIDATED
   }
 
+  /**
+   * Function that checks if the consultant is modifiable
+   * @returns True: the consultant is modifiable, because the user is the consultant's manager and he is active <br> False : the consultant is not modifiable
+   */
   public showConsultantEdit() : boolean {
     return this.userIsConsultantManager && 
       !this.mission.consultant.releaseDate;
   }
 
+  /**
+   * Function that checks if the different versions of the mission are displayed
+   * @returns True: the versions can be shown, there are more than one <br> False: there is only one version or zero
+   */
   public showVersions() : boolean {
     return this.mission.versions.length > 1;
   }
 
   /**
-   * Shows new mission version window
+   * Function that checks if the button for a new version must appear or not
+   * @returns True: the version is validated and is not from today <br> False : the button must not appear
    */
   public showNewVersion() : boolean {
     if (this.mission.sheetStatus !== SheetStatus.VALIDATED)
@@ -148,6 +167,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
   /**
    * Changes view depending of the sheet status
+   * @returns status of the mission's sheet
    */
   public getStatusText() : string {
     let str : string;
@@ -175,7 +195,10 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     )
   }
 
-
+  /**
+   * Function activated when a field's project is modified, it sends an http request to modify the database and then displays an appropriate message
+   * @param event details from the modification received from a child
+   */
   public updateProject(event : any) : void {
     const projectId = this.mission.versions[0].projects[event.index].id;
       this._missionService.updateProject(projectId, event.key, event.value).subscribe(
@@ -202,7 +225,10 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       () => this._dialogUtils.showMsgDialog("Impossible de supprimer le projet.")
     )
   }
-
+  /**
+   * Function activated when a picture is added for a project, it sends an http request to add it in the database and then displays an appropriate message
+   * @param event details on the picture and its project received from a child
+   */
   public onAddPicture(event : any) : void {
     this._missionService.uploadProjectPicture(event.picture, event.project).subscribe(
       response => {
@@ -222,6 +248,10 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     );
   }
 
+  /**
+   * Function activated when the picture of a project is deleted, it sends an http request to remove it from the database
+   * @param event details on the picture's project received from a child
+   */
   public onRemovePicture(event : any) : void {
     this._missionService.removePictureFromProject(event.project).subscribe(
       () => this.ngOnInit(),
@@ -229,6 +259,9 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
     );
   }
 
+  /**
+   * Function activated when the consultant of the mission is released in the mission page, it sends an http request to modify the database
+   */
   public onSetReleaseDate() : void {
     const dialogRef = this._dialogUtils.showDeactivateDialog(this.mission.consultant)
     dialogRef.afterClosed().subscribe(
@@ -279,6 +312,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
 
 /**
  * Checks if all forms are valid, ie if all fields are filled
+ * @returns Boolean that indicates if the mission and its projects are correctly filled
  */
   public allFormsValid() : boolean {
     return (!this.missionEdit?.grp) ? false :
