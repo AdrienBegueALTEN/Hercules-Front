@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 })
 export class ConsultantDiplomaComponent implements OnInit {
   /**
-   * ID of the consultant
+   * ID of the consultant used when fetching data from API
    */
   @Input() consultant : number;
   /**
@@ -25,10 +25,25 @@ export class ConsultantDiplomaComponent implements OnInit {
    */
   @Input() new : boolean;
 
+  /**
+   * Establishment key used when fetching data from API
+   */
   readonly ESTABLISHMENT_KEY : string = 'establishment';
+  /**
+   * Title key used when fetching data from API
+   */
   readonly ENTITLED_KEY : string = 'entitled';
+  /**
+   * ID key used when fetching data from API
+   */
   readonly ID_KEY : string = 'id';
+  /**
+   * Level key used when fetching data from API
+   */
   readonly LEVEL_KEY : string = 'level';
+  /**
+   * Year key used when fetching data from API
+   */
   readonly YEAR_KEY : string = 'year';
 
   /**
@@ -45,8 +60,15 @@ export class ConsultantDiplomaComponent implements OnInit {
    */
   filteredDiplomasSchool: Observable<any[]>;
 
-
+/**
+ * Event is emitted when a diploma is deleted
+ * The diploma will be deleted in the database
+ */
   @Output() deletion = new EventEmitter<number>();
+  /**
+   * Event is emitted when a diploma is updates
+   * The diploma will be updated in the database
+   */
   @Output() reload = new EventEmitter<any>();
   
   constructor(

@@ -33,6 +33,9 @@ export class MissionColumnChoiceComponent implements OnInit {
 
 
   constructor(private _dialogRef: MatDialogRef<MissionColumnChoiceComponent>,
+    /**
+     * Data injected in the table
+     */
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 

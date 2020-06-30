@@ -21,9 +21,21 @@ export class ConsultantEditComponent implements OnInit {
    */
   @Input() consultant : any;
 
+  /**
+   * Email key used when fetching data from API
+   */
   readonly EMAIL_KEY = 'email';
+  /**
+   * First name key used when fetching data from API
+   */
   readonly FIRSTNAME_KEY = 'firstname';
+  /**
+   * Last name key used when fetching data from API
+   */
   readonly LASTNAME_KEY = 'lastname';
+  /**
+   * Experience key used when fetching data from API
+   */
   readonly XP_KEY = 'experience';
 
   /**
@@ -36,6 +48,10 @@ export class ConsultantEditComponent implements OnInit {
    */
   grp : FormGroup = new FormBuilder().group({});
 
+  /**
+   * Event is emitted to reload the consultant informations
+   * It's used when the consultant informations are updated
+   */
   @Output() reload = new EventEmitter<any>();
 
   constructor(
@@ -142,6 +158,9 @@ export class ConsultantEditComponent implements OnInit {
     }
   }
 
+  /**
+   * Checks whether a manager is active
+   */
   public managerIsActive() : boolean {
     return this._dateUtils.userIsActive(this.consultant.manager);
   }

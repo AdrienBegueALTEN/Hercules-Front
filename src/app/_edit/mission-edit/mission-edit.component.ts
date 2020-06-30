@@ -48,6 +48,9 @@ export class MissionEditComponent implements OnInit {
    */
   grp : FormGroup;
 
+  /**
+   * Event is emitted when user update a mission
+   */
   @Output() update : EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {}

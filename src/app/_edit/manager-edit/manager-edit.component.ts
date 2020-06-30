@@ -25,9 +25,21 @@ export class ManagerEditComponent {
    */
   public grp : FormGroup = new FormBuilder().group({});
   
+  /**
+   * Email key used when fetching or updating data from API
+   */
   readonly EMAIL_KEY : string = 'email';
+  /**
+   * First name key used when fetching or updating data from API
+   */
   readonly FIRSTNAME_KEY : string = 'firstname';
+  /**
+   * Last name key used when fetching or updating data from API
+   */
   readonly LASTNAME_KEY : string = 'lastname';
+  /**
+   * User ID
+   */
   readonly userId : number = this._authService.getUser().id;
 
   constructor(
