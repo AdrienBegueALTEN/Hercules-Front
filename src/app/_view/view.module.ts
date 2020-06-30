@@ -13,7 +13,9 @@ import { SharedModule } from '../shared/shared.module';
 import { ImgBoxModule } from '../img-box/img-box.module';
 
 
-
+/**
+ * Module for the components that are used for displaying information without modification
+ */
 @NgModule({
   declarations: [
     ConsultantViewComponent,

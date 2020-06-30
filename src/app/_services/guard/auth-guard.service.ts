@@ -3,6 +3,9 @@ import { CanActivate } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Observable } from 'rxjs';
 
+/**
+ * Guard that checks if the user is authentified
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
 

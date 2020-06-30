@@ -5,7 +5,9 @@ import { SharedModule } from '../shared/shared.module';
 import { HeaderModule } from '../_header/header.module';
 
 
-
+/**
+ * Module for the main structure of a page
+ */
 @NgModule({
   declarations: [
     HomeComponent

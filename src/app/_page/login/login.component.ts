@@ -8,6 +8,9 @@ import { Md5 } from 'ts-md5';
 const EMAIL_KEY : string = 'email';
 const PASSWORD_KEY : string = 'password';
 
+/**
+ * Component for the login page
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,8 +18,18 @@ const PASSWORD_KEY : string = 'password';
 })
 export class LoginComponent implements OnInit {
 
+  /**
+   * True : the identifiers were false / False : the identifiers are good or the user didn't try to connect yet
+   */
   public isLoginFailed : boolean = false;
+  /**
+   * True : the password is hidden / False : the password is visible
+   */
   public hidePassword : boolean = true;
+
+  /**
+   * Form for the identifiers
+   */
   public grp = new FormBuilder().group({
     email: [''],
     password: ['']
@@ -40,6 +53,9 @@ export class LoginComponent implements OnInit {
               (apiData) => this._login(apiData),
       )})})}
 
+  /**
+   * Function activated when the user submits his identifiers, it sends an http request to check them and then connects or not the user
+   */
   public onSubmit() : void {
     let credentials = {
       email: this.grp.get(EMAIL_KEY).value,
@@ -51,7 +67,10 @@ export class LoginComponent implements OnInit {
       () => this.isLoginFailed = true
     );
   }
-
+  /**
+   * Function that connects the user, by saving his token, his details and leading him to the main page
+   * @param data user and authentication's details
+   */
   private _login(data : any) : void {
     this._authService.saveToken(data.accessToken);
     this._authService.saveUser(data.user);

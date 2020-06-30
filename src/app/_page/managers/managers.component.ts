@@ -8,6 +8,9 @@ import { isUndefined } from 'util';
 import { saveAs } from "file-saver";
 import { Router } from '@angular/router';
 
+/**
+ * Component that manages the page of the managers' table
+ */
 @Component({
   selector: 'app-managers',
   templateUrl: './managers.component.html'
