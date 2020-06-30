@@ -46,12 +46,21 @@ export class ChangePasswordDialogComponent {
   public wrongPassword : boolean = false;
 
   readonly CONFIRMATION_KEY = CONST_CONFIRMATION;
+  /**
+   * Current password key
+   */
   readonly CURRENT_KEY = 'currentPassword';
+  /**
+   * When new password is set, sets the value of NEW_KEY
+   */
   readonly NEW_KEY = CONST_NEW;
 
   constructor(
     private _authService : AuthService,
     private _dialogRef : MatDialogRef<ChangePasswordDialogComponent>,
+    /**
+     * User ID involved in the changing password process
+     */
     @Inject(MAT_DIALOG_DATA) public user : number = null) {
     this.grp.addControl(this.NEW_KEY, new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16), Validators.pattern(PASSWORD_PATTERN)]));
     this.grp.addControl(this.CONFIRMATION_KEY, new FormControl(''));
