@@ -106,6 +106,9 @@ export class ManagerPageComponent implements OnInit {
     this._router.navigateByUrl('consultants/' + consultant);
   }
 
+  /**
+   * Checks if the manager is active
+   */
   public isActive() : boolean {
     return this._dateUtils.userIsActive(this.manager);
   }

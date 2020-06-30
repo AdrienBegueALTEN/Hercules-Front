@@ -10,6 +10,9 @@ import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service
 
 const VALIDATION_STEP : number = 2;
 
+/**
+ * Contains all functions for mission page. Allows the user to create, delete or update a project, or creates a new mission version
+ */
 @Component({
   selector: 'app-mission-sheet-page',
   templateUrl: './mission-sheet-page.component.html',
@@ -42,6 +45,10 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     this._cdr.detectChanges();
   }
 
+  /**
+   * Updates a mission
+   * @param event New value
+   */
   public updateMission(event : any) : void {
     this._missionService
     .updateMissionFromToken(this._token, event.key, event.value).subscribe(
@@ -52,6 +59,9 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     )
   }
 
+  /**
+   * Creates a new (empty) project
+   */
   public createNewProject() : void {
     this._missionService.newProjectFromToken(this._token).subscribe(
       () => this.ngOnInit(),
@@ -59,6 +69,10 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     )
   }
 
+  /**
+   * Updates a project
+   * @param event New value
+   */
   public updateProject(event : any) : void { 
     const projectId = this.mission.lastVersion.projects[event.index].id;
       this._missionService.updateProjectFromToken(this._token, projectId, event.key, event.value).subscribe(
@@ -67,6 +81,10 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
       );
   }
 
+  /**
+   * Deletes an existing project
+   * @param index Index of the project to delete
+   */
   public deleteProject(index : number) : void {
     const projectId = this.mission.lastVersion.projects[index].id;
     this._missionService.deleteProjectFromToken(this._token, projectId).subscribe(
@@ -78,6 +96,10 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     )
   }
 
+  /**
+   * Adds a project to the mission
+   * @param event New value
+   */
   public onAddPicture(event : any) : void {
     this._missionService.uploadProjectPictureFromToken(event.picture, event.project, this._token).subscribe(
       response => {
@@ -97,6 +119,10 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     );
   }
 
+  /**
+   * Removes a picture
+   * @param event New picture
+   */
   public onRemovePicture(event : any) : void {
     this._missionService.removePictureFromProjectFromToken(event.project, this._token).subscribe(
       () => this.ngOnInit(),
@@ -104,6 +130,10 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     );
   }
 
+  /**
+   * Adds skill to a project
+   * @param skill Skill to add
+   */
   public addSkillToProject(skill: any){
     this._missionService.addSkillToProjectFromToken(skill.project,[skill.skill], this._token).subscribe(
       () => {},
@@ -111,6 +141,10 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     );
   }
 
+  /**
+   * Removes skill from a project
+   * @param skill Skill to remove
+   */
   public removeSkillFromProject(skill: any){
     this._missionService.removeSkillFromProjectFromToken(skill.project,skill.skill, this._token).subscribe(
       () => {},
@@ -118,6 +152,11 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     )
   }
 
+  /**
+   * Checks if the sheet was updated
+   * If the sheet update is successful, sends a message to the user confirming it
+   * Otherwise, sends message to the user stating there was an error
+   */
   public onValidate() : void {
     this._missionService.updateMissionFromToken(this._token, 'sheetStatus', SheetStatus.VALIDATED).subscribe(
       () => {
@@ -129,6 +168,9 @@ export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
     )
   }
 
+  /**
+   * Checks if all forms are valid
+   */
   public allFormsValid() : boolean {
     return (!this.missionEdit?.grp) ? false :
     this.missionEdit.grp.valid && this.projectsEdit.allFormsValid();

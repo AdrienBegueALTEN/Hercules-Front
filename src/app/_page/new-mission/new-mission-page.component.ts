@@ -15,6 +15,9 @@ import { MessageDialogComponent } from '../../_dialog/message/message-dialog.com
 import { ConsultantAutocompleteComponent } from '../../_input/autocomplete/consultant/consultant-autocomplete.component';
 import { Router } from '@angular/router';
 
+/**
+ * Handles the mission creation process
+ */
 const CONSULTANT_STEP : number = 0;
 const CUSTOMER_STEP : number = 1;
 const NEW_MISSION_STEP : number = 2;
@@ -25,11 +28,25 @@ const NEW_MISSION_STEP : number = 2;
   styleUrls: ['./new-mission-page.component.scss']
 })
 export class NewMissionPageComponent implements OnInit, AfterContentChecked {
+  /**
+   * True : the consultant doesn't exist yet
+   * False : the consultant exists
+   */
   newConsultant : boolean = false;
   consultantForm : FormControl | FormGroup;
+  /**
+   * True : the customer doesn't exist yet
+   * False : the customer exists
+   */
   newCustomer : boolean = false;
   customerForm : FormControl | FormGroup;
+  /**
+   * Customers array. Contains all customers
+   */
   customers : any[];
+  /**
+   * Consultants array. Contains all consultants
+   */
   consultants : any[];
 
   @ViewChild('stepper') stepper : MatStepper;

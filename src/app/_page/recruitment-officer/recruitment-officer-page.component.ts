@@ -6,12 +6,18 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { isUndefined } from 'util';
 
+/**
+ * Handles functions inside the recruitment officer page
+ */
 @Component({
   selector: 'app-recruitment-officer-page',
   templateUrl: './recruitment-officer-page.component.html',
   styleUrls: ['./recruitment-officer-page.component.scss']
 })
 export class RecruitmentOfficerPageComponent implements OnInit {
+  /**
+   * Recruitment officer object
+   */
   public recruitmentOfficer : any;
 
   constructor(
@@ -78,6 +84,9 @@ export class RecruitmentOfficerPageComponent implements OnInit {
     );
   }
 
+  /**
+   * Checks whether the rectruitment officer is active
+   */
   public isActive() : boolean {
     return this._dateUtils.userIsActive(this.recruitmentOfficer);
   }

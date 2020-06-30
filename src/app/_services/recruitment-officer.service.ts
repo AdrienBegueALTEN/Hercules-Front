@@ -3,6 +3,9 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AppSettings } from './../app-settings';
 
+/**
+ * The purpose of this service is to fetch, create, edit and delete recruitment officers from the API
+ */
 const API : string = AppSettings.API_ENDPOINT + 'recruitment-officers/';
 
 @Injectable({
@@ -44,7 +47,7 @@ export class RecruitmentOfficerService {
   }
 
   /**
-   * 
+   * Deletes a recruitment officer
    * @param id Recruitement officer ID
    */
   deleteRecruitmentOfficer(id : String) {

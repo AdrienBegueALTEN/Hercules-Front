@@ -22,27 +22,27 @@ import { Subject, Observable } from 'rxjs';
 export class MissionsComponent implements OnInit {
 
   /**
-   * Title key
+   * Title key used for advanced search
    */
   public readonly TITLE_KEY : string = 'title';
   /**
-   * Locatin key
+   * Location key used for advanced search
    */
   public readonly LOCATION_KEY : string = 'location';
   /**
-   * Consultant key
+   * Consultant key used for advanced search
    */
   public readonly CONSULTANT_KEY : string = 'consultant';
   /**
-   * Customer key
+   * Customer key used for advanced search
    */
   public readonly CUSTOMER_KEY : string = 'customer';
   /**
-   * Activity sector key
+   * Activity sector key used for advanced search
    */
   public readonly ACTIVITY_SECTOR_KEY : string = 'activitySector';
   /**
-   * Skills key
+   * Skills key used for advanced search
    */
   public readonly SKILLS_KEY : string = 'skills';
 
