@@ -13,6 +13,9 @@ export class ImgBoxComponent {
    * False : User cannot delete an image
    */
   @Input() public allowDelete : boolean = false;
+  /**
+   * Image source
+   */
   @Input() public src : string;
   /**
    * Defines the text displayed to the user when hovering the image

@@ -52,6 +52,10 @@ export class CustomerService {
     return this._httpClient.delete(API + id, AppSettings.HTTP_JSON_CONTENT);
   }
 
+  /**
+   * Updates a customer
+   * @param cust New value
+   */
   updateCustomer(cust: any) {
     return this._httpClient.put(API, cust, AppSettings.HTTP_JSON_CONTENT);
   }
