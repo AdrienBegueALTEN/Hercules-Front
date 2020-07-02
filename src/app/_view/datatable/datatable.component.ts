@@ -25,7 +25,14 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
    * Gets the table contents from child component
    */
   @Input() dataSource: MatTableDataSource<any>;
+ /**
+   * Label is used to know which dialog box to display to the user
+   */
   @Input() label : string;
+ /**
+   * True : Shows the new data
+   * False : Doesn't show the new data
+   */
   @Input() showAdd : boolean = false;
 
   /**
@@ -43,7 +50,13 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
    */
   readonly loggedUserIsAdmin : boolean = this._authService.userIsAdmin();
 
+  /**
+   * If event is emitted, an user is deactivated
+   */
   @Output() deactivate : EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * If event is emitted, a new element is created
+   */
   @Output() newElement : EventEmitter<void> = new EventEmitter<void>();
   /**
    * Event is triggered when a row is clicked
@@ -112,6 +125,11 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
     this.rowClicked.emit(elementId);
   }
 
+  /**
+   * Sets a release date for an user
+   * @param index Index of the chosen user
+   * @param user Chosen user
+   */
   public onSetReleaseDate(index : number, user : any) : void {
     this._dialogUtils.showDeactivateDialog(user).afterClosed().subscribe(
       releaseDate => {
@@ -133,6 +151,7 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
    * -a release date was set
    * -the set release date is reached
    * @param user User to check for activity
+   * @returns Returns whether the user is active
    */
   public userIsActive(user : any) : boolean {
     return this._dateUtils.userIsActive(user);
