@@ -37,6 +37,9 @@ export class ChangePasswordDialogComponent {
    * False : New password is shown
    */
   public hiddenNew  : boolean = true;
+  /**
+   * Form builder for changing password
+   */
   public grp : FormGroup = new FormBuilder().group({});
 
   /**
@@ -45,6 +48,9 @@ export class ChangePasswordDialogComponent {
    */
   public wrongPassword : boolean = false;
 
+  /**
+   * Variable confirming the user typed the password and the confirmation right
+   */
   readonly CONFIRMATION_KEY = CONST_CONFIRMATION;
   /**
    * Current password key

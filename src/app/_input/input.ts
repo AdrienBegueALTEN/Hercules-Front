@@ -7,8 +7,17 @@ export abstract class MyInput implements OnInit {
   @Input() label : string;
   @Input() required : boolean = false;
   
+  /**
+   * Form control
+   */
   ctrl : FormControl;
+  /**
+   * Type of input
+   */
   type : InpuType;
+  /**
+   * Field validators
+   */
   validators : ValidatorFn[]
 
   @Output() sendCtrl = new EventEmitter<FormControl>();
@@ -27,5 +36,8 @@ export abstract class MyInput implements OnInit {
     this.sendCtrl.emit(this.ctrl);
   }
 
+/**
+ * Gets the error
+ */
   public abstract getError() : string
 }

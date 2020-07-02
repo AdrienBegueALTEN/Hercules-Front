@@ -19,11 +19,24 @@ const VALIDATION_STEP : number = 2;
   styleUrls: ['./mission-sheet-page.component.scss']
 })
 export class MissionSheetPageComponent implements OnInit, AfterContentChecked {
+  /**
+   * Token used by consultant when editing a sheet
+   */
   private _token : string;
 
+  /**
+   * Contains mission informations.
+   * The mission information depend of the mission the user requested
+   */
   public mission : any;
 
+  /**
+   * Contains the new mission contents
+   */
   @ViewChild('missionEditComponent') missionEdit : MissionEditComponent;
+  /**
+   * Contains the new project contents
+   */
   @ViewChild('projectsEditComponent') projectsEdit : ProjectsEditComponent;
 
   constructor(

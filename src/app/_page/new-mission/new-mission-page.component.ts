@@ -42,6 +42,9 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
    * False : the customer exists
    */
   newCustomer : boolean = false;
+  /**
+   * Customer form
+   */
   customerForm : FormControl | FormGroup;
   /**
    * Customers array. Contains all customers
@@ -52,8 +55,17 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
    */
   consultants : any[];
 
+  /**
+   * Imports matstepper from child component
+   */
   @ViewChild('stepper') stepper : MatStepper;
+  /**
+   * Gets autocomplete feature from child component
+   */
   @ViewChild('consultantAutocomplete') consultantAutocomplete : ConsultantAutocompleteComponent;
+  /**
+   * Gets new consultant feature from child component
+   */
   @ViewChild('newConsultant') newConsultantChild : NewUserComponent;
 
   constructor(
@@ -81,10 +93,18 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
     this._cdr.detectChanges();
   }
 
+  /**
+   * Gets the consultant form
+   * @param consultant Gets consultant information
+   */
   getConsultantForm(consultant : FormControl | FormGroup) : void {
     this.consultantForm = consultant;
   }
 
+  /**
+   * Gets the customer form
+   * @param customer Gets customer information
+   */
   getCustomerForm(customer : FormControl | FormGroup) : void {
     this.customerForm = customer;
   }
