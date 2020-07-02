@@ -19,6 +19,7 @@ export class ConsultantService {
   /**
    * Retrieves all consultants or only those still active (ie consultants still working for the company) from the API
    * @param active Indicates if only active consultants should be returned. <br> If true, only returns active consultants <br> If false, returns all consultants
+   * @returns Returns all consultant
    */
   public getConsultants(active : boolean = false) : Observable<any[]> {
     return this._httpClient.get<any[]>(API + '?active=' + active, AppSettings.HTTP_JSON_CONTENT);
@@ -27,6 +28,7 @@ export class ConsultantService {
   /**
    * Retrieves informations from the API with consultant ID
    * @param id Consultant ID
+   * @returns Returns the chosen consultant
    */
   public getConsultant(id:number){
     return this._httpClient.get<any>(API + id, AppSettings.HTTP_JSON_CONTENT);
@@ -39,6 +41,7 @@ export class ConsultantService {
    * @param firstname First name of the new consultant
    * @param lastname Last name of the new consultant
    * @param manager Manager of the new consultant
+   * @returns Returns a new client to the API
    */
   public newConsultant(email : string, firstname : string, lastname : string, manager : number) : Observable<any> {
     return this._httpClient.post(API,
@@ -54,6 +57,7 @@ export class ConsultantService {
   /**
    * Deletes a consultant from its ID
    * @param id Consultant ID
+   * @returns Returns a deletion order
    */
   public deleteConsultant(id : number) : Observable<any> {
     return this._httpClient.delete(API + id, AppSettings.HTTP_JSON_CONTENT);
@@ -64,6 +68,7 @@ export class ConsultantService {
    * @param id Consultant ID
    * @param fieldname Edited field
    * @param value New value
+   * @returns Returns a consultant update
    */
   public updateConsultant(id : number, fieldname : String, value : any) : Observable<any> {
     return this._httpClient.put(API,
@@ -82,6 +87,7 @@ export class ConsultantService {
    * @param entitled Diploma title
    * @param level Diploma level
    * @param year Graduation year
+   * @returns Returns a new diploma
    */
   public addDiploma(consultant : number, establishment : string, entitled : string, level : string, year : number) : Observable<any> {
     return this._httpClient.put(API + "add-diploma",
@@ -100,6 +106,7 @@ export class ConsultantService {
      * @param diploma Diploma ID
      * @param fieldname Edited field
      * @param value New diploma value
+     * @returns Returns new diploma informations
      */
   public updateDiploma(diploma : number, fieldname : string, value : any) : Observable<any> {
     return this._httpClient.put(API + "update-diploma",
@@ -115,6 +122,7 @@ export class ConsultantService {
    * Deletes a diploma linked to the consultant
    * @param consultant Consultant ID
    * @param diploma Diploma ID
+   * @returns Returns a deletion order for a specific diploma, on a specific consultant
    */
   public removeDiploma(consultant : number, diploma : number): Observable<any> {
     return this._httpClient.put(API + "remove-diploma",
@@ -128,6 +136,7 @@ export class ConsultantService {
   /**
    * Get all missions from a consultant
    * @param consultant Consultant ID
+   * @returns Gets all mission for a consultant
    */
   public getMissions(consultant : number) : Observable<any> {
     return this._httpClient.get(API + consultant + '/missions');

@@ -15,6 +15,11 @@ const USER_KEY : string  = 'auth-user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  /**
+   * Allows HTTP to make requests to the API without token 
+   * By default, all HTTP requests contain the user token. 
+   * 
+   */
   private _notInteceptedHttpClient : HttpClient;
 
   constructor(
@@ -125,12 +130,14 @@ export class AuthService {
 
   /**
    * Checks if user is authenticated
+   * @returns Returns whether the user is authenticated
    */
   public isAuthentificated() : boolean { return !!this.getToken(); }
 
   /**
    * True : User is admin
    * False : User isn't admin
+   * @returns Returns whether the user is authenticated
    */
   public userIsAdmin() : boolean {
     return this._userHasRole(Role.ADMIN);
@@ -138,6 +145,7 @@ export class AuthService {
 
   /**
    * Checks if the authenticated user is manager
+   * @returns Returns whether the user is manager
    */
   public userIsManager() : boolean {
     return this._userHasRole(Role.MANAGER);
@@ -146,6 +154,7 @@ export class AuthService {
   /**
    * Checks if the authenticated user has a specific role
    * @param role Role to check
+   * @returns True : User has role. False : User doesn't have role
    */
   private _userHasRole(role : Role) : boolean {
     return !!this.getUser() && this.getUser().roles.includes(role);
