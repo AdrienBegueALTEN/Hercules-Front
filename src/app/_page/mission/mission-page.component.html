@@ -100,6 +100,7 @@
 <ng-template #projectsEdit>
   <app-projects-edit #projectsEditComponent
     [projects]="mission.versions[selectedIndex].projects"
+    [allowCreationAndDeletion]="mission.sheetStatus !== 'VALIDATED'"
     (addPicture)="onAddPicture($event)"
     (addSkillEvent)="addSkillToProject($event)"
     (deletion)="deleteProject($event)"

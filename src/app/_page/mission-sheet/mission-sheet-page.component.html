@@ -30,6 +30,7 @@
                   projets liés à la mission que vous avez réalisé chez {{mission.customer.name}}.</p>
                 <app-projects-edit #projectsEditComponent 
                   [projects]="mission.lastVersion.projects"
+                  [allowCreationAndDeletion]="true"
                   [externalVersion]="true"
                   (addPicture)="onAddPicture($event)"
                   (addSkillEvent)="addSkillToProject($event)"
