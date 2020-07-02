@@ -11,6 +11,9 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   styleUrls: ['./mission-column-choice.component.scss']
 })
 export class MissionColumnChoiceComponent implements OnInit {
+  /**
+   * Emits an event when column order is changed
+   */
   @Output() colsEvent = new EventEmitter<any>();
   
   /**

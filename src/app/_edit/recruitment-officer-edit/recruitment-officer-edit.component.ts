@@ -24,8 +24,17 @@ export class RecruitmentOfficerEditComponent {
    */
   public grp : FormGroup = new FormBuilder().group({});
   
+  /**
+   * Email key used by the application. It's used to know which field is used when getting user input
+   */
   readonly EMAIL_KEY = 'email';
+  /**
+   * First name key used by the application. It's used to know which field is used when getting user input
+   */
   readonly FIRSTNAME_KEY = 'firstname';
+  /**
+   * Last name key used by the application. It's used to know which field is used when getting user input
+   */
   readonly LASTNAME_KEY = 'lastname';
 
   constructor(
