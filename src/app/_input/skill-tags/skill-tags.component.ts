@@ -41,10 +41,22 @@ export class SkillTagsComponent implements OnInit {
    * Sets the separator keys
    */
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  /**
+   * Gets the skill input from child component
+   */
   @ViewChild('skillInput') skillInput: ElementRef<HTMLInputElement>;
+  /**
+   * Gets autocomplete feature from child component
+   */
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
+  /**
+   * Event is emitted when a new skill is added to a project
+   */
   @Output() addSkillEvent = new EventEmitter<any>();
+  /**
+   * Event is emitted when a skill is removed
+   */
   @Output() removeSkillEvent = new EventEmitter<any>();
 
   constructor(private _missionService : MissionService) {}

@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 /**
  * Autocomplete component for consultant
  */
+
 const _filterConsultant = (consultant : any, value : string) : boolean => {
   return consultant.firstname.toLowerCase().concat(' ', consultant.lastname.toLowerCase()).indexOf(value) === 0 ||
   consultant.lastname.toLowerCase().indexOf(value) === 0;
@@ -16,6 +17,9 @@ const _filterGrpConsultants = (consultants : any[], value : string) : any[] => {
   return consultants.filter(consultant => _filterConsultant(consultant, value));
 };
 
+/**
+ * Autocomplete component for consultant
+ */
 @Component({
   selector: 'app-consultant-autocomplete',
   templateUrl: './consultant-autocomplete.component.html'
@@ -43,9 +47,17 @@ export class ConsultantAutocompleteComponent implements OnInit {
    */
   filteredConsultants: Observable<any[]>;
   /**
-   * Boolean to tell if a add button mush be displayed in the lsit of results when no consultant can be found.
+   * Boolean to tell if a add button mush be displayed in the list of results when no consultant can be found.
    */
   showNewOpt : boolean = false;
+  /**
+   * True : Displays consultant in two groups : 
+   * -One group with consultant under the responsability of the user (ie, the consultants "belong" to the manager, they were created by the manager)
+   * -One group with consultants that aren't under the responsability of the user 
+   * 
+   * False : Displays every consultant in a single group
+   */
+
   displayInGrps: boolean = false;
 
   /**
@@ -162,6 +174,9 @@ export class ConsultantAutocompleteComponent implements OnInit {
     return (typeof control.value == 'string') ? { 'requirements': true } : null;
   }
 
+  /**
+   * Gets input value
+   */
   public getValue(){
     return this.ctrl.value;
   }

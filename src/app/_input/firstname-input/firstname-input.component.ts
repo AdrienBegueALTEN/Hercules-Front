@@ -5,6 +5,9 @@ import { AppSettings } from 'src/app/app-settings';
 import { MyInput } from '../input';
 import { InputType } from 'src/app/_enums/input-type.enum';
 
+/**
+ * Handles first name input and checks if first name field is valid
+ */
 @Component({
   selector: 'app-firstname-input',
   templateUrl: '../input.html'

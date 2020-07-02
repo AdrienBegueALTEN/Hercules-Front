@@ -5,6 +5,9 @@ import { Validators } from '@angular/forms';
 import { AppSettings } from 'src/app/app-settings';
 import { InputType } from 'src/app/_enums/input-type.enum';
 
+/**
+ * Handles last name input and checks if last name field is valid
+ */
 @Component({
   selector: 'app-lastname-input',
   templateUrl: '../input.html'

@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
+/**
+ * Handles data when editing customer description
+ */
 @Component({
   selector: 'app-description-cust-input',
   templateUrl: './description-cust-input.component.html',
@@ -9,11 +12,11 @@ import { FormControl } from '@angular/forms';
 export class DescriptionCustInputComponent implements OnInit {
 
   /**
-   * Customer to modify
+   * Customer to edit
    */
   @Input() customer: any;
   /**
-   * Event with the modified customer
+   * Event is emitted when the customer is edited
    */
   @Output() customerChange = new EventEmitter<any>();
   /**

@@ -4,6 +4,9 @@ import { CustomerService } from 'src/app/_services/customer.service';
 import { Observable } from 'rxjs';
 import { startWith, map, delay } from 'rxjs/operators';
 
+/**
+ * Autocomplete component for activity sector
+ */
 @Component({
   selector: 'app-activity-sector-cust-input',
   templateUrl: './activity-sector-cust-input.component.html',

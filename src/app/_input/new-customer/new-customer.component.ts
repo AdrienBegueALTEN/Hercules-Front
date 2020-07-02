@@ -3,6 +3,9 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 
+/**
+ * Handles new customer data
+ */
 @Component({
   selector: 'app-new-customer',
   templateUrl: './new-customer.component.html'

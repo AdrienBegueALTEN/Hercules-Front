@@ -7,13 +7,16 @@ import { Router } from '@angular/router';
 import { ManagerService } from 'src/app/_services/manager.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+/**
+ * Handles the consultants managed by their manager
+ */
 @Component({
   selector: 'app-consultant-manager',
   templateUrl: './consultant-manager.component.html'
 })
 export class ConsultantManagerComponent implements OnInit {
   /**
-   * The consultant to change his maanger.
+   * The consultant to change his manager.
    */
   @Input() consultant:any;
   /**
@@ -88,10 +91,11 @@ export class ConsultantManagerComponent implements OnInit {
     }
   }
 
+  /**
+   * Gets the selected manager
+   * @param option 
+   */
   getManagerSelected(option){
-    if(option)
-      return option?.firstname+' '+option?.lastname;
-    else
-      return '';
+    return option.firstname+' '+option.lastname;
   }
 }
