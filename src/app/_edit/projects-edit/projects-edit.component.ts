@@ -4,7 +4,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewCh
 import { FormGroup } from '@angular/forms';
 
 /**
- * Component for the parts that serve to manage the projects to modify
+ * This component provides the function and events needed for editing projects
  */
 @Component({
   selector: 'app-projects-edit',
@@ -26,12 +26,33 @@ export class ProjectsEditComponent  {
    */
   public projectsForms : FormGroup[] = [null, null, null, null, null];
 
+  /**
+   * Emits an event when a picture is added
+   */
   @Output() addPicture = new EventEmitter<any>();
+  /**
+   * Emits an event when a skill is added
+   */
   @Output() addSkillEvent = new EventEmitter<any>();
+  /**
+   * Emits an event when a deletion occurs
+   */
   @Output() deletion : EventEmitter<number> = new EventEmitter<number>();
+  /**
+   * Emits an event when a new element is sent by the user
+   */
   @Output() new : EventEmitter<void> = new EventEmitter<void>();
+  /**
+   * Emits an event when a picture is removed
+   */
   @Output() removePicture = new EventEmitter<any>();
+  /**
+   * Emits an event when a skill is removed
+   */
   @Output() removeSkillEvent = new EventEmitter<any>();
+  /**
+   * Emits an event when any field is updated
+   */
   @Output() update : EventEmitter<any> = new EventEmitter<any>();
 
   /**

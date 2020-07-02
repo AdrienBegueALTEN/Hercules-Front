@@ -22,25 +22,85 @@ export class MissionEditComponent implements OnInit {
    */
   @Input() version : any;
 
+  /**
+   * City key used by the application. It's used to know which field is used when getting user input
+   */
   readonly CITY_KEY = 'city';
+  /**
+   * City key to give tips to the user
+   */
   readonly CITY_TOOLTIP = 'Ville au sein de laquelle vous avez effectué la mission. En cas de télétravail, ville où se trouve le site du client.';
+  /**
+   * City key used by the application. It's used to know which field is used when getting user input
+   */
   readonly COMMENT_KEY = 'comment';
+  /**
+   * Sets the maximum length allowed
+   */
   readonly COMMENT_MAX_LENGTH = 255;
+  /**
+   * Contract key used by the application. It's used to know which field is used when getting user input
+   */
   readonly CONTRACT_KEY = 'contractType';
+  /**
+   * Country key used by the application. It's used to know which field is used when getting user input
+   */
   readonly COUNTRY_KEY = 'country';
+  /**
+   * Country key to give tips to the user
+   */
   readonly COUNTRY_TOOLTIP = 'Ville au sein duquel vous avez effectué la mission. En cas de télétravail, pays où se trouve le site du client.';
+  /**
+   * Description key used by the application. It's used to know which field is used when getting user input
+   */
   readonly DESCRIPTION_KEY = 'description';
+  /**
+   * Description key to give tips to the user
+   */
   readonly DESCRIPTION_TOOLTIP = 'Descriptif complet présentant la mission dans sa globalité.';
+  /**
+   * Sets the maximum length for the project description
+   */
   readonly DESCRIPTION_MAX_LENGTH = 1000;
+  /**
+   * Consultant key used by the application. It's used to know which field is used when getting user input
+   */
   readonly ROLE_KEY = 'consultantRole';
+  /**
+   * 
+   */
   readonly ROLE_TOOLTIP = 'Titre représentatif des différentes tâches que vous avez été amené à réaliser durant la mission.';
+  /**
+   * Team size key used by the application. It's used to know which field is used when getting user input
+   */
   readonly TEAM_KEY = 'teamSize';
+  /**
+   * Team key to give tips to the user
+   */
   readonly TEAM_TOOLTIP = 'Taille de l\'équipe au sein de laquelle vous avez été amené a travailler durant la mission (vous inclus).';
+  /**
+   * Title key used by the application. It's used to know which field is used when getting user input
+   */
   readonly TITLE_KEY = 'title';
+  /**
+   * Title key to give tips to the user
+   */
   readonly TITLE_TOOLTIP = 'Bref descriptif contenant des mots-clefs représentatifs de la mission.';
+  /**
+   * Icon key to give tips to the user
+   */
   readonly TOOLTIP_ICON = 'help_outline';
+/**
+ * Sets the position of the tooltip
+ */
   readonly TOOLTIP_POS = 'before';
+  /**
+   * Experience key used by the application. It's used to know which field is used when getting user input
+   */
   readonly XP_KEY = 'consultantStartXp';
+  /**
+   * Experience key to give tips to the user
+   */
   readonly XP_TOOLTIP = 'Le nombre d\'années d\'expérience que vous aviez au départ de la mission.';
 
   /**
