@@ -4,6 +4,9 @@ import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { CtrlError } from 'src/app/_enums/ctrl-error.enum';
 
+/**
+ * Autocomplete component for activity sector
+ */
 @Component({
   selector: 'app-activity-sector-autocomplete',
   templateUrl: './activity-sector-autocomplete.component.html',
@@ -28,6 +31,9 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
    * Array containing the activity sectors matching the searched text
    */
   filteredActivitySectors : Observable<string[]>;
+  /**
+   * Form control for activity sector
+   */
   public ctrl : FormControl = new FormControl('', this.required ? [Validators.required] : null);
 
   /**

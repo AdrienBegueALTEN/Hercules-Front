@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/_services/auth.service';
 
+/**
+ * Autocomplete component for consultant
+ */
 const _filterConsultant = (consultant : any, value : string) : boolean => {
   return consultant.firstname.toLowerCase().concat(' ', consultant.lastname.toLowerCase()).indexOf(value) === 0 ||
   consultant.lastname.toLowerCase().indexOf(value) === 0;
@@ -26,9 +29,18 @@ export class ConsultantAutocompleteComponent implements OnInit {
    * A value is required.
    */
   @Input() required : boolean = false;
+  /**
+   * Consultant array. Contains all consultants
+   */
   @Input() consultants : any[];
 
+  /**
+   * Form control for consultant
+   */
   public ctrl : FormControl;
+  /**
+   * Contains filtered consultants. Consultants are filetred by the user input
+   */
   filteredConsultants: Observable<any[]>;
   /**
    * Boolean to tell if a add button mush be displayed in the lsit of results when no consultant can be found.
@@ -36,7 +48,13 @@ export class ConsultantAutocompleteComponent implements OnInit {
   showNewOpt : boolean = false;
   displayInGrps: boolean = false;
 
+  /**
+   * Emits an event when a form is sent
+   */
   @Output() sendFormCtrl = new EventEmitter<FormControl>();
+  /**
+   * Emits an event when a new consultant is created
+   */
   @Output() newConsultant= new EventEmitter();
 
   constructor(private _authService : AuthService) {
