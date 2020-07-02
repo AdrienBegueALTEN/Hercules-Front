@@ -182,7 +182,7 @@ export class MissionService {
 
   /**
    * Adds a picture to the given project
-   * @param file picture
+   * @param picture \{blob, name\}
    * @param projectId ID of the project
    */
   public uploadProjectPicture(file: any, projectId: number): Observable<HttpEvent<any>> {
@@ -200,13 +200,14 @@ export class MissionService {
 
   /**
    * Adds a picture to the given project for an anonymous user
-   * @param file picture
+   * @param picture \{blob, name\}
    * @param projectId ID of the project
    * @param token token of the anonymous user
    */
-  public uploadProjectPictureFromToken(file: File, projectId: number, token: string): Observable<HttpEvent<any>> {
+  public uploadProjectPictureFromToken(file: any, projectId: number, token: string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
-    formData.append('file', file);
+    formData.append('blob', file.blob);
+    formData.append('name', file.name);
 
     const req = new HttpRequest('POST', PROJECT_API + 'anonymous/' + projectId + '/upload-picture', formData, {
       reportProgress: true,
