@@ -19,8 +19,17 @@ export class NewUserComponent implements OnInit, AfterContentInit  {
   /** Event containing the form group */
   @Output() sendFormGrp : EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
+  /**
+   * First name of the new user
+   */
   @ViewChild('firstname') firstname : FirstnameInputComponent;
+  /**
+   * Last name of the new user
+   */
   @ViewChild('lastname') lastname : LastnameInputComponent;
+  /**
+   * Email of the new user
+   */
   @ViewChild('email') email : EmailInputComponent;
 
   constructor(

@@ -7,17 +7,20 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
+/**
+ * Manages the skill tags
+ */
 @Component({
   selector: 'app-skill-tags',
   templateUrl: './skill-tags.component.html'
 })
 export class SkillTagsComponent implements OnInit {
   /**
-   * Project where the skill are added.
+   * Project where the skills are added.
    */
   @Input() project: any;
   /**
-   * Bollean to show if the component is part of the page without authentication needed.
+   * Boolean to show if the component is part of the page without authentication needed.
    */
   @Input() externalVersion : boolean = false;
   
@@ -26,8 +29,17 @@ export class SkillTagsComponent implements OnInit {
    * Array of skills in the database
    */
   allSkills;
+  /**
+   * Skills filtered by the user input
+   */
   filteredSkills: Observable<any[]>;
+  /**
+   * Skill form control
+   */
   skillCtrl = new FormControl();
+  /**
+   * Sets the separator keys
+   */
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   @ViewChild('skillInput') skillInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
