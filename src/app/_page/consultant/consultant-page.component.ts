@@ -16,6 +16,9 @@ import { isUndefined } from 'util';
   styleUrls: ['./consultant-page.component.scss']
 })
 export class ConsultantPageComponent implements OnInit {
+  /**
+   * Use of child component
+   */
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
   /**
    * Consultant object

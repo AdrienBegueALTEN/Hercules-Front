@@ -5,6 +5,9 @@ import { Validators } from '@angular/forms';
 import { AppSettings } from 'src/app/app-settings';
 import { InputType } from 'src/app/_enums/input-type.enum';
 
+/**
+ * Handles email input and checks if email field is valid
+ */
 @Component({
   selector: 'app-email-input',
   templateUrl: '../input.html'

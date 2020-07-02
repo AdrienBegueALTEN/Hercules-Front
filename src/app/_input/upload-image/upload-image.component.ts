@@ -1,15 +1,20 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as sha1 from 'js-sha1';
-
+/**
+ * Manages project properties
+ */
 @Component({
   selector: 'app-upload-image',
   templateUrl: './upload-image.component.html'
 })
 export class UploadImageComponent {
   /**
-   * Id of projet or client
+   * Project ID or customer ID
    */
   @Input() id : number;
+  /**
+   * Image title
+   */
   @Input() title : string;
   /**
    * Image event emmitted containing the blob and the hashed name

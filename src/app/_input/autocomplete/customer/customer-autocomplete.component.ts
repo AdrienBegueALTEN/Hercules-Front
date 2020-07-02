@@ -3,10 +3,16 @@ import { FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
+/**
+ * Autocomplete component for customers
+ */
 const _filter = (name : string, value : string) : boolean => {
   return name.toLowerCase().indexOf(value) >= 0;
 };
 
+/**
+ * Autocomplete component for customers
+ */
 @Component({
   selector: 'app-customer-autocomplete',
   templateUrl: './customer-autocomplete.component.html'

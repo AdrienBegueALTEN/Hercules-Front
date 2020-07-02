@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 
+/**
+ * Autocomplete component for customers
+ */
 @Component({
   selector: 'app-skills-autocomplete',
   templateUrl: './skills-autocomplete.component.html'

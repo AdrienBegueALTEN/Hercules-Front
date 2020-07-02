@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
+/**
+ * Handles data when editing customer name
+ */
 @Component({
   selector: 'app-name-cust-input',
   templateUrl: './name-cust-input.component.html',

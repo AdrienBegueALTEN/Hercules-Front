@@ -31,6 +31,9 @@ export class CustomerPageComponent implements OnInit {
    */
   public customersMissions : any[];
 
+/**
+   * The child component is used to view data
+   */
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
 
   constructor(
