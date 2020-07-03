@@ -109,7 +109,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
  * Allow the content to be sorted
  */
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChildren(MatInput) matInputs: QueryList<MatInput>;
+  //@ViewChildren(MatInput) matInputs: QueryList<MatInput>;
 
   /**
  * Uses the cdkdetailrow directive, allowing to expand missions to displays projects

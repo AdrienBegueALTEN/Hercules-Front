@@ -59,6 +59,9 @@ export class MissionsComponent implements OnInit {
    */
   @ViewChild(SkillsAutocompleteComponent) skills: SkillsAutocompleteComponent;
 
+  /**
+   * Event is emitted when user click advanced search button
+   */
   eventsSubject: Subject<void> = new Subject<void>();
   /**
    * Form for the missions
@@ -118,6 +121,9 @@ export class MissionsComponent implements OnInit {
    * False : Cooldown is disabled. The user can use the advanced search
    */
   cooldownOn = false;
+  /**
+   * Contains all events
+   */
   public events: Observable<void> = this.eventsSubject.asObservable();
 
   constructor(

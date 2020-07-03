@@ -22,7 +22,13 @@ import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service
   styleUrls: ['./mission-page.component.scss']
 })
 export class MissionPageComponent implements OnInit, AfterContentChecked {
+  /**
+   * Index number of the consultant table
+   */
   readonly CONSULTANT_TAB_INDEX : number = 2;
+  /**
+   * Index number of the customer
+   */
   readonly CUSTOMER_TAB_INDEX : number = 3;
   
   /**
@@ -45,8 +51,17 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
    */
   userIsConsultantManager : boolean = false;
 
+  /**
+   * Table group
+   */
   @ViewChild('tabGrp') tabGrp : MatTabGroup;
+  /**
+   * Contains new mission informations
+   */
   @ViewChild('missionEditComponent') missionEdit : MissionEditComponent;
+  /**
+   * Contains new project informations
+   */
   @ViewChild('projectsEditComponent') projectsEdit : ProjectsEditComponent;
 
   constructor(
