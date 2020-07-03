@@ -103,7 +103,8 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
         () => {
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
           this.mission.versions[0][event.key] = event.value;
-          this.mission.sheetStatus = SheetStatus.ON_GOING;
+          if (this.mission.sheetStatus !== SheetStatus.VALIDATED)
+            this.mission.sheetStatus = SheetStatus.ON_GOING;
         },
         () => this._dialogUtils.showMsgDialog("Impossible de mettre à jour les données.")
       )
@@ -145,8 +146,7 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
    */
   public showMissionEdit() : boolean {
     return this.userIsConsultantManager && 
-      this.selectedIndex === 0 &&
-      this.mission.sheetStatus !== SheetStatus.VALIDATED
+      this.selectedIndex === 0
   }
 
   /**
@@ -219,8 +219,9 @@ export class MissionPageComponent implements OnInit, AfterContentChecked {
       this._missionService.updateProject(projectId, event.key, event.value).subscribe(
         () => {
           this.mission.versions[0].projects[event.index][event.key] = event.value;
-          this.mission.sheetStatus = SheetStatus.ON_GOING;
           this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000});
+          if (this.mission.sheetStatus !== SheetStatus.VALIDATED)
+            this.mission.sheetStatus = SheetStatus.ON_GOING;
         },
         () => this._dialogUtils.showMsgDialog("Impossible de mettre à jour le projet.")
       );

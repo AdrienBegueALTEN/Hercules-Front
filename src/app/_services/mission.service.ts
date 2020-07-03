@@ -176,7 +176,7 @@ export class MissionService {
    * @param project Project ID
    */
   public deleteProjectFromToken(token : string, project : number){
-    return this._notInteceptedHttpClient.delete(PROJECT_API + 'anonymous' + project,
+    return this._notInteceptedHttpClient.delete(PROJECT_API + 'anonymous/' + project,
     { headers: new HttpHeaders({ Authorization: TOKEN_PREFIX + token }) });
   }
 

@@ -22,6 +22,11 @@ export class ProjectsEditComponent  {
   @Input() projects : any [];
 
   /**
+   * Boolean that indacates if the user is allowed to create and delete projects
+   */
+  @Input() allowCreationAndDeletion : boolean = false;
+
+  /**
    * List of the forms of the projects
    */
   public projectsForms : FormGroup[] = [null, null, null, null, null];

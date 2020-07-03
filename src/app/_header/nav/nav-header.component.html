@@ -22,23 +22,21 @@
   <div class="foot">
     <a title="Liste des missions" routerLink=""><img id="home" src="assets/img/logo/alten.png" alt="Logo ALTEN"></a>
     <div class="user">
-      <mat-icon>account_circle</mat-icon>
       {{user.firstname}} {{user.lastname}}
     </div>
+    <button mat-button title="Modifier mon mot de passe" (click)="onChangePassword()">
+      <mat-icon>vpn_key</mat-icon>
+    </button>
     <div id="actions">
-      <button mat-button [matMenuTriggerFor]="appMenu">
-        <mat-icon>power_settings_new</mat-icon>
+      <button mat-button [matMenuTriggerFor]="logoutMenu">
+        <mat-icon>exit_to_app</mat-icon>
       </button>
     </div>
   </div>
 </header>
 
-<mat-menu #appMenu="matMenu">
-  <button mat-menu-item (click)="onChangePassword()">
-    <mat-icon>vpn_key</mat-icon>
-    <span>Modifier mon mot de passe</span>
-  </button>
-  <button mat-menu-item (click)="onLogout()">
+<mat-menu #logoutMenu="matMenu">
+  <button mat-menu-item title="Me déconnecter" (click)="onLogout()">
     <mat-icon>exit_to_app</mat-icon>
     <span>Me déconnecter</span>
   </button>
