@@ -10,6 +10,13 @@ const SEMANTICS_ERR : string = 'semantics';
  * Component for the parts that serve to modify a single project
  */
 export class ErrorController implements ErrorStateMatcher {
+  /**
+   * This function will change the content of the displayed message under a field to the user
+   * It's used when the user is picking a date
+   * @param control Which form control is used for this function
+   * @param form Which form is used for this function
+   * @returns The state of the boolean will change the message returned to the user. If true, the field is in an error state
+   */
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && form.touched && control.invalid);
