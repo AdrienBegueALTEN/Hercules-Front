@@ -7,12 +7,12 @@ import { ErrorStateMatcher } from '@angular/material/core';
 const SEMANTICS_ERR : string = 'semantics';
 
 /**
- * Component for the parts that serve to modify a single project
+ * Class that serves to manage the error state for a field
  */
 export class ErrorController implements ErrorStateMatcher {
   /**
-   * This function will change the content of the displayed message under a field to the user
-   * It's used when the user is picking a date
+   * This function will show if  the error message under a field must be displayed to the user
+   * It's used for the date's fields
    * @param control Which form control is used for this function
    * @param form Which form is used for this function
    * @returns The state of the boolean will change the message returned to the user. If true, the field is in an error state
