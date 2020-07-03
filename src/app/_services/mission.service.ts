@@ -14,6 +14,10 @@ const PROJECT_API : string = MISSION_API + 'projects/';
   providedIn: 'root'
 })
 export class MissionService {
+  /**
+   * By default, all requests made are intercepted and the user token is bond to the requests
+   * This specific request doesn't bond the token
+   */
   private _notInteceptedHttpClient : HttpClient;
 
   constructor(
