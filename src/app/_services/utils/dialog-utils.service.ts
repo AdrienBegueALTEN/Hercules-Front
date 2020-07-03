@@ -19,6 +19,7 @@ constructor(private _dialog : MatDialog) { }
 /**
  * Shows a dialog box to the user
  * @param message Text of the dialog box
+ * @returns Returns the content of the dialog 
  */
   public showMsgDialog(message : string) : MatDialogRef<MessageDialogComponent, any> {
     const dialogConfig = new MatDialogConfig();
@@ -31,6 +32,7 @@ constructor(private _dialog : MatDialog) { }
   /**
    * Shows the deactivate dialog box to the user
    * @param user User to deactivate
+   * @returns Returns the content of the dialog
    */
   public showDeactivateDialog(user : any) : MatDialogRef<DeactivateComponent, any> {
     const dialogConfig = new MatDialogConfig();
@@ -47,6 +49,7 @@ constructor(private _dialog : MatDialog) { }
   /**
    * Shows the change password dialog to the user
    * @param user User involved in the password change
+   * @returns Returns the content of the dialog
    */
   public showChangePasswordDialog(user? : number) : MatDialogRef<ChangePasswordDialogComponent, any> {
     const dialogConfig = new MatDialogConfig();
@@ -62,6 +65,7 @@ constructor(private _dialog : MatDialog) { }
  * Shows new user dialog box if manager doesn't exist
  * @param label Label to search into the dialog box
  * @param newManager True : The manager is new and dooesn't exust yet. False : The manager already exists
+ * @returns Returns the content of the dialog
  */
   public showNewUserDialog(label : string, newManager : boolean = false) : MatDialogRef<NewUserDialogComponent, any> {
     const dialogConfig = new MatDialogConfig();
@@ -80,6 +84,7 @@ constructor(private _dialog : MatDialog) { }
    * @param msg Text to display if user clicks "yes"
    * @param yes Replaces the text inside the "yes" button
    * @param no Replaces the text inside the "no" button
+   * @returns Returns the content of the dialog
    */
   public showYesNoDialog(title : string, msg : string, yes : string, no : string) : MatDialogRef<YesNoDialogComponent, any> {
     const dialogConfig = new MatDialogConfig();

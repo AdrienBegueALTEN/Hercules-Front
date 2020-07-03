@@ -15,13 +15,14 @@ import { MessageDialogComponent } from '../../_dialog/message/message-dialog.com
 import { ConsultantAutocompleteComponent } from '../../_input/autocomplete/consultant/consultant-autocomplete.component';
 import { Router } from '@angular/router';
 
-/**
- * Handles the mission creation process
- */
+
 const CONSULTANT_STEP : number = 0;
 const CUSTOMER_STEP : number = 1;
 const NEW_MISSION_STEP : number = 2;
 
+/**
+ * Handles the mission creation process
+ */
 @Component({
   selector: 'app-new-mission-page',
   templateUrl: './new-mission-page.component.html',
