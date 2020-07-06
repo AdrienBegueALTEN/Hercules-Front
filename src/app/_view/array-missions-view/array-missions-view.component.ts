@@ -280,7 +280,6 @@ generatePDF(selectedElements : any[],filename : string) : void {
     });
     this._missionService.generatePDF(elements).subscribe(
       (content) => {  
-                        
                         this._snackBar.open("Le PDF a bien été enregistré",'X', { duration: 2000 });
                         var newBlob = new Blob([content], { type: "application/pdf" });
                         
@@ -296,21 +295,15 @@ generatePDF(selectedElements : any[],filename : string) : void {
                           this._dialog.open(MessageDialogComponent,dialogConfig);
                         }
                   },
-      (error) => {  if(error.error==="the file could not be saved"){
-                      const dialogConfig = new MatDialogConfig();
+      (error) => {  const dialogConfig = new MatDialogConfig();
+                    if(error.error==="the file could not be saved")
                       dialogConfig.data = "Le fichier PDF n'a pas pu être finalisé sur le serveur.";
-                      this._dialog.open(MessageDialogComponent,dialogConfig); 
-                    }
-                    else{
-                      const dialogConfig = new MatDialogConfig();
+                    else
                       dialogConfig.data = "Le fichier PDF n'a pas pu être crée sur le serveur.";
-                      this._dialog.open(MessageDialogComponent,dialogConfig);
-                    }
-
+                    
+                    this._dialog.open(MessageDialogComponent,dialogConfig);
       }
     );
-
-
   }
 
    /**
