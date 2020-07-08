@@ -54,7 +54,7 @@ export class CustomerAutocompleteComponent implements OnInit {
   @Output() newCustomer = new EventEmitter();
 
   constructor() {
-    var validators : ValidatorFn[] = [this._checkSelection];
+    var validators : ValidatorFn[] = this.canCreateNew ? [this._checkSelection] : [] ;
     if (this.required) validators.push(Validators.required);
     this.ctrl = new FormControl('', validators);
   }
@@ -106,7 +106,7 @@ export class CustomerAutocompleteComponent implements OnInit {
 
   /**
    * Check if the control value is of type string.
-   * @param control From control to check
+   * @param control Form control to check
    * @returns \{ 'requirements': true \} if value is a string
    */
   private _checkSelection(control) {

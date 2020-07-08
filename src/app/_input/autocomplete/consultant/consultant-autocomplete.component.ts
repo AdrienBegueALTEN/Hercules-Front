@@ -70,7 +70,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
   @Output() newConsultant= new EventEmitter();
 
   constructor(private _authService : AuthService) {
-    var validators : ValidatorFn[] = [this._checkSelection];
+    var validators : ValidatorFn[] = this.canCreateNew ? [this._checkSelection] : [] ;
     if (this.required) validators.push(Validators.required);
     this.ctrl = new FormControl('', validators);
   }
@@ -166,12 +166,12 @@ export class ConsultantAutocompleteComponent implements OnInit {
 
   /**
    * Check if a control value is a string.
-   * It returns an object saying the requirements are good if the control.
+   * It returns an object saying the requirements are good if the control value is a string.
    * @param control 
    * @returns \{ 'requirements': true \} if control value is a string
    */
   private _checkSelection(control) {
-    return (typeof control.value == 'string') ? { 'requirements': true } : null;
+    return (typeof control.value == 'string' ) ? { 'requirements': true } : null;
   }
 
   /**
