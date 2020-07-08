@@ -84,7 +84,7 @@ export class ProjectsEditComponent  {
    */
   public allFormsValid() : boolean {
     let res : boolean;
-    let i = 0;
+    let i : number = 0;
     do {
       res = this.projectsForms[i] === null || this.projectsForms[i].valid;
       i++;
@@ -103,8 +103,9 @@ export class ProjectsEditComponent  {
       'Supprimer le projet',
       'Annuler').afterClosed().subscribe(yes => {
         if (yes) {
-          this.deletion.emit(index)
+          this.deletion.emit(index);
           this.tabGrp.selectedIndex = 0;
+          this.projectsForms.splice(index, 1);
         }
       }
     );

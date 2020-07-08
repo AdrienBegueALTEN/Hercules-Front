@@ -70,14 +70,13 @@
         <mat-cell *matCellDef="let mission" [ngSwitch]="mission.sheetStatus">
             <div *ngIf="userIsManager">
                 <mat-icon *ngSwitchCase="'ON_WAITING'" style="color: red" 
-                    matTooltip="Fiche en attente">close</mat-icon>
+                    matTooltip="En attente">close</mat-icon>
                 <mat-icon *ngSwitchCase="'ON_GOING'" style="color: orange"
-                    matTooltip="Fiche en cours de validation">done</mat-icon>
+                    matTooltip="En cours de validation">done</mat-icon>
                 <mat-icon *ngSwitchCase="'VALIDATED'" style="color: green"
-                    matTooltip="Fiche validée">done_all</mat-icon>
+                    matTooltip="Validée">done_all</mat-icon>
             </div>
-            <button mat-icon-button
-                [routerLink]="['/missions', mission.id]">
+            <button mat-icon-button [routerLink]="['/missions', mission.id]">
                 <mat-icon matTooltip="Voir les détails">more_horiz</mat-icon>
             </button>
 
