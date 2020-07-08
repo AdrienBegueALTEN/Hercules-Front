@@ -93,7 +93,7 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
 
   /**
    * Sorts the datasource by the chosen column
-   */col
+   */
   private _sortAndPagination() : void {
     this.dataSource.sortingDataAccessor = (item, header) => {
       switch (header) {

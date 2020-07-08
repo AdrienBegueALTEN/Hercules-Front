@@ -4,6 +4,9 @@
     <input matInput (keyup)="applyFilter($event)" />
   </mat-form-field>
 
+  <div *ngIf="dataSource.filteredData.length !== 0; then data else noData"></div>
+
+  <ng-template #data>
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort matSortActive="releaseDate" matSortDirection="asc">
     <ng-container matColumnDef="firstname">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Prénom</th>
@@ -97,6 +100,8 @@
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay; let index = dataIndex;" class="element-row" [ngClass]="{'element-disabled': !userIsActive(row)}"></tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" #paginator></mat-paginator>
+</ng-template>
+<ng-template #noData><p>Aucun {{label}} à afficher.</p></ng-template>
     <button *ngIf="showAdd && loggedUserIsManager" mat-raised-button color="primary" (click)="newElement.emit()">
-      <mat-icon class="label-icon">{{columnsToDisplay.includes('activitySector') ? 'add_business' : 'person_add'}}</mat-icon>Ajouter un {{label}}</button>
+    <mat-icon class="label-icon">{{columnsToDisplay.includes('activitySector') ? 'add_business' : 'person_add'}}</mat-icon>Ajouter un {{label}}</button>
 </div>
