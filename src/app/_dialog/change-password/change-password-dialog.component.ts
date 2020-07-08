@@ -98,7 +98,7 @@ export class ChangePasswordDialogComponent {
     switch (key) {
       case this.NEW_KEY:
         return this.grp.controls[key].hasError(CtrlError.REQUIRED) ? 'Le nouveau mot de passe est obligatoire.' :
-        this.grp.controls[key].hasError(CtrlError.MIN_LENGTH) ? 'Le nouveau mot de passe doit contenir au moins 6 caractères.' :
+        this.grp.controls[key].hasError(CtrlError.MIN_LENGTH) ? 'Le nouveau mot de passe doit contenir au moins 8 caractères.' :
         this.grp.controls[key].hasError(CtrlError.MAX_LENGTH) ? 'Le nouveau mot de passe ne peut pas contenir plus de 16 caractères' : 
         this.grp.controls[key].hasError(CtrlError.PATTERN) ? 'Le nouveau mot de passe doit contenir au moins une lettre, un chiffre et un caractère spécial.' : '';
       default : return '';
