@@ -17,7 +17,7 @@
         </mat-header-cell>
 
         <mat-cell *matCellDef="let mission">
-            <mat-checkbox *ngIf="mission.sheetStatus === 'VALIDATED' && (selection.selected.length < NB_MAX_CHECK || selection.isSelected(mission))"
+            <mat-checkbox *ngIf="(mission.sheetStatus == null || mission.sheetStatus === 'VALIDATED') && (selection.selected.length < NB_MAX_CHECK || selection.isSelected(mission))"
                 (click)="$event.stopPropagation() || onClick($event,mission)"
                 (change)="$event ? selection.toggle(mission) : null" [checked]="selection.isSelected(mission)">
             </mat-checkbox>
@@ -98,7 +98,7 @@
     <div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
         <div class="contours-margin" *ngIf="element?.lastVersion?.projects">
             <div *ngFor="let project of element.lastVersion.projects; let i = index">
-                <mat-checkbox *ngIf="selection.isSelected(project) || (element?.sheetStatus === 'VALIDATED' && selection.selected.length < NB_MAX_CHECK)"
+                <mat-checkbox *ngIf="selection.isSelected(project) || ((element.sheetStatus == null || element.sheetStatus === 'VALIDATED') && selection.selected.length < NB_MAX_CHECK)"
                     (click)="$event.stopPropagation() || onClick($event,project)"
                     (change)="$event ? selection.toggle(project) : null" [checked]="selection.isSelected(project)">
                 </mat-checkbox>
@@ -126,5 +126,5 @@
     [matBadge]="selection.selected.length"
     [matBadgeColor]="selection.selected.length >= NB_MAX_CHECK ? 'warn' : 'accent'"
     (click)="onChooseFilenameDialog(this.selection.selected)" >
-    Générer fiche PDF
+    Générer book PDF
 </button>

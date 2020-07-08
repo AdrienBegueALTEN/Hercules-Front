@@ -168,9 +168,7 @@ export class MissionsComponent implements OnInit {
         this.missions = data;
         this.arrayView.modifyArray(this.missions);
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => console.log(err)
     )
   }
 

@@ -193,7 +193,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
  * @param key Field in the JSON nest
  */
   nestedFilterCheck(search, data, key) {
-    console.log(search);
     if (typeof data[key] === 'object') {
       for (const k in data[key]) {
         if (data[key][k] !== null) {
@@ -221,7 +220,9 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
  * @returns Number of validated missions inside the missions array
  */
   public getNbCheckableRow() : number {
-    const checkableMission : any[] = this.dataSource.data.filter(row => row.sheetStatus === SheetStatus.VALIDATED);
+    const checkableMission : any[] = this.dataSource.data
+    if (this.userIsManager)
+      checkableMission.filter(row => row.sheetStatus === SheetStatus.VALIDATED);
     var nbCheckableRow : number = 0;
     checkableMission.forEach(mission => nbCheckableRow += mission.lastVersion.projects.length + 1);
     return nbCheckableRow;
@@ -237,7 +238,7 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
     else {
       var row : number = 0, subRow : number, nbProjects : number;
       while (row < this.dataSource.data.length && this.selection.selected.length < this.NB_MAX_CHECK) {
-        if (this.dataSource.data[row].sheetStatus === SheetStatus.VALIDATED) {
+        if (this.dataSource.data[row].sheetStatus == null || this.dataSource.data[row].sheetStatus === SheetStatus.VALIDATED) {
           subRow = 0;
           nbProjects = this.dataSource.data[row].lastVersion.projects.length;
           this.selection.select(this.dataSource.data[row]);
