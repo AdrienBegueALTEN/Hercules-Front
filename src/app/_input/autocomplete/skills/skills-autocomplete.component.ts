@@ -24,17 +24,14 @@ export class SkillsAutocompleteComponent  {
    * Add a skill to the array
    * @param event Mat chip event containign the name of a skill
    */
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
+  add(event : MatChipInputEvent): void {
     const value = event.value;
+    const input = event.input;
 
-    if ((value || '').trim()) {
-      this.skills.push(value);
-    }
+    if ((value || '').trim())
+      this.skills.push(value.toUpperCase());
 
-    if (input) {
-      input.value = '';
-    }
+    if (input) input.value = '';
   }
 
   /**
@@ -44,9 +41,7 @@ export class SkillsAutocompleteComponent  {
   remove(skill: string): void {
     const index = this.skills.indexOf(skill);
 
-    if (index >= 0) {
-      this.skills.splice(index, 1);
-    }
+    if (index >= 0) this.skills.splice(index, 1);
   }
 
   /**
@@ -56,5 +51,4 @@ export class SkillsAutocompleteComponent  {
   public getSkills(){
     return this.skills;
   }
-
 }
