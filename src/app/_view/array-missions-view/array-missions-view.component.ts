@@ -1,12 +1,11 @@
 import { SheetStatus } from 'src/app/_enums/sheet-status.enum';
-import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, Output, EventEmitter, AfterViewInit} from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, AfterViewInit} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AuthService } from 'src/app/_services/auth.service';
 import { MissionService } from 'src/app/_services/mission.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatInput } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { MessageDialogComponent } from 'src/app/_dialog/message/message-dialog.component';
@@ -135,7 +134,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(){
     this.refreshDatasource();
   }
-
 
   /**
  * Changes the value of the datasource with a new missions array
