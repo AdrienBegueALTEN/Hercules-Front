@@ -69,6 +69,8 @@ export class ConsultantsComponent implements OnInit {
   ) {}
 
   public ngOnInit() : void {
+    if (!this.userIsManager)
+      this.columnsToDisplay.splice(this.MANAGER_COLUMN_INDEX, 0, 'manager');
     this._consultantService.getConsultants(false).subscribe(
       (consultants) => {
         this.consultants = consultants;
@@ -131,9 +133,9 @@ export class ConsultantsComponent implements OnInit {
   public onOnlyMine() : void {
     this.onlyMine = !this.onlyMine;
     if (this.onlyMine) {
-      const managerColumnIndex = this.columnsToDisplay.findIndex(column => column === 'manager')
+      const managerColumnIndex = this.columnsToDisplay.findIndex(column => column === 'manager');
       this.columnsToDisplay.splice(managerColumnIndex, 1);
-    } else this.columnsToDisplay.splice(this.MANAGER_COLUMN_INDEX, 0, 'manager')
+    } else this.columnsToDisplay.splice(this.MANAGER_COLUMN_INDEX, 0, 'manager');
     this.refreshDatasource();
   }
 

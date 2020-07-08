@@ -93,16 +93,21 @@ export class DatatableComponent implements AfterViewInit,OnChanges {
 
   /**
    * Sorts the datasource by the chosen column
-   */
+   */col
   private _sortAndPagination() : void {
     this.dataSource.sortingDataAccessor = (item, header) => {
-      if (header === 'releaseDate')
-        return ((!!item.releaseDate) ? "2" : "1").concat(item.lastname, item.firstname);
-      else if(header==='admin')
-        return (item.admin ? "1" : "2").concat(item.lastname, item.firstname);
-      else if(header==='missionNb')
-        return (item.missions.length);
-      else return item[header];
+      switch (header) {
+        case 'releaseDate' :
+          return (!!item.releaseDate ? '2' : '1').concat(item.firstname, item.lastname);
+        case 'admin' :
+          return (item.admin ? '1' : '2').concat(item.firstname, item.lastname);
+        case 'missionNb' :
+          return (item.missions.length);
+        case 'manager' :
+          return item.manager.firstname + item.manager.lastname;
+        default :
+          return item[header];
+      }
     };
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
