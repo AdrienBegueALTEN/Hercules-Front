@@ -25,7 +25,7 @@
   <mat-card-actions>
     <div *ngIf="userIsManager && consultant.manager.id === user.id">
       <button mat-button color="accent" (click)="onSetReleaseDate()">
-        {{consultant.releaseDate ? 'Modifier' : 'Indiquer'}} date de sortie des effectifs
+        {{consultant.releaseDate ? 'Modifier/annuler' : 'Indiquer'}} date de sortie des effectifs
       </button>
       <button mat-button color="warn" *ngIf="consultantsMissions?.length === 0"
         (click)="onDelete()">Supprimer ce consultant en base</button>
