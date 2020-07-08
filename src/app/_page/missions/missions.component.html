@@ -25,7 +25,7 @@
 </ng-template>
 
 <ng-template #complex>
-    <form [formGroup]="grp">
+    <form [formGroup]="grp" (keyup.enter)="onSearch();cooldownTime();emitEventToChild()">
         <table class="inputable">
             <tr><td>
                 <mat-form-field>
@@ -54,7 +54,8 @@
             <tr><td colspan="2">
                 <app-consultant-autocomplete *ngIf="!!consultants" 
                     [consultants]="consultants" 
-                    (sendFormCtrl)="grp.addControl(CONSULTANT_KEY, $event)">
+                    (sendFormCtrl)="grp.addControl(CONSULTANT_KEY, $event)"
+                    >
                 </app-consultant-autocomplete>
              </td></tr>
             <tr><td colspan="2">

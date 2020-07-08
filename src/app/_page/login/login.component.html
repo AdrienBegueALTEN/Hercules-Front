@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card (keyup.enter)="onSubmit()">
     <mat-card-header>
         <mat-card-title>
             <img src="/assets/img/logo/alten.png" alt="Logo ALTEN">Connexion</mat-card-title>
@@ -11,7 +11,7 @@
               </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Mot de passe</mat-label>
-                <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" (keyup.enter)="onSubmit()">
+                <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
                 <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
                   <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
