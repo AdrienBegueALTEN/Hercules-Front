@@ -119,7 +119,7 @@
         </div>
     </div>
 </ng-template>
-<p *ngIf="this.selection.selected.length >= NB_MAX_CHECK" style="color: red">Vous ne pouvez pas sélectionner plus de {{NB_MAX_CHECK}} mission et/ou projets.</p>
+<p *ngIf="this.selection.selected.length >= NB_MAX_CHECK" style="color: red">Vous ne pouvez pas sélectionner plus de {{NB_MAX_CHECK}} mission(s) et/ou projet(s).</p>
 <button mat-raised-button 
     *ngIf="this.selection.selected.length > 0"
     class="pdfButton" color="primary"
