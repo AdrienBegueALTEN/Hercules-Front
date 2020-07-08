@@ -27,7 +27,7 @@
           Lien de réinitialisation de mot de passe
         </button>
         <button mat-button color="accent" (click)="onSetReleaseDate()">
-          {{manager.releaseDate ? 'Modifier' : 'Indiquer'}} date de sortie des effectifs
+          {{manager.releaseDate ? 'Modifier/annuler' : 'Indiquer'}} date de sortie des effectifs
         </button>
         <button mat-button color="warn" *ngIf="manager.consultants.length === 0"
           (click)="onDelete()">Supprimer ce manager en base</button>

@@ -4,14 +4,13 @@
             <tr>
                 <td><mat-form-field>
                     <mat-label>Intitulé du diplôme</mat-label>
-                    <input matInput type="text"
+                    <input matInput maxlength="100"
                     [formControlName]="ENTITLED_KEY"
-                    (change)="onChange(ENTITLED_KEY)"
-                    >
+                    (change)="onChange(ENTITLED_KEY)">
                 </mat-form-field></td>
                 <td><mat-form-field>
                     <mat-label>Niveau du diplôme</mat-label>
-                    <input matInput type="text"
+                    <input matInput maxlength="100"
                     [formControlName]="LEVEL_KEY"
                     (change)="onChange(LEVEL_KEY)">
                 </mat-form-field></td>
@@ -19,7 +18,7 @@
             <tr>
                 <td><mat-form-field>
                     <mat-label>Etablissement d'obtention du diplôme</mat-label>
-                    <input matInput type="text"
+                    <input matInput maxlength="100"
                     [formControlName]="ESTABLISHMENT_KEY"
                     (change)="onChange(ESTABLISHMENT_KEY)">
                 </mat-form-field></td>

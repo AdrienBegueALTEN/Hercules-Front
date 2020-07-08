@@ -80,9 +80,9 @@ export class ConsultantDiplomaComponent implements OnInit {
     const maxYear : number = new Date().getFullYear();
     const minYear : number = maxYear - 90;
     this.grp = new FormBuilder().group({
-      establishment: [this.diploma?.establishment, [Validators.required]],
-      entitled: [this.diploma?.entitled, [Validators.required]],
-      level: [this.diploma?.level, [Validators.required]],
+      establishment: [this.diploma?.establishment, [Validators.required, Validators.maxLength(100)]],
+      entitled: [this.diploma?.entitled, [Validators.required, Validators.maxLength(100)]],
+      level: [this.diploma?.level, [Validators.required, Validators.maxLength(100)]],
       year: [this.diploma?.year, [Validators.required, Validators.min(minYear), Validators.max(maxYear)]]
     });
   }
