@@ -2,7 +2,6 @@ import { MatTabGroup } from '@angular/material/tabs';
 import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { newArray } from '@angular/compiler/src/util';
 
 /**
  * This component provides the function and events needed for editing projects
@@ -34,7 +33,7 @@ export class ProjectsEditComponent  {
   /**
    * List of the forms of the projects
    */
-  public projectsForms : FormGroup[] = newArray(1);
+  public projectsForms : FormGroup[] = [];
 
   /**
    * Emits an event when a picture is added
