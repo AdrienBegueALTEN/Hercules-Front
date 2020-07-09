@@ -8,7 +8,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 
 const CONST_NEW : string = 'newPassword';
 const CONST_CONFIRMATION : string = 'confirmation';
-const PASSWORD_PATTERN : string = '(?=.*\\d)(?=.*[a-zA-Z])(?=.*[#{}\\[\\]()<>@%$+*\\-_~/!?])([a-zA-Z\\d#{}\\[\\]()<>@%$+*\\-_~/!?]{8,16})';
+const PASSWORD_PATTERN : string = '(?=.*\\d)(?=.*[a-zA-Z])(?=.*[#{}\\[\\]()<>@%$+*\\-_~/!,;:=^&|`"\'?])([a-zA-Z\\d#{}\\[\\]()<>@%$+*\\-_~/!,;:=^&|`"\'?]{8,16})';
 
 export function checkConfirmation (ctrl : AbstractControl) {
   let res : any = 
