@@ -118,6 +118,10 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
       this._createMissionConsultantStep();
   }
 
+  /**
+   * Function activated when the user presses the enter key, then it goes to the next step if the current step is valid
+   * @param stepper object that manages the MatStepper from angular
+   */
   onEnter(stepper : MatStepper) : void {
     if(stepper.selectedIndex === CONSULTANT_STEP && this.consultantForm.valid)
       stepper.next();
