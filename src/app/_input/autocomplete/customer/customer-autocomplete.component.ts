@@ -1,14 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormControl, Validators, ValidatorFn } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-
-/**
- * Autocomplete component for customers
- */
-const _filter = (name : string, value : string) : boolean => {
-  return name.toLowerCase().indexOf(value) >= 0;
-};
 
 /**
  * Autocomplete component for customers
@@ -22,14 +15,6 @@ export class CustomerAutocompleteComponent implements OnInit {
    * List of customers
    */
   @Input() customers : any[];
-  /**
-   * Tell the user writing right
-   */
-  @Input() canCreateNew : boolean = false;
-  /**
-   * A value is required
-   */
-  @Input() required : boolean = false;
 
   /**
    * From control of the input
@@ -54,9 +39,7 @@ export class CustomerAutocompleteComponent implements OnInit {
   @Output() newCustomer = new EventEmitter();
 
   constructor() {
-    var validators : ValidatorFn[] = this.canCreateNew ? [this._checkSelection] : [] ;
-    if (this.required) validators.push(Validators.required);
-    this.ctrl = new FormControl('', validators);
+    this.ctrl = new FormControl('', [Validators.required, this._checkSelection]);
   }
 
   /**
@@ -99,8 +82,8 @@ export class CustomerAutocompleteComponent implements OnInit {
     }
 
     const filteredValue = name.toLowerCase();
-    const filteredCustomers = this.customers.filter(customer => _filter(customer.name, filteredValue));
-    this.showNewOpt = this.canCreateNew && filteredCustomers.length === 0;
+    const filteredCustomers = this.customers.filter(customer => { return customer.name.toLowerCase().indexOf(filteredValue) >= 0 } );
+    this.showNewOpt = filteredCustomers.length === 0;
     return filteredCustomers;
   }
 

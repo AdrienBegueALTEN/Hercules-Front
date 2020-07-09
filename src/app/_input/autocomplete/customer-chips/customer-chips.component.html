@@ -1,0 +1,23 @@
+<mat-form-field>
+  <mat-chip-list #chipList>
+    <mat-chip
+      *ngFor="let customer of selectedCustomers"
+      (removed)="remove(customer)">
+      {{customer.name}}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <input #input
+      placeholder="Client"
+      [formControl]="ctrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="[]">
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="selected($event)">
+    <div *ngFor="let customer of filteredCustomers | async">
+    <mat-option *ngIf="!selectedCustomers.includes(customer)" [value]="customer">
+      {{customer.name}}
+    </mat-option>
+  </div>
+  </mat-autocomplete>
+</mat-form-field>

@@ -1,3 +1,4 @@
+import { CustomerChipsComponent } from './../../_input/autocomplete/customer-chips/customer-chips.component';
 import { CustomerService } from './../../_services/customer.service';
 import { ConsultantService } from 'src/app/_services/consultant.service';
 import { MissionService } from 'src/app/_services/mission.service';
@@ -36,7 +37,7 @@ export class MissionsComponent implements OnInit {
   /**
    * Customer key used for advanced search
    */
-  public readonly CUSTOMER_KEY : string = 'customer';
+  public readonly CUSTOMER_KEY : string = 'customers';
   /**
    * Activity sector key used for advanced search
    */
@@ -54,6 +55,10 @@ export class MissionsComponent implements OnInit {
    * Gets activity sector autocomplete feature from the child component
    */
   @ViewChild(ActivitySectorAutocompleteComponent) activtySector: ActivitySectorAutocompleteComponent;
+    /**
+   * Gets skills customers feature from the child component
+   */
+  @ViewChild(CustomerChipsComponent) customerChips: CustomerChipsComponent;
   /**
    * Gets skills autocomplete feature from the child component
    */
@@ -180,12 +185,14 @@ export class MissionsComponent implements OnInit {
    */
   public onSearch() : void {
     var criteria : object = {};
+    var values : number[];
 
     if (this.grp.controls[this.TITLE_KEY].value !== '')
       criteria[this.TITLE_KEY] = this.grp.controls[this.TITLE_KEY].value;
 
-    if (this.grp.controls[this.CUSTOMER_KEY]?.valid)
-      criteria[this.CUSTOMER_KEY] = this.grp.controls[this.CUSTOMER_KEY].value.id;
+    values = this.customerChips.getValues();
+    if (values.length > 0)
+      criteria[this.CUSTOMER_KEY] = values;
 
     if (this.grp.controls[this.CONSULTANT_KEY]?.valid)
       criteria[this.CONSULTANT_KEY] = this.grp.controls[this.CONSULTANT_KEY].value.id;

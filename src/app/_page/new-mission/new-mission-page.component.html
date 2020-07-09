@@ -35,8 +35,6 @@
 <ng-template #customersList>
   <app-customer-autocomplete *ngIf="!!customers"
     [customers]="customers"
-    [canCreateNew]="true"
-    [required]="true"
     (sendFormCtrl)="getCustomerForm($event)"
     (newCustomer)="newCustomer = true">
   </app-customer-autocomplete>

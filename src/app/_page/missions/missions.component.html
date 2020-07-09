@@ -40,10 +40,8 @@
                 </mat-form-field>
             </td></tr>
             <tr><td>
-                <app-customer-autocomplete *ngIf="!!customers"
-                    [customers]="customers"
-                    (sendFormCtrl)="grp.addControl(CUSTOMER_KEY, $event)">
-                </app-customer-autocomplete>
+                <app-customer-chips *ngIf="!!customers" [customers]="customers">
+                </app-customer-chips>
             </td>
             <td>
                 <app-activity-sector-autocomplete *ngIf="!!customers"
