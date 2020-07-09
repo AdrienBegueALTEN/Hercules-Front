@@ -62,11 +62,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
  * If false, displays every single mission
  */
   onlyMine = true;
-  /**
-   * If true, the main toggle to check all validated mission is checked
-   * If false, the main toglle is not checked
-   */
-  mainBoxChecked = false;
 
   /**
  * Contains missions fetched from child component
@@ -223,9 +218,9 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
  * @returns Number of validated missions inside the missions array
  */
   public getNbCheckableRow() : number {
-    const checkableMission : any[] = this.dataSource.data
+    var checkableMission : any[] = this.dataSource.data
     if (this.userIsManager)
-      checkableMission.filter(row => row.sheetStatus === SheetStatus.VALIDATED);
+      checkableMission = checkableMission.filter(row => row.sheetStatus === SheetStatus.VALIDATED);
     var nbCheckableRow : number = 0;
     checkableMission.forEach(mission => nbCheckableRow += mission.lastVersion.projects.length + 1);
     return nbCheckableRow;
@@ -236,9 +231,8 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
  * Toggle every validated mission or untoggle everything
  */
   public masterToggle() : void {
-    if (this.mainBoxChecked){
-      this.mainBoxChecked = false;
-      this.selection.clear(); }
+    if (this.selection.selected.length === this.getNbCheckableRow())
+      this.selection.clear(); 
     else {
       var row : number = 0, subRow : number, nbProjects : number;
       while (row < this.dataSource.data.length && this.selection.selected.length < this.NB_MAX_CHECK) {
@@ -253,7 +247,6 @@ export class ArrayMissionsViewComponent implements OnInit, AfterViewInit {
         }
         row++;
       };
-      this.mainBoxChecked = true;
     }
   }
 
