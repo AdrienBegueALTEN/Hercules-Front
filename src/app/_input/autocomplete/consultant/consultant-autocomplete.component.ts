@@ -121,7 +121,7 @@ export class ConsultantAutocompleteComponent implements OnInit {
 
   /**
    * Function to display a consutlant in the results of the autocomplete. 
-   * It show the firstname and lastname of a consutlant.
+   * It show the firstname and lastname of a consultant.
    * @param consultant Constultant to display
    * @returns Identity of a consultant as a string
    */

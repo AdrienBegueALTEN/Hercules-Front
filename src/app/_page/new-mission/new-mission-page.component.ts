@@ -11,7 +11,6 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { HttpStatus } from '../../_enums/http-status.enum';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
-import { MessageDialogComponent } from '../../_dialog/message/message-dialog.component';
 import { ConsultantAutocompleteComponent } from '../../_input/autocomplete/consultant/consultant-autocomplete.component';
 import { Router } from '@angular/router';
 
@@ -117,6 +116,13 @@ export class NewMissionPageComponent implements OnInit, AfterContentChecked {
   onStepChange(event : StepperSelectionEvent) : void {
     if (event.selectedIndex === NEW_MISSION_STEP)
       this._createMissionConsultantStep();
+  }
+
+  onEnter(stepper : MatStepper) : void {
+    if(stepper.selectedIndex === CONSULTANT_STEP && this.consultantForm.valid)
+      stepper.next();
+    else if(stepper.selectedIndex === CUSTOMER_STEP && this.customerForm.valid)
+      stepper.next();
   }
 
   /**

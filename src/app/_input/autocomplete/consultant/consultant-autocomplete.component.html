@@ -1,7 +1,8 @@
 <form>
   <mat-form-field>
     <mat-label>Rechercher un consultant</mat-label>
-    <input type="text" matInput [formControl]="ctrl" [matAutocomplete]="auto" [required]="required">
+    <input type="text" matInput [formControl]="ctrl" [matAutocomplete]="auto" [required]="required" 
+           #trigger="matAutocompleteTrigger" (keydown.enter)="trigger.closePanel()">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         <div *ngIf="displayInGrps">
           <mat-optgroup *ngFor="let grp of filteredConsultants | async" [label]="grp.name">
@@ -23,7 +24,7 @@
             Nouveau consultant
           </button>
         </mat-option>
-    </mat-autocomplete>
+      </mat-autocomplete>
   </mat-form-field>
 </form>
 <button *ngIf="canCreateNew" class="blue-shape" mat-mini-fab (click)="onNew()" title="Créer un nouveau consultant">
