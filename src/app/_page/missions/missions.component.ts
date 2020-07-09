@@ -10,6 +10,7 @@ import { ActivitySectorAutocompleteComponent } from 'src/app/_input/autocomplete
 import { SkillsAutocompleteComponent } from 'src/app/_input/autocomplete/skills/skills-autocomplete.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject, Observable } from 'rxjs';
+import { isEmpty } from 'rxjs/operators';
 
 /**
  * This component is the core component of the missions table
@@ -194,7 +195,7 @@ export class MissionsComponent implements OnInit {
     if (values.length > 0)
       criteria[this.CUSTOMER_KEY] = values;
 
-    if (this.grp.controls[this.CONSULTANT_KEY]?.valid)
+    if (this.grp.controls[this.CONSULTANT_KEY].value && this.grp.controls[this.CONSULTANT_KEY]?.valid)
       criteria[this.CONSULTANT_KEY] = this.grp.controls[this.CONSULTANT_KEY].value.id;
 
     if (this.grp.controls[this.LOCATION_KEY].value !== '')
@@ -203,7 +204,7 @@ export class MissionsComponent implements OnInit {
     if (this.grp.controls[this.ACTIVITY_SECTOR_KEY]?.value !== '')
       criteria[this.ACTIVITY_SECTOR_KEY] = this.grp.controls[this.ACTIVITY_SECTOR_KEY].value;
     
-    if(this.skills.getSkills().length>0)
+    if(this.skills.getSkills().length > 0)
       criteria[this.SKILLS_KEY] = this.skills.getSkills();
 
     this._missionService.advancedSearch(criteria).subscribe(
