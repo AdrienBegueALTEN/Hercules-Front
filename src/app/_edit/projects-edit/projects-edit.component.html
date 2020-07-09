@@ -1,4 +1,4 @@
-<mat-tab-group #tabGrp>
+<mat-tab-group #tabGrp [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
   <ng-container *ngIf="!!projects">
     <mat-tab *ngFor="let project of projects; let i = index">
       <ng-template mat-tab-label>

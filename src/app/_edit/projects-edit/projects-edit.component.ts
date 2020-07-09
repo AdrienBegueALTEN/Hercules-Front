@@ -1,15 +1,15 @@
 import { MatTabGroup } from '@angular/material/tabs';
 import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { newArray } from '@angular/compiler/src/util';
 
 /**
  * This component provides the function and events needed for editing projects
  */
 @Component({
   selector: 'app-projects-edit',
-  templateUrl: './projects-edit.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './projects-edit.component.html'
 })
 export class ProjectsEditComponent  {
   /**
@@ -27,9 +27,14 @@ export class ProjectsEditComponent  {
   @Input() allowCreationAndDeletion : boolean = false;
 
   /**
+   * Manage tab selection
+   */
+  public selected : FormControl = new FormControl(0);
+
+  /**
    * List of the forms of the projects
    */
-  public projectsForms : FormGroup[] = [null, null, null, null, null];
+  public projectsForms : FormGroup[] = newArray(1);
 
   /**
    * Emits an event when a picture is added
@@ -76,6 +81,7 @@ export class ProjectsEditComponent  {
    */
   public receiveFormGrp(grp : FormGroup, index : number) : void {
     this.projectsForms[index] = grp;
+    this.selected.setValue(this.projects.length - 1);
   }
 
   /**
