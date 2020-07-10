@@ -1,0 +1,23 @@
+<mat-form-field>
+  <mat-chip-list #chipList>
+    <mat-chip
+      *ngFor="let sector of selectedSectors"
+      (removed)="remove(sector)">
+      {{sector}}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <input #input
+      placeholder="Secteur d'activité"
+      [formControl]="ctrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="[]">
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <div *ngFor="let sector of filteredSectors | async">
+    <mat-option *ngIf="!selectedSectors.includes(sector)" [value]="sector">
+      {{sector}}
+    </mat-option>
+  </div>
+  </mat-autocomplete>
+</mat-form-field>

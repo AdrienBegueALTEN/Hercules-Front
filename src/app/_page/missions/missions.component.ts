@@ -1,3 +1,4 @@
+import { ActivitySectorChipsComponent } from './../../_input/autocomplete/activity-sector-chips/activity-sector-chips.component';
 import { CustomerChipsComponent } from './../../_input/autocomplete/customer-chips/customer-chips.component';
 import { CustomerService } from './../../_services/customer.service';
 import { ConsultantService } from 'src/app/_services/consultant.service';
@@ -6,11 +7,9 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ArrayMissionsViewComponent } from 'src/app/_view/array-missions-view/array-missions-view.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivitySectorAutocompleteComponent } from 'src/app/_input/autocomplete/activity-sector/activity-sector-autocomplete.component';
 import { SkillsAutocompleteComponent } from 'src/app/_input/autocomplete/skills/skills-autocomplete.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject, Observable } from 'rxjs';
-import { isEmpty } from 'rxjs/operators';
 
 /**
  * This component is the core component of the missions table
@@ -42,7 +41,7 @@ export class MissionsComponent implements OnInit {
   /**
    * Activity sector key used for advanced search
    */
-  public readonly ACTIVITY_SECTOR_KEY : string = 'activitySector';
+  public readonly ACTIVITY_SECTOR_KEY : string = 'activitySectors';
   /**
    * Skills key used for advanced search
    */
@@ -53,11 +52,11 @@ export class MissionsComponent implements OnInit {
    */
   @ViewChild(ArrayMissionsViewComponent) arrayView: ArrayMissionsViewComponent;
   /**
-   * Gets activity sector autocomplete feature from the child component
+   * Gets activity sector feature from the child component
    */
-  @ViewChild(ActivitySectorAutocompleteComponent) activtySector: ActivitySectorAutocompleteComponent;
+  @ViewChild(ActivitySectorChipsComponent) sectorsChips: ActivitySectorChipsComponent;
     /**
-   * Gets skills customers feature from the child component
+   * Gets customers feature feature from the child component
    */
   @ViewChild(CustomerChipsComponent) customerChips: CustomerChipsComponent;
   /**
@@ -82,17 +81,17 @@ export class MissionsComponent implements OnInit {
  * Consultants array
  * Contains every consultant
  */
-  consultants : any[];
+  public consultants : any[];
   /**
    * Customers array
    * Contains every customer
    */
-  customers : any[];
+  public customers : any[];
   /**
    * Missions array
    * Contains every mission allowed to be fetched
    */
-  missions: any[];
+  public missions : any[];
   /**
    * True : Shows advanced search
    * False : Hides advanced search
@@ -115,26 +114,26 @@ export class MissionsComponent implements OnInit {
   /**
    * Contains user ID
    */
-  public userId = this._authService.getUser().id;
+  public userId : number = this._authService.getUser().id;
   /**
    * Default columns to be displayed in the missions table
    */
-  colsToDisp = ['select','title','consultant','customer','sheetStatus'];
+  public colsToDisp : string[] = ['select','title','consultant','customer','sheetStatus'];
   /**
    * Cooldown is used to limit the number of requests by the user when he uses advanced search
    * The user can do one request per second.
    * True : Cooldown is enabled. The user can't temporarily use the advanced search
    * False : Cooldown is disabled. The user can use the advanced search
    */
-  cooldownOn = false;
+  public cooldownOn : boolean = false;
   /**
    * Contains all events
    */
-  public events: Observable<void> = this.eventsSubject.asObservable();
+  public events : Observable<void> = this.eventsSubject.asObservable();
 
   constructor(
-    private _missionService: MissionService,
-    private _authService: AuthService,
+    private _missionService : MissionService,
+    private _authService : AuthService,
     private _consultantService : ConsultantService,
     private _customerService : CustomerService
   ) {}
@@ -158,11 +157,10 @@ export class MissionsComponent implements OnInit {
    * Toggles advanced search
    * When advanced search is enabled, the basic search is disabled and any content inside the basic search is cleared
    */
-  public toggleAdvancedSearch(){
+  public toggleAdvancedSearch() : void{
     this.showAdvancedSearch = !this.showAdvancedSearch;
-    if(!this.showAdvancedSearch){
+    if (!this.showAdvancedSearch)
       this.setAllMissions();
-    }
   }
   
   /**
@@ -186,14 +184,15 @@ export class MissionsComponent implements OnInit {
    */
   public onSearch() : void {
     var criteria : object = {};
-    var values : number[];
 
     if (this.grp.controls[this.TITLE_KEY].value !== '')
       criteria[this.TITLE_KEY] = this.grp.controls[this.TITLE_KEY].value;
 
-    values = this.customerChips.getValues();
-    if (values.length > 0)
-      criteria[this.CUSTOMER_KEY] = values;
+    if (this.customerChips.selectedCustomers.length > 0) {
+      var customerCriteria : number[] = [];
+      this.customerChips.selectedCustomers.forEach(customer => customerCriteria.push(customer.id));
+      criteria[this.CUSTOMER_KEY] = customerCriteria;
+    }
 
     if (this.grp.controls[this.CONSULTANT_KEY].value && this.grp.controls[this.CONSULTANT_KEY]?.valid)
       criteria[this.CONSULTANT_KEY] = this.grp.controls[this.CONSULTANT_KEY].value.id;
@@ -201,8 +200,8 @@ export class MissionsComponent implements OnInit {
     if (this.grp.controls[this.LOCATION_KEY].value !== '')
       criteria[this.LOCATION_KEY] = this.grp.controls[this.LOCATION_KEY].value;
 
-    if (this.grp.controls[this.ACTIVITY_SECTOR_KEY]?.value !== '')
-      criteria[this.ACTIVITY_SECTOR_KEY] = this.grp.controls[this.ACTIVITY_SECTOR_KEY].value;
+    if (this.sectorsChips.selectedSectors.length > 0)
+      criteria[this.ACTIVITY_SECTOR_KEY] = this.sectorsChips.selectedSectors;
     
     if(this.skills.getSkills().length > 0)
       criteria[this.SKILLS_KEY] = this.skills.getSkills();

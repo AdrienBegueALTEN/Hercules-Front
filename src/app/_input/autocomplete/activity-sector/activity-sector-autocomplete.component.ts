@@ -41,18 +41,13 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
    */
   @Output() sendFormCtrl = new EventEmitter<FormControl>();
 
-  constructor() {}
-
   /**
    * Initialize the activity sector array.
    */
   public ngOnInit() : void {
     this.activitySectors = this._getActivitySectorsSet(this.customers);
     this.filteredActivitySectors = this.ctrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
+      .pipe(startWith(''), map(value => this._filter(value)));
     this.sendFormCtrl.emit(this.ctrl);
   }
 
@@ -61,7 +56,7 @@ export class ActivitySectorAutocompleteComponent implements OnInit {
    * @returns Error message
    */ 
   public getErrorText() : string {
-    return  this.ctrl.hasError(CtrlError.REQUIRED) ? 'Le secteur d\'activité du client doit être renseigné.' : '';
+    return this.ctrl.hasError(CtrlError.REQUIRED) ? 'Le secteur d\'activité du client doit être renseigné.' : '';
   }
 
   /**

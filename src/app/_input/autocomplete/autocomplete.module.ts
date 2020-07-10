@@ -1,3 +1,4 @@
+import { ActivitySectorChipsComponent } from './activity-sector-chips/activity-sector-chips.component';
 import { CustomerChipsComponent } from './customer-chips/customer-chips.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,7 +18,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ActivitySectorAutocompleteComponent,
     SkillsAutocompleteComponent,
     ConsultantManagerComponent,
-    CustomerChipsComponent
+    CustomerChipsComponent,
+    ActivitySectorChipsComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ActivitySectorAutocompleteComponent,
     SkillsAutocompleteComponent,
     ConsultantManagerComponent,
-    CustomerChipsComponent
+    CustomerChipsComponent,
+    ActivitySectorChipsComponent
   ]
 })
 export class AutocompleteModule { }

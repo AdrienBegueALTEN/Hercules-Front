@@ -39,16 +39,10 @@
                     <input matInput [formControlName]="LOCATION_KEY" placeholder="Ville ou pays où s'est déroulée la mission">
                 </mat-form-field>
             </td></tr>
-            <tr><td>
-                <app-customer-chips *ngIf="!!customers" [customers]="customers">
-                </app-customer-chips>
-            </td>
-            <td>
-                <app-activity-sector-autocomplete *ngIf="!!customers"
-                    [customers]="customers"
-                    (sendFormCtrl)="grp.addControl(ACTIVITY_SECTOR_KEY, $event)">
-                </app-activity-sector-autocomplete>
-            </td></tr>
+            <tr *ngIf="!!customers">
+                <td><app-customer-chips [customers]="customers"></app-customer-chips></td>
+                <td><app-activity-sector-chips [customers]="customers"></app-activity-sector-chips></td>
+            </tr>
             <tr><td colspan="2">
                 <app-consultant-autocomplete *ngIf="!!consultants" 
                     [consultants]="consultants" 
