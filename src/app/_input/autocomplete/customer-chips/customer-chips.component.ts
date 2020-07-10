@@ -18,7 +18,7 @@ export class CustomerChipsComponent implements OnInit {
   @ViewChild('input') public input: ElementRef<HTMLInputElement>;
   @ViewChild('auto') public matAutocomplete: MatAutocomplete;
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.filteredCustomers = this.ctrl.valueChanges
     .pipe(
       startWith(''),
@@ -27,7 +27,11 @@ export class CustomerChipsComponent implements OnInit {
     );
   }
 
-  remove(customer : string): void {
+  /**
+   * Removes a customer
+   * @param customer Customer to remove
+   */
+  public remove(customer : string): void {
     const index = this.selectedCustomers.indexOf(customer);
 
     if (index >= 0) {
@@ -35,7 +39,10 @@ export class CustomerChipsComponent implements OnInit {
     }
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
+  /**
+   * Manage the selection of a customer
+   */
+  public selected(event: MatAutocompleteSelectedEvent): void {
     this.selectedCustomers.push(event.option.value);
     this.input.nativeElement.value = '';
     this.ctrl.setValue('');

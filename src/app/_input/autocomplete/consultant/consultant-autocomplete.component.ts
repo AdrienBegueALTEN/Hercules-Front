@@ -4,10 +4,6 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/_services/auth.service';
 
-/**
- * Autocomplete component for consultant
- */
-
 const _filterConsultant = (consultant : any, value : string) : boolean => {
   return consultant.firstname.toLowerCase().concat(' ', consultant.lastname.toLowerCase()).indexOf(value) === 0 ||
   consultant.lastname.toLowerCase().indexOf(value) === 0;

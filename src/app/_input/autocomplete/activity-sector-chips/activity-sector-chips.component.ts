@@ -25,12 +25,19 @@ export class ActivitySectorChipsComponent implements OnInit {
       .pipe(startWith(''), map(value => this._filter(value)));
   }
 
+  /**
+   * Removes an activity sector
+   * @param sector Activity sector to remove
+   */
   public remove(sector : string) : void {
     const index = this.selectedSectors.indexOf(sector);
     if (index >= 0)
       this.selectedSectors.splice(index, 1);
   }
 
+  /**
+   * Manage the selection of an activity sector
+   */
   public selected(event: MatAutocompleteSelectedEvent) : void {
     this.selectedSectors.push(event.option.value);
     this.input.nativeElement.value = '';

@@ -18,13 +18,13 @@ export class SkillsAutocompleteComponent  {
   /**
    * Contains all skills
    */
-  skills: any[] = [];
+  public skills : any[] = [];
 
   /**
    * Add a skill to the array
    * @param event Mat chip event containign the name of a skill
    */
-  add(event : MatChipInputEvent): void {
+  public add(event : MatChipInputEvent): void {
     const value = event.value;
     const input = event.input;
 
@@ -38,7 +38,7 @@ export class SkillsAutocompleteComponent  {
    * Removes a skill
    * @param skill Skill to remove
    */
-  remove(skill: string): void {
+  public remove(skill: string): void {
     const index = this.skills.indexOf(skill);
 
     if (index >= 0) this.skills.splice(index, 1);

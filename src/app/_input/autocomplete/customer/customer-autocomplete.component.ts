@@ -45,7 +45,7 @@ export class CustomerAutocompleteComponent implements OnInit {
   /**
    * Initialize the autocompletre component with the filtering function.
    */
-  ngOnInit() {
+  public ngOnInit() {
     this.filteredCustomers = this.ctrl.valueChanges
       .pipe(
         startWith(''),
@@ -60,14 +60,14 @@ export class CustomerAutocompleteComponent implements OnInit {
    * @param customer Customer object
    * @returns The customer name
    */
-  displayFn(customer : any) : string {
+  public displayFn(customer : any) : string {
     return customer ? customer.name : '';
   }
   
   /**
    * When the new button is clicked, the newCustomer event is emitted.
    */
-  onNew() { this.newCustomer.emit(); }
+  public onNew() { this.newCustomer.emit(); }
 
   /**
    * Filter the customer according to a value.
