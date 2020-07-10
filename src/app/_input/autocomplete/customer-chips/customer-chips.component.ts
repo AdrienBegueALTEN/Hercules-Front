@@ -4,18 +4,41 @@ import { Observable } from 'rxjs';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { startWith, map } from 'rxjs/operators';
 
+/**
+ * Manages the customer chips in the advanced search bar
+ */
 @Component({
   selector: 'app-customer-chips',
   templateUrl: './customer-chips.component.html'
 })
 export class CustomerChipsComponent implements OnInit {
+
+  /**
+   * Contains all customers inside customers array
+   */
   @Input() public customers : any[];
   
+  /**
+   * Form control
+   */
   public ctrl = new FormControl();
+  /**
+   * Customers filtered by the user's string
+   */
   public filteredCustomers : Observable<any[]>;
+  /**
+   * Customers selected by the user
+   */
   public selectedCustomers : any[] = [];
 
+
+  /**
+   * Input child component
+   */
   @ViewChild('input') public input: ElementRef<HTMLInputElement>;
+  /**
+   * Autocomplete material component
+   */
   @ViewChild('auto') public matAutocomplete: MatAutocomplete;
 
   public ngOnInit(): void {
