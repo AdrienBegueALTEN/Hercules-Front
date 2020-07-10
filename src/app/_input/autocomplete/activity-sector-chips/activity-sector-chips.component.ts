@@ -4,19 +4,43 @@ import { Observable } from 'rxjs';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { startWith, map } from 'rxjs/operators';
 
+/**
+ * Manages the activity sector chips in the advanced search fields
+ */
 @Component({
   selector: 'app-activity-sector-chips',
   templateUrl: './activity-sector-chips.component.html'
 })
 export class ActivitySectorChipsComponent implements OnInit {
+  /**
+   * Array containing all activity sectors
+   */
   @Input() public customers : any[];
   
+  /**
+   * Form control
+   */
   public ctrl = new FormControl();
+  /**
+   * Filtered sector by user input
+   */
   public filteredSectors : Observable<string[]>;
+  /**
+   * Selected sectors by customers
+   */
   public selectedSectors : string[] = [];
+  /**
+   * Contains all activity sectors
+   */
   public sectors : string [];
 
+  /**
+   * Gets the user input from child component
+   */
   @ViewChild('input') public input: ElementRef<HTMLInputElement>;
+  /**
+   * Autocomplete child component
+   */
   @ViewChild('auto') public matAutocomplete: MatAutocomplete;
 
   public ngOnInit() : void {
