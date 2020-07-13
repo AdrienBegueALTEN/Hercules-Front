@@ -68,8 +68,10 @@ export class ManagerEditComponent {
    * Function that changes the administration rights of the manager in the database by sending an http request
    */
   public adminToogle() : void {
-    this._managerService.updateManager(this.manager.id, 'isAdmin', !this.manager.admin)
-      .subscribe(() => {}, error => {this._handleError(error.status); console.log(error); } );
+    this._managerService.updateManager(this.manager.id, 'isAdmin', !this.manager.admin).subscribe(
+        () =>  this._snackBar.open('Mise à jour effectuée', 'X', {duration: 2000}),
+        error => {this._handleError(error.status); console.log(error); } 
+      );
   }
 
   /**

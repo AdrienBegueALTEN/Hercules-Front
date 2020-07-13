@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { isUndefined } from 'util';
 import { saveAs } from "file-saver";
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 /**
  * Component that manages the page of the managers' table
@@ -30,7 +31,8 @@ export class ManagersComponent implements OnInit {
     private _authService : AuthService,
     private _managerService : ManagerService, 
     private _dialogUtils : DialogUtilsService,
-    private _router : Router
+    private _router : Router,
+    private _snackBar : MatSnackBar
   ) {}
 
   public ngOnInit() : void {
@@ -84,8 +86,9 @@ export class ManagersComponent implements OnInit {
    * @param event Event is triggered when the user sets a release date for another user
    */
   public onDeactivate(event : any) : void {
-    this._managerService.updateManager(event.user, 'releaseDate', event.releaseDate)
-      .subscribe(() => this.ngOnInit(), error => { this._dialogUtils.showMsgDialog("Impossible d'indiquer la sortie des effectifs"); });
+    this._managerService.updateManager(event.user, 'releaseDate', event.releaseDate).subscribe(
+      () => { this.ngOnInit(); this._snackBar.open('Sortie des effectifs appliquée', 'X', {duration: 2000}); },
+      error => { this._dialogUtils.showMsgDialog("Impossible d'indiquer la sortie des effectifs"); });
   }
 
   /**
@@ -93,7 +96,9 @@ export class ManagersComponent implements OnInit {
    * @param event Event is triggered when an user set another user as admin
    */
   public setAdmin(event : any) : void {
-    this._managerService.updateManager(event.manager, 'isAdmin', event.admin)
-      .subscribe(() => this.ngOnInit(), error => { this._dialogUtils.showMsgDialog("Impossible de modifier les droits d'administrateurs"); });
+    this._managerService.updateManager(event.manager, 'isAdmin', event.admin).subscribe(
+      () => { this.ngOnInit(); this._snackBar.open("Droits d'administrateur modifiés", 'X', {duration: 2000}); },
+      error => { this._dialogUtils.showMsgDialog("Impossible de modifier les droits d'administrateurs"); });
   }
 }
+

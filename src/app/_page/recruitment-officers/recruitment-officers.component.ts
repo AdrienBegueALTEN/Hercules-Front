@@ -7,6 +7,7 @@ import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { saveAs } from "file-saver";
 import { isUndefined } from 'util';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 /**
  * Handles recruitment officer informations
@@ -32,7 +33,9 @@ export class RecruitmentOfficersComponent implements OnInit {
     private _authService : AuthService,
     private _recruitmentOfficerService : RecruitmentOfficerService, 
     private _dialogUtils : DialogUtilsService,
-    private _router : Router) { }
+    private _router : Router,
+    private _snackBar : MatSnackBar
+    ) { }
 
   public ngOnInit() : void {
     this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
@@ -85,7 +88,7 @@ export class RecruitmentOfficersComponent implements OnInit {
    */
   public onDeactivate(event : any) : void {
     this._recruitmentOfficerService.updateRecruitmentOfficer(event.user, 'releaseDate', event.releaseDate).subscribe(
-      () => this.ngOnInit(),
+      () => { this.ngOnInit(); this._snackBar.open('Sortie des effectifs appliquée', 'X', {duration: 2000}); },
       () => this._dialogUtils.showMsgDialog("Impossible d'indiquer la sortie des effectifs")
     );
   }

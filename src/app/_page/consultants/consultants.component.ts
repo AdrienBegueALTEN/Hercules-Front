@@ -7,6 +7,7 @@ import { ConsultantService } from '../../_services/consultant.service';
 import { isUndefined } from 'util';
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 /**
  * Handles consultants data
@@ -65,7 +66,8 @@ export class ConsultantsComponent implements OnInit {
     private _authService : AuthService,
     private _consultantService : ConsultantService,
     private _dialogUtils : DialogUtilsService,
-    private _router : Router
+    private _router : Router,
+    private _snackBar : MatSnackBar
   ) {}
 
   public ngOnInit() : void {
@@ -145,7 +147,7 @@ export class ConsultantsComponent implements OnInit {
    */
   public onDeactivate(event : any) : void {
     this._consultantService.updateConsultant(event.user, 'releaseDate', event.releaseDate).subscribe(
-      () => this.ngOnInit(),
+      () => { this.ngOnInit(); this._snackBar.open('Sortie des effectifs appliquée', 'X', {duration: 2000}); },
       () => this._dialogUtils.showMsgDialog("Impossible de notifier la sortie des effectifs.")
     );
   }
