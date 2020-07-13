@@ -1,7 +1,6 @@
 import { DialogUtilsService } from 'src/app/_services/utils/dialog-utils.service';
-import { DatatableComponent } from './../../_view/datatable/datatable.component';
 import { AuthService } from 'src/app/_services/auth.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { RecruitmentOfficerService } from 'src/app/_services/recruitment-officer.service';
 import { HttpStatus } from 'src/app/_enums/http-status.enum';
@@ -27,10 +26,7 @@ export class RecruitmentOfficersComponent implements OnInit {
    */
   readonly LABEL : string = 'chargé de recrutement';
 
-  /**
-   * Gets the table format
-   */
-  @ViewChild(DatatableComponent, { static: true }) datatable : DatatableComponent;
+ 
 
   constructor(
     private _authService : AuthService,
@@ -39,12 +35,8 @@ export class RecruitmentOfficersComponent implements OnInit {
     private _router : Router) { }
 
   public ngOnInit() : void {
-    this.dataSource = new MatTableDataSource();
     this._recruitmentOfficerService.getRecruitmentOfficers().subscribe(
-      (data) => {
-        this.dataSource = new MatTableDataSource(data);
-        
-      },
+      (data) => this.dataSource = new MatTableDataSource(data),
       () => window.location.replace("")
     );
   }
